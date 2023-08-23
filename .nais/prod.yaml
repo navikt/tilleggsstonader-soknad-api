@@ -1,16 +1,16 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: tilleggstonader-soknad-api
-  namespace: tilleggstonader
+  name: tilleggsstonader-soknad-api
+  namespace: tilleggsstonader
   labels:
-    team: tilleggstonader
+    team: tilleggsstonader
 
 spec:
   port: 8080
   image: {{ image }}
   ingresses:
-    - https://tilleggstonader-soknad-api.intern.nav.no
+    - https://tilleggsstonader-soknad-api.intern.nav.no
   liveness:
     path: /internal/status/isAlive
     initialDelay: 30
