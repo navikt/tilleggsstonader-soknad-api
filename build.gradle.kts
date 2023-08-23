@@ -10,6 +10,8 @@ plugins {
     id("org.springframework.boot") version "3.1.2"
     id("io.spring.dependency-management") version "1.1.3"
     kotlin("plugin.spring") version "1.9.0"
+
+    id("org.cyclonedx.bom") version "1.7.4"
 }
 
 repositories {
@@ -28,7 +30,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // Logging
-    implementation("ch.qos.logback:logback-classic:1.4.11")
     implementation("net.logstash.logback:logstash-logback-encoder:7.4")
 
     implementation("io.micrometer:micrometer-registry-prometheus")
@@ -68,4 +69,8 @@ tasks {
             freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         }
     }
+}
+
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+    this.archiveFileName.set("app.jar")
 }

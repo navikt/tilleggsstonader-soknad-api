@@ -2,7 +2,7 @@ application:
   name: tilleggsstonad-soknad-api
 
 server:
-  port: 8001
+  port: 8080
   shutdown: graceful
   servlet:
     context-path: /
