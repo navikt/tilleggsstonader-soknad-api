@@ -6,7 +6,7 @@ version = "1.0.0"
 plugins {
     application
 
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.10"
 
     id("com.diffplug.spotless") version "6.20.0"
 
