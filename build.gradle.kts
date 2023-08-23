@@ -50,7 +50,7 @@ apply(plugin = "com.diffplug.spotless")
 
 spotless {
     kotlin {
-        ktlint("0.50.0")
+        //ktlint("0.50.0")
     }
 }
 
