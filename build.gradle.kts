@@ -1,5 +1,8 @@
 val javaVersion = JavaVersion.VERSION_17
 
+group = "no.nav.tilleggsstonader.soknad"
+version = "1.0.0"
+
 plugins {
     application
 
@@ -51,7 +54,7 @@ apply(plugin = "com.diffplug.spotless")
 
 spotless {
     kotlin {
-        //ktlint("0.50.0")
+        // ktlint("0.50.0") // burde ktlint ligge som egen task?
     }
 }
 
