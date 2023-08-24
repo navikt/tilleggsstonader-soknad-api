@@ -7,8 +7,7 @@ plugins {
     application
 
     kotlin("jvm") version "1.9.10"
-
-    id("com.diffplug.spotless") version "6.20.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 
     id("org.springframework.boot") version "3.1.2"
     id("io.spring.dependency-management") version "1.1.3"
@@ -50,14 +49,6 @@ application {
     mainClass.set("no.nav.tilleggsstonader.soknad.AppKt")
 }
 
-apply(plugin = "com.diffplug.spotless")
-
-spotless {
-    kotlin {
-        // ktlint("0.50.0") // burde ktlint ligge som egen task?
-    }
-}
-
 tasks {
     compileKotlin {
         kotlinOptions {
@@ -72,6 +63,10 @@ tasks {
             freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         }
     }
+}
+
+if (project.hasProperty("skipLint")) {
+    gradle.startParameter.excludedTaskNames += "ktlintMainSourceSetCheck"
 }
 
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {

@@ -23,7 +23,7 @@ jobs:
           java-version: '17'
           cache: 'gradle'
       - name: Test and build
-        run: ./gradlew test bootJar
+        run: ./gradlew test bootJar -PskipLint
       - name: Generate and output SBOM
         run: ./gradlew cyclonedxBom
       - uses: nais/docker-build-push@v0
