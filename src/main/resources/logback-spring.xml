@@ -20,6 +20,10 @@
         <appender-ref ref="secureLog"/>
     </logger>
 
+    <appender name="stdout_json" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
     <root level="${ROOT_LOG_LEVEL:-INFO}">
         <!-- nais+local -->
         <appender-ref ref="stdout_json"/>
