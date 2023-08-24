@@ -24,7 +24,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'maven'
+          cache: 'gradle'
       - name: Test and build
         run: ./gradlew test bootJar -PskipLint
       - name: Generate and output SBOM
