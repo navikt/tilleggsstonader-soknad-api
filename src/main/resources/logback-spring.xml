@@ -3,7 +3,6 @@
     <property name="ROOT_LOG_LEVEL" value="INFO"/>
 
     <!-- Logger for sensitive data -->
-    <!--
     <appender name="secureLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>/secure-logs/secure.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
@@ -20,7 +19,6 @@
     <logger name="secureLogger" level="INFO" additivity="false">
         <appender-ref ref="secureLog"/>
     </logger>
-    -->
 
     <root level="${ROOT_LOG_LEVEL:-INFO}">
         <!-- nais+local -->
