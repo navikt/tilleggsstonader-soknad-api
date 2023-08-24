@@ -63,6 +63,9 @@ tasks {
             freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         }
     }
+    test {
+        useJUnitPlatform()
+    }
 }
 
 if (project.hasProperty("skipLint")) {
