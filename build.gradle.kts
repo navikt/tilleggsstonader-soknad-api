@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
+
 val javaVersion = JavaVersion.VERSION_17
 
 group = "no.nav.tilleggsstonader.soknad"
@@ -18,6 +20,10 @@ plugins {
 
 repositories {
     mavenCentral()
+}
+
+configure<KtlintExtension> {
+    version.set("0.50.0")
 }
 
 dependencies {

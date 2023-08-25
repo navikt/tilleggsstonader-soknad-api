@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 import org.springframework.boot.runApplication
 
 @SpringBootApplication(
-    exclude = [ErrorMvcAutoConfiguration::class]
+    exclude = [ErrorMvcAutoConfiguration::class],
 )
 class App
 

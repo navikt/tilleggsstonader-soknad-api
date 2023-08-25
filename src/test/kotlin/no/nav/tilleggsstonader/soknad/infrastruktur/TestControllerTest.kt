@@ -39,7 +39,7 @@ class TestControllerTest : IntegrationTest() {
         val json = TestObject(
             tekst = "abc",
             dato = LocalDate.of(2023, 1, 1),
-            tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3)
+            tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3),
         )
 
         val response = restTemplate.postForEntity<TestObject>(localhost("api/test"), json)
@@ -52,7 +52,7 @@ class TestControllerTest : IntegrationTest() {
         val json = TestObject(
             tekst = "abc",
             dato = LocalDate.of(2023, 1, 1),
-            tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3)
+            tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3),
         )
 
         val response = restTemplate.postForEntity<TestObject>(localhost("api/test"), HttpEntity(json, headers))
@@ -80,7 +80,7 @@ class TestController {
         return TestObject(
             tekst = "abc",
             dato = LocalDate.of(2023, 1, 1),
-            tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3)
+            tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3),
         )
     }
 
@@ -98,5 +98,5 @@ class TestController {
 data class TestObject(
     val tekst: String,
     val dato: LocalDate,
-    val tidspunkt: LocalDateTime
+    val tidspunkt: LocalDateTime,
 )
