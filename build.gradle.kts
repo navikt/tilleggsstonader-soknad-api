@@ -26,6 +26,12 @@ configure<KtlintExtension> {
     version.set("0.50.0")
 }
 
+configurations.all {
+    resolutionStrategy {
+        failOnNonReproducibleResolution()
+    }
+}
+
 dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-web")
