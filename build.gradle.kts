@@ -1,6 +1,6 @@
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
-val javaVersion = JavaVersion.VERSION_17
+val javaVersion = JavaLanguageVersion.of(17)
 
 group = "no.nav.tilleggsstonader.soknad"
 version = "1.0.0"
@@ -27,10 +27,6 @@ configure<KtlintExtension> {
 }
 
 dependencies {
-    // Align versions of all Kotlin components
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-    implementation(kotlin("stdlib"))
-
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -46,38 +42,26 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-java {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+kotlin {
+    jvmToolchain(javaVersion.asInt())
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xjsr305=strict")
+    }
 }
 
 application {
     mainClass.set("no.nav.tilleggsstonader.soknad.AppKt")
 }
 
-tasks {
-    compileKotlin {
-        kotlinOptions {
-            jvmTarget = javaVersion.toString()
-            freeCompilerArgs += "-Xjsr305=strict"
-        }
-    }
-    compileTestKotlin {
-        kotlinOptions {
-            jvmTarget = javaVersion.toString()
-            freeCompilerArgs += "-Xjsr305=strict"
-            freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-        }
-    }
-    test {
-        useJUnitPlatform()
-    }
-}
-
 if (project.hasProperty("skipLint")) {
     gradle.startParameter.excludedTaskNames += "ktlintMainSourceSetCheck"
 }
 
-tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-    this.archiveFileName.set("app.jar")
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.bootJar {
+    archiveFileName.set("app.jar")
 }
