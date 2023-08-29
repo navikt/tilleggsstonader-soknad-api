@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 9093
 
 logging:
   config: classpath:logback-test.xml
@@ -9,12 +9,3 @@ no.nav.security.jwt:
     discovery-url: http://localhost:${mock-oauth2-server.port}/tokenx/.well-known/openid-configuration
     accepted-audience: tilleggsstonader-app
     cookie_name: localhost-idtoken
-
-TOKEN_X_WELL_KNOWN_URL: http://localhost
-TOKEN_X_PRIVATE_JWK: '{
-    "kty" : "RSA",
-    "e" : "AQAB",
-    "use" : "sig",
-    "kid" : "mock-oauth2-server-key",
-    "n" : ""
-  }'
