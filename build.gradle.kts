@@ -1,6 +1,6 @@
 val javaVersion = JavaLanguageVersion.of(17)
-val tilleggsstønaderLibsVersion = "2023.08.29-19.55.714aea6495e6"
-val tokenSupportVersion = "3.1.4"
+val tilleggsstønaderLibsVersion = "2023.08.29-20.43.64952624e213"
+val tokenSupportVersion = "3.1.3"
 
 group = "no.nav.tilleggsstonader.soknad"
 version = "1.0.0"
