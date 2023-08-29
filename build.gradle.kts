@@ -1,5 +1,3 @@
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
-
 val javaVersion = JavaLanguageVersion.of(17)
 
 group = "no.nav.tilleggsstonader.soknad"
@@ -9,7 +7,7 @@ plugins {
     application
 
     kotlin("jvm") version "1.9.10"
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    id("com.diffplug.spotless") version "6.20.0"
 
     id("org.springframework.boot") version "3.1.2"
     id("io.spring.dependency-management") version "1.1.3"
@@ -22,8 +20,12 @@ repositories {
     mavenCentral()
 }
 
-configure<KtlintExtension> {
-    version.set("0.50.0")
+apply(plugin = "com.diffplug.spotless")
+
+spotless {
+    kotlin {
+        ktlint("0.50.0")
+    }
 }
 
 configurations.all {
