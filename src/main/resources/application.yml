@@ -16,7 +16,7 @@ spring:
       date: iso
       date-time: iso
   main:
-    allow-bean-definition-overriding: false
+    allow-bean-definition-overriding: true
     banner-mode: "off"
 
 management:
@@ -27,4 +27,27 @@ management:
     path-mapping:
       info: "status/isAlive"
   prometheus.metrics.export.enabled: true
+
+no.nav.security.jwt:
+  issuer:
+    tokenx:
+      discovery-url: ${TOKEN_X_WELL_KNOWN_URL}
+      accepted-audience: ${TOKEN_X_CLIENT_ID}
+  client.registration:
+    pdl:
+      resource-url: ${clients.pdl.uri}
+      well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
+      grant-type: urn:ietf:params:oauth:grant-type:token-exchange
+      token-exchange:
+        audience: ${clients.pdl.audience}
+      authentication:
+        client-id: ${TOKEN_X_CLIENT_ID}
+        client-auth-method: private_key_jwt
+        client-jwk: ${TOKEN_X_PRIVATE_JWK}
+
+clients:
+  pdl:
+    uri: https://pdl-api.prod-fss-pub.nais.io
+    audience: prod-fss:pdl:pdl-api
+    scope: api://prod-fss.pdl.pdl-api/.default
 

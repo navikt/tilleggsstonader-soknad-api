@@ -1,0 +1,6 @@
+server:
+  port: 8001
+
+clients:
+  pdl:
+    uri: https://pdl-api-q1.dev.intern.nav.no

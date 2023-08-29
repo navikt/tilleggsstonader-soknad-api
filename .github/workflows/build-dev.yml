@@ -36,4 +36,4 @@ jobs:
           java-version: '17'
           cache: 'gradle'
       - name: Test and build
-        run: ./gradlew test -PskipLint
+        run: ./gradlew build -PskipLint
