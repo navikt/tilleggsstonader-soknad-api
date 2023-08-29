@@ -77,7 +77,7 @@ application {
 }
 
 if (project.hasProperty("skipLint")) {
-    gradle.startParameter.excludedTaskNames += "ktlintMainSourceSetCheck"
+    gradle.startParameter.excludedTaskNames += "spotlessKotlinCheck"
 }
 
 tasks.test {
