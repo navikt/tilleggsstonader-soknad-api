@@ -16,7 +16,7 @@ spring:
       date: iso
       date-time: iso
   main:
-    allow-bean-definition-overriding: false
+    allow-bean-definition-overriding: true
     banner-mode: "off"
 
 management:
@@ -28,3 +28,7 @@ management:
       info: "status/isAlive"
   prometheus.metrics.export.enabled: true
 
+no.nav.security.jwt:
+  issuer.tokenx:
+    discovery-url: ${TOKEN_X_WELL_KNOWN_URL}
+    accepted-audience: ${TOKEN_X_CLIENT_ID}

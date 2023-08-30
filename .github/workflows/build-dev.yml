@@ -20,7 +20,7 @@ jobs:
           java-version: '17'
           cache: 'gradle'
       - name: Kjør ktlint
-        run: ./gradlew ktlintCheck
+        run: ./gradlew spotlessCheck
   build:
     name: Build and test
     runs-on: ubuntu-latest
@@ -36,4 +36,4 @@ jobs:
           java-version: '17'
           cache: 'gradle'
       - name: Test and build
-        run: ./gradlew test -PskipLint
+        run: ./gradlew build -PskipLint
