@@ -4,6 +4,8 @@ import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
+import no.nav.tilleggsstonader.soknad.infrastruktur.PdlClientConfig.Companion.resetPdlClientMock
+import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,6 +35,7 @@ class DefaultRestTemplateConfiguration {
 @SpringBootTest(classes = [App::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(
     "integrasjonstest",
+    "mock-pdl",
 )
 @EnableMockOAuth2Server
 abstract class IntegrationTest {
@@ -49,9 +52,17 @@ abstract class IntegrationTest {
     @Autowired
     private lateinit var mockOAuth2Server: MockOAuth2Server
 
+    @Autowired
+    protected lateinit var pdlClient: PdlClient
+
     @AfterEach
     fun tearDown() {
         headers.clear()
+        clearClientMocks()
+    }
+
+    private fun clearClientMocks() {
+        resetPdlClientMock(pdlClient)
     }
 
     protected fun localhost(path: String): String {

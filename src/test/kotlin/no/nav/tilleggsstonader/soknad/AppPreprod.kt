@@ -6,7 +6,10 @@ import java.io.File
 fun main(args: Array<String>) {
     val properties = hentPreprodEnv()
     SpringApplicationBuilder(App::class.java)
-        .profiles("preprod")
+        .profiles(
+            "preprod",
+            "mock-pdl",
+        )
         .properties(properties)
         .run(*args)
 }

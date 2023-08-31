@@ -43,4 +43,13 @@ enum class Familierelasjonsrolle {
     MEDMOR,
 }
 
-data class Navn(val fornavn: String, val mellomnavn: String?, val etternavn: String)
+data class Navn(val fornavn: String, val mellomnavn: String?, val etternavn: String) {
+
+    fun visningsnavn(): String {
+        return if (mellomnavn.isNullOrEmpty()) {
+            "$fornavn $etternavn"
+        } else {
+            "$fornavn $mellomnavn $etternavn"
+        }
+    }
+}

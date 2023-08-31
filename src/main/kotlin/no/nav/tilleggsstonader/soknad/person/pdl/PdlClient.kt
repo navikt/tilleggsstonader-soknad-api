@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.person.pdl
 
+import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlUtil.httpHeaders
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlPersonRequest
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlPersonRequestVariables
@@ -9,9 +10,10 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøkerData
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
+import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
-import org.springframework.web.client.postForEntity
+import org.springframework.web.client.exchange
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
@@ -23,16 +25,17 @@ class PdlClient(
     private val restOperations: RestOperations,
 ) {
 
-    fun hentSøker(personIdent: String): PdlSøker {
+    fun hentSøker(fødselsnummer: Fødselsnummer): PdlSøker {
         val pdlPersonRequest = PdlPersonRequest(
-            variables = PdlPersonRequestVariables(personIdent),
+            variables = PdlPersonRequestVariables(fødselsnummer.verdi),
             query = PdlUtil.søkerQuery,
         )
-        val pdlResponse = restOperations.postForEntity<PdlResponse<PdlSøkerData>>(
+        val pdlResponse = restOperations.exchange<PdlResponse<PdlSøkerData>>(
             graphqlUri,
+            HttpMethod.POST,
             HttpEntity(pdlPersonRequest, httpHeaders),
         ).body ?: error("Mangler body")
-        return feilsjekkOgReturnerData(personIdent, pdlResponse) { it.person }
+        return feilsjekkOgReturnerData(fødselsnummer.verdi, pdlResponse) { it.person }
     }
 
     private val graphqlUri = UriComponentsBuilder.fromUri(pdlUrl)

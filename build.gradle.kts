@@ -1,6 +1,7 @@
 val javaVersion = JavaLanguageVersion.of(17)
 val tilleggsstønaderLibsVersion = "2023.08.29-20.43.64952624e213"
 val tokenSupportVersion = "3.1.3"
+val wiremockVersion = "2.35.0"
 
 group = "no.nav.tilleggsstonader.soknad"
 version = "1.0.0"
@@ -56,12 +57,15 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
 
     // Tillegggsstønader libs
+    implementation("no.nav.tilleggsstonader-libs:util:$tilleggsstønaderLibsVersion")
     implementation("no.nav.tilleggsstonader-libs:log:$tilleggsstønaderLibsVersion")
     implementation("no.nav.tilleggsstonader-libs:http-client:$tilleggsstønaderLibsVersion")
     implementation("no.nav.tilleggsstonader-libs:sikkerhet:$tilleggsstønaderLibsVersion")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
+    testImplementation("io.mockk:mockk:1.13.7")
 
     testImplementation("no.nav.security:token-validation-spring-test:$tokenSupportVersion")
     testImplementation("no.nav.tilleggsstonader-libs:test-util:$tilleggsstønaderLibsVersion")
