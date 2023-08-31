@@ -44,5 +44,5 @@ spec:
     enabled: true
   env:
     - name: SPRING_PROFILES_ACTIVE
-      value: prod
+      value: dev
 
