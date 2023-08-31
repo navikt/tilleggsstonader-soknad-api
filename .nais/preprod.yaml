@@ -39,10 +39,10 @@ spec:
         - application: tilleggsstonader-soknad
     outbound:
       external:
-        - host: pdl-api.dev-fss-pub.nais.io
+        - host: pdl-api-q1.dev-fss-pub.nais.io
   tokenx:
     enabled: true
   env:
     - name: SPRING_PROFILES_ACTIVE
-      value: prod
+      value: dev
 

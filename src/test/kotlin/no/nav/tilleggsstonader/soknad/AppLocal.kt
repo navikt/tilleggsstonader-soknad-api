@@ -13,7 +13,10 @@ class ApplicationLocalLauncher : App()
 
 fun main(args: Array<String>) {
     SpringApplicationBuilder(ApplicationLocalLauncher::class.java)
-        .profiles("local")
+        .profiles(
+            "local",
+            "mock-pdl",
+        )
         .properties(mapOf("mock-oauth2-server.port" to mockOauth2ServerPort))
         .run(*args)
 }
