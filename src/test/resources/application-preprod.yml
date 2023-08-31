@@ -1,6 +1,9 @@
 server:
   port: 8001
 
+logging:
+  config: classpath:logback-test.xml
+
 clients:
   pdl:
     uri: https://pdl-api-q1.dev.intern.nav.no

@@ -1,7 +1,6 @@
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
-
 val javaVersion = JavaLanguageVersion.of(17)
-val tilleggsstønaderLibsVersion = "1.0.0-SNAPSHOT"
+val tilleggsstønaderLibsVersion = "2023.08.29-20.43.64952624e213"
+val tokenSupportVersion = "3.1.3"
 
 group = "no.nav.tilleggsstonader.soknad"
 version = "1.0.0"
@@ -10,9 +9,10 @@ plugins {
     application
 
     kotlin("jvm") version "1.9.10"
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    id("com.diffplug.spotless") version "6.21.0"
+    id("com.github.ben-manes.versions") version "0.47.0"
 
-    id("org.springframework.boot") version "3.1.2"
+    id("org.springframework.boot") version "3.1.3"
     id("io.spring.dependency-management") version "1.1.3"
     kotlin("plugin.spring") version "1.9.10"
 
@@ -28,8 +28,12 @@ repositories {
     }
 }
 
-configure<KtlintExtension> {
-    version.set("0.50.0")
+apply(plugin = "com.diffplug.spotless")
+
+spotless {
+    kotlin {
+        ktlint("0.50.0")
+    }
 }
 
 configurations.all {
@@ -54,9 +58,13 @@ dependencies {
     // Tillegggsstønader libs
     implementation("no.nav.tilleggsstonader-libs:log:$tilleggsstønaderLibsVersion")
     implementation("no.nav.tilleggsstonader-libs:http-client:$tilleggsstønaderLibsVersion")
+    implementation("no.nav.tilleggsstonader-libs:sikkerhet:$tilleggsstønaderLibsVersion")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    testImplementation("no.nav.security:token-validation-spring-test:$tokenSupportVersion")
+    testImplementation("no.nav.tilleggsstonader-libs:test-util:$tilleggsstønaderLibsVersion")
 }
 
 kotlin {
@@ -72,7 +80,7 @@ application {
 }
 
 if (project.hasProperty("skipLint")) {
-    gradle.startParameter.excludedTaskNames += "ktlintMainSourceSetCheck"
+    gradle.startParameter.excludedTaskNames += "spotlessKotlinCheck"
 }
 
 tasks.test {
