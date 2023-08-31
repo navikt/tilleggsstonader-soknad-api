@@ -7,3 +7,5 @@ logging:
 clients:
   pdl:
     uri: https://pdl-api-q1.dev.intern.nav.no
+    audience: dev-fss:pdl:pdl-api-q1
+    scope: api://dev-fss.pdl.pdl-api-q1/.default

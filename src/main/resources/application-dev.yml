@@ -1,5 +1,5 @@
 clients:
   pdl:
-    uri: https://pdl-api.dev-fss-pub.nais.io
-    audience: dev-fss:pdl:pdl-api
-    scope: api://dev-fss.pdl.pdl-api/.default
+    uri: https://pdl-api-q1.dev-fss-pub.nais.io
+    audience: dev-fss:pdl:pdl-api-q1
+    scope: api://dev-fss.pdl.pdl-api-q1/.default
