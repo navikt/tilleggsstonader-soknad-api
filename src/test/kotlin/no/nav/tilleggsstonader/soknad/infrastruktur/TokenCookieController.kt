@@ -7,6 +7,8 @@ import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import no.nav.security.token.support.core.api.Unprotected
 import no.nav.security.token.support.spring.test.MockLoginController
+import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
+import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -23,23 +25,24 @@ class TokenCookieController(
     fun addCookie(
         @RequestParam(value = "issuerId", defaultValue = "tokenx") issuerId: String,
         @RequestParam(value = "audience", defaultValue = "tilleggsstonader-app") audience: String,
-        @RequestParam(value = "subject", defaultValue = "12345678910") subject: String,
+        @RequestParam(value = "subject", required = false) subject: String?,
         @RequestParam(value = "cookiename", defaultValue = "localhost-idtoken") cookieName: String,
         @RequestParam(value = "redirect", required = false) redirect: String?,
         @RequestParam(value = "expiry", required = false) expiry: String?,
         response: HttpServletResponse,
     ): Cookie? {
+        val fnr = Fødselsnummer(subject ?: FnrGenerator.generer())
         val token = mockOAuth2Server.issueToken(
             issuerId,
             MockLoginController::class.java.simpleName,
             DefaultOAuth2TokenCallback(
                 issuerId = issuerId,
-                subject = subject,
+                subject = fnr.verdi,
                 typeHeader = JOSEObjectType.JWT.type,
                 audience = listOf(audience),
                 claims = mapOf(
                     "acr" to "Level4",
-                    "pid" to subject,
+                    "pid" to fnr.verdi,
                 ),
                 expiry = expiry?.toLong() ?: 3600,
             ),
