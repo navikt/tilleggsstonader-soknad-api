@@ -37,6 +37,9 @@ spec:
     inbound:
       rules:
         - application: tilleggsstonader-soknad
+    outbound:
+      external:
+        - host: pdl-api.prod-fss-pub.nais.io
   tokenx:
     enabled: true
   env:
