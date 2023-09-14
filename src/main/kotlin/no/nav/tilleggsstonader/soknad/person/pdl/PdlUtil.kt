@@ -12,8 +12,7 @@ val logger: Logger = LoggerFactory.getLogger(PdlClient::class.java)
 
 object PdlUtil {
     val httpHeaders = HttpHeaders().apply {
-        add("Tema", "ENF") // TODO
-        add("behandlingsnummer", "") // TODO
+        add("behandlingsnummer", "B289")
     }
 
     val søkerQuery = graphqlQuery("/pdl/søker.graphql")
