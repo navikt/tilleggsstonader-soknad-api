@@ -54,7 +54,7 @@ class DatabaseConfiguration : AbstractJdbcConfiguration() {
         return JdbcCustomConversions(
             listOf(
                 PGobjectTilJsonWrapperConverter(),
-                JsonWrapperTilPGobjectConverter()
+                JsonWrapperTilPGobjectConverter(),
             ),
         )
     }
