@@ -6,6 +6,7 @@ import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.soknad.infrastruktur.PdlClientConfig.Companion.resetPdlClientMock
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
+import no.nav.tilleggsstonader.soknad.util.DbContainerInitializer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,11 +15,14 @@ import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.jdbc.core.JdbcAggregateOperations
 import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.web.client.RestTemplate
 import java.util.UUID
+import kotlin.reflect.KClass
 
 val tokenSubject = "12345678911"
 
@@ -32,6 +36,7 @@ class DefaultRestTemplateConfiguration {
 }
 
 @ExtendWith(SpringExtension::class)
+@ContextConfiguration(initializers = [DbContainerInitializer::class])
 @SpringBootTest(classes = [App::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(
     "integrasjonstest",
@@ -55,10 +60,18 @@ abstract class IntegrationTest {
     @Autowired
     protected lateinit var pdlClient: PdlClient
 
+    @Autowired
+    private lateinit var jdbcAggregateOperations: JdbcAggregateOperations
+
     @AfterEach
     fun tearDown() {
         headers.clear()
         clearClientMocks()
+        resetDatabase()
+    }
+
+    private fun resetDatabase() {
+        listOf<KClass<Any>>().forEach { jdbcAggregateOperations.deleteAll(it.java) }
     }
 
     private fun clearClientMocks() {

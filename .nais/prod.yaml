@@ -33,6 +33,20 @@ spec:
       cpu: 500m
   secureLogs:
     enabled: true
+  gcp:
+    sqlInstances:
+      - type: POSTGRES_15
+        tier: db-custom-1-3840
+        diskAutoresize: true
+        cascadingDelete: false
+        highAvailability: true
+        pointInTimeRecovery: true
+        maintenance:
+          day: 7
+          hour: 23
+        databases:
+          - name: tilleggsstonader-soknad
+            envVarPrefix: DB
   accessPolicy:
     inbound:
       rules:
