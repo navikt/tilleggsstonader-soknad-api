@@ -1,5 +1,5 @@
 prosessering:
-  rolle: "31a99292-9461-40bf-b2d0-a815697dfbb4" # Saksbehandler, i prod brukes egen rolle for tilgang til prosessering
+  rolle: "34e7f3e4-2649-4e3d-9a5c-7fc14aea28dd" # 0000-GA-STDAPPS gir alle tilgang i preprod til prosessering
 
 clients:
   pdl:
