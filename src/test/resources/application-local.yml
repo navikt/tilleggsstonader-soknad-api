@@ -11,6 +11,9 @@ spring:
     url: ${DATASOURCE_URL}
     driver-class-name: org.postgresql.Driver
 
+prosessering:
+  fixedDelayString.in.milliseconds: 3000
+
 no.nav.security.jwt:
   issuer.tokenx:
     discovery-url: http://localhost:${mock-oauth2-server.port}/tokenx/.well-known/openid-configuration

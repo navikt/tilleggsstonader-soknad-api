@@ -50,11 +50,18 @@ spec:
     inbound:
       rules:
         - application: tilleggsstonader-soknad
+        - application: tilleggsstonader-prosessering
     outbound:
       external:
         - host: pdl-api-q1.dev-fss-pub.nais.io
   tokenx:
     enabled: true
+  azure:
+    application:
+      enabled: true
+      claims:
+        groups:
+          - id: "928636f4-fd0d-4149-978e-a6fb68bb19de" # 0000-GA-STDAPPS gir alle tilgang i preprod til prosessering
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
