@@ -55,7 +55,7 @@ class SøknadControllerTest : IntegrationTest() {
         assertThat(dbSøknad.type).isEqualTo(stønadstype)
         try {
             assertThat(søknadFraDb).isEqualTo(objectMapper.readValue<Map<String, Any>>(FileUtil.readFile(filnavn)))
-        } catch (e: Throwable){
+        } catch (e: Throwable) {
             LoggerFactory.getLogger("testlogger")
                 .error("Actual=${objectMapper.writeValueAsString(søknadFraDb)}")
             throw e

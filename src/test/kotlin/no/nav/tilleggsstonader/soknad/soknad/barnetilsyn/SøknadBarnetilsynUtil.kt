@@ -11,10 +11,10 @@ object SøknadBarnetilsynUtil {
         hovedytelse = EnumFelt("Hovedutelse?", Hovedytelse.AAP, "AAP"),
         aktivitet = Aktiviet(
             utdanning = EnumFelt(
-            "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
+                "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
                 JaNei.JA,
-                "Ja"
-            )
+                "Ja",
+            ),
         ),
         barn = listOf(
             BarnMedBarnepass(

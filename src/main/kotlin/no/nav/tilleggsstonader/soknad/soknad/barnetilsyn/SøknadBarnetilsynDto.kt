@@ -14,7 +14,7 @@ data class SøknadBarnetilsynDto(
 )
 
 data class Aktiviet(
-    val utdanning: EnumFelt<JaNei>
+    val utdanning: EnumFelt<JaNei>,
 )
 
 data class BarnMedBarnepass(

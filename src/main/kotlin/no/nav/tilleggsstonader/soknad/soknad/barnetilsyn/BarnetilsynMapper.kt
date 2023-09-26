@@ -22,11 +22,11 @@ class BarnetilsynMapper {
                 ident = it.ident,
                 type = it.type,
                 startetIFemte = it.startetIFemte,
-                årsak = it.årsak
-        )
-    }
+                årsak = it.årsak,
+            )
+        }
 
     private fun mapAktivitet(dto: SøknadBarnetilsynDto) = Aktivitet(
-        utdanning = dto.aktivitet.utdanning
+        utdanning = dto.aktivitet.utdanning,
     )
 }
