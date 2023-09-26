@@ -1,11 +1,14 @@
 package no.nav.tilleggsstonader.soknad.infrastruktur.database
 
+import org.postgresql.util.PGobject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.flyway.FlywayConfigurationCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.convert.converter.Converter
 import org.springframework.core.env.Environment
+import org.springframework.data.convert.ReadingConverter
+import org.springframework.data.convert.WritingConverter
 import org.springframework.data.jdbc.core.convert.JdbcCustomConversions
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories
@@ -49,7 +52,28 @@ class DatabaseConfiguration : AbstractJdbcConfiguration() {
     @Bean
     override fun jdbcCustomConversions(): JdbcCustomConversions {
         return JdbcCustomConversions(
-            listOf<Converter<Any, Any>>(),
+            listOf(
+                PGobjectTilJsonWrapperConverter(),
+                JsonWrapperTilPGobjectConverter(),
+            ),
         )
+    }
+
+    @ReadingConverter
+    class PGobjectTilJsonWrapperConverter : Converter<PGobject, JsonWrapper?> {
+
+        override fun convert(pGobject: PGobject): JsonWrapper? {
+            return pGobject.value?.let { JsonWrapper(it) }
+        }
+    }
+
+    @WritingConverter
+    class JsonWrapperTilPGobjectConverter : Converter<JsonWrapper, PGobject> {
+
+        override fun convert(jsonWrapper: JsonWrapper): PGobject =
+            PGobject().apply {
+                type = "json"
+                value = jsonWrapper.json
+            }
     }
 }

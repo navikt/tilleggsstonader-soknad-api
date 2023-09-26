@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad
 
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
+import no.nav.tilleggsstonader.soknad.util.DbContainerInitializer
 import org.springframework.boot.builder.SpringApplicationBuilder
 
 /**
@@ -9,10 +10,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 private val mockOauth2ServerPort: String = "11588"
 
 @EnableMockOAuth2Server
-class ApplicationLocalLauncher : App()
+class AppLocal : App()
 
 fun main(args: Array<String>) {
-    SpringApplicationBuilder(ApplicationLocalLauncher::class.java)
+    SpringApplicationBuilder(AppLocal::class.java)
+        .initializers(DbContainerInitializer())
         .profiles(
             "local",
             "mock-pdl",
