@@ -64,9 +64,13 @@ no.nav.security.jwt:
         client-auth-method: private_key_jwt
         client-jwk: ${TOKEN_X_PRIVATE_JWK}
 
+CLIENT_ENV: prod
 clients:
+  integrasjoner:
+    uri: http://tilleggsstonader-integrasjoner
+    scope: api://${CLIENT_ENV}-gcp.tilleggsstonader.tilleggsstonader-integrasjoner/.default
   pdl:
     uri: https://pdl-api.prod-fss-pub.nais.io
-    audience: prod-fss:pdl:pdl-api
-    scope: api://prod-fss.pdl.pdl-api/.default
+    audience: ${CLIENT_ENV}-fss:pdl:pdl-api
+    scope: api://${CLIENT_ENV}-fss.pdl.pdl-api/.default
 

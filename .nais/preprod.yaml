@@ -52,6 +52,8 @@ spec:
         - application: tilleggsstonader-soknad
         - application: tilleggsstonader-prosessering
     outbound:
+      rules:
+        - application: tilleggsstonader-integrasjoner
       external:
         - host: pdl-api-q1.dev-fss-pub.nais.io
   tokenx:
