@@ -11,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -52,6 +53,12 @@ class SøknadControllerTest : IntegrationTest() {
 
         assertThat(dbSøknad.personIdent).isEqualTo(tokenSubject)
         assertThat(dbSøknad.type).isEqualTo(stønadstype)
-        assertThat(søknadFraDb).isEqualTo(objectMapper.readValue<Map<String, Any>>(FileUtil.readFile(filnavn)))
+        try {
+            assertThat(søknadFraDb).isEqualTo(objectMapper.readValue<Map<String, Any>>(FileUtil.readFile(filnavn)))
+        } catch (e: Throwable){
+            LoggerFactory.getLogger("testlogger")
+                .error("Actual=${objectMapper.writeValueAsString(søknadFraDb)}")
+            throw e
+        }
     }
 }

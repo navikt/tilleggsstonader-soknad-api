@@ -1,5 +1,5 @@
 {
-  "personIdent": "12345678911",
+  "ident": "12345678911",
   "mottattTidspunkt": "2023-09-25T21:32:18.22631",
   "skjema": {
     "hovedytelse": {
@@ -7,13 +7,16 @@
       "verdi": "AAP",
       "svarTekst": "AAP"
     },
+    "aktivitet": {
     "utdanning": {
       "label": "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
-      "verdi": true
+        "verdi": "JA",
+        "svarTekst": "Ja"
+      }
     },
     "barn": [
       {
-        "personIdent": "barn1",
+        "ident": "barn1",
         "type": {
           "label": "",
           "verdi": "BARNEHAGE_SFO_AKS",
@@ -21,7 +24,8 @@
         },
         "startetIFemte": {
           "label": "Har startet i 5. klasse?",
-          "verdi": true
+          "verdi": "JA",
+          "svarTekst": "Ja"
         },
         "årsak": {
           "label": "Årsak?",
