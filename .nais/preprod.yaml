@@ -50,6 +50,7 @@ spec:
     inbound:
       rules:
         - application: tilleggsstonader-soknad
+        - application: tilleggsstonader-prosessering
     outbound:
       external:
         - host: pdl-api-q1.dev-fss-pub.nais.io

@@ -4,6 +4,9 @@ server:
 logging:
   config: classpath:logback-test.xml
 
+prosessering:
+  enabled: false
+
 clients:
   pdl:
     uri: https://pdl-api-q1.dev.intern.nav.no

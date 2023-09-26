@@ -4,6 +4,9 @@ server:
 logging:
   config: classpath:logback-test.xml
 
+prosessering:
+  enabled: false
+
 no.nav.security.jwt:
   issuer.tokenx:
     discovery-url: http://localhost:${mock-oauth2-server.port}/tokenx/.well-known/openid-configuration

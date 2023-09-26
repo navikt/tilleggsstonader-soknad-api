@@ -1,3 +1,6 @@
+prosessering:
+  rolle: "31a99292-9461-40bf-b2d0-a815697dfbb4" # Saksbehandler, i prod brukes egen rolle for tilgang til prosessering
+
 clients:
   pdl:
     uri: https://pdl-api-q1.dev-fss-pub.nais.io

@@ -1,5 +1,7 @@
 package no.nav.tilleggsstonader.soknad.infrastruktur.database
 
+import no.nav.familie.prosessering.PropertiesWrapperTilStringConverter
+import no.nav.familie.prosessering.StringTilPropertiesWrapperConverter
 import org.postgresql.util.PGobject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.flyway.FlywayConfigurationCustomizer
@@ -19,7 +21,7 @@ import org.springframework.transaction.PlatformTransactionManager
 import javax.sql.DataSource
 
 @Configuration
-@EnableJdbcRepositories("no.nav.tilleggsstonader.soknad") // TODO task-prosessering
+@EnableJdbcRepositories("no.nav.tilleggsstonader.soknad", "no.nav.familie.prosessering")
 class DatabaseConfiguration : AbstractJdbcConfiguration() {
 
     @Bean
@@ -55,6 +57,9 @@ class DatabaseConfiguration : AbstractJdbcConfiguration() {
             listOf(
                 PGobjectTilJsonWrapperConverter(),
                 JsonWrapperTilPGobjectConverter(),
+
+                StringTilPropertiesWrapperConverter(),
+                PropertiesWrapperTilStringConverter(),
             ),
         )
     }
