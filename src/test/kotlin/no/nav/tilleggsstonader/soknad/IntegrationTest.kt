@@ -1,5 +1,7 @@
 package no.nav.tilleggsstonader.soknad
 
+import no.nav.familie.prosessering.domene.Task
+import no.nav.familie.prosessering.domene.TaskLogg
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
@@ -71,7 +73,12 @@ abstract class IntegrationTest {
     }
 
     private fun resetDatabase() {
-        listOf(Søknad::class).forEach { jdbcAggregateOperations.deleteAll(it.java) }
+        listOf(
+            TaskLogg::class,
+            Task::class,
+
+            Søknad::class,
+        ).forEach { jdbcAggregateOperations.deleteAll(it.java) }
     }
 
     private fun clearClientMocks() {
