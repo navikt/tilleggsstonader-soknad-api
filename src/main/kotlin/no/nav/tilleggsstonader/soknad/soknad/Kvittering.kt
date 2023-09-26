@@ -1,4 +1,4 @@
-package no.nav.tilleggsstonader.soknad.soknad.dto
+package no.nav.tilleggsstonader.soknad.soknad
 
 import java.time.LocalDateTime
 

@@ -1,0 +1,38 @@
+{
+  "ident": "12345678911",
+  "mottattTidspunkt": "2023-09-25T21:32:18.22631",
+  "skjema": {
+    "hovedytelse": {
+      "label": "Hovedutelse?",
+      "verdi": "AAP",
+      "svarTekst": "AAP"
+    },
+    "aktivitet": {
+    "utdanning": {
+      "label": "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
+        "verdi": "JA",
+        "svarTekst": "Ja"
+      }
+    },
+    "barn": [
+      {
+        "ident": "barn1",
+        "type": {
+          "label": "",
+          "verdi": "BARNEHAGE_SFO_AKS",
+          "svarTekst": "Svartekst"
+        },
+        "startetIFemte": {
+          "label": "Har startet i 5. klasse?",
+          "verdi": "JA",
+          "svarTekst": "Ja"
+        },
+        "årsak": {
+          "label": "Årsak?",
+          "verdi": "MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID",
+          "svarTekst": "Mye borte"
+        }
+      }
+    ]
+  }
+}
