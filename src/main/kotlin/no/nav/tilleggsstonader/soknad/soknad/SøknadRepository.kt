@@ -25,6 +25,4 @@ data class Søknad(
     val søknadJson: JsonWrapper,
 
     val journalpostId: String? = null,
-    @Column("soknad_pdf")
-    val søknadPdf: String? = null,
 )
