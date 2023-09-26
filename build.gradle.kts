@@ -76,7 +76,7 @@ dependencies {
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
-    testImplementation("io.mockk:mockk:1.13.7")
+    testImplementation("io.mockk:mockk:1.13.8")
 
     testImplementation("org.testcontainers:postgresql:$testcontainerVersion")
 
