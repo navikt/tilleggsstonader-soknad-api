@@ -77,7 +77,7 @@ abstract class IntegrationTest {
             TaskLogg::class,
             Task::class,
 
-            Søknad::class
+            Søknad::class,
         ).forEach { jdbcAggregateOperations.deleteAll(it.java) }
     }
 

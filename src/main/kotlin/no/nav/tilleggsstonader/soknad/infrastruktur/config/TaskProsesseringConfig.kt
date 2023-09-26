@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 @ComponentScan("no.nav.familie.prosessering")
 @Configuration
 class TaskProsesseringConfig(
-    @Value("\${prosessering.rolle}") private val rolle: String
+    @Value("\${prosessering.rolle}") private val rolle: String,
 ) {
 
     @Bean
@@ -27,7 +27,7 @@ class TaskProsesseringConfig(
         }
     }
 
-    fun hentGrupperFraToken(): Set<String> = try{
+    fun hentGrupperFraToken(): Set<String> = try {
         SpringTokenValidationContextHolder().tokenValidationContext
             .getClaims("azuread")
             ?.get("groups") as List<String>?
