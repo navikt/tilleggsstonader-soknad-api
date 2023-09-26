@@ -2,6 +2,7 @@ package no.nav.tilleggsstonader.soknad.infrastruktur.config
 
 import no.nav.familie.prosessering.config.ProsesseringInfoProvider
 import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -13,6 +14,8 @@ class TaskProsesseringConfig(
     @Value("\${prosessering.rolle}") private val rolle: String,
 ) {
 
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     @Bean
     fun prosesseringInfoProvider() = object : ProsesseringInfoProvider {
         override fun hentBrukernavn(): String = try {
@@ -23,7 +26,9 @@ class TaskProsesseringConfig(
         }
 
         override fun harTilgang(): Boolean {
-            return hentGrupperFraToken().contains(rolle)
+            val harTilgang = hentGrupperFraToken().contains(rolle)
+            logger.warn("Tilgang=$harTilgang")
+            return harTilgang
         }
     }
 
