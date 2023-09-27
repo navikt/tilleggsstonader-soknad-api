@@ -13,31 +13,28 @@ import kotlinx.html.style
 import kotlinx.html.title
 import kotlinx.html.unsafe
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-fun main() {
-    HtmlGenerator.generateHtml()
-}
-object HtmlGenerator {
+@Service
+class HtmlGenerator(
+    @Value("\${pdf.html.prettyPrint:false}")
+    private val prettyPrint: Boolean,
+) {
 
     val DATE_FORMAT_NORSK = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-    fun generateHtml() {
-        val titleText = "abc"
-        val stønadstype: Stønadstype = Stønadstype.BARNETILSYN
-        val html2 = createHTMLDocument().html {
+    fun generateHtml(stønadstype: Stønadstype, felter: Map<String, *>): String {
+        return createHTMLDocument().html {
             head {
                 meta {
                     httpEquiv = "content-type"
                     content = "text/html; charset=utf-8"
                 }
-                style {
-                    unsafe {
-                        raw(css)
-                    }
-                }
-                title { +titleText }
+                style { unsafe { raw(css) } }
+                title { +stønadstype.name }
             }
             body {
                 div("header") {
@@ -50,10 +47,8 @@ object HtmlGenerator {
                     }
                 }
             }
-        }.serialize()
-        println(html2)
+        }.serialize(prettyPrint = prettyPrint)
     }
-
 }
 
 private val navIkone = """

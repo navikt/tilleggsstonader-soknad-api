@@ -24,5 +24,34 @@ data class Søknad(
     @Column("soknad_json")
     val søknadJson: JsonWrapper,
 
+    @Column("soknad_pdf")
+    val søknadPdf: ByteArray? = null,
+
     val journalpostId: String? = null,
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Søknad
+
+        if (id != other.id) return false
+        if (opprettetTid != other.opprettetTid) return false
+        if (type != other.type) return false
+        if (personIdent != other.personIdent) return false
+        if (søknadJson != other.søknadJson) return false
+        if (!søknadPdf.contentEquals(other.søknadPdf)) return false
+        return journalpostId == other.journalpostId
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + opprettetTid.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + personIdent.hashCode()
+        result = 31 * result + søknadJson.hashCode()
+        result = 31 * result + søknadPdf.contentHashCode()
+        result = 31 * result + (journalpostId?.hashCode() ?: 0)
+        return result
+    }
+}
