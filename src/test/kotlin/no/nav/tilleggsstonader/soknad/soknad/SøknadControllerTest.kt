@@ -5,6 +5,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapp
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
+import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
