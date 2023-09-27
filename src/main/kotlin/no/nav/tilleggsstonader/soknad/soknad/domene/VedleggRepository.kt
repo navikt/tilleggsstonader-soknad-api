@@ -23,7 +23,7 @@ class Vedlegg(
     val type: Vedleggstype,
     val navn: String,
     val innhold: ByteArray,
-    val opprettetTid: LocalDateTime = SporbarUtils.now()
+    val opprettetTid: LocalDateTime = SporbarUtils.now(),
 ) {
 
     /**

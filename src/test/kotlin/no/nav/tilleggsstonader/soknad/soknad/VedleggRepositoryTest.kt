@@ -21,7 +21,6 @@ class VedleggRepositoryTest : IntegrationTest() {
     @Autowired
     lateinit var vedleggRepository: VedleggRepository
 
-
     @Test
     fun `skal kunne lagre og hente vedlegg`() {
         val søknad = lagreSøknad()
@@ -30,7 +29,7 @@ class VedleggRepositoryTest : IntegrationTest() {
     }
 
     @Nested
-    inner class findBySøknadId {
+    inner class FindBySøknadId {
 
         @Test
         fun `skal finne vedlegg til søknad`() {
@@ -54,8 +53,8 @@ class VedleggRepositoryTest : IntegrationTest() {
                 søknadId = søknad.id,
                 type = Vedleggstype.EKSEMPEL,
                 navn = "charlie.pdf",
-                innhold = byteArrayOf(13)
-            )
+                innhold = byteArrayOf(13),
+            ),
         )
 
     private fun lagreSøknad() = søknadRepository.insert(
