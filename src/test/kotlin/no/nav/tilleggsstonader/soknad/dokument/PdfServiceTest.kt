@@ -8,16 +8,14 @@ import no.nav.security.mock.oauth2.http.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.dokument.pdf.HtmlGenerator
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
-import no.nav.tilleggsstonader.soknad.soknad.Søknad
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
+import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.util.FileUtil
-import no.nav.tilleggsstonader.soknad.util.FileUtil.skrivTilFil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.io.File
 import java.time.LocalDateTime
 
 class PdfServiceTest {
@@ -50,7 +48,7 @@ class PdfServiceTest {
 
     private fun assertGenerertHtml(filnavn: String) {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
-        // skrivTilFil(filnavn, htmlSlot.captured)
+        // FileUtil.skrivTilFil(filnavn, htmlSlot.captured)
         assertThat(htmlSlot.captured).isEqualTo(FileUtil.readFile(filnavn))
     }
 

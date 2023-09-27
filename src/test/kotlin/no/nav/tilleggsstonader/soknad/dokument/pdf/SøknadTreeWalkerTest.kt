@@ -8,8 +8,6 @@ import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
-import no.nav.tilleggsstonader.soknad.util.FileUtil.skrivTilFil
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -23,7 +21,7 @@ class SøknadTreeWalkerTest {
             val result = SøknadTreeWalker.mapSøknad(
                 BarnetilsynMapper().map(SøknadBarnetilsynUtil.søknad),
                 emptyList(),
-                Språkkode.NB
+                Språkkode.NB,
             )
             println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result))
         }
@@ -37,13 +35,13 @@ class SøknadTreeWalkerTest {
         val result = SøknadTreeWalker.mapSøknad(BarnetilsynMapper().map(søknad), emptyList(), Språkkode.NB)
         assertExpected(
             "søknad/barnetilsyn_verdiliste_nullverdier.json",
-            objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result)
+            objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result),
         )
     }
 
     private fun assertExpected(filnavn: String, actual: String) {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
-        // skrivTilFil(filnavn, actual)
+        // FileUtil.skrivTilFil(filnavn, actual)
         assertThat(actual).isEqualTo(FileUtil.readFile(filnavn))
     }
 }

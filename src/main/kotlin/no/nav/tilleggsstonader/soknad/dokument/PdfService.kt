@@ -6,8 +6,8 @@ import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.dokument.pdf.HtmlGenerator
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
-import no.nav.tilleggsstonader.soknad.soknad.Søknad
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
+import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import org.springframework.stereotype.Service
 import java.util.UUID
 

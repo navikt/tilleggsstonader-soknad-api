@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.soknad.infrastruktur.database.SporbarUtils
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.InsertUpdateRepository
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.RepositoryInterface
 import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.stereotype.Repository
@@ -29,6 +30,9 @@ data class Søknad(
     val søknadPdf: ByteArray? = null,
 
     val journalpostId: String? = null,
+
+    @Version
+    val version: Int = 0, // TODO lag test
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

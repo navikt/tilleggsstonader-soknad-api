@@ -19,11 +19,11 @@ import kotlin.reflect.full.primaryConstructor
 sealed class HtmlVerdi
 data class Verdiliste(
     val label: String,
-    val verdiliste: List<HtmlVerdi>
+    val verdiliste: List<HtmlVerdi>,
 ) : HtmlVerdi()
 
 data class Verdi(
-    val verdi: String
+    val verdi: String,
 ) : HtmlVerdi()
 
 object SøknadTreeWalker {
@@ -44,7 +44,7 @@ object SøknadTreeWalker {
     private val avsnittSpråkmapper = mapOf<KClass<*>, Map<Språkkode, String>>(
         HovedytelseAvsnitt::class to mapOf(Språkkode.NB to "Hovedytelse"),
         AktivitetAvsnitt::class to mapOf(Språkkode.NB to "Aktivitet"),
-        BarnAvsnitt::class to mapOf(Språkkode.NB to "Barn")
+        BarnAvsnitt::class to mapOf(Språkkode.NB to "Barn"),
     )
 
     private fun tittelAvsnitt(kClass: Any, språk: Språkkode): String =
@@ -57,12 +57,13 @@ object SøknadTreeWalker {
     private fun finnFelter(entitet: Any, språk: Språkkode): List<Verdiliste> {
         return when (entitet) {
             is SøknadsskjemaBarnetilsyn,
-            is BarnMedBarnepass
+            is BarnMedBarnepass,
             -> finnFelter(finnParametere(entitet), språk)
 
             is HovedytelseAvsnitt,
             is AktivitetAvsnitt,
-            is BarnAvsnitt ->
+            is BarnAvsnitt,
+            ->
                 listOf(Verdiliste(tittelAvsnitt(entitet, språk), finnFelter(finnParametere(entitet), språk)))
 
             is List<Any?> -> entitet.filterNotNull().map { finnFelter(it, språk) }.flatten()
