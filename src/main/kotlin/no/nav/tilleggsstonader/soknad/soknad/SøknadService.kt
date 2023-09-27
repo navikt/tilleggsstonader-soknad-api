@@ -45,5 +45,6 @@ class SøknadService(
                 søknadJson = JsonWrapper(ObjectMapperProvider.objectMapper.writeValueAsString(søknadsskjema)),
             ),
         )
+        // TODO lagre vedlegg
     }
 }
