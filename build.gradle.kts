@@ -5,6 +5,7 @@ val familieProsesseringVersion = "2.20230926054831_994885a"
 val tokenSupportVersion = "3.1.5"
 val wiremockVersion = "2.35.0"
 val testcontainerVersion = "1.19.0"
+val kotlinx_html_version = "0.8.0"
 
 group = "no.nav.tilleggsstonader.soknad"
 version = "1.0.0"
@@ -54,6 +55,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    // generering av html
+    implementation(kotlin("stdlib-js"))
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:${kotlinx_html_version}")
+    //implementation("org.jetbrains.kotlinx:kotlinx-html-js:${kotlinx_html_version}")
+    implementation("org.jetbrains.kotlinx:kotlinx-html:${kotlinx_html_version}")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.postgresql:postgresql")

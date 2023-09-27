@@ -1,0 +1,1 @@
+ALTER TABLE soknad ADD COLUMN soknad_pdf bytea;
