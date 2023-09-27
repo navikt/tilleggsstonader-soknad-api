@@ -1,6 +1,5 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
-import no.nav.familie.prosessering.domene.Task
 import no.nav.familie.prosessering.internal.TaskService
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
@@ -20,11 +19,15 @@ import java.util.UUID
 class SøknadService(
     private val søknadRepository: SøknadRepository,
     private val barnetilsynMapper: BarnetilsynMapper,
-    private val taskService: TaskService
+    private val taskService: TaskService,
 ) {
 
     fun hentSøknad(id: UUID): Søknad {
         return søknadRepository.findByIdOrThrow(id)
+    }
+
+    fun oppdaterSøknad(søknad: Søknad) {
+        søknadRepository.update(søknad)
     }
 
     @Transactional
@@ -40,7 +43,7 @@ class SøknadService(
             mottattTidspunkt = mottattTidspunkt,
             søknad = barnetilsynMapper.map(søknad),
         )
-        taskService.save(Task())
+        // taskService.save(Task()) TODO LagPdfTask
     }
 
     private fun <T> lagreSøknad(
