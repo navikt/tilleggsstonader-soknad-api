@@ -49,9 +49,14 @@ prosessering:
   delete.after.weeks: 16
 
 no.nav.security.jwt:
-  issuer.tokenx:
-    discovery-url: ${TOKEN_X_WELL_KNOWN_URL}
-    accepted-audience: ${TOKEN_X_CLIENT_ID}
+  issuer:
+    tokenx:
+      discovery-url: ${TOKEN_X_WELL_KNOWN_URL}
+      accepted-audience: ${TOKEN_X_CLIENT_ID}
+    azuread:
+      discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
+      accepted_audience: ${AZURE_APP_CLIENT_ID}
+      cookie_name: azure_token
   client.registration:
     familie-dokument-client_credentials:
       resource-url: ${clients.familie-dokument.uri}

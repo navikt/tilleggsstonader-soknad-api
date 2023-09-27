@@ -7,6 +7,8 @@ import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
+import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -55,5 +57,6 @@ class SøknadService(
                 søknadJson = JsonWrapper(ObjectMapperProvider.objectMapper.writeValueAsString(søknadsskjema)),
             ),
         )
+        // TODO lagre vedlegg
     }
 }
