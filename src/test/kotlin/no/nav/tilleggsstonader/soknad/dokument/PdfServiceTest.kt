@@ -13,6 +13,7 @@ import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
+import no.nav.tilleggsstonader.soknad.util.FileUtil.skrivTilFil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -51,15 +52,6 @@ class PdfServiceTest {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
         // skrivTilFil(filnavn, htmlSlot.captured)
         assertThat(htmlSlot.captured).isEqualTo(FileUtil.readFile(filnavn))
-    }
-
-    @Suppress("unused")
-    private fun skrivTilFil(navn: String, data: String) {
-        val file = File("src/test/resources/$navn")
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-        file.writeText(data)
     }
 
     private fun lagSøknad(stønadstype: Stønadstype, data: Any) = Søknad(

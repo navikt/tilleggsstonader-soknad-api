@@ -1,10 +1,14 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
+import kotlinx.html.FlowContent
 import kotlinx.html.body
 import kotlinx.html.div
 import kotlinx.html.dom.createHTMLDocument
 import kotlinx.html.dom.serialize
 import kotlinx.html.h1
+import kotlinx.html.h2
+import kotlinx.html.h3
+import kotlinx.html.h4
 import kotlinx.html.head
 import kotlinx.html.html
 import kotlinx.html.meta
@@ -26,7 +30,7 @@ class HtmlGenerator(
 
     val DATE_FORMAT_NORSK = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-    fun generateHtml(stønadstype: Stønadstype, felter: Map<String, *>): String {
+    fun generateHtml(stønadstype: Stønadstype, felter: Verdiliste): String {
         return createHTMLDocument().html {
             head {
                 meta {
@@ -34,6 +38,7 @@ class HtmlGenerator(
                     content = "text/html; charset=utf-8"
                 }
                 style { unsafe { raw(css) } }
+                style { unsafe { raw(søknadCss) } }
                 title { +stønadstype.name }
             }
             body {
@@ -45,11 +50,118 @@ class HtmlGenerator(
                     div("stonad-tittel") {
                         h1 { +stønadstype.name }
                     }
+                    mapFelter(felter)
                 }
             }
         }.serialize(prettyPrint = prettyPrint)
     }
+
+    private fun FlowContent.header(verdiliste: Verdiliste, nivå: Int, className: String) {
+        return when (nivå) {
+            1 -> h1(className) { +verdiliste.label }
+            2 -> h2(className) { +verdiliste.label }
+            3 -> h3(className) { +verdiliste.label }
+            else -> h4(className) { +verdiliste.label }
+        }
+    }
+
+    private fun FlowContent.mapFelter(verdier: HtmlVerdi, nivå: Int = 1) {
+        val nivåClassName = "level-$nivå"
+        return when (verdier) {
+            is Verdi -> +verdier.verdi
+            is Verdiliste -> div {
+                header(verdier, nivå, nivåClassName)
+                div(nivåClassName) {
+                    verdier.verdiliste.map { this.mapFelter(it, minOf(nivå + 1, 4)) }
+                }
+            }
+        }
+    }
 }
+
+private val css = """
+   body {
+      font-family: Source Sans Pro, sans-serif;
+      font-size: 12pt;
+      line-height: 1.4em;
+      margin: 0;
+      box-sizing: border-box;
+  }
+
+  .ikon-og-dato{
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      margin:0;
+      padding:0;
+  }
+
+  .nav-ikon {
+      width: 100px;
+      height: 65px;
+      position: relative;
+      right: 0px;
+      margin: 0;
+      padding: 0;
+  }
+
+  .header{
+    margin-bottom: 20px;
+  }
+  
+  @page {
+    @bottom-right {
+      content: 'Side ' counter(page) ' av ' counter(pages);  
+    }
+  }
+""".trimIndent()
+
+private val søknadCss = """
+  .body {
+    white-space: pre-line
+  }
+  
+  .stonad-tittel{
+    line-height: 40px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    width: 85%
+  }
+  h1, h2, h3, h4 {
+    margin-bottom: 0px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    margin-top: 30px
+  }
+  h2 {
+    font-size: 18px;
+    margin-top: 18px;
+  }
+  h3 {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  h4 {
+    font-size: 16px;
+    margin-top: 0px;
+  }
+  .level-2 {
+    margin-left: 20px
+  }
+  .level-3 {
+    margin-left: 40px
+  }
+  .level-4, .level-5 {
+    margin-left: 50px
+  }
+  
+  .alternativer {
+    font-style: italic;
+    font-size: 75%;
+  }
+""".trimIndent()
 
 private val navIkone = """
     <svg
@@ -97,66 +209,4 @@ private val navIkone = """
         fill="#fff"
       />
     </svg>
-""".trimIndent()
-
-private val css = """
-   body {
-      font-family: Source Sans Pro, sans-serif;
-      font-size: 12pt;
-      line-height: 1.4em;
-      margin: 0;
-      box-sizing: border-box;
-  }
-
-  .ikon-og-dato{
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      margin:0;
-      padding:0;
-  }
-
-  .nav-ikon {
-      width: 100px;
-      height: 65px;
-      position: relative;
-      right: 0px;
-      margin: 0;
-      padding: 0;
-  }
-
-  .inline{
-    display: inline-block;
-  }
-
-  .header{
-    margin-bottom: 20px;
-  }
-
-  .tittel-og-personinfo{
-    margin-top: 200px;
-  }
-  
-  .lenke {
-    white-space: nowrap;
-  }
-
-  ul {
-    margin: 0;
-  }
-  
-  .block{
-    white-space: pre-wrap;
-  }
-  
-  @page {
-    @bottom-right {
-      content: 'Side ' counter(page) ' av ' counter(pages);  
-    }
-  }
-  
-  .høyrestill {
-    float: right;
-    white-space: normal;
-  }
 """.trimIndent()

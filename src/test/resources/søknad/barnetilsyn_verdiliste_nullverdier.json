@@ -1,0 +1,46 @@
+{
+  "label" : "Søknad om barnetilsyn <brevkode>",
+  "verdiliste" : [ {
+    "label" : "Hovedytelse",
+    "verdiliste" : [ {
+      "label" : "Hovedutelse?",
+      "verdiliste" : [ {
+        "verdi" : "AAP"
+      } ]
+    } ]
+  }, {
+    "label" : "Aktivitet",
+    "verdiliste" : [ {
+      "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
+      "verdiliste" : [ {
+        "verdi" : "Ja"
+      } ]
+    } ]
+  }, {
+    "label" : "Barn",
+    "verdiliste" : [ {
+      "label" : "Navn",
+      "verdiliste" : [ {
+        "verdi" : "Navn"
+      } ]
+    }, {
+      "label" : "Fødselsnummer",
+      "verdiliste" : [ {
+        "verdi" : "ident"
+      } ]
+    }, {
+      "label" : "label",
+      "verdiliste" : [ {
+        "verdi" : "svar"
+      } ]
+    } ]
+  }, {
+    "label" : "Vedlegg",
+    "verdiliste" : [ {
+      "label" : "Vedlegg",
+      "verdiliste" : [ {
+        "verdi" : ""
+      } ]
+    } ]
+  } ]
+}

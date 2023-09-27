@@ -33,3 +33,24 @@ data class BarnMedBarnepass(
         }
     }
 }
+
+/*
+return verdier.map((verdiliste, index) => {
+      const nivåClassName = `level-${nivå}`;
+      return (
+        <div key={index}>
+          <HeaderSøknad nivå={nivå} className={nivåClassName}>
+            {verdiliste.label}
+          </HeaderSøknad>
+          {verdiliste.verdiliste && lagVerdiliste(verdiliste.verdiliste, nivå + 1)}
+          {verdiliste.alternativer && (
+            <div className={`alternativer ${nivåClassName}`}>{verdiliste.alternativer}</div>
+          )}
+          {verdiliste.verdi && (
+            <div className={nivåClassName}>{verdiliste.verdi.replace(/(\n\n)/gm, '\n')}</div>
+          )}
+        </div>
+      );
+    });
+
+ */

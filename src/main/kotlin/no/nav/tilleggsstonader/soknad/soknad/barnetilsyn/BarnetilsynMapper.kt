@@ -1,7 +1,9 @@
 package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.Aktivitet
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.SøknadsskjemaBarnetilsyn
 import org.springframework.stereotype.Service
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass as BarnMedBarnepassKontrakt
@@ -11,9 +13,9 @@ class BarnetilsynMapper {
 
     fun map(dto: SøknadBarnetilsynDto): SøknadsskjemaBarnetilsyn {
         return SøknadsskjemaBarnetilsyn(
-            hovedytelse = dto.hovedytelse,
+            hovedytelse = HovedytelseAvsnitt(dto.hovedytelse),
             aktivitet = mapAktivitet(dto),
-            barn = mapBarn(dto),
+            barn = BarnAvsnitt(mapBarn(dto)),
         )
     }
 
@@ -28,7 +30,7 @@ class BarnetilsynMapper {
             )
         }
 
-    private fun mapAktivitet(dto: SøknadBarnetilsynDto) = Aktivitet(
+    private fun mapAktivitet(dto: SøknadBarnetilsynDto) = AktivitetAvsnitt(
         utdanning = dto.aktivitet.utdanning,
     )
 }

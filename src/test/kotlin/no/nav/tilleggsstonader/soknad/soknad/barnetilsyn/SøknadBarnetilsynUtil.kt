@@ -23,6 +23,12 @@ object SøknadBarnetilsynUtil {
                 startetIFemte = EnumFelt("Har startet i 5. klasse?", JaNei.JA, "Ja"),
                 årsak = EnumFelt("Årsak?", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "Mye borte"),
             ),
+            BarnMedBarnepass(
+                ident = "barn2",
+                type = EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst"),
+                startetIFemte = EnumFelt("Har startet i 5. klasse?", JaNei.JA, "Ja"),
+                årsak = EnumFelt("Årsak?", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "Mye borte"),
+            ),
         ),
     )
 }

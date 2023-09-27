@@ -1,9 +1,12 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
+import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.Aktivitet
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
 import kotlin.reflect.KClass
@@ -13,27 +16,58 @@ import kotlin.reflect.KVisibility
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
 
+sealed class HtmlVerdi
+data class Verdiliste(
+    val label: String,
+    val verdiliste: List<HtmlVerdi>
+) : HtmlVerdi()
+
+data class Verdi(
+    val verdi: String
+) : HtmlVerdi()
+
 object SøknadTreeWalker {
 
     fun mapSøknad(
         søknad: SøknadsskjemaBarnetilsyn,
         vedleggTitler: List<String>,
-    ): Map<String, Any> {
-        val finnFelter = finnFelter(søknad)
+        språk: Språkkode,
+    ): Verdiliste {
+        val finnFelter = finnFelter(søknad, språk)
         val vedlegg = feltlisteMap("Vedlegg", listOf(Feltformaterer.mapVedlegg(vedleggTitler)))
         return feltlisteMap("Søknad om barnetilsyn <brevkode>", finnFelter + vedlegg)
     }
 
-    private fun finnFelter(entitet: Any): List<Map<String, *>> {
+    /**
+     * Avsnitt i skjemat har ikke labels, de definieres her
+     */
+    private val avsnittSpråkmapper = mapOf<KClass<*>, Map<Språkkode, String>>(
+        HovedytelseAvsnitt::class to mapOf(Språkkode.NB to "Hovedytelse"),
+        AktivitetAvsnitt::class to mapOf(Språkkode.NB to "Aktivitet"),
+        BarnAvsnitt::class to mapOf(Språkkode.NB to "Barn")
+    )
+
+    private fun tittelAvsnitt(kClass: Any, språk: Språkkode): String =
+        avsnittSpråkmapper[kClass::class]?.get(språk)
+            ?: error("Finner ikke språkmapping for ${kClass::class.java.simpleName}-$språk")
+
+    /**
+     * For å ha litt mer kontroll så må alle typer definieres
+     */
+    private fun finnFelter(entitet: Any, språk: Språkkode): List<Verdiliste> {
         return when (entitet) {
             is SøknadsskjemaBarnetilsyn,
-            is Aktivitet,
-            is BarnMedBarnepass,
-            -> finnFelter(finnParametere(entitet))
+            is BarnMedBarnepass
+            -> finnFelter(finnParametere(entitet), språk)
 
-            is List<Any?> -> entitet.filterNotNull().map { finnFelter(it) }.flatten()
-            is TekstFelt -> listOf(feltlisteMap(entitet.label, listOf(mapVerdi(entitet.verdi))))
-            is EnumFelt<*> -> listOf(feltlisteMap(entitet.label, listOf(mapVerdi(entitet.svarTekst))))
+            is HovedytelseAvsnitt,
+            is AktivitetAvsnitt,
+            is BarnAvsnitt ->
+                listOf(Verdiliste(tittelAvsnitt(entitet, språk), finnFelter(finnParametere(entitet), språk)))
+
+            is List<Any?> -> entitet.filterNotNull().map { finnFelter(it, språk) }.flatten()
+            is TekstFelt -> listOf(feltlisteMap(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
+            is EnumFelt<*> -> listOf(feltlisteMap(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst)))))
             else -> error("Kan ikke mappe entitet=$entitet")
         }
     }
@@ -67,8 +101,7 @@ object SøknadTreeWalker {
             .toList()
     }
 
-    private fun feltlisteMap(label: String, verdi: String) = mapOf("label" to label, "verdiliste" to listOf(verdi))
-    private fun feltlisteMap(label: String, verdi: List<*>) = mapOf("label" to label, "verdiliste" to verdi)
+    private fun feltlisteMap(label: String, verdi: List<HtmlVerdi>) = Verdiliste(label, verdi)
 
     /**
      * Henter ut verdien for felt på entitet.
