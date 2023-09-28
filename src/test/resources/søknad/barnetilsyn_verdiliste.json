@@ -26,12 +26,47 @@
     }, {
       "label" : "Fødselsnummer",
       "verdier" : [ {
-        "verdi" : "ident"
+        "verdi" : "barn1"
       } ]
     }, {
-      "label" : "label",
+      "label" : "Type barnepass",
       "verdier" : [ {
-        "verdi" : "svar"
+        "verdi" : "Svartekst"
+      } ]
+    }, {
+      "label" : "Har startet i 5. klasse?",
+      "verdier" : [ {
+        "verdi" : "Ja"
+      } ]
+    }, {
+      "label" : "Årsak?",
+      "verdier" : [ {
+        "verdi" : "Mye borte"
+      } ]
+    }, { }, {
+      "label" : "Navn",
+      "verdier" : [ {
+        "verdi" : "Navn"
+      } ]
+    }, {
+      "label" : "Fødselsnummer",
+      "verdier" : [ {
+        "verdi" : "barn2"
+      } ]
+    }, {
+      "label" : "Type barnepass",
+      "verdier" : [ {
+        "verdi" : "Svartekst"
+      } ]
+    }, {
+      "label" : "Har startet i 5. klasse?",
+      "verdier" : [ {
+        "verdi" : "Ja"
+      } ]
+    }, {
+      "label" : "Årsak?",
+      "verdier" : [ {
+        "verdi" : "Mye borte"
       } ]
     } ]
   }, {

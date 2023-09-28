@@ -9,9 +9,9 @@ import java.util.Locale
 
 object Feltformaterer {
 
-    fun mapVedlegg(vedleggTitler: List<String>): Verdiliste {
+    fun mapVedlegg(vedleggTitler: List<String>): Avsnitt {
         val verdi = vedleggTitler.joinToString("\n\n")
-        return Verdiliste("Vedlegg", listOf(Verdi(verdi)))
+        return Avsnitt("Vedlegg", listOf(Verdi(verdi)))
     }
 
     fun mapVerdi(verdi: Any?): String {

@@ -10,6 +10,7 @@ import kotlinx.html.h2
 import kotlinx.html.h3
 import kotlinx.html.h4
 import kotlinx.html.head
+import kotlinx.html.hr
 import kotlinx.html.html
 import kotlinx.html.meta
 import kotlinx.html.p
@@ -20,6 +21,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Service
@@ -30,7 +32,7 @@ class HtmlGenerator(
 
     val DATE_FORMAT_NORSK = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-    fun generateHtml(stønadstype: Stønadstype, felter: Verdiliste): String {
+    fun generateHtml(stønadstype: Stønadstype, felter: Avsnitt, mottattTidspunkt: LocalDateTime): String {
         return createHTMLDocument().html {
             head {
                 meta {
@@ -45,7 +47,7 @@ class HtmlGenerator(
                 div("header") {
                     div("ikon-og-dato") {
                         unsafe { raw(navIkone) }
-                        p { +LocalDate.now().format(DATE_FORMAT_NORSK) }
+                        p { +mottattTidspunkt.toLocalDate().format(DATE_FORMAT_NORSK) }
                     }
                     div("stonad-tittel") {
                         h1 { +stønadstype.name }
@@ -56,12 +58,12 @@ class HtmlGenerator(
         }.serialize(prettyPrint = prettyPrint)
     }
 
-    private fun FlowContent.header(verdiliste: Verdiliste, nivå: Int, className: String) {
+    private fun FlowContent.header(avsnitt: Avsnitt, nivå: Int, className: String) {
         return when (nivå) {
-            1 -> h1(className) { +verdiliste.label }
-            2 -> h2(className) { +verdiliste.label }
-            3 -> h3(className) { +verdiliste.label }
-            else -> h4(className) { +verdiliste.label }
+            1 -> h1(className) { +avsnitt.label }
+            2 -> h2(className) { +avsnitt.label }
+            3 -> h3(className) { +avsnitt.label }
+            else -> h4(className) { +avsnitt.label }
         }
     }
 
@@ -69,12 +71,13 @@ class HtmlGenerator(
         val nivåClassName = "level-$nivå"
         return when (verdier) {
             is Verdi -> +verdier.verdi
-            is Verdiliste -> div {
+            is Avsnitt -> div {
                 header(verdier, nivå, nivåClassName)
                 div(nivåClassName) {
-                    verdier.verdiliste.map { this.mapFelter(it, minOf(nivå + 1, 4)) }
+                    verdier.verdier.map { this.mapFelter(it, minOf(nivå + 1, 4)) }
                 }
             }
+            is HorisontalLinje -> hr {  }
         }
     }
 }

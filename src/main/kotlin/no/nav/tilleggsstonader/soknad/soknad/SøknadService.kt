@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider
+import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
@@ -40,6 +41,7 @@ class SøknadService(
             personIdent = personIdent,
             mottattTidspunkt = mottattTidspunkt,
             søknad = barnetilsynMapper.map(søknad),
+            språkkode = Språkkode.NB,
         )
     }
 
@@ -48,8 +50,9 @@ class SøknadService(
         personIdent: String,
         mottattTidspunkt: LocalDateTime,
         søknad: T,
+        språkkode: Språkkode,
     ) {
-        val søknadsskjema = Søknadsskjema(personIdent, mottattTidspunkt, søknad)
+        val søknadsskjema = Søknadsskjema(personIdent, mottattTidspunkt, språkkode, søknad)
         søknadRepository.insert(
             Søknad(
                 type = type,

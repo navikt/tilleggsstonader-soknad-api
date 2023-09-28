@@ -2,6 +2,7 @@ package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
@@ -17,23 +18,24 @@ import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
 
 sealed class HtmlVerdi
-data class Verdiliste(
+data class Avsnitt(
     val label: String,
-    val verdiliste: List<HtmlVerdi>,
+    val verdier: List<HtmlVerdi>,
 ) : HtmlVerdi()
 
 data class Verdi(
     val verdi: String,
 ) : HtmlVerdi()
 
+data object HorisontalLinje : HtmlVerdi()
+
 object SøknadTreeWalker {
 
     fun mapSøknad(
-        søknad: SøknadsskjemaBarnetilsyn,
+        søknad: Søknadsskjema<*>,
         vedleggTitler: List<String>,
-        språk: Språkkode,
-    ): Verdiliste {
-        val finnFelter = finnFelter(søknad, språk)
+    ): Avsnitt {
+        val finnFelter = mapFelter(søknad.skjema, søknad.språk)
         val vedlegg = feltlisteMap("Vedlegg", listOf(Feltformaterer.mapVedlegg(vedleggTitler)))
         return feltlisteMap("Søknad om barnetilsyn <brevkode>", finnFelter + vedlegg)
     }
@@ -54,24 +56,36 @@ object SøknadTreeWalker {
     /**
      * For å ha litt mer kontroll så må alle typer definieres
      */
-    private fun finnFelter(entitet: Any, språk: Språkkode): List<Verdiliste> {
+    private fun mapFelter(entitet: Any?, språk: Språkkode): List<HtmlVerdi> {
         return when (entitet) {
             is SøknadsskjemaBarnetilsyn,
             is BarnMedBarnepass,
-            -> finnFelter(finnParametere(entitet), språk)
+            -> finnFelter(entitet, språk)
 
             is HovedytelseAvsnitt,
             is AktivitetAvsnitt,
             is BarnAvsnitt,
-            ->
-                listOf(Verdiliste(tittelAvsnitt(entitet, språk), finnFelter(finnParametere(entitet), språk)))
+            -> listOf(Avsnitt(tittelAvsnitt(entitet, språk), finnFelter(entitet, språk)))
 
-            is List<Any?> -> entitet.filterNotNull().map { finnFelter(it, språk) }.flatten()
+            is List<*> -> entitet.filterNotNull().mapIndexed { index, it ->
+                val felter = mapFelter(it, språk)
+                if (index != 0) {
+                    listOf(HorisontalLinje) + felter
+                } else {
+                    felter
+                }
+            }.flatten()
+
             is TekstFelt -> listOf(feltlisteMap(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is EnumFelt<*> -> listOf(feltlisteMap(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst)))))
             else -> error("Kan ikke mappe entitet=$entitet")
         }
     }
+
+    private fun finnFelter(
+        entitet: Any,
+        språk: Språkkode
+    ) = finnParametere(entitet).map { mapFelter(it, språk) }.flatten()
 
     private data class SpecialHåndtering<T : Any, OUT : Any>(
         val kClass: KClass<T>,
@@ -102,7 +116,7 @@ object SøknadTreeWalker {
             .toList()
     }
 
-    private fun feltlisteMap(label: String, verdi: List<HtmlVerdi>) = Verdiliste(label, verdi)
+    private fun feltlisteMap(label: String, verdi: List<HtmlVerdi>) = Avsnitt(label, verdi)
 
     /**
      * Henter ut verdien for felt på entitet.

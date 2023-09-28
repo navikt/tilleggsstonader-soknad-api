@@ -2,8 +2,9 @@ package no.nav.tilleggsstonader.soknad.dokument
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
-import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.soknad.dokument.pdf.HtmlGenerator
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
@@ -18,21 +19,22 @@ class PdfService(
     private val dokumentClient: FamilieDokumentClient,
 ) {
 
-    // todo søknad som lagres ned burde være Søknadsskjema
     fun lagPdf(søknadId: UUID) {
         val søknad = søknadService.hentSøknad(søknadId)
         val vedleggtitler = listOf<String>() // TODO
-        val feltMap = lagFeltMap(søknad, vedleggtitler, Språkkode.NB) // TODO språk
-        val html = htmlGenerator.generateHtml(søknad.type, feltMap)
+        val søknadsskjema = parseSøknadsskjema(søknad)
+        val feltMap = mapSøknad(søknadsskjema, vedleggtitler)
+        val html = htmlGenerator.generateHtml(søknad.type, feltMap, søknadsskjema.mottattTidspunkt)
         val pdf = dokumentClient.genererPdf(html)
         søknadService.oppdaterSøknad(søknad.copy(søknadPdf = pdf))
     }
 
-    private fun lagFeltMap(
+    private fun parseSøknadsskjema(
         søknad: Søknad,
-        vedleggtitler: List<String>,
-        språk: Språkkode,
-    ) = when (søknad.type) {
-        Stønadstype.BARNETILSYN -> mapSøknad(objectMapper.readValue(søknad.søknadJson.json), vedleggtitler, språk)
+    ): Søknadsskjema<*> {
+        val json = søknad.søknadJson.json
+        return when (søknad.type) {
+            Stønadstype.BARNETILSYN -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaBarnetilsyn>>(json)
+        }
     }
 }
