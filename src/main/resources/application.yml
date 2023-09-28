@@ -58,6 +58,16 @@ no.nav.security.jwt:
       accepted_audience: ${AZURE_APP_CLIENT_ID}
       cookie_name: azure_token
   client.registration:
+    integrasjoner-client_credentials:
+      resource-url: ${clients.integrasjoner.uri}
+      token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
+      grant-type: client_credentials
+      scope: ${clients.integrasjoner.scope}
+      authentication:
+        client-id: ${AZURE_APP_CLIENT_ID}
+        client-secret: ${AZURE_APP_CLIENT_SECRET}
+        client-auth-method: client_secret_basic
+
     familie-dokument-client_credentials:
       resource-url: ${clients.familie-dokument.uri}
       token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
@@ -67,6 +77,7 @@ no.nav.security.jwt:
         client-id: ${AZURE_APP_CLIENT_ID}
         client-secret: ${AZURE_APP_CLIENT_SECRET}
         client-auth-method: client_secret_basic
+
     pdl:
       resource-url: ${clients.pdl.uri}
       well-known-url: ${TOKEN_X_WELL_KNOWN_URL}

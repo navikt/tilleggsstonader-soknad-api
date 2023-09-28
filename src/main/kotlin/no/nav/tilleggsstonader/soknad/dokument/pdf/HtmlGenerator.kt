@@ -18,6 +18,7 @@ import kotlinx.html.style
 import kotlinx.html.title
 import kotlinx.html.unsafe
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.soknad.util.DatoFormat.DATE_FORMAT_NORSK
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -28,8 +29,6 @@ class HtmlGenerator(
     @Value("\${pdf.html.prettyPrint:false}")
     private val prettyPrint: Boolean,
 ) {
-
-    val DATE_FORMAT_NORSK = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     fun generateHtml(stønadstype: Stønadstype, felter: Avsnitt, mottattTidspunkt: LocalDateTime): String {
         return createHTMLDocument().html {
@@ -65,7 +64,7 @@ class HtmlGenerator(
         }
     }
 
-    private fun FlowContent.mapFelter(verdier: HtmlVerdi, nivå: Int = 1) {
+    private fun FlowContent.mapFelter(verdier: HtmlFelt, nivå: Int = 1) {
         val nivåClassName = "level-$nivå"
         return when (verdier) {
             is Verdi -> +verdier.verdi

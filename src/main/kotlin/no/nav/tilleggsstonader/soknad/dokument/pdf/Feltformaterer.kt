@@ -1,9 +1,9 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
+import no.nav.tilleggsstonader.soknad.util.DatoFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
-import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -37,17 +37,8 @@ object Feltformaterer {
     private fun tilUtskriftsformat(verdi: Double) = String.format("%.2f", verdi).replace(".", ",")
     private fun tilUtskriftsformat(verdi: Month) = verdi.getDisplayName(TextStyle.FULL, Locale("no"))
     private fun tilUtskriftsformat(verdi: LocalDateTime) =
-        verdi.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))
+        verdi.format(DatoFormat.DATE_TIME_FORMAT_NORSK)
 
-    private fun tilUtskriftsformat(verdi: LocalDate): String {
-        return verdi.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-    }
-
-    fun feltMap(label: String, verdi: String, alternativer: List<String>? = null): Map<String, String> {
-        return if (alternativer != null) {
-            mapOf("label" to label, "verdi" to verdi, "alternativer" to alternativer.joinToString(" / "))
-        } else {
-            mapOf("label" to label, "verdi" to verdi)
-        }
-    }
+    private fun tilUtskriftsformat(verdi: LocalDate): String =
+        verdi.format(DatoFormat.DATE_FORMAT_NORSK)
 }
