@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
+import no.nav.familie.prosessering.internal.TaskService
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
@@ -19,6 +20,7 @@ import java.util.UUID
 class SøknadService(
     private val søknadRepository: SøknadRepository,
     private val barnetilsynMapper: BarnetilsynMapper,
+    private val taskService: TaskService,
 ) {
 
     fun hentSøknad(id: UUID): Søknad {
@@ -43,6 +45,7 @@ class SøknadService(
             søknad = barnetilsynMapper.map(søknad),
             språkkode = Språkkode.NB,
         )
+        // taskService.save(Task()) TODO LagPdfTask
     }
 
     private fun <T> lagreSøknad(

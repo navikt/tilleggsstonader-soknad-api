@@ -80,6 +80,9 @@ no.nav.security.jwt:
 
 CLIENT_ENV: prod
 clients:
+  integrasjoner:
+    uri: http://tilleggsstonader-integrasjoner
+    scope: api://${CLIENT_ENV}-gcp.tilleggsstonader.tilleggsstonader-integrasjoner/.default
   familie-dokument:
     uri: http://familie-dokument.teamfamilie
     scope: api://${CLIENT_ENV}-gcp.teamfamilie.familie-dokument/.default
