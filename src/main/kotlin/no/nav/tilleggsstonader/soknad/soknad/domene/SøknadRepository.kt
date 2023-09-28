@@ -32,7 +32,7 @@ data class Søknad(
     val journalpostId: String? = null,
 
     @Version
-    val version: Int = 0, // TODO lag test
+    val version: Int = 0,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -45,8 +45,12 @@ data class Søknad(
         if (type != other.type) return false
         if (personIdent != other.personIdent) return false
         if (søknadJson != other.søknadJson) return false
-        if (!søknadPdf.contentEquals(other.søknadPdf)) return false
-        return journalpostId == other.journalpostId
+        if (søknadPdf != null) {
+            if (other.søknadPdf == null) return false
+            if (!søknadPdf.contentEquals(other.søknadPdf)) return false
+        } else if (other.søknadPdf != null) return false
+        if (journalpostId != other.journalpostId) return false
+        return version == other.version
     }
 
     override fun hashCode(): Int {
@@ -55,8 +59,9 @@ data class Søknad(
         result = 31 * result + type.hashCode()
         result = 31 * result + personIdent.hashCode()
         result = 31 * result + søknadJson.hashCode()
-        result = 31 * result + søknadPdf.contentHashCode()
+        result = 31 * result + (søknadPdf?.contentHashCode() ?: 0)
         result = 31 * result + (journalpostId?.hashCode() ?: 0)
+        result = 31 * result + version
         return result
     }
 }
