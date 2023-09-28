@@ -20,7 +20,7 @@ class SøknadTreeWalkerTest {
         fun `skal mappe barnetilsyn`() {
             val result = SøknadTreeWalker.mapSøknad(
                 lagSøknadsskjema(BarnetilsynMapper().map(SøknadBarnetilsynUtil.søknad)),
-                emptyList()
+                emptyList(),
             )
             assertExpected(
                 "søknad/barnetilsyn_verdiliste.json",
@@ -36,7 +36,7 @@ class SøknadTreeWalkerTest {
                 ident = "ident",
                 type = EnumFelt("label", TypeBarnepass.BARNEHAGE_SFO_AKS, "svar"),
                 startetIFemte = null,
-                årsak = null
+                årsak = null,
             )
         val søknad = SøknadBarnetilsynUtil.søknad.copy(barn = listOf(barnMedBarnepass))
         val søknadsskjema = lagSøknadsskjema(BarnetilsynMapper().map(søknad))
@@ -49,7 +49,7 @@ class SøknadTreeWalkerTest {
 
     private fun assertExpected(filnavn: String, actual: String) {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
-        FileUtil.skrivTilFil(filnavn, actual)
+        // FileUtil.skrivTilFil(filnavn, actual)
         assertThat(actual).isEqualTo(FileUtil.readFile(filnavn))
     }
 }

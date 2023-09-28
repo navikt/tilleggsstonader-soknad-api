@@ -87,4 +87,3 @@ private val navIkone = readFile("html/nav_svg.html")
 
 private fun readFile(filnavn: String): String =
     HtmlGenerator::class.java.classLoader.getResource(filnavn)!!.readText()
-

@@ -84,7 +84,7 @@ object SøknadTreeWalker {
 
     private fun finnFelter(
         entitet: Any,
-        språk: Språkkode
+        språk: Språkkode,
     ) = finnParametere(entitet).map { mapFelter(it, språk) }.flatten()
 
     private data class SpecialHåndtering<T : Any, OUT : Any>(

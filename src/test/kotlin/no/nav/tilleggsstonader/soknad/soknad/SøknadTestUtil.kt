@@ -36,6 +36,6 @@ object SøknadTestUtil {
         "ident",
         LocalDateTime.of(2023, 1, 1, 12, 13, 0),
         Språkkode.NB,
-        søknad
+        søknad,
     )
 }
