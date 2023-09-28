@@ -3,7 +3,7 @@ val tilleggsstønaderLibsVersion = "2023.09.14-10.25.400ea92abb53"
 val tilleggsstønaderKontrakterVersion = "2023.09.28-08.35.e6c6b8848959"
 val familieProsesseringVersion = "2.20230926054831_994885a"
 val tokenSupportVersion = "3.1.5"
-val wiremockVersion = "2.35.0"
+val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.19.0"
 
 group = "no.nav.tilleggsstonader.soknad"
