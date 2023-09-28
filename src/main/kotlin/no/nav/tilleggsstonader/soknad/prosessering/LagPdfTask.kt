@@ -11,7 +11,7 @@ import java.util.Properties
 import java.util.UUID
 
 @Service
-@TaskStepBeskrivelse(taskStepType = ArkiverSøknadTask.TYPE, beskrivelse = "Arkiver søknad")
+@TaskStepBeskrivelse(taskStepType = LagPdfTask.TYPE, beskrivelse = "Lag pdf av søknaden, for etterlevelse")
 class LagPdfTask(
     private val pdfService: PdfService,
     private val taskService: TaskService,
