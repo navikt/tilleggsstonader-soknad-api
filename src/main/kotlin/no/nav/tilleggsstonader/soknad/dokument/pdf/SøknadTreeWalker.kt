@@ -75,7 +75,7 @@ object SøknadTreeWalker {
      */
     private fun mapListe(
         entitet: List<*>,
-        språk: Språkkode
+        språk: Språkkode,
     ) = entitet.filterNotNull().mapIndexed { index, it ->
         val felter = mapFelter(it, språk)
         if (index != 0) {

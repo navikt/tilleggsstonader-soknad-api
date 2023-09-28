@@ -22,7 +22,6 @@ import no.nav.tilleggsstonader.soknad.util.DatoFormat.DATE_FORMAT_NORSK
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Service
 class HtmlGenerator(

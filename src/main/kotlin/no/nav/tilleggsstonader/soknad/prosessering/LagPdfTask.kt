@@ -5,7 +5,6 @@ import no.nav.familie.prosessering.TaskStepBeskrivelse
 import no.nav.familie.prosessering.domene.Task
 import no.nav.familie.prosessering.internal.TaskService
 import no.nav.tilleggsstonader.soknad.dokument.PdfService
-import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import org.springframework.stereotype.Service
 import java.util.Properties
@@ -16,7 +15,7 @@ import java.util.UUID
 class LagPdfTask(
     private val pdfService: PdfService,
     private val taskService: TaskService,
-): AsyncTaskStep {
+) : AsyncTaskStep {
 
     override fun doTask(task: Task) {
         val søknadId = UUID.fromString(task.payload)
