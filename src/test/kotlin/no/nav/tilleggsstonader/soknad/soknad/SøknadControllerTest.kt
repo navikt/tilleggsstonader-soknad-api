@@ -55,6 +55,7 @@ class SøknadControllerTest : IntegrationTest() {
         assertThat(dbSøknad.personIdent).isEqualTo(tokenSubject)
         assertThat(dbSøknad.type).isEqualTo(stønadstype)
         try {
+            // FileUtil.skrivJsonTilFil(filnavn, søknadFraDb)
             assertThat(søknadFraDb).isEqualTo(objectMapper.readValue<Map<String, Any>>(FileUtil.readFile(filnavn)))
         } catch (e: Throwable) {
             LoggerFactory.getLogger("testlogger")
