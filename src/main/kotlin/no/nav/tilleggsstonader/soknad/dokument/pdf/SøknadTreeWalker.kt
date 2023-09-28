@@ -37,7 +37,7 @@ object SøknadTreeWalker {
     ): Avsnitt {
         val finnFelter = mapFelter(søknad.skjema, søknad.språk)
         val vedlegg = feltlisteMap("Vedlegg", listOf(Feltformaterer.mapVedlegg(vedleggTitler)))
-        return feltlisteMap("Søknad om barnetilsyn <brevkode>", finnFelter + vedlegg)
+        return feltlisteMap("Søknad om barnetilsyn <brevkode>", finnFelter + vedlegg) // todo label for søknadsskjema
     }
 
     /**
