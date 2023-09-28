@@ -1,11 +1,11 @@
 val javaVersion = JavaLanguageVersion.of(17)
 val tilleggsstønaderLibsVersion = "2023.09.14-10.25.400ea92abb53"
-val tilleggsstønaderKontrakterVersion = "2023.09.26-09.37.899354321766"
+val tilleggsstønaderKontrakterVersion = "2023.09.28-08.35.e6c6b8848959"
 val familieProsesseringVersion = "2.20230926054831_994885a"
 val tokenSupportVersion = "3.1.5"
 val wiremockVersion = "2.35.0"
 val testcontainerVersion = "1.19.0"
-val kotlinx_html_version = "0.8.0"
+val kotlinxHtmlVersion = "0.8.0"
 
 group = "no.nav.tilleggsstonader.soknad"
 version = "1.0.0"
@@ -58,9 +58,8 @@ dependencies {
 
     // generering av html
     implementation(kotlin("stdlib-js"))
-    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:${kotlinx_html_version}")
-    //implementation("org.jetbrains.kotlinx:kotlinx-html-js:${kotlinx_html_version}")
-    implementation("org.jetbrains.kotlinx:kotlinx-html:${kotlinx_html_version}")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:${kotlinxHtmlVersion}")
+    implementation("org.jetbrains.kotlinx:kotlinx-html:${kotlinxHtmlVersion}")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.postgresql:postgresql")
