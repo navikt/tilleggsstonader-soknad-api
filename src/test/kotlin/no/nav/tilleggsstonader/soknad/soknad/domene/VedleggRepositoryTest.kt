@@ -1,13 +1,10 @@
-package no.nav.tilleggsstonader.soknad.soknad
+package no.nav.tilleggsstonader.soknad.soknad.domene
 
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
-import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
-import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
-import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
+import no.nav.tilleggsstonader.soknad.soknad.Vedleggstype
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
