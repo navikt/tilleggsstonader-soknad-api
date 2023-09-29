@@ -7,14 +7,16 @@
       "hovedytelse" : {
         "label" : "Hovedutelse?",
         "verdi" : "AAP",
-        "svarTekst" : "AAP"
+        "svarTekst" : "AAP",
+        "alternativer" : [ "Alt1", "Alt2" ]
       }
     },
     "aktivitet" : {
       "utdanning" : {
         "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
         "verdi" : "JA",
-        "svarTekst" : "Ja"
+        "svarTekst" : "Ja",
+        "alternativer" : [ "Alt1", "Alt2" ]
       }
     },
     "barn" : {
@@ -30,17 +32,20 @@
         "type" : {
           "label" : "Type barnepass",
           "verdi" : "BARNEHAGE_SFO_AKS",
-          "svarTekst" : "Svartekst"
+          "svarTekst" : "Svartekst",
+          "alternativer" : [ "Alt1", "Alt2" ]
         },
         "startetIFemte" : {
           "label" : "Har startet i 5. klasse?",
           "verdi" : "JA",
-          "svarTekst" : "Ja"
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
         },
         "årsak" : {
           "label" : "Årsak?",
           "verdi" : "MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID",
-          "svarTekst" : "Mye borte"
+          "svarTekst" : "Mye borte",
+          "alternativer" : [ ]
         }
       }, {
         "navn" : {
@@ -54,17 +59,20 @@
         "type" : {
           "label" : "Type barnepass",
           "verdi" : "BARNEHAGE_SFO_AKS",
-          "svarTekst" : "Svartekst"
+          "svarTekst" : "Svartekst",
+          "alternativer" : [ ]
         },
         "startetIFemte" : {
           "label" : "Har startet i 5. klasse?",
           "verdi" : "JA",
-          "svarTekst" : "Ja"
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
         },
         "årsak" : {
           "label" : "Årsak?",
           "verdi" : "MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID",
-          "svarTekst" : "Mye borte"
+          "svarTekst" : "Mye borte",
+          "alternativer" : [ ]
         }
       } ]
     }

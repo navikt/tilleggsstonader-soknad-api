@@ -37,7 +37,7 @@ class HtmlGenerator(
                     content = "text/html; charset=utf-8"
                 }
                 style { unsafe { raw(søknadCss) } }
-                title { +stønadstype.name }
+                title { +stønadstype.tittel }
             }
             body {
                 div("header") {
@@ -46,7 +46,7 @@ class HtmlGenerator(
                         p { +mottattTidspunkt.toLocalDate().format(DATE_FORMAT_NORSK) }
                     }
                     div("stonad-tittel") {
-                        h1 { +stønadstype.name }
+                        h1 { +stønadstype.tittel }
                     }
                     mapFelter(felter)
                 }
@@ -66,11 +66,19 @@ class HtmlGenerator(
     private fun FlowContent.mapFelter(verdier: HtmlFelt, nivå: Int = 1) {
         val nivåClassName = "level-$nivå"
         return when (verdier) {
-            is Verdi -> +verdier.verdi
+            is Verdi -> {
+                verdier.alternativer?.let {
+                    div("alternativer") { +it.joinToString(",") }
+                }
+                +verdier.verdi
+            }
+
             is Avsnitt -> div {
                 header(verdier, nivå, nivåClassName)
                 div(nivåClassName) {
-                    verdier.verdier.map { this.mapFelter(it, minOf(nivå + 1, 4)) }
+                    verdier.verdier.map {
+                        mapFelter(it, minOf(nivå + 1, 4))
+                    }
                 }
             }
 

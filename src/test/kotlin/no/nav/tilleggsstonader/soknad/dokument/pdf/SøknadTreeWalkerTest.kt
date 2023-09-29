@@ -34,7 +34,7 @@ class SøknadTreeWalkerTest {
         val barnMedBarnepass =
             BarnMedBarnepass(
                 ident = "ident",
-                type = EnumFelt("label", TypeBarnepass.BARNEHAGE_SFO_AKS, "svar"),
+                type = EnumFelt("label", TypeBarnepass.BARNEHAGE_SFO_AKS, "svar", emptyList()),
                 startetIFemte = null,
                 årsak = null,
             )
@@ -49,7 +49,7 @@ class SøknadTreeWalkerTest {
 
     private fun assertExpected(filnavn: String, actual: String) {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
-        // FileUtil.skrivTilFil(filnavn, actual)
+        FileUtil.skrivTilFil(filnavn, actual)
         assertThat(actual).isEqualTo(FileUtil.readFile(filnavn))
     }
 }

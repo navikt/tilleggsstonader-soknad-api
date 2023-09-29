@@ -5,7 +5,8 @@
     "verdier" : [ {
       "label" : "Hovedutelse?",
       "verdier" : [ {
-        "verdi" : "AAP"
+        "verdi" : "AAP",
+        "alternativer" : [ "Alt1", "Alt2" ]
       } ]
     } ]
   }, {
@@ -13,7 +14,8 @@
     "verdier" : [ {
       "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
       "verdier" : [ {
-        "verdi" : "Ja"
+        "verdi" : "Ja",
+        "alternativer" : [ "Alt1", "Alt2" ]
       } ]
     } ]
   }, {
@@ -21,17 +23,20 @@
     "verdier" : [ {
       "label" : "Navn",
       "verdier" : [ {
-        "verdi" : "Navn"
+        "verdi" : "Navn",
+        "alternativer" : null
       } ]
     }, {
       "label" : "Fødselsnummer",
       "verdier" : [ {
-        "verdi" : "ident"
+        "verdi" : "ident",
+        "alternativer" : null
       } ]
     }, {
       "label" : "label",
       "verdier" : [ {
-        "verdi" : "svar"
+        "verdi" : "svar",
+        "alternativer" : [ ]
       } ]
     } ]
   }, {
@@ -39,7 +44,8 @@
     "verdier" : [ {
       "label" : "Vedlegg",
       "verdier" : [ {
-        "verdi" : ""
+        "verdi" : "",
+        "alternativer" : null
       } ]
     } ]
   } ]

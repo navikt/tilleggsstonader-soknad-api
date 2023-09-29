@@ -5,7 +5,8 @@
     "verdier" : [ {
       "label" : "Hovedutelse?",
       "verdier" : [ {
-        "verdi" : "AAP"
+        "verdi" : "AAP",
+        "alternativer" : [ "Alt1", "Alt2" ]
       } ]
     } ]
   }, {
@@ -13,7 +14,8 @@
     "verdier" : [ {
       "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
       "verdier" : [ {
-        "verdi" : "Ja"
+        "verdi" : "Ja",
+        "alternativer" : [ "Alt1", "Alt2" ]
       } ]
     } ]
   }, {
@@ -21,52 +23,62 @@
     "verdier" : [ {
       "label" : "Navn",
       "verdier" : [ {
-        "verdi" : "Navn"
+        "verdi" : "Navn",
+        "alternativer" : null
       } ]
     }, {
       "label" : "Fødselsnummer",
       "verdier" : [ {
-        "verdi" : "barn1"
+        "verdi" : "barn1",
+        "alternativer" : null
       } ]
     }, {
       "label" : "Type barnepass",
       "verdier" : [ {
-        "verdi" : "Svartekst"
+        "verdi" : "Svartekst",
+        "alternativer" : [ "Alt1", "Alt2" ]
       } ]
     }, {
       "label" : "Har startet i 5. klasse?",
       "verdier" : [ {
-        "verdi" : "Ja"
+        "verdi" : "Ja",
+        "alternativer" : [ ]
       } ]
     }, {
       "label" : "Årsak?",
       "verdier" : [ {
-        "verdi" : "Mye borte"
+        "verdi" : "Mye borte",
+        "alternativer" : [ ]
       } ]
     }, { }, {
       "label" : "Navn",
       "verdier" : [ {
-        "verdi" : "Navn"
+        "verdi" : "Navn",
+        "alternativer" : null
       } ]
     }, {
       "label" : "Fødselsnummer",
       "verdier" : [ {
-        "verdi" : "barn2"
+        "verdi" : "barn2",
+        "alternativer" : null
       } ]
     }, {
       "label" : "Type barnepass",
       "verdier" : [ {
-        "verdi" : "Svartekst"
+        "verdi" : "Svartekst",
+        "alternativer" : [ ]
       } ]
     }, {
       "label" : "Har startet i 5. klasse?",
       "verdier" : [ {
-        "verdi" : "Ja"
+        "verdi" : "Ja",
+        "alternativer" : [ ]
       } ]
     }, {
       "label" : "Årsak?",
       "verdier" : [ {
-        "verdi" : "Mye borte"
+        "verdi" : "Mye borte",
+        "alternativer" : [ ]
       } ]
     } ]
   }, {
@@ -74,7 +86,8 @@
     "verdier" : [ {
       "label" : "Vedlegg",
       "verdier" : [ {
-        "verdi" : ""
+        "verdi" : "",
+        "alternativer" : null
       } ]
     } ]
   } ]
