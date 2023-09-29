@@ -49,7 +49,7 @@ class SøknadTreeWalkerTest {
 
     private fun assertExpected(filnavn: String, actual: String) {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
-        FileUtil.skrivTilFil(filnavn, actual)
+        // FileUtil.skrivTilFil(filnavn, actual)
         assertThat(actual).isEqualTo(FileUtil.readFile(filnavn))
     }
 }
