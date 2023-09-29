@@ -33,7 +33,7 @@ object ArkiverDokumentRequestMapper {
             hoveddokumentvarianter = listOf(søknadsdokumentPdf, søknadsdokumentJson),
             vedleggsdokumenter = mapVedlegg(vedlegg, søknad.type),
             eksternReferanseId = søknad.id.toString(),
-            avsenderMottaker = AvsenderMottaker(id = søknad.personIdent, idType = BrukerIdType.FNR, navn = null)
+            avsenderMottaker = AvsenderMottaker(id = søknad.personIdent, idType = BrukerIdType.FNR, navn = null),
         )
     }
 
