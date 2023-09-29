@@ -33,6 +33,7 @@ internal class ArkiveringServiceTest {
         type = Stønadstype.BARNETILSYN,
         personIdent = "1",
         opprettetTid = LocalDateTime.now(),
+        søknadPdf = byteArrayOf(12)
     )
 
     val oppdaterSøknadSlot = slot<Søknad>()

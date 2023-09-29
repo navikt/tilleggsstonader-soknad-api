@@ -23,12 +23,12 @@ object ArkiverDokumentRequestMapper {
                 dokumenttype.dokumentTittel(),
                 dokumenttype,
             )
-        // val søknadsdokumentPdf =
-        //    Dokument(søknad.søknadPdf!!.bytes, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
+        val søknadsdokumentPdf =
+            Dokument(søknad.søknadPdf!!, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
         return ArkiverDokumentRequest(
             fnr = søknad.personIdent,
             forsøkFerdigstill = false,
-            hoveddokumentvarianter = listOf(søknadsdokumentJson),
+            hoveddokumentvarianter = listOf(søknadsdokumentPdf, søknadsdokumentJson),
             vedleggsdokumenter = mapVedlegg(vedlegg, søknad.type),
             eksternReferanseId = søknad.id.toString(),
         )
@@ -61,7 +61,7 @@ object ArkiverDokumentRequestMapper {
 
 fun Dokumenttype?.dokumentTittel(): String {
     return when (this) {
-        Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om overgangsstønad"
+        Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om barnetilsyn"
         else -> error("Mangler mapping av $this")
     }
 }
