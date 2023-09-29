@@ -1,9 +1,11 @@
 package no.nav.tilleggsstonader.soknad.arkivering
 
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentRequest
+import no.nav.tilleggsstonader.kontrakter.dokarkiv.AvsenderMottaker
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokument
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
+import no.nav.tilleggsstonader.kontrakter.felles.BrukerIdType
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
@@ -31,6 +33,7 @@ object ArkiverDokumentRequestMapper {
             hoveddokumentvarianter = listOf(søknadsdokumentPdf, søknadsdokumentJson),
             vedleggsdokumenter = mapVedlegg(vedlegg, søknad.type),
             eksternReferanseId = søknad.id.toString(),
+            avsenderMottaker = AvsenderMottaker(id = søknad.personIdent, idType = BrukerIdType.FNR, navn = null)
         )
     }
 
