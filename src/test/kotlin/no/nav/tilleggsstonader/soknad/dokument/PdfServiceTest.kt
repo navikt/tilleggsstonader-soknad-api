@@ -49,7 +49,7 @@ class PdfServiceTest {
 
     private fun assertGenerertHtml(filnavn: String) {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
-         FileUtil.skrivTilFil(filnavn, htmlSlot.captured)
+        FileUtil.skrivTilFil(filnavn, htmlSlot.captured)
         // kan brukes for å generere en pdf å verifisere at den ser riktig ut
         generatePdf(htmlSlot.captured, "$filnavn.pdf")
 

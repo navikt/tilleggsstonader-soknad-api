@@ -2,7 +2,6 @@ package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
@@ -34,7 +33,7 @@ data class Avsnitt(
 
 data class Verdi(
     val verdi: String,
-    val alternativer: List<String>? = null
+    val alternativer: List<String>? = null,
 ) : HtmlFelt()
 
 data object HorisontalLinje : HtmlFelt()

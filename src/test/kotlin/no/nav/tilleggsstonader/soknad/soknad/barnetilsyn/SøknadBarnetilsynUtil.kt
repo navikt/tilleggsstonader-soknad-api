@@ -14,7 +14,7 @@ object SøknadBarnetilsynUtil {
                 "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
                 JaNei.JA,
                 "Ja",
-                listOf("Alt1", "Alt2")
+                listOf("Alt1", "Alt2"),
             ),
         ),
         barn = listOf(
