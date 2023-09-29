@@ -24,7 +24,7 @@ class IntegrasjonerClient(
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    private val sendInnUri = UriComponentsBuilder.fromUri(uri).pathSegment("arkiv").toUriString()
+    private val sendInnUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "arkiv").toUriString()
 
     fun arkiver(request: ArkiverDokumentRequest): ArkiverDokumentResponse {
         try {
