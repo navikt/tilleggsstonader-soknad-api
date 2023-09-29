@@ -14,7 +14,7 @@ class SøknadBarnetilsynDtoTest {
 
     @Nested
     inner class BarnMedBarnepassTest {
-        val årsak = EnumFelt("", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "")
+        val årsak = EnumFelt("", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "", emptyList())
 
         @Test
         fun `må velge årsak dersom barnet har startet i 5 klasse`() {
@@ -51,8 +51,8 @@ class SøknadBarnetilsynDtoTest {
         ) {
             BarnMedBarnepass(
                 ident = "ident",
-                type = EnumFelt("", TypeBarnepass.BARNEHAGE_SFO_AKS, ""),
-                startetIFemte = startetIFemteklasse?.let { EnumFelt("", startetIFemteklasse, "") },
+                type = EnumFelt("", TypeBarnepass.BARNEHAGE_SFO_AKS, "", emptyList()),
+                startetIFemte = startetIFemteklasse?.let { EnumFelt("", startetIFemteklasse, "", emptyList()) },
                 årsak = årsak,
             )
         }

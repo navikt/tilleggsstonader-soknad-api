@@ -52,6 +52,8 @@ spec:
       rules:
         - application: tilleggsstonader-soknad
         - application: tilleggsstonader-prosessering
+        - application: familie-dokument
+          namespace: teamfamilie
     outbound:
       rules:
         - application: tilleggsstonader-integrasjoner

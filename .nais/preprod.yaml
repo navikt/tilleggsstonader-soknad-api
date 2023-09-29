@@ -54,6 +54,8 @@ spec:
     outbound:
       rules:
         - application: tilleggsstonader-integrasjoner
+        - application: familie-dokument
+          namespace: teamfamilie
       external:
         - host: pdl-api-q1.dev-fss-pub.nais.io
   tokenx:

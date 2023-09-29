@@ -5,8 +5,10 @@ import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.OptimisticLockingFailureException
 
 class SøknadRepositoryTest : IntegrationTest() {
 
@@ -17,6 +19,15 @@ class SøknadRepositoryTest : IntegrationTest() {
     fun `skal kunne lagre og hente søknad`() {
         val søknad = lagreSøknad()
         assertThat(søknadRepository.findByIdOrThrow(søknad.id)).isEqualTo(søknad)
+    }
+
+    @Test
+    fun `skal ikke kunne lagre en søknad med samme versjon 2 ganger`() {
+        val søknad = lagreSøknad()
+        søknadRepository.update(søknad)
+        assertThatThrownBy {
+            søknadRepository.update(søknad)
+        }.isInstanceOf(OptimisticLockingFailureException::class.java)
     }
 
     private fun lagreSøknad() = søknadRepository.insert(

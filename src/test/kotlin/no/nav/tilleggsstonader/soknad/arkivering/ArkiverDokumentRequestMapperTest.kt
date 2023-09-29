@@ -25,11 +25,15 @@ internal class ArkiverDokumentRequestMapperTest {
 
         assertThat(dto.fnr).isEqualTo(søknad.personIdent)
         assertThat(dto.forsøkFerdigstill).isFalse
-        assertThat(dto.hoveddokumentvarianter).hasSize(1)
+        assertThat(dto.hoveddokumentvarianter).hasSize(2)
 
-        assertThat(dto.hoveddokumentvarianter.first().dokumenttype.name).isEqualTo(Dokumenttype.BARNETILSYN_SØKNAD.name)
-        assertThat(dto.hoveddokumentvarianter.first().tittel).isEqualTo(Dokumenttype.BARNETILSYN_SØKNAD.dokumentTittel())
-        assertThat(dto.hoveddokumentvarianter.first().filtype).isEqualTo(Filtype.JSON)
+        assertThat(dto.hoveddokumentvarianter[0].dokumenttype.name).isEqualTo(Dokumenttype.BARNETILSYN_SØKNAD.name)
+        assertThat(dto.hoveddokumentvarianter[0].tittel).isEqualTo(Dokumenttype.BARNETILSYN_SØKNAD.dokumentTittel())
+        assertThat(dto.hoveddokumentvarianter[0].filtype).isEqualTo(Filtype.PDFA)
+
+        assertThat(dto.hoveddokumentvarianter[1].dokumenttype.name).isEqualTo(Dokumenttype.BARNETILSYN_SØKNAD.name)
+        assertThat(dto.hoveddokumentvarianter[1].tittel).isEqualTo(Dokumenttype.BARNETILSYN_SØKNAD.dokumentTittel())
+        assertThat(dto.hoveddokumentvarianter[1].filtype).isEqualTo(Filtype.JSON)
 
         assertThat(dto.vedleggsdokumenter.first().dokumenttype).isEqualTo(Dokumenttype.BARNETILSYN_SØKNAD_VEDLEGG)
         assertThat(dto.vedleggsdokumenter.first().filnavn).isEqualTo(vedlegg.id.toString())
@@ -39,6 +43,7 @@ internal class ArkiverDokumentRequestMapperTest {
         søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknad)),
         personIdent = "123",
         type = type,
+        søknadPdf = byteArrayOf(12),
     )
 
     private fun lagVedlegg() =
