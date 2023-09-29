@@ -1,0 +1,80 @@
+{
+  "ident" : "12345678911",
+  "mottattTidspunkt" : "2023-09-25T21:32:18.22631",
+  "språk" : "NB",
+  "skjema" : {
+    "hovedytelse" : {
+      "hovedytelse" : {
+        "label" : "Hovedutelse?",
+        "verdi" : "AAP",
+        "svarTekst" : "AAP",
+        "alternativer" : [ "Alt1", "Alt2" ]
+      }
+    },
+    "aktivitet" : {
+      "utdanning" : {
+        "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ "Alt1", "Alt2" ]
+      }
+    },
+    "barn" : {
+      "barnMedBarnepass" : [ {
+        "navn" : {
+          "label" : "Navn",
+          "verdi" : "Navn"
+        },
+        "ident" : {
+          "label" : "Fødselsnummer",
+          "verdi" : "barn1"
+        },
+        "type" : {
+          "label" : "Type barnepass",
+          "verdi" : "BARNEHAGE_SFO_AKS",
+          "svarTekst" : "Svartekst",
+          "alternativer" : [ "Alt1", "Alt2" ]
+        },
+        "startetIFemte" : {
+          "label" : "Har startet i 5. klasse?",
+          "verdi" : "JA",
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
+        },
+        "årsak" : {
+          "label" : "Årsak?",
+          "verdi" : "MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID",
+          "svarTekst" : "Mye borte",
+          "alternativer" : [ ]
+        }
+      }, {
+        "navn" : {
+          "label" : "Navn",
+          "verdi" : "Navn"
+        },
+        "ident" : {
+          "label" : "Fødselsnummer",
+          "verdi" : "barn2"
+        },
+        "type" : {
+          "label" : "Type barnepass",
+          "verdi" : "BARNEHAGE_SFO_AKS",
+          "svarTekst" : "Svartekst",
+          "alternativer" : [ ]
+        },
+        "startetIFemte" : {
+          "label" : "Har startet i 5. klasse?",
+          "verdi" : "JA",
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
+        },
+        "årsak" : {
+          "label" : "Årsak?",
+          "verdi" : "MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID",
+          "svarTekst" : "Mye borte",
+          "alternativer" : [ ]
+        }
+      } ]
+    }
+  }
+}

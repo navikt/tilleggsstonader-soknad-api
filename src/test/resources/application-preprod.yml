@@ -4,7 +4,13 @@ server:
 logging:
   config: classpath:logback-test.xml
 
+prosessering:
+  enabled: false
+
 clients:
+  familie-dokument:
+    uri: https://familie-dokument.dev.intern.nav.no
+    scope: api://dev-gcp.teamfamilie.familie-dokument/.default
   pdl:
     uri: https://pdl-api-q1.dev.intern.nav.no
     audience: dev-fss:pdl:pdl-api-q1

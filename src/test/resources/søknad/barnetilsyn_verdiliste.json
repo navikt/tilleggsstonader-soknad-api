@@ -1,0 +1,94 @@
+{
+  "label" : "Søknad om barnetilsyn <brevkode>",
+  "verdier" : [ {
+    "label" : "Hovedytelse",
+    "verdier" : [ {
+      "label" : "Hovedutelse?",
+      "verdier" : [ {
+        "verdi" : "AAP",
+        "alternativer" : [ "Alt1", "Alt2" ]
+      } ]
+    } ]
+  }, {
+    "label" : "Aktivitet",
+    "verdier" : [ {
+      "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : [ "Alt1", "Alt2" ]
+      } ]
+    } ]
+  }, {
+    "label" : "Barn",
+    "verdier" : [ {
+      "label" : "Navn",
+      "verdier" : [ {
+        "verdi" : "Navn",
+        "alternativer" : null
+      } ]
+    }, {
+      "label" : "Fødselsnummer",
+      "verdier" : [ {
+        "verdi" : "barn1",
+        "alternativer" : null
+      } ]
+    }, {
+      "label" : "Type barnepass",
+      "verdier" : [ {
+        "verdi" : "Svartekst",
+        "alternativer" : [ "Alt1", "Alt2" ]
+      } ]
+    }, {
+      "label" : "Har startet i 5. klasse?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : [ ]
+      } ]
+    }, {
+      "label" : "Årsak?",
+      "verdier" : [ {
+        "verdi" : "Mye borte",
+        "alternativer" : [ ]
+      } ]
+    }, { }, {
+      "label" : "Navn",
+      "verdier" : [ {
+        "verdi" : "Navn",
+        "alternativer" : null
+      } ]
+    }, {
+      "label" : "Fødselsnummer",
+      "verdier" : [ {
+        "verdi" : "barn2",
+        "alternativer" : null
+      } ]
+    }, {
+      "label" : "Type barnepass",
+      "verdier" : [ {
+        "verdi" : "Svartekst",
+        "alternativer" : [ ]
+      } ]
+    }, {
+      "label" : "Har startet i 5. klasse?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : [ ]
+      } ]
+    }, {
+      "label" : "Årsak?",
+      "verdier" : [ {
+        "verdi" : "Mye borte",
+        "alternativer" : [ ]
+      } ]
+    } ]
+  }, {
+    "label" : "Vedlegg",
+    "verdier" : [ {
+      "label" : "Vedlegg",
+      "verdier" : [ {
+        "verdi" : "",
+        "alternativer" : null
+      } ]
+    } ]
+  } ]
+}

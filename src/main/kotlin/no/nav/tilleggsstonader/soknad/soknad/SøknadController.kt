@@ -2,8 +2,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
-import no.nav.tilleggsstonader.soknad.infrastruktur.config.SecureLogger.secureLogger
-import no.nav.tilleggsstonader.soknad.soknad.dto.Kvittering
+import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -15,16 +14,18 @@ import java.time.LocalDateTime
 @RequestMapping("api/soknad")
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
-class SøknadController {
+class SøknadController(
+    private val søknadService: SøknadService,
+) {
 
     @PostMapping("barnetilsyn")
-    fun sendInn(@RequestBody søknad: Map<String, Any>): Kvittering {
-        /*if (!EksternBrukerUtils.personIdentErLikInnloggetBruker()) {
-            throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
-        }*/
+    fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
         val mottattTidspunkt = LocalDateTime.now()
-        secureLogger.info("Mottatt søknad fra ${EksternBrukerUtils.hentFnrFraToken()}") // slett denne senere
-        // søknadService.sendInn(søknad, innsendingMottatt)
+        søknadService.lagreSøknad(
+            personIdent = EksternBrukerUtils.hentFnrFraToken(),
+            mottattTidspunkt = mottattTidspunkt,
+            søknad = søknad,
+        )
         return Kvittering(mottattTidspunkt = mottattTidspunkt)
     }
 }

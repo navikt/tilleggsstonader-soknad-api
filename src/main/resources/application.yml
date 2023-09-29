@@ -18,6 +18,20 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: "off"
+  data.jdbc.repositories.enabled: true
+  flyway:
+    enabled: true
+    placeholders:
+      ignoreIfProd:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/tilleggsstonader-soknad
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 20
+      connection-test-query: "select 1"
+      max-lifetime: 30000
+      minimum-idle: 1
 
 management:
   endpoint.health.show-details: always
@@ -28,11 +42,42 @@ management:
       info: "status/isAlive"
   prometheus.metrics.export.enabled: true
 
+prosessering:
+  rolle: "9f2c914f-9619-41a2-bea6-d62910514c8a" # Team Tilleggsstønader - Utviklere # tilgang ti prosessering
+  continuousRunning.enabled: true
+  fixedDelayString.in.milliseconds: 15000
+  delete.after.weeks: 16
+
 no.nav.security.jwt:
-  issuer.tokenx:
-    discovery-url: ${TOKEN_X_WELL_KNOWN_URL}
-    accepted-audience: ${TOKEN_X_CLIENT_ID}
+  issuer:
+    tokenx:
+      discovery-url: ${TOKEN_X_WELL_KNOWN_URL}
+      accepted-audience: ${TOKEN_X_CLIENT_ID}
+    azuread:
+      discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
+      accepted_audience: ${AZURE_APP_CLIENT_ID}
+      cookie_name: azure_token
   client.registration:
+    integrasjoner-client_credentials:
+      resource-url: ${clients.integrasjoner.uri}
+      token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
+      grant-type: client_credentials
+      scope: ${clients.integrasjoner.scope}
+      authentication:
+        client-id: ${AZURE_APP_CLIENT_ID}
+        client-secret: ${AZURE_APP_CLIENT_SECRET}
+        client-auth-method: client_secret_basic
+
+    familie-dokument-client_credentials:
+      resource-url: ${clients.familie-dokument.uri}
+      token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
+      grant-type: client_credentials
+      scope: ${clients.familie-dokument.scope}
+      authentication:
+        client-id: ${AZURE_APP_CLIENT_ID}
+        client-secret: ${AZURE_APP_CLIENT_SECRET}
+        client-auth-method: client_secret_basic
+
     pdl:
       resource-url: ${clients.pdl.uri}
       well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
@@ -44,9 +89,16 @@ no.nav.security.jwt:
         client-auth-method: private_key_jwt
         client-jwk: ${TOKEN_X_PRIVATE_JWK}
 
+CLIENT_ENV: prod
 clients:
+  integrasjoner:
+    uri: http://tilleggsstonader-integrasjoner
+    scope: api://${CLIENT_ENV}-gcp.tilleggsstonader.tilleggsstonader-integrasjoner/.default
+  familie-dokument:
+    uri: http://familie-dokument.teamfamilie
+    scope: api://${CLIENT_ENV}-gcp.teamfamilie.familie-dokument/.default
   pdl:
     uri: https://pdl-api.prod-fss-pub.nais.io
-    audience: prod-fss:pdl:pdl-api
-    scope: api://prod-fss.pdl.pdl-api/.default
+    audience: ${CLIENT_ENV}-fss:pdl:pdl-api
+    scope: api://${CLIENT_ENV}-fss.pdl.pdl-api/.default
 
