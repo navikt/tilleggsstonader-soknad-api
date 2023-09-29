@@ -43,7 +43,7 @@ internal class ArkiverDokumentRequestMapperTest {
         søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknad)),
         personIdent = "123",
         type = type,
-        søknadPdf = byteArrayOf(12)
+        søknadPdf = byteArrayOf(12),
     )
 
     private fun lagVedlegg() =
