@@ -1,10 +1,10 @@
 val javaVersion = JavaLanguageVersion.of(17)
 val tilleggsstønaderLibsVersion = "2023.09.14-10.25.400ea92abb53"
 val tilleggsstønaderKontrakterVersion = "2023.09.29-11.29.adc626b7267e"
-val familieProsesseringVersion = "2.20230928100816_3cbdfc5"
-val tokenSupportVersion = "3.1.5"
+val familieProsesseringVersion = "2.20231005144526_f184554"
+val tokenSupportVersion = "3.1.7"
 val wiremockVersion = "3.0.1"
-val testcontainerVersion = "1.19.0"
+val testcontainerVersion = "1.19.1"
 val kotlinxHtmlVersion = "0.9.1"
 
 group = "no.nav.tilleggsstonader.soknad"
