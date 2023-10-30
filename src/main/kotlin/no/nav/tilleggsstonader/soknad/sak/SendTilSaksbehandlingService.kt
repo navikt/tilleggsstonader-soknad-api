@@ -19,7 +19,6 @@ class SendTilSaksbehandlingService(
                 personIdent = søknad.personIdent,
                 journalpostId = journalpostId,
                 stønadstype = søknad.type,
-                mappeId = null,
             ),
         )
     }
