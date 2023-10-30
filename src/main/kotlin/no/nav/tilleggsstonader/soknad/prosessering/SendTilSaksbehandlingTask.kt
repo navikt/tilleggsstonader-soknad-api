@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import java.util.UUID
 
 @Service
-@TaskStepBeskrivelse(taskStepType = LagPdfTask.TYPE, beskrivelse = "Send den arkiverte journalposten/søknad til sak for videre håndtering")
+@TaskStepBeskrivelse(taskStepType = SendTilSaksbehandlingTask.TYPE, beskrivelse = "Send den arkiverte journalposten/søknad til sak for videre håndtering")
 class SendTilSaksbehandlingTask(
     private val sendTilSaksbehandlingService: SendTilSaksbehandlingService,
 
