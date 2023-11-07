@@ -15,6 +15,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.gradering
 import no.nav.tilleggsstonader.soknad.util.EnvUtil
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.time.Period
 
 @Service
 class PersonService(
@@ -44,16 +45,26 @@ class PersonService(
             telefonnr = "950863265",
             epost = "mail@gmail.com",
             kontonr = "1234.56.78910",
-            barn = barn.entries.map {
-                Barn(
-                    ident = it.key,
-                    navn = it.value.navn.first().visningsnavn(),
-                    fødselsdato = LocalDate.of(2023, 1, 1),
-                    alder = 9,
-                )
-            },
+            barn = mapBarn(barn),
         )
     }
+
+    private fun mapBarn(barn: Map<String, PdlBarn>) =
+        barn.entries
+            .filter { erILive(it.value) }
+            .map { (ident, pdlBarn) ->
+                val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+                val alder = Period.between(fødselsdato, LocalDate.now()).years
+                Barn(
+                    ident = ident,
+                    navn = pdlBarn.navn.first().visningsnavn(),
+                    fødselsdato = fødselsdato,
+                    alder = alder,
+                )
+            }
+
+    private fun erILive(pdlBarn: PdlBarn) =
+        pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
 
     private fun hentBarn(søker: PdlSøker): Map<String, PdlBarn> {
         val barnIdenter = søker.forelderBarnRelasjon.filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
