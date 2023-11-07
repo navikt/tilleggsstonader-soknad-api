@@ -7,11 +7,10 @@ import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
-import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Familierelasjonsrolle
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
-import no.nav.tilleggsstonader.soknad.person.pdl.gradering
+import no.nav.tilleggsstonader.soknad.person.pdl.erStrengtFortrolig
 import no.nav.tilleggsstonader.soknad.util.EnvUtil
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -38,7 +37,7 @@ class PersonService(
         return PersonMedBarnDto(
             navn = søker.navn.first().visningsnavn(),
             adresse = Adresse(
-                adresse = "Liaveien 34",
+                adresse = "En vei 34",
                 postnummer = "0152",
                 poststed = "Oslo",
             ),
@@ -74,8 +73,8 @@ class PersonService(
 
     private fun søkerEllerBarnErGradert(
         søker: PdlSøker,
-        barn: Map<String, PdlBarn>
+        barn: Map<String, PdlBarn>,
     ) =
-        søker.adressebeskyttelse.gradering() != AdressebeskyttelseGradering.UGRADERT ||
-                barn.values.any { it.adressebeskyttelse.gradering() != AdressebeskyttelseGradering.UGRADERT }
+        søker.adressebeskyttelse.erStrengtFortrolig() ||
+            barn.values.any { it.adressebeskyttelse.erStrengtFortrolig() }
 }

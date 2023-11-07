@@ -29,7 +29,7 @@ data class Fødsel(
 )
 
 data class Dødsfall(
-    @JsonProperty("doedsdato") val dødsdato: LocalDate?
+    @JsonProperty("doedsdato") val dødsdato: LocalDate?,
 )
 
 data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)

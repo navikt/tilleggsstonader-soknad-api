@@ -1,16 +1,10 @@
 package no.nav.tilleggsstonader.soknad.person.pdl
 
-import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlUtil.httpHeaders
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBolkResponse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlPersonBolkRequest
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlPersonBolkRequestVariables
-import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlPersonRequest
-import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlPersonRequestVariables
-import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlResponse
-import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
-import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøkerData
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity

@@ -33,6 +33,12 @@ object PdlUtil {
 fun List<Adressebeskyttelse>.gradering(): AdressebeskyttelseGradering =
     this.singleOrNull()?.gradering ?: AdressebeskyttelseGradering.UGRADERT
 
+fun List<Adressebeskyttelse>.erStrengtFortrolig(): Boolean {
+    val gradering = gradering()
+    return gradering == AdressebeskyttelseGradering.STRENGT_FORTROLIG ||
+        gradering == AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
+}
+
 inline fun <reified DATA : Any, reified RESULT : Any> feilsjekkOgReturnerData(
     ident: String?,
     pdlResponse: PdlResponse<DATA>,

@@ -19,7 +19,7 @@ class SøknadServiceTest {
         søknadRepository = mockk(),
         barnetilsynMapper = mockk(),
         taskService = mockk(),
-        personService = personService
+        personService = personService,
     )
 
     @Test
