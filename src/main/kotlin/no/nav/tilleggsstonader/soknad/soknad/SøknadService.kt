@@ -5,8 +5,10 @@ import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
+import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
+import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.prosessering.LagPdfTask
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
@@ -22,6 +24,7 @@ class SøknadService(
     private val søknadRepository: SøknadRepository,
     private val barnetilsynMapper: BarnetilsynMapper,
     private val taskService: TaskService,
+    private val personService: PersonService,
 ) {
 
     fun hentSøknad(id: UUID): Søknad {
@@ -38,7 +41,7 @@ class SøknadService(
         mottattTidspunkt: LocalDateTime,
         søknad: SøknadBarnetilsynDto,
     ) {
-        // TODO valider barn på søknad
+        verifiserHarGyldigeBarn(personIdent, søknad)
         val type = Stønadstype.BARNETILSYN
         val opprettetSøknad = lagreSøknad(
             type = type,
@@ -48,6 +51,14 @@ class SøknadService(
             språkkode = Språkkode.NB,
         )
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
+    }
+
+    private fun verifiserHarGyldigeBarn(personIdent: String, søknad: SøknadBarnetilsynDto) {
+        val barnIdenter = personService.hentSøker(Fødselsnummer(personIdent)).barn.map { it.ident }.toSet()
+        val barnIdenterSøknad = søknad.barnMedBarnepass.map { it.ident }
+        if (!barnIdenter.containsAll(barnIdenterSøknad)) {
+            error("Prøver å sende inn identer på barnen($barnIdenterSøknad) som ikke finnes på søkeren ($barnIdenter)")
+        }
     }
 
     private fun <T> lagreSøknad(
