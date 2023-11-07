@@ -38,6 +38,7 @@ class SøknadService(
         mottattTidspunkt: LocalDateTime,
         søknad: SøknadBarnetilsynDto,
     ) {
+        // TODO valider barn på søknad
         val type = Stønadstype.BARNETILSYN
         val opprettetSøknad = lagreSøknad(
             type = type,

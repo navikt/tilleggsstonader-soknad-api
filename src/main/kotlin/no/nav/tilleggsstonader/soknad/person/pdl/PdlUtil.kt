@@ -1,6 +1,8 @@
 package no.nav.tilleggsstonader.soknad.person.pdl
 
 import no.nav.tilleggsstonader.soknad.infrastruktur.config.SecureLogger.secureLogger
+import no.nav.tilleggsstonader.soknad.person.pdl.dto.Adressebeskyttelse
+import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBolkResponse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlResponse
 import org.apache.commons.lang3.StringUtils
@@ -17,6 +19,8 @@ object PdlUtil {
 
     val søkerQuery = graphqlQuery("/pdl/søker.graphql")
 
+    val barnQuery = graphqlQuery("/pdl/barn.graphql")
+
     private fun graphqlQuery(path: String) = PdlUtil::class.java.getResource(path)!!
         .readText()
         .graphqlCompatible()
@@ -25,6 +29,9 @@ object PdlUtil {
         return StringUtils.normalizeSpace(this.replace("\n", ""))
     }
 }
+
+fun List<Adressebeskyttelse>.gradering(): AdressebeskyttelseGradering =
+    this.singleOrNull()?.gradering ?: AdressebeskyttelseGradering.UGRADERT
 
 inline fun <reified DATA : Any, reified RESULT : Any> feilsjekkOgReturnerData(
     ident: String?,

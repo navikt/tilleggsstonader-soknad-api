@@ -38,7 +38,7 @@ class SøknadTreeWalkerTest {
                 startetIFemte = null,
                 årsak = null,
             )
-        val søknad = SøknadBarnetilsynUtil.søknad.copy(barn = listOf(barnMedBarnepass))
+        val søknad = SøknadBarnetilsynUtil.søknad.copy(barnMedBarnepass = listOf(barnMedBarnepass))
         val søknadsskjema = lagSøknadsskjema(BarnetilsynMapper().map(søknad))
         val result = SøknadTreeWalker.mapSøknad(søknadsskjema, emptyList())
         assertExpected(

@@ -10,7 +10,7 @@ import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 data class SøknadBarnetilsynDto(
     val hovedytelse: EnumFelt<Hovedytelse>,
     val aktivitet: Aktivitet,
-    val barn: List<BarnMedBarnepass>,
+    val barnMedBarnepass: List<BarnMedBarnepass>,
 )
 
 data class Aktivitet(

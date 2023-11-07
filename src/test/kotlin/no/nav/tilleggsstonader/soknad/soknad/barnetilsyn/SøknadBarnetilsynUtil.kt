@@ -17,7 +17,7 @@ object SøknadBarnetilsynUtil {
                 listOf("Alt1", "Alt2"),
             ),
         ),
-        barn = listOf(
+        barnMedBarnepass = listOf(
             BarnMedBarnepass(
                 ident = "barn1",
                 type = EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", listOf("Alt1", "Alt2")),
