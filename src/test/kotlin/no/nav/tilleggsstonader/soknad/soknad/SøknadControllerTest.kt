@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
+import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import no.nav.tilleggsstonader.soknad.tokenSubject
@@ -20,6 +21,9 @@ import org.springframework.web.client.postForEntity
 import java.time.LocalDate
 
 class SøknadControllerTest : IntegrationTest() {
+
+    @Autowired
+    lateinit var personService: PersonService
 
     @Autowired
     lateinit var søknadRepository: SøknadRepository

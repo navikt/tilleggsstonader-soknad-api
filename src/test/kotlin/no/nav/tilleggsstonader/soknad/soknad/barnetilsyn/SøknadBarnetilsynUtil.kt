@@ -17,19 +17,22 @@ object SøknadBarnetilsynUtil {
                 listOf("Alt1", "Alt2"),
             ),
         ),
-        barn = listOf(
-            BarnMedBarnepass(
-                ident = "barn1",
-                type = EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", listOf("Alt1", "Alt2")),
-                startetIFemte = EnumFelt("Har startet i 5. klasse?", JaNei.JA, "Ja", emptyList()),
-                årsak = EnumFelt("Årsak?", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "Mye borte", emptyList()),
-            ),
-            BarnMedBarnepass(
-                ident = "barn2",
-                type = EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList()),
-                startetIFemte = EnumFelt("Har startet i 5. klasse?", JaNei.JA, "Ja", emptyList()),
-                årsak = EnumFelt("Årsak?", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "Mye borte", emptyList()),
-            ),
+        barnMedBarnepass = listOf(
+            lagBarn("08921997974"),
+            lagBarn("43921075201", EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList())),
         ),
     )
+
+    fun lagBarn(
+        ident: String,
+        type: EnumFelt<TypeBarnepass> = defaultTypeBarnepass(),
+    ) = BarnMedBarnepass(
+        ident = ident,
+        type = type,
+        startetIFemte = EnumFelt("Har startet i 5. klasse?", JaNei.JA, "Ja", emptyList()),
+        årsak = EnumFelt("Årsak?", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "Mye borte", emptyList()),
+    )
+
+    private fun defaultTypeBarnepass() =
+        EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", listOf("Alt1", "Alt2"))
 }

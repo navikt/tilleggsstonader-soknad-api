@@ -20,7 +20,7 @@ class BarnetilsynMapper {
     }
 
     private fun mapBarn(dto: SøknadBarnetilsynDto) =
-        dto.barn.map {
+        dto.barnMedBarnepass.map {
             BarnMedBarnepassKontrakt(
                 navn = TekstFelt("Navn", "Navn"), // TODO navn
                 ident = TekstFelt("Fødselsnummer", it.ident), // TODO må kanskje inn med språk-riktig-label her?

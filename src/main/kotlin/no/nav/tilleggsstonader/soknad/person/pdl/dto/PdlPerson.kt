@@ -1,5 +1,8 @@
 package no.nav.tilleggsstonader.soknad.person.pdl.dto
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import java.time.LocalDate
+
 data class PdlSøkerData(val person: PdlSøker?)
 
 data class PdlSøker(
@@ -7,6 +10,26 @@ data class PdlSøker(
     val bostedsadresse: List<Bostedsadresse>,
     val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
     val navn: List<Navn>,
+)
+
+data class PdlBarn(
+    val adressebeskyttelse: List<Adressebeskyttelse>,
+    val navn: List<Navn>,
+    @JsonProperty("foedsel")
+    val fødsel: List<Fødsel>,
+    @JsonProperty("doedsfall")
+    val dødsfall: List<Dødsfall>,
+)
+
+data class Fødsel(
+    @JsonProperty("foedselsaar")
+    val fødselsår: Int?,
+    @JsonProperty("foedselsdato")
+    val fødselsdato: LocalDate?,
+)
+
+data class Dødsfall(
+    @JsonProperty("doedsdato") val dødsdato: LocalDate?,
 )
 
 data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)

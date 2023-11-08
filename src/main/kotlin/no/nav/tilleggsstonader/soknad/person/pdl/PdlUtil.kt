@@ -1,6 +1,8 @@
 package no.nav.tilleggsstonader.soknad.person.pdl
 
 import no.nav.tilleggsstonader.soknad.infrastruktur.config.SecureLogger.secureLogger
+import no.nav.tilleggsstonader.soknad.person.pdl.dto.Adressebeskyttelse
+import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBolkResponse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlResponse
 import org.apache.commons.lang3.StringUtils
@@ -17,6 +19,8 @@ object PdlUtil {
 
     val søkerQuery = graphqlQuery("/pdl/søker.graphql")
 
+    val barnQuery = graphqlQuery("/pdl/barn.graphql")
+
     private fun graphqlQuery(path: String) = PdlUtil::class.java.getResource(path)!!
         .readText()
         .graphqlCompatible()
@@ -24,6 +28,15 @@ object PdlUtil {
     private fun String.graphqlCompatible(): String {
         return StringUtils.normalizeSpace(this.replace("\n", ""))
     }
+}
+
+fun List<Adressebeskyttelse>.gradering(): AdressebeskyttelseGradering =
+    this.singleOrNull()?.gradering ?: AdressebeskyttelseGradering.UGRADERT
+
+fun List<Adressebeskyttelse>.erStrengtFortrolig(): Boolean {
+    val gradering = gradering()
+    return gradering == AdressebeskyttelseGradering.STRENGT_FORTROLIG ||
+        gradering == AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
 }
 
 inline fun <reified DATA : Any, reified RESULT : Any> feilsjekkOgReturnerData(

@@ -27,7 +27,7 @@
         },
         "ident" : {
           "label" : "Fødselsnummer",
-          "verdi" : "barn1"
+          "verdi" : "08921997974"
         },
         "type" : {
           "label" : "Type barnepass",
@@ -54,7 +54,7 @@
         },
         "ident" : {
           "label" : "Fødselsnummer",
-          "verdi" : "barn2"
+          "verdi" : "43921075201"
         },
         "type" : {
           "label" : "Type barnepass",
