@@ -18,15 +18,21 @@ object SøknadBarnetilsynUtil {
             ),
         ),
         barnMedBarnepass = listOf(
-            lagBarn("barn1"),
-            lagBarn("barn2"),
+            lagBarn("08921997974"),
+            lagBarn("43921075201", EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList())),
         ),
     )
 
-    fun lagBarn(ident: String) = BarnMedBarnepass(
+    fun lagBarn(
+        ident: String,
+        type: EnumFelt<TypeBarnepass> = defaultTypeBarnepass(),
+    ) = BarnMedBarnepass(
         ident = ident,
-        type = EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", listOf("Alt1", "Alt2")),
+        type = type,
         startetIFemte = EnumFelt("Har startet i 5. klasse?", JaNei.JA, "Ja", emptyList()),
         årsak = EnumFelt("Årsak?", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "Mye borte", emptyList()),
     )
+
+    private fun defaultTypeBarnepass() =
+        EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", listOf("Alt1", "Alt2"))
 }

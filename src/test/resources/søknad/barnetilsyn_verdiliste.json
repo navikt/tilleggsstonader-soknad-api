@@ -29,7 +29,7 @@
     }, {
       "label" : "Fødselsnummer",
       "verdier" : [ {
-        "verdi" : "barn1",
+        "verdi" : "08921997974",
         "alternativer" : null
       } ]
     }, {
@@ -59,7 +59,7 @@
     }, {
       "label" : "Fødselsnummer",
       "verdier" : [ {
-        "verdi" : "barn2",
+        "verdi" : "43921075201",
         "alternativer" : null
       } ]
     }, {

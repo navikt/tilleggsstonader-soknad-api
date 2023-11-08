@@ -46,13 +46,16 @@ class SøknadControllerTest : IntegrationTest() {
     }
 
     private fun lagSøknadMedGyldigeBarn(): SøknadBarnetilsynDto {
-        val barnIdenter = personService.hentSøker(Fødselsnummer(tokenSubject)).barn.map { it.ident }
+        val hentSøker = personService.hentSøker(Fødselsnummer(tokenSubject))
+        val barnIdenter = hentSøker.barn.map { it.ident }
+        return SøknadBarnetilsynUtil.søknad
+        /*
         return SøknadBarnetilsynUtil.søknad.copy(
             barnMedBarnepass = listOf(
                 SøknadBarnetilsynUtil.lagBarn(barnIdenter[0]),
                 SøknadBarnetilsynUtil.lagBarn(barnIdenter[1]),
             ),
-        )
+        )*/
     }
 
     @Test

@@ -3,7 +3,6 @@ package no.nav.tilleggsstonader.soknad.infrastruktur
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
@@ -19,7 +18,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
-import java.time.Year
 
 @Configuration
 @Profile("mock-pdl")
@@ -49,13 +47,12 @@ class PdlClientConfig {
 
         fun resetPdlClientMock(client: PdlClientCredentialClient) {
             clearMocks(client)
-            val år = Year.now().value
             val barn1 = lagPdlBarn(
-                ident = FnrGenerator.generer(år - 5, 5, 12),
+                ident = "08921997974",
                 navn = navn(fornavn = "Ronja", etternavn = "Røverdatter"),
             )
             val barn2 = lagPdlBarn(
-                ident = FnrGenerator.generer(år - 11, 1, 5),
+                ident = "43921075201",
                 navn = navn(fornavn = "Espen", etternavn = "Askeladden"),
             )
             every { client.hentBarn(any()) } returns listOf(barn1, barn2).toMap()
