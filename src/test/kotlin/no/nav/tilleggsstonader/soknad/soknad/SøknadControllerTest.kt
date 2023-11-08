@@ -3,7 +3,10 @@ package no.nav.tilleggsstonader.soknad.soknad
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.IntegrationTest
+import no.nav.tilleggsstonader.soknad.person.PersonService
+import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import no.nav.tilleggsstonader.soknad.tokenSubject
@@ -22,6 +25,9 @@ import java.time.LocalDate
 class SøknadControllerTest : IntegrationTest() {
 
     @Autowired
+    lateinit var personService: PersonService
+
+    @Autowired
     lateinit var søknadRepository: SøknadRepository
 
     @BeforeEach
@@ -31,11 +37,22 @@ class SøknadControllerTest : IntegrationTest() {
 
     @Test
     fun `skal kunne sende inn en komplett søknad for barnetilsyn`() {
-        val request = HttpEntity(SøknadBarnetilsynUtil.søknad, headers)
+        val søknad = lagSøknadMedGyldigeBarn()
+        val request = HttpEntity(søknad, headers)
         val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/barnetilsyn"), request)
         assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
         verifiserLagretSøknad(Stønadstype.BARNETILSYN, "søknad/barnetilsyn.json")
+    }
+
+    private fun lagSøknadMedGyldigeBarn(): SøknadBarnetilsynDto {
+        val barnIdenter = personService.hentSøker(Fødselsnummer(tokenSubject)).barn.map { it.ident }
+        return SøknadBarnetilsynUtil.søknad.copy(
+            barnMedBarnepass = listOf(
+                SøknadBarnetilsynUtil.lagBarn(barnIdenter[0]),
+                SøknadBarnetilsynUtil.lagBarn(barnIdenter[1]),
+            ),
+        )
     }
 
     @Test
