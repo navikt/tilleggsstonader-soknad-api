@@ -1,9 +1,9 @@
 package no.nav.tilleggsstonader.soknad.soknad.domene
 
+import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.SporbarUtils
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.InsertUpdateRepository
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.RepositoryInterface
-import no.nav.tilleggsstonader.soknad.soknad.Vedleggstype
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.stereotype.Repository
@@ -17,7 +17,7 @@ interface VedleggRepository : RepositoryInterface<Vedlegg, UUID>, InsertUpdateRe
 
 class Vedlegg(
     @Id
-    val id: UUID = UUID.randomUUID(),
+    val id: UUID,
     @Column("soknad_id")
     val søknadId: UUID,
     val type: Vedleggstype,

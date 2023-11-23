@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
 import no.nav.tilleggsstonader.kontrakter.felles.Hovedytelse
+import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
@@ -11,6 +12,7 @@ data class SøknadBarnetilsynDto(
     val hovedytelse: EnumFelt<Hovedytelse>,
     val aktivitet: Aktivitet,
     val barnMedBarnepass: List<BarnMedBarnepass>,
+    val dokumentasjon: List<DokumentasjonFelt>,
 )
 
 data class Aktivitet(
