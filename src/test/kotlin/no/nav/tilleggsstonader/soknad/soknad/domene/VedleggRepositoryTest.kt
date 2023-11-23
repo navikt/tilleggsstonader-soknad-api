@@ -1,14 +1,15 @@
 package no.nav.tilleggsstonader.soknad.soknad.domene
 
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
-import no.nav.tilleggsstonader.soknad.soknad.Vedleggstype
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import java.util.UUID
 
 class VedleggRepositoryTest : IntegrationTest() {
 
@@ -47,6 +48,7 @@ class VedleggRepositoryTest : IntegrationTest() {
     private fun lagreVedlegg(søknad: Søknad) =
         vedleggRepository.insert(
             Vedlegg(
+                id = UUID.randomUUID(),
                 søknadId = søknad.id,
                 type = Vedleggstype.EKSEMPEL,
                 navn = "charlie.pdf",

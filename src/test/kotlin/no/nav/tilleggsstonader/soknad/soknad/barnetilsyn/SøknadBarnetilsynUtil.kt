@@ -1,10 +1,14 @@
 package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
 import no.nav.tilleggsstonader.kontrakter.felles.Hovedytelse
+import no.nav.tilleggsstonader.kontrakter.søknad.Dokument
+import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
+import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
+import java.util.UUID
 
 object SøknadBarnetilsynUtil {
     val søknad = SøknadBarnetilsynDto(
@@ -19,8 +23,24 @@ object SøknadBarnetilsynUtil {
         ),
         barnMedBarnepass = listOf(
             lagBarn("08921997974"),
-            lagBarn("43921075201", EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList())),
+            lagBarn(
+                "43921075201",
+                EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList())
+            ),
         ),
+        dokumentasjon = listOf(lagDokumentasjonFelt())
+    )
+
+    private fun lagDokumentasjonFelt() = DokumentasjonFelt(
+        type = Vedleggstype.EKSEMPEL,
+        label = "Vedlegglabel",
+        harSendtInn = false,
+        opplastedeVedlegg = listOf(
+            Dokument(
+                id = UUID.fromString("98fd0f9b-1206-4918-80d9-e76f85ba1b39"),
+                "Navn på vedlegg"
+            )
+        )
     )
 
     fun lagBarn(
