@@ -34,6 +34,7 @@ class PdfServiceTest {
     fun setUp() {
         justRun { søknadService.oppdaterSøknad(capture(oppdaterSøknadSlot)) }
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
+        every { søknadService.finnVedleggTitlerForSøknad(any()) } returns listOf("Vedlegg1.png")
     }
 
     @Test
@@ -51,7 +52,7 @@ class PdfServiceTest {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
         FileUtil.skrivTilFil(filnavn, htmlSlot.captured)
         // kan brukes for å generere en pdf å verifisere at den ser riktig ut
-        // generatePdf(htmlSlot.captured, "$filnavn.pdf")
+        generatePdf(htmlSlot.captured, "$filnavn.pdf")
 
         assertThat(htmlSlot.captured).isEqualTo(FileUtil.readFile(filnavn))
     }
