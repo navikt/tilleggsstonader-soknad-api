@@ -70,7 +70,7 @@ class SøknadService(
                     id = vedlegg.id,
                     type = it.type,
                     navn = vedlegg.navn,
-                    data = hentVedlegg(vedlegg.id)
+                    data = hentVedlegg(vedlegg.id),
                 )
             }
         }
@@ -95,7 +95,7 @@ class SøknadService(
         mottattTidspunkt: LocalDateTime,
         søknad: T,
         språkkode: Språkkode,
-        vedlegg: List<Vedleggholder>
+        vedlegg: List<Vedleggholder>,
     ): Søknad {
         val søknadsskjema = Søknadsskjema(personIdent, mottattTidspunkt, språkkode, søknad)
         val søknadDb = søknadRepository.insert(
@@ -113,21 +113,23 @@ class SøknadService(
         søknadDb: Søknad,
         vedlegg: List<Vedleggholder>,
     ) {
-        vedleggRepository.insertAll(vedlegg.map {
-            Vedlegg(
-                id = it.id,
-                søknadId = søknadDb.id,
-                type = it.type,
-                navn = it.navn,
-                innhold = it.data
-            )
-        })
+        vedleggRepository.insertAll(
+            vedlegg.map {
+                Vedlegg(
+                    id = it.id,
+                    søknadId = søknadDb.id,
+                    type = it.type,
+                    navn = it.navn,
+                    innhold = it.data,
+                )
+            },
+        )
     }
 
     private class Vedleggholder(
         val id: UUID,
         val type: Vedleggstype,
         val navn: String,
-        val data: ByteArray
+        val data: ByteArray,
     )
 }

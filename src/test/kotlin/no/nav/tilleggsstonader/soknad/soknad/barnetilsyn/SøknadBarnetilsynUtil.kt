@@ -25,10 +25,10 @@ object SøknadBarnetilsynUtil {
             lagBarn("08921997974"),
             lagBarn(
                 "43921075201",
-                EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList())
+                EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList()),
             ),
         ),
-        dokumentasjon = listOf(lagDokumentasjonFelt())
+        dokumentasjon = listOf(lagDokumentasjonFelt()),
     )
 
     private fun lagDokumentasjonFelt() = DokumentasjonFelt(
@@ -38,9 +38,9 @@ object SøknadBarnetilsynUtil {
         opplastedeVedlegg = listOf(
             Dokument(
                 id = UUID.fromString("98fd0f9b-1206-4918-80d9-e76f85ba1b39"),
-                "Navn på vedlegg"
-            )
-        )
+                "Navn på vedlegg",
+            ),
+        ),
     )
 
     fun lagBarn(

@@ -68,7 +68,7 @@ object SøknadTreeWalker {
 
             is TekstFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is EnumFelt<*> -> listOf(
-                Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer)))
+                Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer))),
             )
 
             is DokumentasjonFelt -> emptyList()
