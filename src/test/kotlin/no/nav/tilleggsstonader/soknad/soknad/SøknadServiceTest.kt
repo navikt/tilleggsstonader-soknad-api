@@ -27,7 +27,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg as VedleggDomene
 
-
 class SøknadServiceTest {
 
     private val søknadRepository = mockk<SøknadRepository>()
@@ -35,14 +34,13 @@ class SøknadServiceTest {
     private val personService = mockk<PersonService>()
     private val familieVedleggClient = mockk<FamilieVedleggClient>()
 
-
     private val service = SøknadService(
         søknadRepository = søknadRepository,
         vedleggRepository = vedleggRepository,
         barnetilsynMapper = BarnetilsynMapper(),
         taskService = mockk<TaskService>(relaxed = true),
         personService = personService,
-        familieVedleggClient = familieVedleggClient
+        familieVedleggClient = familieVedleggClient,
     )
 
     val personIdent = FnrGenerator.generer()
@@ -79,7 +77,6 @@ class SøknadServiceTest {
             val søknadId =
                 service.lagreSøknad(personIdent, LocalDateTime.now(), søknad.copy(dokumentasjon = dokumentasjon))
 
-
             val lagretVedlegg = vedleggSlot.captured.single()
             assertThat(lagretVedlegg.id).isEqualTo(vedlegg.id)
             assertThat(lagretVedlegg.type).isEqualTo(Vedleggstype.EKSEMPEL)
@@ -105,7 +102,7 @@ class SøknadServiceTest {
             type = Vedleggstype.EKSEMPEL,
             label = "label",
             harSendtInn = false,
-            opplastedeVedlegg = listOf(vedlegg)
-        )
+            opplastedeVedlegg = listOf(vedlegg),
+        ),
     )
 }
