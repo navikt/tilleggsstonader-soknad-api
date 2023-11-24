@@ -40,21 +40,6 @@
       } ]
     } ]
   }, {
-    "label" : "Dokumentasjon",
-    "verdier" : [ {
-      "label" : "Vedlegglabel",
-      "verdier" : [ {
-        "label" : "Har sendt inn",
-        "verdier" : [ {
-          "verdi" : "Nei",
-          "alternativer" : null
-        } ]
-      }, {
-        "verdi" : "Navn på vedlegg",
-        "alternativer" : null
-      } ]
-    } ]
-  }, {
     "label" : "Vedlegg",
     "verdier" : [ {
       "label" : "Vedlegg",

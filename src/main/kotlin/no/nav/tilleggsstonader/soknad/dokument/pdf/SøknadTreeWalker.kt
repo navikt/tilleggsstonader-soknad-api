@@ -8,7 +8,6 @@ import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.DokumentasjonAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
@@ -63,7 +62,6 @@ object SøknadTreeWalker {
             is HovedytelseAvsnitt,
             is AktivitetAvsnitt,
             is BarnAvsnitt,
-            is DokumentasjonAvsnitt,
             -> listOf(Avsnitt(tittelAvsnitt(entitet, språk), finnFelter(entitet, språk)))
 
             is List<*> -> mapListe(entitet, språk)
@@ -73,19 +71,10 @@ object SøknadTreeWalker {
                 Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer)))
             )
 
-            is DokumentasjonFelt -> mapDokumentasjonFelt(entitet)
+            is DokumentasjonFelt -> emptyList()
             else -> error("Kan ikke mappe entitet=$entitet")
         }
     }
-
-    private fun mapDokumentasjonFelt(felt: DokumentasjonFelt) =
-        listOf(
-            Avsnitt(
-                felt.label,
-                listOf(Avsnitt("Har sendt inn", listOf(Verdi(if (felt.harSendtInn) "Ja" else "Nei"))))
-                        + felt.opplastedeVedlegg.map { Verdi(it.navn) }.toList()
-            )
-        )
 
     /**
      * I de tilfeller man eks har en liste med Barn, så er det ønskelig å lage en Horisontallinje mellom barnen

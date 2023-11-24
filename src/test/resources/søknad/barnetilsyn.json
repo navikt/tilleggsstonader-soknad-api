@@ -76,16 +76,14 @@
         }
       } ]
     },
-    "dokumentasjon" : {
-      "dokumentasjon" : [ {
-        "type" : "EKSEMPEL",
-        "label" : "Vedlegglabel",
-        "harSendtInn" : false,
-        "opplastedeVedlegg" : [ {
-          "id" : "98fd0f9b-1206-4918-80d9-e76f85ba1b39",
-          "navn" : "Navn på vedlegg"
-        } ]
+    "dokumentasjon" : [ {
+      "type" : "EKSEMPEL",
+      "label" : "Vedlegglabel",
+      "harSendtInn" : false,
+      "opplastedeVedlegg" : [ {
+        "id" : "98fd0f9b-1206-4918-80d9-e76f85ba1b39",
+        "navn" : "Navn på vedlegg"
       } ]
-    }
+    } ]
   }
 }
