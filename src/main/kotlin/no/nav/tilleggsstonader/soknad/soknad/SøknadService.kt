@@ -38,6 +38,8 @@ class SøknadService(
         return søknadRepository.findByIdOrThrow(id)
     }
 
+    fun finnVedleggTitlerForSøknad(id: UUID) = vedleggRepository.finnTitlerForSøknadId(id)
+
     fun oppdaterSøknad(søknad: Søknad) {
         søknadRepository.update(søknad)
     }
