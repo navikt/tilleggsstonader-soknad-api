@@ -3,7 +3,6 @@ package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.DokumentasjonAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.SøknadsskjemaBarnetilsyn
 import org.springframework.stereotype.Service
@@ -17,7 +16,7 @@ class BarnetilsynMapper {
             hovedytelse = HovedytelseAvsnitt(dto.hovedytelse),
             aktivitet = mapAktivitet(dto),
             barn = BarnAvsnitt(mapBarn(dto)),
-            dokumentasjon = DokumentasjonAvsnitt(dto.dokumentasjon)
+            dokumentasjon = dto.dokumentasjon
         )
     }
 
