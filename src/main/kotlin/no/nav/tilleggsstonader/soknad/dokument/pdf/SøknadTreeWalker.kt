@@ -46,7 +46,7 @@ object SøknadTreeWalker {
         vedleggTitler: List<String>,
     ): Avsnitt {
         val finnFelter = mapFelter(søknad.skjema, søknad.språk)
-        val vedlegg = Avsnitt("Vedlegg", listOf(Feltformaterer.mapVedlegg(vedleggTitler)))
+        val vedlegg = Avsnitt("Vedlegg", Feltformaterer.mapVedlegg(vedleggTitler))
         return Avsnitt(tittelSøknadsskjema(søknad), finnFelter + vedlegg)
     }
 

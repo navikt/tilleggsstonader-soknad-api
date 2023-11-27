@@ -34,7 +34,7 @@ class PdfServiceTest {
     fun setUp() {
         justRun { søknadService.oppdaterSøknad(capture(oppdaterSøknadSlot)) }
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
-        every { søknadService.finnVedleggTitlerForSøknad(any()) } returns listOf("Vedlegg1.png")
+        every { søknadService.finnVedleggTitlerForSøknad(any()) } returns listOf("Vedlegg1.png", "Vedlegg2.png")
     }
 
     @Test
