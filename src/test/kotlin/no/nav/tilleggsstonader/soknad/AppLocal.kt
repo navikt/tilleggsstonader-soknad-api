@@ -18,6 +18,8 @@ fun main(args: Array<String>) {
         .profiles(
             "local",
             "mock-pdl",
+            "mock-vedlegg",
+            "mock-familie-vedlegg-controller",
         )
         .properties(mapOf("mock-oauth2-server.port" to mockOauth2ServerPort))
         .run(*args)
