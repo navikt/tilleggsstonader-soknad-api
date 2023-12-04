@@ -21,7 +21,7 @@ class PdfService(
 
     fun lagPdf(søknadId: UUID) {
         val søknad = søknadService.hentSøknad(søknadId)
-        val vedleggtitler = listOf<String>() // TODO
+        val vedleggtitler = søknadService.finnVedleggTitlerForSøknad(søknadId)
         val søknadsskjema = parseSøknadsskjema(søknad)
         val feltMap = mapSøknad(søknadsskjema, vedleggtitler)
         val html = htmlGenerator.generateHtml(søknad.type, feltMap, søknadsskjema.mottattTidspunkt)
