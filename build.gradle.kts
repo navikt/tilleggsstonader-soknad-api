@@ -1,11 +1,11 @@
-val javaVersion = JavaLanguageVersion.of(17)
-val tilleggsstønaderLibsVersion = "2023.09.14-10.25.400ea92abb53"
-val tilleggsstønaderKontrakterVersion = "2023.10.30-10.29.220396448adf"
-val familieProsesseringVersion = "2.20230928100816_3cbdfc5"
-val tokenSupportVersion = "3.1.5"
+val javaVersion = JavaLanguageVersion.of(21)
+val tilleggsstønaderLibsVersion = "2023.12.04-12.14.a6ecafd594a1"
+val tilleggsstønaderKontrakterVersion = "2023.12.04-12.03.40d61264fa02"
+val familieProsesseringVersion = "2.20231026103714_2f17845"
+val tokenSupportVersion = "3.2.0"
 val wiremockVersion = "3.0.1"
-val testcontainerVersion = "1.19.0"
-val kotlinxHtmlVersion = "0.9.1"
+val testcontainerVersion = "1.19.3"
+val kotlinxHtmlVersion = "0.10.1"
 
 group = "no.nav.tilleggsstonader.soknad"
 version = "1.0.0"
@@ -13,16 +13,16 @@ version = "1.0.0"
 plugins {
     application
 
-    kotlin("jvm") version "1.9.10"
-    id("com.diffplug.spotless") version "6.22.0"
-    id("com.github.ben-manes.versions") version "0.48.0"
+    kotlin("jvm") version "2.0.0-Beta1"
+    id("com.diffplug.spotless") version "6.23.3"
+    id("com.github.ben-manes.versions") version "0.50.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
 
-    id("org.springframework.boot") version "3.1.4"
-    id("io.spring.dependency-management") version "1.1.3"
-    kotlin("plugin.spring") version "1.9.10"
+    id("org.springframework.boot") version "3.2.0"
+    id("io.spring.dependency-management") version "1.1.4"
+    kotlin("plugin.spring") version "2.0.0-Beta1"
 
-    id("org.cyclonedx.bom") version "1.7.4"
+    id("org.cyclonedx.bom") version "1.8.1"
 }
 
 repositories {
