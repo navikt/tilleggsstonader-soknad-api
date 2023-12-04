@@ -4,9 +4,9 @@ import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.arkivering.ArkiverDokumentRequestMapper.toDto
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
-import no.nav.tilleggsstonader.soknad.soknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
