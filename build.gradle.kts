@@ -13,14 +13,14 @@ version = "1.0.0"
 plugins {
     application
 
-    kotlin("jvm") version "2.0.0-Beta1"
+    kotlin("jvm") version "1.9.21"
     id("com.diffplug.spotless") version "6.23.3"
     id("com.github.ben-manes.versions") version "0.50.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
 
     id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.4"
-    kotlin("plugin.spring") version "2.0.0-Beta1"
+    kotlin("plugin.spring") version "1.9.21"
 
     id("org.cyclonedx.bom") version "1.8.1"
 }
