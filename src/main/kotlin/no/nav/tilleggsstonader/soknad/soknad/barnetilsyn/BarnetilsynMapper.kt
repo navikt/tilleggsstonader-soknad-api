@@ -16,7 +16,7 @@ class BarnetilsynMapper {
             hovedytelse = HovedytelseAvsnitt(dto.hovedytelse),
             aktivitet = mapAktivitet(dto),
             barn = BarnAvsnitt(mapBarn(dto)),
-            dokumentasjon = emptyList()
+            dokumentasjon = dto.dokumentasjon,
         )
     }
 

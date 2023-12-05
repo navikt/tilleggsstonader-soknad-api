@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
+import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
@@ -45,7 +46,7 @@ object SøknadTreeWalker {
         vedleggTitler: List<String>,
     ): Avsnitt {
         val finnFelter = mapFelter(søknad.skjema, søknad.språk)
-        val vedlegg = Avsnitt("Vedlegg", listOf(Feltformaterer.mapVedlegg(vedleggTitler)))
+        val vedlegg = Avsnitt("Vedlegg", Feltformaterer.mapVedlegg(vedleggTitler))
         return Avsnitt(tittelSøknadsskjema(søknad), finnFelter + vedlegg)
     }
 
@@ -66,7 +67,11 @@ object SøknadTreeWalker {
             is List<*> -> mapListe(entitet, språk)
 
             is TekstFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
-            is EnumFelt<*> -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer))))
+            is EnumFelt<*> -> listOf(
+                Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer))),
+            )
+
+            is DokumentasjonFelt -> emptyList()
             else -> error("Kan ikke mappe entitet=$entitet")
         }
     }
