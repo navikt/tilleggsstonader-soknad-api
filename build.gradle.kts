@@ -57,9 +57,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // generering av html
-    implementation(kotlin("stdlib-js"))
-    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:${kotlinxHtmlVersion}")
-    implementation("org.jetbrains.kotlinx:kotlinx-html:${kotlinxHtmlVersion}")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:$kotlinxHtmlVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.postgresql:postgresql")
