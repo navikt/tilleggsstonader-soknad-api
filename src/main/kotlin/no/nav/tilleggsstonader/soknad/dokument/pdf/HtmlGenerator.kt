@@ -75,8 +75,8 @@ class HtmlGenerator(
 
             is Avsnitt -> div {
                 header(verdier, nivå, nivåClassName)
-                div(nivåClassName) {
-                    verdier.verdier.map {
+                verdier.verdier.map {
+                    div(nivåClassName) {
                         mapFelter(it, minOf(nivå + 1, 4))
                     }
                 }

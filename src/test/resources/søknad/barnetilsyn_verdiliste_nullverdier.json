@@ -41,12 +41,6 @@
     } ]
   }, {
     "label" : "Vedlegg",
-    "verdier" : [ {
-      "label" : "Vedlegg",
-      "verdier" : [ {
-        "verdi" : "",
-        "alternativer" : null
-      } ]
-    } ]
+    "verdier" : [ ]
   } ]
 }
