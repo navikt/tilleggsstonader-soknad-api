@@ -1,7 +1,7 @@
 val javaVersion = JavaLanguageVersion.of(21)
-val tilleggsstønaderLibsVersion = "2023.12.15-09.40.7c554b900322"
-val tilleggsstønaderKontrakterVersion = "2023.12.04-12.03.40d61264fa02"
-val familieProsesseringVersion = "2.20231026103714_2f17845"
+val tilleggsstønaderLibsVersion = "2024.01.02-12.46.9d660ad18bf7"
+val tilleggsstønaderKontrakterVersion = "2023.12.18-10.13.7d6848ac9d82"
+val familieProsesseringVersion = "2.20231212093500_bfa0e7c"
 val tokenSupportVersion = "3.2.0"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.19.3"
@@ -13,14 +13,14 @@ version = "1.0.0"
 plugins {
     application
 
-    kotlin("jvm") version "1.9.21"
+    kotlin("jvm") version "1.9.22"
     id("com.diffplug.spotless") version "6.23.3"
     id("com.github.ben-manes.versions") version "0.50.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
 
-    id("org.springframework.boot") version "3.2.0"
+    id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.4"
-    kotlin("plugin.spring") version "1.9.21"
+    kotlin("plugin.spring") version "1.9.22"
 
     id("org.cyclonedx.bom") version "1.8.1"
 }
