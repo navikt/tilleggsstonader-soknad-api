@@ -70,6 +70,7 @@ prosessering:
   fixedDelayString.in.milliseconds: 15000
   delete.after.weeks: 16
 
+
 no.nav.security.jwt:
   issuer:
     tokenx:
@@ -157,3 +158,4 @@ clients:
     uri: http://tilleggsstonader-sak
     scope: api://${CLIENT_ENV}-gcp.tilleggsstonader.tilleggsstonader-sak/.default
 
+KAFKA_TOPIC_DITTNAV: min-side.aapen-brukernotifikasjon-beskjed-v1
