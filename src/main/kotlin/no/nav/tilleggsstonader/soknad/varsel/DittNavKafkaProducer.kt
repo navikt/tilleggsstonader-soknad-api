@@ -23,12 +23,11 @@ class DittNavKafkaProducer(private val kafkaTemplate: KafkaTemplate<NokkelInput,
     fun sendToKafka(
         fnr: String,
         melding: String,
-        grupperingsnummer: String,
         eventId: String,
         link: URL? = null,
         kanal: PreferertKanal? = null,
     ) {
-        val nokkel = lagNøkkel(fnr, grupperingsnummer, eventId)
+        val nokkel = lagNøkkel(fnr, eventId)
         val beskjed = lagBeskjed(melding, link, kanal)
 
         secureLogger.debug("Sending to Kafka topic: {}: {}", topic, beskjed)
@@ -41,12 +40,11 @@ class DittNavKafkaProducer(private val kafkaTemplate: KafkaTemplate<NokkelInput,
             throw RuntimeException(errorMessage)
         }
     }
-    private fun lagNøkkel(fnr: String, grupperingsId: String, eventId: String): NokkelInput =
+    private fun lagNøkkel(fnr: String, eventId: String): NokkelInput =
         NokkelInputBuilder()
             .withAppnavn("tilleggsstonader-soknad-api")
             .withNamespace("tilleggsstonader")
             .withFodselsnummer(fnr)
-            .withGrupperingsId(grupperingsId)
             .withEventId(eventId)
             .build()
 
@@ -56,10 +54,7 @@ class DittNavKafkaProducer(private val kafkaTemplate: KafkaTemplate<NokkelInput,
             .withSynligFremTil(null)
             .withTekst(melding)
             .withTidspunkt(LocalDateTime.now(UTC))
-
-        if (link != null) builder.withLink(link)
-        if (kanal != null) builder.withEksternVarsling(true).withPrefererteKanaler(kanal)
-
+        builder.withEksternVarsling(true).withPrefererteKanaler(kanal)
         return builder.build()
     }
 }
