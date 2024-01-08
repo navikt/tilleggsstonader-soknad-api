@@ -28,7 +28,7 @@ class DittNavKafkaProducer(private val kafkaTemplate: KafkaTemplate<NokkelInput,
         kanal: PreferertKanal? = null,
     ) {
         val nokkel = lagNøkkel(fnr, eventId)
-        val beskjed = lagBeskjed(melding, link, kanal)
+        val beskjed = lagBeskjed(melding, kanal)
 
         secureLogger.debug("Sending to Kafka topic: {}: {}", topic, beskjed)
         runCatching {
@@ -48,7 +48,7 @@ class DittNavKafkaProducer(private val kafkaTemplate: KafkaTemplate<NokkelInput,
             .withEventId(eventId)
             .build()
 
-    private fun lagBeskjed(melding: String, link: URL?, kanal: PreferertKanal?): BeskjedInput {
+    private fun lagBeskjed(melding: String, kanal: PreferertKanal?): BeskjedInput {
         val builder = BeskjedInputBuilder()
             .withSikkerhetsnivaa(4)
             .withSynligFremTil(null)

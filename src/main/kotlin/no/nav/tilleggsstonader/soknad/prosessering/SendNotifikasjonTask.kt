@@ -16,13 +16,13 @@ class SendNotifikasjonTask(
 
     override fun doTask(task: Task) {
         val personident = task.metadata.getProperty("personident")
-        val message = lagNotifikasjonsMedling(task.type)
+        val message = lagNotifikasjonsMedling()
         val eventId = task.id.toString()
 
         notifikasjonsService.sendToKafka(personident, message, eventId)
     }
 
-    private fun lagNotifikasjonsMedling(type: String): String {
+    private fun lagNotifikasjonsMedling(): String {
         return "Vi har mottatt søknaden din om pass av barn."
     }
 
