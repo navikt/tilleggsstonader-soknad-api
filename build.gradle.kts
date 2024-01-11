@@ -81,9 +81,8 @@ dependencies {
     implementation("no.nav.tilleggsstonader.kontrakter:tilleggsstonader-kontrakter:$tilleggsstønaderKontrakterVersion")
 
     //Kafka
-    implementation("org.apache.avro:avro:1.11.3")
-    implementation("com.github.navikt:brukernotifikasjon-schemas:2.6.0")
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("no.nav.tms.varsel:kotlin-builder:1.0.0")
 
 
     // Test
