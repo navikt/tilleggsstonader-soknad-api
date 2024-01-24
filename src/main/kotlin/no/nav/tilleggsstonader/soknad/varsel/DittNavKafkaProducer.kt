@@ -41,7 +41,7 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
             kafkaTemplate.send(producerRecord)
         }.onFailure {
             val errorMessage = "Could not send DittNav to Kafka. Check secure logs for more information."
-            secureLogger.error("Could not send DittNav to Kafka melding={}", kafkaBeskjedJson, it)
+            secureLogger.error("Could not send DittNav to Kafka melding=${kafkaBeskjedJson}", it)
             throw RuntimeException(errorMessage)
         }
         return kafkaBeskjedJson
