@@ -44,7 +44,7 @@ class SendNotifikasjonTaskTest {
             dittNavKafkaProducer.sendToKafka(
                 FNR,
                 forventetTekst,
-                EVENT_ID,
+                SØKNAD_ID,
             )
         }
     }

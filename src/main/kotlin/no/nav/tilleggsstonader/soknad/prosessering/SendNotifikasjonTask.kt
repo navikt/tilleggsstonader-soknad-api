@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.prosessering
 import no.nav.familie.prosessering.AsyncTaskStep
 import no.nav.familie.prosessering.TaskStepBeskrivelse
 import no.nav.familie.prosessering.domene.Task
+import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.varsel.DittNavKafkaProducer
@@ -18,14 +19,16 @@ class SendNotifikasjonTask(
 
     override fun doTask(task: Task) {
         val søknad = søknadService.hentSøknad(UUID.fromString(task.payload))
-        val message = lagNotifikasjonsMelding()
-        val eventId = task.metadata["eventId"].toString()
+        val message = lagNotifikasjonsMelding(søknad.type)
+        val eventId = søknad.id.toString()
 
         notifikasjonsService.sendToKafka(søknad.personIdent, message, eventId)
     }
 
-    private fun lagNotifikasjonsMelding(): String {
-        return "Vi har mottatt søknaden din om pass av barn."
+    private fun lagNotifikasjonsMelding(stønadstype: Stønadstype): String {
+        return when (stønadstype) {
+            Stønadstype.BARNETILSYN -> "Vi har mottatt søknaden din om pass av barn."
+        }
     }
 
     companion object {
