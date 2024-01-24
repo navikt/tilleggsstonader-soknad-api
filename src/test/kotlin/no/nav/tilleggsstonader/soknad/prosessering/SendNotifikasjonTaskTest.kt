@@ -20,14 +20,14 @@ class SendNotifikasjonTaskTest {
 
     @Test
     fun `Task blir kjørt for å sende notifikasjon`() {
-        mockSøknad()
-        val søknad = søknadService.hentSøknad(fromString(SØKNAD_ID))
+        val søknad = opprettSøknad()
+        every { søknadService.hentSøknad(fromString(SØKNAD_ID)) } returns søknad
         sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknad))
         verifiserForventetKallMed("Vi har mottatt søknaden din om pass av barn.")
     }
 
     private fun verifiserForventetKallMed(forventetTekst: String) {
-        verify(exactly = 2) {
+        verify(exactly = 1) {
             søknadService.hentSøknad(fromString(SØKNAD_ID))
             dittNavKafkaProducer.sendToKafka(
                 FNR,
@@ -37,14 +37,13 @@ class SendNotifikasjonTaskTest {
         }
     }
 
-    private fun mockSøknad() {
-        every { søknadService.hentSøknad(fromString(SØKNAD_ID)) } returns
-            Søknad(
-                id = UUID.fromString(SØKNAD_ID),
-                søknadJson = JsonWrapper(""),
-                type = Stønadstype.BARNETILSYN,
-                personIdent = FNR,
-            )
+    private fun opprettSøknad(): Søknad {
+       return Søknad(
+            id = UUID.fromString(SØKNAD_ID),
+            søknadJson = JsonWrapper(""),
+            type = Stønadstype.BARNETILSYN,
+            personIdent = FNR,
+        )
     }
 
     companion object {
