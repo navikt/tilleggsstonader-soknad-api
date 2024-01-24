@@ -62,6 +62,8 @@ spec:
         - host: pdl-api.prod-fss-pub.nais.io
   tokenx:
     enabled: true
+  kafka:
+    pool: nav-prod
   azure:
     application:
       enabled: true

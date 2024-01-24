@@ -25,7 +25,7 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
     ): String {
         val kafkaBeskjedJson = VarselActionBuilder.opprett {
             type = Varseltype.Beskjed
-            varselId = eventId // TODO: er eventId unik nok i denne settinga, melding om behov for ettersendelse har den annen eventId?
+            varselId = eventId
             sensitivitet = Sensitivitet.Substantial
             ident = fnr
             tekster += Tekst(
@@ -36,7 +36,6 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
             eksternVarsling = EksternVarslingBestilling(prefererteKanaler = listOf(EksternKanal.EPOST, EksternKanal.SMS))
         }
 
-        secureLogger.debug("Sending to Kafka topic: {}: {}", topic, kafkaBeskjedJson)
         runCatching {
             val producerRecord = ProducerRecord(topic, eventId, kafkaBeskjedJson)
             kafkaTemplate.send(producerRecord)
