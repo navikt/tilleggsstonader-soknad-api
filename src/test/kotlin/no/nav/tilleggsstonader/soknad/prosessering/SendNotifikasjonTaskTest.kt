@@ -38,7 +38,7 @@ class SendNotifikasjonTaskTest {
     }
 
     private fun opprettSøknad(): Søknad {
-       return Søknad(
+        return Søknad(
             id = UUID.fromString(SØKNAD_ID),
             søknadJson = JsonWrapper(""),
             type = Stønadstype.BARNETILSYN,
