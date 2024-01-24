@@ -38,7 +38,7 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
 
         runCatching {
             val producerRecord = ProducerRecord(topic, eventId, kafkaBeskjedJson)
-            kafkaTemplate.send(producerRecord)
+            kafkaTemplate.send(producerRecord).get()
         }.onFailure {
             val errorMessage = "Could not send DittNav to Kafka. Check secure logs for more information."
             secureLogger.error("Could not send DittNav to Kafka melding=$kafkaBeskjedJson", it)
