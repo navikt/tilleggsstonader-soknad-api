@@ -52,6 +52,8 @@ kafka:
         password: ${KAFKA_CREDSTORE_PASSWORD}
   producer:
     acks: all
+    key-serializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 
 management:
