@@ -157,4 +157,4 @@ clients:
     uri: http://tilleggsstonader-sak
     scope: api://${CLIENT_ENV}-gcp.tilleggsstonader.tilleggsstonader-sak/.default
 
-KAFKA_TOPIC_DITTNAV: min-side.aapen-brukernotifikasjon-beskjed-v1
+KAFKA_TOPIC_DITTNAV: min-side.aapen-brukervarsel-v1
