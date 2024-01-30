@@ -19,7 +19,7 @@ class SøknadRoutingController(
     private val saksbehandlingClient: SaksbehandlingClient,
 ) {
 
-    @PostMapping()
+    @PostMapping
     fun sjekkRoutingForPerson(@RequestBody request: RoutingRequest): RoutingResponse {
         val skalRoutesTilNyLøsning = saksbehandlingClient.skalRoutesTilNyLøsning(
             IdentStønadstype(
@@ -27,7 +27,7 @@ class SøknadRoutingController(
                 stønadstype = request.stønadstype,
             ),
         )
-        return RoutingResponse(skalRoutesTilNyLøsning = skalRoutesTilNyLøsning)
+        return RoutingResponse(skalBehandlesINyLøsning = skalRoutesTilNyLøsning)
     }
 }
 
@@ -36,5 +36,5 @@ data class RoutingRequest(
 )
 
 data class RoutingResponse(
-    val skalRoutesTilNyLøsning: Boolean,
+    val skalBehandlesINyLøsning: Boolean,
 )
