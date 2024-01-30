@@ -5,7 +5,6 @@ import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapp
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.SøknadsskjemaBarnetilsyn
-import no.nav.tilleggsstonader.soknad.dokument.pdf.HtmlGenerator
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
@@ -15,7 +14,7 @@ import java.util.UUID
 @Service
 class PdfService(
     private val søknadService: SøknadService,
-    private val htmlGenerator: HtmlGenerator,
+    private val htmlifyClient: HtmlifyClient,
     private val dokumentClient: FamilieDokumentClient,
 ) {
 
@@ -24,7 +23,7 @@ class PdfService(
         val vedleggtitler = søknadService.finnVedleggTitlerForSøknad(søknadId)
         val søknadsskjema = parseSøknadsskjema(søknad)
         val feltMap = mapSøknad(søknadsskjema, vedleggtitler)
-        val html = htmlGenerator.generateHtml(søknad.type, feltMap, søknadsskjema.mottattTidspunkt)
+        val html = htmlifyClient.generateHtml(søknad.type, feltMap, søknadsskjema.mottattTidspunkt)
         val pdf = dokumentClient.genererPdf(html)
         søknadService.oppdaterSøknad(søknad.copy(søknadPdf = pdf))
     }

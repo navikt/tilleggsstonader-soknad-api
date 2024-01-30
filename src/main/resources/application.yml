@@ -134,4 +134,7 @@ clients:
   sak:
     uri: http://tilleggsstonader-sak
     scope: api://${CLIENT_ENV}-gcp.tilleggsstonader.tilleggsstonader-sak/.default
+  htmlify:
+    uri: http://tilleggsstonader-htmlify
+    scope: api://${CLIENT_ENV}-gcp.tilleggsstonader.tilleggsstonader-htmlify/.default
 
