@@ -15,8 +15,6 @@ fun main(args: Array<String>) {
 }
 
 private fun hentPreprodEnv(): Map<String, String> {
-    val cmd = "src/test/resources/hentEnvFraPreprod.sh"
-
     val file = File(IntegrationTest::class.java.classLoader.getResource("hentEnvFraPreprod.sh")!!.file)
 
     val process = ProcessBuilder(file.path).start()
