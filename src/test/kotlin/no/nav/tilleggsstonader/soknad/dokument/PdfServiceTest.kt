@@ -11,8 +11,8 @@ import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Ignore
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.client.postForEntity
@@ -43,7 +43,7 @@ class PdfServiceTest {
     }
 
     @Test
-    @Ignore // html-fila må prettyfies etter at den har blitt generert, htmlify returnerer all html som en rad
+    @Disabled // html-fila må prettyfies etter at den har blitt generert, htmlify returnerer all html som en rad
     fun `skal lage pdf fra barnetilsyn`() {
         val søknad = lagSøknad(SøknadBarnetilsynUtil.søknad)
         every { søknadService.hentSøknad(søknad.id) } returns søknad
