@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.sak
 
+import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
 import no.nav.tilleggsstonader.kontrakter.sak.journalføring.AutomatiskJournalføringRequest
 import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
 import org.springframework.beans.factory.annotation.Qualifier
@@ -23,4 +24,14 @@ class SaksbehandlingClient(
             .pathSegment("handter-soknad").build().toUriString()
         postForEntityNullable<Void>(uri, request)
     }
+
+    fun skalRoutesTilNyLøsning(request: IdentStønadstype): Boolean {
+        val uri = UriComponentsBuilder.fromUri(sakUri.toUri())
+            .pathSegment("routing-soknad").build().toUriString()
+        return postForEntity<SkalRoutesINyLøsning>(uri, request).skalBehandlesINyLøsning
+    }
 }
+
+private data class SkalRoutesINyLøsning(
+    val skalBehandlesINyLøsning: Boolean,
+)

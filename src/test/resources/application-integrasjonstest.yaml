@@ -24,6 +24,8 @@ no.nav.security.jwt:
       token-endpoint-url: http://metadata
     familie-dokument:
       token-endpoint-url: http://metadata
+    sak-client_credentials:
+      token-endpoint-url: http://metadata
 
 
 TOKEN_X_WELL_KNOWN_URL: http://localhost
