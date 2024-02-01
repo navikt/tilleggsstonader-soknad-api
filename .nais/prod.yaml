@@ -57,6 +57,7 @@ spec:
     outbound:
       rules:
         - application: tilleggsstonader-integrasjoner
+        - application: tilleggsstonader-htmlify
         - application: tilleggsstonader-sak
       external:
         - host: pdl-api.prod-fss-pub.nais.io

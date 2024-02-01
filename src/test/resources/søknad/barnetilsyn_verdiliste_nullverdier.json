@@ -6,41 +6,56 @@
       "label" : "Hovedutelse?",
       "verdier" : [ {
         "verdi" : "AAP",
-        "alternativer" : [ "Alt1", "Alt2" ]
-      } ]
-    } ]
+        "alternativer" : [ "Alt1", "Alt2" ],
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    } ],
+    "type" : "AVSNITT"
   }, {
     "label" : "Aktivitet",
     "verdier" : [ {
       "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
       "verdier" : [ {
         "verdi" : "Ja",
-        "alternativer" : [ "Alt1", "Alt2" ]
-      } ]
-    } ]
+        "alternativer" : [ "Alt1", "Alt2" ],
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    } ],
+    "type" : "AVSNITT"
   }, {
     "label" : "Barn",
     "verdier" : [ {
       "label" : "Navn",
       "verdier" : [ {
         "verdi" : "Navn",
-        "alternativer" : null
-      } ]
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
     }, {
       "label" : "Fødselsnummer",
       "verdier" : [ {
         "verdi" : "ident",
-        "alternativer" : null
-      } ]
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
     }, {
       "label" : "label",
       "verdier" : [ {
         "verdi" : "svar",
-        "alternativer" : [ ]
-      } ]
-    } ]
+        "alternativer" : [ ],
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    } ],
+    "type" : "AVSNITT"
   }, {
     "label" : "Vedlegg",
-    "verdier" : [ ]
-  } ]
+    "verdier" : [ ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
 }
