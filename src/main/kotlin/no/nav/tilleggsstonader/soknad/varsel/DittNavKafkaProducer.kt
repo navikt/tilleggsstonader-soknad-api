@@ -1,8 +1,6 @@
 package no.nav.tilleggsstonader.soknad.varsel
 
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
-import no.nav.tms.varsel.action.EksternKanal
-import no.nav.tms.varsel.action.EksternVarslingBestilling
 import no.nav.tms.varsel.action.Sensitivitet
 import no.nav.tms.varsel.action.Tekst
 import no.nav.tms.varsel.action.Varseltype
@@ -33,7 +31,6 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
                 tekst = melding,
                 default = true,
             )
-            eksternVarsling = EksternVarslingBestilling(prefererteKanaler = listOf(EksternKanal.EPOST, EksternKanal.SMS))
         }
 
         runCatching {
