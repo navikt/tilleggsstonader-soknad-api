@@ -26,18 +26,24 @@ import kotlin.reflect.full.primaryConstructor
  * [Verdi] brukes For [EnumFelt], [TekstFelt] etc for å plukke ut selve verdiet og vise det frem i html'en
  * [HorisontalLinje] brukes i eks tilfeller der man har en liste med Barn, og lager en linje mellom hvert barn
  */
-sealed class HtmlFelt
+sealed class HtmlFelt(val type: HtmlFeltType)
+
+enum class HtmlFeltType {
+    AVSNITT,
+    VERDI,
+    LINJE,
+}
 data class Avsnitt(
     val label: String,
     val verdier: List<HtmlFelt>,
-) : HtmlFelt()
+) : HtmlFelt(HtmlFeltType.AVSNITT)
 
 data class Verdi(
     val verdi: String,
     val alternativer: List<String>? = null,
-) : HtmlFelt()
+) : HtmlFelt(HtmlFeltType.VERDI)
 
-data object HorisontalLinje : HtmlFelt()
+data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
 
 object SøknadTreeWalker {
 

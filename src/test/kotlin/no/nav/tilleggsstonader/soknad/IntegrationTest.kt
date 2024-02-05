@@ -44,6 +44,7 @@ class DefaultRestTemplateConfiguration {
 @ActiveProfiles(
     "integrasjonstest",
     "mock-pdl",
+    "mock-sak",
     "mock-vedlegg",
 )
 @EnableMockOAuth2Server
