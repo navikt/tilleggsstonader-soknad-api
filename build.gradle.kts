@@ -27,6 +27,7 @@ plugins {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven("https://jitpack.io")
 
     maven {
         url = uri("https://github-package-registry-mirror.gc.nav.no/cached/maven-release")
@@ -73,6 +74,11 @@ dependencies {
     implementation("no.nav.tilleggsstonader-libs:sikkerhet:$tilleggsstønaderLibsVersion")
 
     implementation("no.nav.tilleggsstonader.kontrakter:tilleggsstonader-kontrakter:$tilleggsstønaderKontrakterVersion")
+
+    //Kafka
+    implementation("org.springframework.kafka:spring-kafka")
+    implementation("no.nav.tms.varsel:kotlin-builder:1.0.0")
+
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")

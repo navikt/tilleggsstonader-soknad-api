@@ -13,6 +13,7 @@ import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.prosessering.LagPdfTask
+import no.nav.tilleggsstonader.soknad.prosessering.SendNotifikasjonTask
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
@@ -62,6 +63,7 @@ class SøknadService(
             vedlegg = vedlegg,
         )
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
+        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
         return opprettetSøknad.id
     }
 
