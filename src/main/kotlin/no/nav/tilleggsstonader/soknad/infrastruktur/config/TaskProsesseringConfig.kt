@@ -16,7 +16,7 @@ class TaskProsesseringConfig(
     @Bean
     fun prosesseringInfoProvider() = object : ProsesseringInfoProvider {
         override fun hentBrukernavn(): String = try {
-            SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread")
+            SpringTokenValidationContextHolder().getTokenValidationContext().getClaims("azuread")
                 .getStringClaim("preferred_username")
         } catch (e: Exception) {
             error("Mangler preferred_username på request")
@@ -28,9 +28,10 @@ class TaskProsesseringConfig(
     }
 
     fun hentGrupperFraToken(): Set<String> = try {
-        SpringTokenValidationContextHolder().tokenValidationContext
+        @Suppress("UNCHECKED_CAST")
+        SpringTokenValidationContextHolder().getTokenValidationContext()
             .getClaims("azuread")
-            ?.get("groups") as List<String>?
+            .get("groups") as List<String>?
     } catch (e: Exception) {
         error("Mangler groups på request")
     }?.toSet() ?: emptySet()
