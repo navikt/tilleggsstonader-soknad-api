@@ -5,7 +5,7 @@
     "verdier" : [ {
       "label" : "Hovedutelse?",
       "verdier" : [ {
-        "verdi" : "AAP",
+        "verdi" : "AAP, Overgangsstønad",
         "alternativer" : [ "Alt1", "Alt2" ],
         "type" : "VERDI"
       } ],

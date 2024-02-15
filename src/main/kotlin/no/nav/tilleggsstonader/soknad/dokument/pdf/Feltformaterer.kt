@@ -25,7 +25,7 @@ object Feltformaterer {
             is Month -> tilUtskriftsformat(verdi)
             is Boolean -> tilUtskriftsformat(verdi)
             is Double -> tilUtskriftsformat(verdi)
-            is Collection<*> -> verdi.joinToString("\n\n") { mapVerdi(it!!) }
+            is Collection<*> -> verdi.joinToString(", ") { mapVerdi(it!!) }
             is LocalDate -> tilUtskriftsformat(verdi)
             is LocalDateTime -> tilUtskriftsformat(verdi)
             else -> error("Kan ikke mappe $verdi")
