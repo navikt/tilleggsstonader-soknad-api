@@ -3,13 +3,14 @@ package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 import no.nav.tilleggsstonader.kontrakter.felles.Hovedytelse
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 
 data class SøknadBarnetilsynDto(
-    val hovedytelse: EnumFelt<Hovedytelse>,
+    val hovedytelse: EnumFlereValgFelt<Hovedytelse>,
     val aktivitet: Aktivitet,
     val barnMedBarnepass: List<BarnMedBarnepass>,
     val dokumentasjon: List<DokumentasjonFelt>,
