@@ -14,10 +14,17 @@ import java.util.UUID
 
 object SøknadBarnetilsynUtil {
     val søknad = SøknadBarnetilsynDto(
-        hovedytelse = EnumFlereValgFelt(
-            label = "Hovedutelse?",
-            verdier = listOf(VerdiFelt(Hovedytelse.AAP, "AAP"), VerdiFelt(Hovedytelse.OVERGANGSSTØNAD, "Overgangsstønad")),
-            alternativer = listOf("Alt1", "Alt2"),
+        hovedytelse = HovedytelseDto(
+            ytelse = EnumFlereValgFelt(
+                label = "Hovedutelse?",
+                verdier = listOf(
+                    VerdiFelt(Hovedytelse.AAP, "AAP"),
+                    VerdiFelt(Hovedytelse.OVERGANGSSTØNAD, "Overgangsstønad"),
+                ),
+                alternativer = listOf("Alt1", "Alt2"),
+            ),
+            boddSammenhengende = EnumFelt("Bodd sammenhengende?", JaNei.JA, "Ja", emptyList()),
+            planleggerBoINorgeNeste12mnd = EnumFelt("Planlegger du noe?", JaNei.JA, "Ja", emptyList()),
         ),
         aktivitet = Aktivitet(
             utdanning = EnumFelt(

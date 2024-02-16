@@ -10,6 +10,22 @@
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
+    }, {
+      "label" : "Bodd sammenhengende?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : [ ],
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Planlegger du noe?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : [ ],
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
     } ],
     "type" : "AVSNITT"
   }, {
