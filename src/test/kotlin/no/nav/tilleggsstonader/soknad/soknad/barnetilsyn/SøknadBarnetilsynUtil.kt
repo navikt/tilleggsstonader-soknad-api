@@ -4,15 +4,21 @@ import no.nav.tilleggsstonader.kontrakter.felles.Hovedytelse
 import no.nav.tilleggsstonader.kontrakter.søknad.Dokument
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
+import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
 import java.util.UUID
 
 object SøknadBarnetilsynUtil {
     val søknad = SøknadBarnetilsynDto(
-        hovedytelse = EnumFelt("Hovedutelse?", Hovedytelse.AAP, "AAP", listOf("Alt1", "Alt2")),
+        hovedytelse = EnumFlereValgFelt(
+            label = "Hovedutelse?",
+            verdier = listOf(VerdiFelt(Hovedytelse.AAP, "AAP"), VerdiFelt(Hovedytelse.OVERGANGSSTØNAD, "Overgangsstønad")),
+            alternativer = listOf("Alt1", "Alt2"),
+        ),
         aktivitet = Aktivitet(
             utdanning = EnumFelt(
                 "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",

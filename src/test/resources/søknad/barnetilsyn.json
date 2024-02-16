@@ -6,8 +6,13 @@
     "hovedytelse" : {
       "hovedytelse" : {
         "label" : "Hovedutelse?",
-        "verdi" : "AAP",
-        "svarTekst" : "AAP",
+        "verdier" : [ {
+          "verdi" : "AAP",
+          "label" : "AAP"
+        }, {
+          "verdi" : "OVERGANGSSTØNAD",
+          "label" : "Overgangsstønad"
+        } ],
         "alternativer" : [ "Alt1", "Alt2" ]
       }
     },

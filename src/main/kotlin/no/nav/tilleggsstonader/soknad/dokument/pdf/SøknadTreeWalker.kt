@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.dokument.pdf
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
@@ -75,6 +76,9 @@ object SøknadTreeWalker {
             is TekstFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is EnumFelt<*> -> listOf(
                 Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer))),
+            )
+            is EnumFlereValgFelt<*> -> listOf(
+                Avsnitt(label = entitet.label, verdier = listOf(Verdi(verdi = mapVerdi(entitet.verdier.map { it.label }), alternativer = entitet.alternativer))),
             )
 
             is DokumentasjonFelt -> emptyList()

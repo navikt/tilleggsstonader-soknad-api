@@ -17,7 +17,7 @@ class SaksbehandlingClientConfig {
     @Bean
     fun saksbehandlingClient(): SaksbehandlingClient {
         val client = mockk<SaksbehandlingClient>()
-        every { client.skalRoutesTilNyLøsning(any()) } answers { false }
+        every { client.skalRoutesTilNyLøsning(any()) } answers { true }
         justRun { client.sendTilSak(any()) }
         return client
     }
