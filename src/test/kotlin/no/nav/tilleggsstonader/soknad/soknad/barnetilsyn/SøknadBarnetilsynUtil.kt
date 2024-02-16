@@ -17,7 +17,7 @@ object SøknadBarnetilsynUtil {
         hovedytelse = EnumFlereValgFelt(
             label = "Hovedutelse?",
             verdier = listOf(VerdiFelt(Hovedytelse.AAP, "AAP"), VerdiFelt(Hovedytelse.OVERGANGSSTØNAD, "Overgangsstønad")),
-            alternativer = listOf("Alt1", "Alt2")
+            alternativer = listOf("Alt1", "Alt2"),
         ),
         aktivitet = Aktivitet(
             utdanning = EnumFelt(
