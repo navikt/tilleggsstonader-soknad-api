@@ -5,7 +5,7 @@
   "skjema" : {
     "hovedytelse" : {
       "hovedytelse" : {
-        "label" : "Hovedutelse?",
+        "label" : "Hovedytelse?",
         "verdier" : [ {
           "verdi" : "AAP",
           "label" : "AAP"
@@ -22,7 +22,7 @@
         "alternativer" : [ ]
       },
       "planleggerBoINorgeNeste12mnd" : {
-        "label" : "Planlegger du noe?",
+        "label" : "Planlegger du å bo i Norge de neste 12 månedene?",
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]

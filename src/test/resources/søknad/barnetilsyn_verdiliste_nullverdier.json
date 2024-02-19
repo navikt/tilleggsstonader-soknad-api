@@ -3,7 +3,7 @@
   "verdier" : [ {
     "label" : "Hovedytelse",
     "verdier" : [ {
-      "label" : "Hovedutelse?",
+      "label" : "Hovedytelse?",
       "verdier" : [ {
         "verdi" : "AAP, Overgangsstønad",
         "alternativer" : [ "Alt1", "Alt2" ],
@@ -19,7 +19,7 @@
       } ],
       "type" : "AVSNITT"
     }, {
-      "label" : "Planlegger du noe?",
+      "label" : "Planlegger du å bo i Norge de neste 12 månedene?",
       "verdier" : [ {
         "verdi" : "Ja",
         "alternativer" : [ ],
