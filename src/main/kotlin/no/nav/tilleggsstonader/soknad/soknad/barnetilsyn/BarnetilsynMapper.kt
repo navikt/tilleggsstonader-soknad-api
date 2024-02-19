@@ -13,12 +13,19 @@ class BarnetilsynMapper {
 
     fun map(dto: SøknadBarnetilsynDto): SøknadsskjemaBarnetilsyn {
         return SøknadsskjemaBarnetilsyn(
-            hovedytelse = HovedytelseAvsnitt(dto.hovedytelse),
+            hovedytelse = mapHovedytelse(dto),
             aktivitet = mapAktivitet(dto),
             barn = BarnAvsnitt(mapBarn(dto)),
             dokumentasjon = dto.dokumentasjon,
         )
     }
+
+    private fun mapHovedytelse(dto: SøknadBarnetilsynDto) =
+        HovedytelseAvsnitt(
+            hovedytelse = dto.hovedytelse.ytelse,
+            boddSammenhengende = dto.hovedytelse.boddSammenhengende,
+            planleggerBoINorgeNeste12mnd = dto.hovedytelse.planleggerBoINorgeNeste12mnd,
+        )
 
     private fun mapBarn(dto: SøknadBarnetilsynDto) =
         dto.barnMedBarnepass.map {

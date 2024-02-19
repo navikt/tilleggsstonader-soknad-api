@@ -5,7 +5,7 @@
   "skjema" : {
     "hovedytelse" : {
       "hovedytelse" : {
-        "label" : "Hovedutelse?",
+        "label" : "Hovedytelse?",
         "verdier" : [ {
           "verdi" : "AAP",
           "label" : "AAP"
@@ -14,6 +14,18 @@
           "label" : "Overgangsstønad"
         } ],
         "alternativer" : [ "Alt1", "Alt2" ]
+      },
+      "boddSammenhengende" : {
+        "label" : "Bodd sammenhengende?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
+      },
+      "planleggerBoINorgeNeste12mnd" : {
+        "label" : "Planlegger du å bo i Norge de neste 12 månedene?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
       }
     },
     "aktivitet" : {

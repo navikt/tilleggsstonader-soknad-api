@@ -10,10 +10,16 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 
 data class SøknadBarnetilsynDto(
-    val hovedytelse: EnumFlereValgFelt<Hovedytelse>,
+    val hovedytelse: HovedytelseDto,
     val aktivitet: Aktivitet,
     val barnMedBarnepass: List<BarnMedBarnepass>,
     val dokumentasjon: List<DokumentasjonFelt>,
+)
+
+data class HovedytelseDto(
+    val ytelse: EnumFlereValgFelt<Hovedytelse>,
+    val boddSammenhengende: EnumFelt<JaNei>?,
+    val planleggerBoINorgeNeste12mnd: EnumFelt<JaNei>?,
 )
 
 data class Aktivitet(
