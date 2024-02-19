@@ -30,7 +30,7 @@ class FamilieVedleggClient(
 
     companion object {
 
-        private const val HENT = "api/mapper/familievedlegg/"
+        private const val HENT = "api/mapper/tilleggsstonad"
         private val HENT_HEADERS = HttpHeaders().apply {
             accept = listOf(MediaType.APPLICATION_OCTET_STREAM)
         }
