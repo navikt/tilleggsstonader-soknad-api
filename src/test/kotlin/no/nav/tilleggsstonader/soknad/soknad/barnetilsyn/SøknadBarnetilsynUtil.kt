@@ -24,7 +24,7 @@ object SøknadBarnetilsynUtil {
                 alternativer = listOf("Alt1", "Alt2"),
             ),
             boddSammenhengende = EnumFelt("Bodd sammenhengende?", JaNei.JA, "Ja", emptyList()),
-            planleggerBoINorgeNeste12mnd = EnumFelt("Planlegger du noe?", JaNei.JA, "Ja", emptyList()),
+            planleggerBoINorgeNeste12mnd = EnumFelt("Planlegger du å bo i Norge de neste 12 månedene?", JaNei.JA, "Ja", emptyList()),
         ),
         aktivitet = Aktivitet(
             utdanning = EnumFelt(
