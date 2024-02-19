@@ -21,7 +21,7 @@ class FamilieVedleggClient(
 
     private val hentVedleggUri = UriComponentsBuilder.fromUri(dokumentApiURI)
         .path(HENT)
-        .pathSegment("{id}")
+        .pathSegment("{id}", "pdf")
         .encode().toUriString()
 
     fun hentVedlegg(vedleggId: UUID): ByteArray {
