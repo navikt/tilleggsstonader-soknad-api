@@ -16,7 +16,7 @@ object SøknadBarnetilsynUtil {
     val søknad = SøknadBarnetilsynDto(
         hovedytelse = HovedytelseDto(
             ytelse = EnumFlereValgFelt(
-                label = "Hovedutelse?",
+                label = "Hovedytelse?",
                 verdier = listOf(
                     VerdiFelt(Hovedytelse.AAP, "AAP"),
                     VerdiFelt(Hovedytelse.OVERGANGSSTØNAD, "Overgangsstønad"),
