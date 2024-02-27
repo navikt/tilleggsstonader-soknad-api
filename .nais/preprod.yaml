@@ -62,6 +62,7 @@ spec:
           namespace: teamfamilie
       external:
         - host: pdl-api-q1.dev-fss-pub.nais.io
+        - host: kodeverk-api.nav.no
   tokenx:
     enabled: true
   azure:
