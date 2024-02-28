@@ -4,17 +4,11 @@ import java.time.LocalDate
 
 data class PersonMedBarnDto(
     val navn: String,
-    val adresse: Adresse?,
+    val adresse: String,
     val telefonnr: String,
     val epost: String,
     val kontonr: String,
     val barn: List<Barn>,
-)
-
-data class Adresse(
-    val adresse: String,
-    val postnummer: String,
-    val poststed: String,
 )
 
 data class Barn(
