@@ -1,9 +1,11 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknadsskjema
+import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.mapBarn
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
@@ -18,8 +20,10 @@ class SøknadTreeWalkerTest {
     inner class Barnetilsyn {
         @Test
         fun `skal mappe barnetilsyn`() {
+            val søknad = SøknadBarnetilsynUtil.søknad
+            val barn = mapBarn(søknad)
             val result = SøknadTreeWalker.mapSøknad(
-                lagSøknadsskjema(BarnetilsynMapper().map(SøknadBarnetilsynUtil.søknad)),
+                lagSøknadsskjema(BarnetilsynMapper().map(søknad, barn, Språkkode.NB)),
                 emptyList(),
             )
             assertExpected(
@@ -39,7 +43,7 @@ class SøknadTreeWalkerTest {
                 årsak = null,
             )
         val søknad = SøknadBarnetilsynUtil.søknad.copy(barnMedBarnepass = listOf(barnMedBarnepass))
-        val søknadsskjema = lagSøknadsskjema(BarnetilsynMapper().map(søknad))
+        val søknadsskjema = lagSøknadsskjema(BarnetilsynMapper().map(søknad, mapBarn(søknad), Språkkode.NB))
         val result = SøknadTreeWalker.mapSøknad(søknadsskjema, emptyList())
         assertExpected(
             "søknad/barnetilsyn_verdiliste_nullverdier.json",

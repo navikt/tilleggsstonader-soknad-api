@@ -45,7 +45,7 @@
     "verdier" : [ {
       "label" : "Navn",
       "verdier" : [ {
-        "verdi" : "Navn",
+        "verdi" : "Fornavn Etternavn",
         "alternativer" : null,
         "type" : "VERDI"
       } ],
