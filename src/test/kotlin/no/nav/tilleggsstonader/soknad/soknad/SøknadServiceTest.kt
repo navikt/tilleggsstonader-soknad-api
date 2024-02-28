@@ -81,7 +81,7 @@ class SøknadServiceTest {
 
             val lagretVedlegg = vedleggSlot.captured.single()
             assertThat(lagretVedlegg.id).isEqualTo(vedlegg.id)
-            assertThat(lagretVedlegg.type).isEqualTo(Vedleggstype.EKSEMPEL)
+            assertThat(lagretVedlegg.type).isEqualTo(Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE)
             assertThat(lagretVedlegg.søknadId).isEqualTo(søknadId)
             assertThat(lagretVedlegg.navn).isEqualTo(vedlegg.navn)
             assertThat(lagretVedlegg.innhold).isEqualTo(byteArrayOf(12))
@@ -101,7 +101,7 @@ class SøknadServiceTest {
 
     private fun lagDokumentasjonFelt(vedlegg: Dokument) = listOf(
         DokumentasjonFelt(
-            type = Vedleggstype.EKSEMPEL,
+            type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
             label = "label",
             harSendtInn = false,
             opplastedeVedlegg = listOf(vedlegg),

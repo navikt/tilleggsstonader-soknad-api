@@ -45,7 +45,7 @@ object SøknadBarnetilsynUtil {
     )
 
     private fun lagDokumentasjonFelt() = DokumentasjonFelt(
-        type = Vedleggstype.EKSEMPEL,
+        type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
         label = "Vedlegglabel",
         harSendtInn = false,
         opplastedeVedlegg = listOf(
