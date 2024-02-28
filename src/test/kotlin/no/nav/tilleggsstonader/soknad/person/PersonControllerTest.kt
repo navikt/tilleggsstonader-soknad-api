@@ -32,6 +32,6 @@ class PersonControllerTest : IntegrationTest() {
         val response = restTemplate.exchange<PersonMedBarnDto>(url, HttpMethod.GET, HttpEntity(null, headers))
 
         verify(exactly = 1) { pdlClient.hentSøker(Fødselsnummer(personident)) }
-        assertThat(response.body!!.navn).isEqualTo("fornavn etternavn")
+        assertThat(response.body!!.visningsnavn).isEqualTo("fornavn etternavn")
     }
 }

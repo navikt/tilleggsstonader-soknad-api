@@ -52,7 +52,9 @@ class SøknadServiceTest {
     @BeforeEach
     fun setUp() {
         every { søknadRepository.insert(any()) } answers { firstArg() }
-        every { person.barn } returns søknad.barnMedBarnepass.map { Barn(it.ident, "navn", LocalDate.now(), 3) }
+        every { person.barn } returns søknad.barnMedBarnepass.map {
+            Barn(it.ident, "fornavn", "fornavn etternavn", LocalDate.now(), 3)
+        }
         every { personService.hentSøker(Fødselsnummer(personIdent)) } returns person
         every { vedleggRepository.insertAll(capture(vedleggSlot)) } answers { firstArg() }
     }

@@ -36,7 +36,8 @@ class PersonService(
         }
 
         return PersonMedBarnDto(
-            navn = søker.navn.first().visningsnavn(),
+            fornavn = søker.navn.first().fornavn,
+            visningsnavn = søker.navn.first().visningsnavn(),
             adresse = adresseMapper.tilFormatertAdresse(søker),
             telefonnr = "950863265",
             epost = "mail@gmail.com",
@@ -53,7 +54,8 @@ class PersonService(
                 val alder = Period.between(fødselsdato, LocalDate.now()).years
                 Barn(
                     ident = ident,
-                    navn = pdlBarn.navn.first().visningsnavn(),
+                    fornavn = pdlBarn.navn.first().fornavn,
+                    visningsnavn = pdlBarn.navn.first().visningsnavn(),
                     fødselsdato = fødselsdato,
                     alder = alder,
                 )
