@@ -59,6 +59,8 @@ spec:
         - application: tilleggsstonader-integrasjoner
         - application: tilleggsstonader-htmlify
         - application: tilleggsstonader-sak
+        - application: kodeverk-api
+          namespace: team-rocket
       external:
         - host: pdl-api.prod-fss-pub.nais.io
   tokenx:
