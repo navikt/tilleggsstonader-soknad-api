@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.person.pdl
 
-import no.nav.tilleggsstonader.soknad.infrastruktur.config.SecureLogger.secureLogger
+import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Adressebeskyttelse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBolkResponse
