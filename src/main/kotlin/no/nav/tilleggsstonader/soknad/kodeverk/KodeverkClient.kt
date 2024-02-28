@@ -22,7 +22,7 @@ class KodeverkClient(
 
     private val kodeverkUri = UriComponentsBuilder.fromUri(uri)
         .pathSegment("api", "v1", "kodeverk", "{kodeverksnavn}", "koder", "betydninger")
-        .queryParam("ekskluderUgyldige", "false") // henter historikk
+        .queryParam("ekskluderUgyldige", "true") // henter ikke historikk
         .queryParam("spraak", "nb")
         .encode()
         .toUriString()
