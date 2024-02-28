@@ -17,7 +17,7 @@ import java.util.UUID
  * Disse blir cachet i [CachedKodeverkService]
  */
 @Component
-@Profile("!local & !integrasjonstest")
+@Profile("!integrasjonstest")
 class KodeverkInitializer(
     private val kodeverkService: CachedKodeverkService,
     @Qualifier("kodeverkCache")

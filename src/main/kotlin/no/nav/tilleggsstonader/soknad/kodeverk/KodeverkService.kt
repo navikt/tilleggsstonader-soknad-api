@@ -2,21 +2,10 @@ package no.nav.tilleggsstonader.soknad.kodeverk
 
 import no.nav.tilleggsstonader.kontrakter.kodeverk.KodeverkDto
 import no.nav.tilleggsstonader.kontrakter.kodeverk.hentGjeldende
-import no.nav.tilleggsstonader.libs.log.mdc.MDCConstants
 import org.slf4j.LoggerFactory
-import org.slf4j.MDC
-import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.boot.context.event.ApplicationReadyEvent
-import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.context.ApplicationListener
-import org.springframework.context.annotation.Profile
-import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
-import java.time.LocalDate
-import java.util.UUID
 
 /**
  * Henter cachade verdier fra kodeverk. Kodeverk inneholder mapping av div verdier til norsk tekst av verdiet.
