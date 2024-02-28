@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.infrastruktur.config
 
+import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
@@ -19,8 +20,7 @@ class ApiExceptionHandler {
             ?.value
             ?: HttpStatus.INTERNAL_SERVER_ERROR
         logger.error("Ukjent feil status=${responseStatus.value()}")
-        // TODO securelogger når vi har tilgang
-        logger.error("Ukjent feil status=${responseStatus.value()}", throwable)
+        secureLogger.error("Ukjent feil status=${responseStatus.value()}", throwable)
         return ProblemDetail.forStatusAndDetail(responseStatus, "Ukjent feil")
     }
 }
