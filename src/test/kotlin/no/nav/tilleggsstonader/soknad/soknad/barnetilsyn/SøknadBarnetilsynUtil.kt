@@ -41,19 +41,32 @@ object SøknadBarnetilsynUtil {
                 EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList()),
             ),
         ),
-        dokumentasjon = listOf(lagDokumentasjonFelt()),
+        dokumentasjon = listOf(lagDokumentasjonFelt(), lagDokumentasjonFeltBarn()),
     )
 
     private fun lagDokumentasjonFelt() = DokumentasjonFelt(
-        type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
+        type = Vedleggstype.UTGIFTER_PASS_ANNET,
         label = "Vedlegglabel",
-        harSendtInn = false,
+        harSendtInn = true,
         opplastedeVedlegg = listOf(
             Dokument(
                 id = UUID.fromString("98fd0f9b-1206-4918-80d9-e76f85ba1b39"),
                 "Navn på vedlegg",
             ),
         ),
+    )
+
+    private fun lagDokumentasjonFeltBarn() = DokumentasjonFelt(
+        type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
+        label = "Vedlegglabel",
+        harSendtInn = false,
+        opplastedeVedlegg = listOf(
+            Dokument(
+                id = UUID.fromString("3e5f0073-036b-4da1-af82-787fecdbb481"),
+                "Navn på vedlegg",
+            ),
+        ),
+        barnId = "08921997974",
     )
 
     fun lagBarn(
