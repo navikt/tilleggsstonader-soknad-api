@@ -17,8 +17,7 @@ class SøknadTreeWalkerTest {
     inner class Barnetilsyn {
         @Test
         fun `skal mappe barnetilsyn`() {
-            val søknad = SøknadBarnetilsynUtil.søknad
-            val søknadsskjema = SøknadTreeWalker.mapSøknad(lagSøknadsksjema(søknad), emptyList())
+            val søknadsskjema = SøknadTreeWalker.mapSøknad(lagSøknadsksjema(SøknadBarnetilsynUtil.søknad))
             assertExpected(
                 "søknad/barnetilsyn_verdiliste.json",
                 objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(søknadsskjema),
@@ -38,7 +37,7 @@ class SøknadTreeWalkerTest {
         val søknad =
             SøknadBarnetilsynUtil.søknad.copy(barnMedBarnepass = listOf(barnMedBarnepass), dokumentasjon = emptyList())
         val søknadsskjema = lagSøknadsksjema(søknad)
-        val result = SøknadTreeWalker.mapSøknad(søknadsskjema, emptyList())
+        val result = SøknadTreeWalker.mapSøknad(søknadsskjema)
         assertExpected(
             "søknad/barnetilsyn_verdiliste_nullverdier.json",
             objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result),

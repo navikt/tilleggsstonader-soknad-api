@@ -20,9 +20,8 @@ class PdfService(
 
     fun lagPdf(søknadId: UUID) {
         val søknad = søknadService.hentSøknad(søknadId)
-        val vedleggtitler = søknadService.finnVedleggTitlerForSøknad(søknadId)
         val søknadsskjema = parseSøknadsskjema(søknad)
-        val feltMap = mapSøknad(søknadsskjema, vedleggtitler)
+        val feltMap = mapSøknad(søknadsskjema)
         val html = htmlifyClient.generateHtml(søknad.type, feltMap, søknadsskjema.mottattTidspunkt)
         val pdf = dokumentClient.genererPdf(html)
         søknadService.oppdaterSøknad(søknad.copy(søknadPdf = pdf))
