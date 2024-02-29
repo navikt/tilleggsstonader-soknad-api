@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
@@ -34,9 +35,15 @@ enum class HtmlFeltType {
     VERDI,
     LINJE,
 }
+
+/**
+ * @param beholdMargin gjør at htmlify beholder margin, og ikke legger på ekstra margin
+ */
 data class Avsnitt(
     val label: String,
     val verdier: List<HtmlFelt>,
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    val beholdMargin: Boolean? = null,
 ) : HtmlFelt(HtmlFeltType.AVSNITT)
 
 data class Verdi(
@@ -48,13 +55,37 @@ data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
 
 object SøknadTreeWalker {
 
-    fun mapSøknad(
-        søknad: Søknadsskjema<*>,
-        vedleggTitler: List<String>,
-    ): Avsnitt {
+    fun mapSøknad(søknad: Søknadsskjema<*>): Avsnitt {
         val finnFelter = mapFelter(søknad.skjema, søknad.språk)
-        val vedlegg = Avsnitt("Vedlegg", Feltformaterer.mapVedlegg(vedleggTitler))
+        val vedlegg = Avsnitt("Vedlegg", mapVedlegg(søknad))
         return Avsnitt(tittelSøknadsskjema(søknad), finnFelter + vedlegg)
+    }
+
+    private fun mapVedlegg(søknad: Søknadsskjema<*>): List<HtmlFelt> {
+        require(søknad.språk == Språkkode.NB) {
+            "Må legge inn mapping av språk ${søknad.språk} for vedleggstitler"
+        }
+        val identTilNavn = mapBarnIdentTilNavn(søknad)
+        val dokumentasjon = søknad.skjema.dokumentasjon
+        return dokumentasjon.groupBy { it.barnId }
+            .flatMap { (barnId, values) ->
+                val verdier = Feltformaterer.mapVedlegg(values.map { it.type.tittel }.sorted())
+                if (barnId != null) {
+                    val navn = identTilNavn[barnId] ?: error("Finner ikke barn=$barnId")
+                    listOf(Avsnitt("Vedlegg $navn", verdier, beholdMargin = true))
+                } else {
+                    verdier
+                }
+            }
+    }
+
+    private fun mapBarnIdentTilNavn(søknad: Søknadsskjema<*>): Map<String, String> {
+        val skjema = søknad.skjema
+        return if (skjema is SøknadsskjemaBarnetilsyn) {
+            skjema.barn.barnMedBarnepass.associate { it.ident.verdi to it.navn.verdi }
+        } else {
+            emptyMap()
+        }
     }
 
     /**
@@ -77,8 +108,17 @@ object SøknadTreeWalker {
             is EnumFelt<*> -> listOf(
                 Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer))),
             )
+
             is EnumFlereValgFelt<*> -> listOf(
-                Avsnitt(label = entitet.label, verdier = listOf(Verdi(verdi = mapVerdi(entitet.verdier.map { it.label }), alternativer = entitet.alternativer))),
+                Avsnitt(
+                    label = entitet.label,
+                    verdier = listOf(
+                        Verdi(
+                            verdi = mapVerdi(entitet.verdier.map { it.label }),
+                            alternativer = entitet.alternativer,
+                        ),
+                    ),
+                ),
             )
 
             is DokumentasjonFelt -> emptyList()
