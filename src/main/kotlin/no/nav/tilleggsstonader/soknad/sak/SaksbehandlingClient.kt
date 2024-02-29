@@ -1,7 +1,7 @@
 package no.nav.tilleggsstonader.soknad.sak
 
 import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
-import no.nav.tilleggsstonader.kontrakter.sak.journalføring.AutomatiskJournalføringRequest
+import no.nav.tilleggsstonader.kontrakter.sak.journalføring.HåndterSøknadRequest
 import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
@@ -19,7 +19,7 @@ class SaksbehandlingClient(
 
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern").build()
 
-    fun sendTilSak(request: AutomatiskJournalføringRequest) {
+    fun sendTilSak(request: HåndterSøknadRequest) {
         val uri = UriComponentsBuilder.fromUri(sakUri.toUri())
             .pathSegment("handter-soknad").build().toUriString()
         postForEntityNullable<Void>(uri, request)
