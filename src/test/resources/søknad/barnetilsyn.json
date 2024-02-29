@@ -94,7 +94,7 @@
       } ]
     },
     "dokumentasjon" : [ {
-      "type" : "EKSEMPEL",
+      "type" : "UTGIFTER_PASS_SFO_AKS_BARNEHAGE",
       "label" : "Vedlegglabel",
       "harSendtInn" : false,
       "opplastedeVedlegg" : [ {
