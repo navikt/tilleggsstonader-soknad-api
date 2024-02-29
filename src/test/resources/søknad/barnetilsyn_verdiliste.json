@@ -128,23 +128,6 @@
     "type" : "AVSNITT"
   }, {
     "type" : "LINJE"
-  }, {
-    "label" : "Vedlegg",
-    "verdier" : [ {
-      "verdi" : "Dokumentasjon av utgifter for pass av barn",
-      "alternativer" : null,
-      "type" : "VERDI"
-    }, {
-      "label" : "Vedlegg Navn",
-      "verdier" : [ {
-        "verdi" : "Dokumentasjon av utgifter for pass av barn",
-        "alternativer" : null,
-        "type" : "VERDI"
-      } ],
-      "beholdMargin" : true,
-      "type" : "AVSNITT"
-    } ],
-    "type" : "AVSNITT"
   } ],
   "type" : "AVSNITT"
 }

@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
+import no.nav.tilleggsstonader.soknad.dokument.pdf.VedleggMapper.mapVedlegg
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import org.springframework.stereotype.Service
@@ -22,7 +23,12 @@ class PdfService(
         val søknad = søknadService.hentSøknad(søknadId)
         val søknadsskjema = parseSøknadsskjema(søknad)
         val feltMap = mapSøknad(søknadsskjema)
-        val html = htmlifyClient.generateHtml(søknad.type, feltMap, søknadsskjema.mottattTidspunkt)
+        val html = htmlifyClient.generateHtml(
+            stønadstype = søknad.type,
+            avsnitt = feltMap,
+            mottattTidspunkt = søknadsskjema.mottattTidspunkt,
+            dokumentasjon = mapVedlegg(søknadsskjema),
+        )
         val pdf = dokumentClient.genererPdf(html)
         søknadService.oppdaterSøknad(søknad.copy(søknadPdf = pdf))
     }

@@ -18,14 +18,31 @@ class HtmlifyClient(
     @Qualifier("utenAuth") restTemplate: RestTemplate,
 ) : AbstractRestClient(restTemplate) {
 
-    fun generateHtml(stønadstype: Stønadstype, avsnitt: Avsnitt, mottattTidspunkt: LocalDateTime): String {
+    fun generateHtml(
+        stønadstype: Stønadstype,
+        avsnitt: Avsnitt,
+        mottattTidspunkt: LocalDateTime,
+        dokumentasjon: List<DokumentasjonAvsnitt>,
+    ): String {
         return postForEntity<String>(
             UriComponentsBuilder.fromUri(uri).pathSegment("api", "soknad").toUriString(),
             mapOf(
                 "type" to stønadstype,
                 "mottattTidspunkt" to mottattTidspunkt,
                 "avsnitt" to avsnitt,
+                "dokumentasjon" to dokumentasjon,
             ),
         )
     }
 }
+
+data class DokumentasjonAvsnitt(
+    val label: String,
+    val dokument: List<Dokument>,
+)
+
+data class Dokument(
+    val label: String,
+    val labelSendtInnTidligere: String,
+    val labelAntall: String,
+)
