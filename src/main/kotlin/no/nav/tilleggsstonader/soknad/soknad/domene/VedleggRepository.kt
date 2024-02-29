@@ -5,7 +5,6 @@ import no.nav.tilleggsstonader.soknad.infrastruktur.database.SporbarUtils
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.InsertUpdateRepository
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.RepositoryInterface
 import org.springframework.data.annotation.Id
-import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
@@ -14,9 +13,6 @@ import java.util.UUID
 @Repository
 interface VedleggRepository : RepositoryInterface<Vedlegg, UUID>, InsertUpdateRepository<Vedlegg> {
     fun findBySøknadId(søknadId: UUID): List<Vedlegg>
-
-    @Query("SELECT navn FROM vedlegg WHERE soknad_id=:søknadId")
-    fun finnTitlerForSøknadId(søknadId: UUID): List<String>
 }
 
 class Vedlegg(
