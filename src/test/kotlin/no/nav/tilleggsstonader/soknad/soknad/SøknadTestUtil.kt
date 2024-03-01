@@ -4,7 +4,6 @@ import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapp
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
