@@ -3,9 +3,8 @@ package no.nav.tilleggsstonader.soknad.dokument.pdf
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
-import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknadsskjema
+import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknadsksjema
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnMedBarnepass
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
@@ -18,13 +17,10 @@ class SøknadTreeWalkerTest {
     inner class Barnetilsyn {
         @Test
         fun `skal mappe barnetilsyn`() {
-            val result = SøknadTreeWalker.mapSøknad(
-                lagSøknadsskjema(BarnetilsynMapper().map(SøknadBarnetilsynUtil.søknad)),
-                emptyList(),
-            )
+            val søknadsskjema = SøknadTreeWalker.mapSøknad(lagSøknadsksjema(SøknadBarnetilsynUtil.søknad), emptyList())
             assertExpected(
                 "søknad/barnetilsyn_verdiliste.json",
-                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result),
+                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(søknadsskjema),
             )
         }
     }
@@ -38,8 +34,9 @@ class SøknadTreeWalkerTest {
                 startetIFemte = null,
                 årsak = null,
             )
-        val søknad = SøknadBarnetilsynUtil.søknad.copy(barnMedBarnepass = listOf(barnMedBarnepass))
-        val søknadsskjema = lagSøknadsskjema(BarnetilsynMapper().map(søknad))
+        val søknad =
+            SøknadBarnetilsynUtil.søknad.copy(barnMedBarnepass = listOf(barnMedBarnepass), dokumentasjon = emptyList())
+        val søknadsskjema = lagSøknadsksjema(søknad)
         val result = SøknadTreeWalker.mapSøknad(søknadsskjema, emptyList())
         assertExpected(
             "søknad/barnetilsyn_verdiliste_nullverdier.json",

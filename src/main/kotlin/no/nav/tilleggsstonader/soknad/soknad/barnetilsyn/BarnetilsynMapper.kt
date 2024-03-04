@@ -1,22 +1,34 @@
 package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
+import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
+import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.SøknadsskjemaBarnetilsyn
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass as BarnMedBarnepassKontrakt
 
 @Service
 class BarnetilsynMapper {
 
-    fun map(dto: SøknadBarnetilsynDto): SøknadsskjemaBarnetilsyn {
-        return SøknadsskjemaBarnetilsyn(
-            hovedytelse = mapHovedytelse(dto),
-            aktivitet = mapAktivitet(dto),
-            barn = BarnAvsnitt(mapBarn(dto)),
-            dokumentasjon = dto.dokumentasjon,
+    fun map(
+        ident: String,
+        mottattTidspunkt: LocalDateTime,
+        dto: SøknadBarnetilsynDto,
+    ): Søknadsskjema<SøknadsskjemaBarnetilsyn> {
+        return Søknadsskjema(
+            ident = ident,
+            mottattTidspunkt = mottattTidspunkt,
+            språk = Språkkode.NB,
+            skjema = SøknadsskjemaBarnetilsyn(
+                hovedytelse = mapHovedytelse(dto),
+                aktivitet = mapAktivitet(dto),
+                barn = BarnAvsnitt(mapBarn(dto)),
+                dokumentasjon = dto.dokumentasjon,
+            ),
         )
     }
 
