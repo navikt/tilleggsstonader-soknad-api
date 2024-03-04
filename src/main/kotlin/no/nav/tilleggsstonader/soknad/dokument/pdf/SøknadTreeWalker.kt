@@ -34,6 +34,7 @@ enum class HtmlFeltType {
     VERDI,
     LINJE,
 }
+
 data class Avsnitt(
     val label: String,
     val verdier: List<HtmlFelt>,
@@ -48,13 +49,9 @@ data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
 
 object SøknadTreeWalker {
 
-    fun mapSøknad(
-        søknad: Søknadsskjema<*>,
-        vedleggTitler: List<String>,
-    ): Avsnitt {
+    fun mapSøknad(søknad: Søknadsskjema<*>): Avsnitt {
         val finnFelter = mapFelter(søknad.skjema, søknad.språk)
-        val vedlegg = Avsnitt("Vedlegg", Feltformaterer.mapVedlegg(vedleggTitler))
-        return Avsnitt(tittelSøknadsskjema(søknad), finnFelter + vedlegg)
+        return Avsnitt(tittelSøknadsskjema(søknad), finnFelter)
     }
 
     /**
@@ -77,8 +74,17 @@ object SøknadTreeWalker {
             is EnumFelt<*> -> listOf(
                 Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer))),
             )
+
             is EnumFlereValgFelt<*> -> listOf(
-                Avsnitt(label = entitet.label, verdier = listOf(Verdi(verdi = mapVerdi(entitet.verdier.map { it.label }), alternativer = entitet.alternativer))),
+                Avsnitt(
+                    label = entitet.label,
+                    verdier = listOf(
+                        Verdi(
+                            verdi = mapVerdi(entitet.verdier.map { it.label }),
+                            alternativer = entitet.alternativer,
+                        ),
+                    ),
+                ),
             )
 
             is DokumentasjonFelt -> emptyList()

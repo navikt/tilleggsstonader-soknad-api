@@ -68,10 +68,6 @@
       "type" : "AVSNITT"
     } ],
     "type" : "AVSNITT"
-  }, {
-    "label" : "Vedlegg",
-    "verdier" : [ ],
-    "type" : "AVSNITT"
   } ],
   "type" : "AVSNITT"
 }

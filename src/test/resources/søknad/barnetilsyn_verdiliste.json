@@ -128,10 +128,6 @@
     "type" : "AVSNITT"
   }, {
     "type" : "LINJE"
-  }, {
-    "label" : "Vedlegg",
-    "verdier" : [ ],
-    "type" : "AVSNITT"
   } ],
   "type" : "AVSNITT"
 }
