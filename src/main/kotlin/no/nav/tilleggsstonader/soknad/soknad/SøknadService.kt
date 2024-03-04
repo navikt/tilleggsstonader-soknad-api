@@ -12,6 +12,7 @@ import no.nav.tilleggsstonader.soknad.dokument.FamilieVedleggClient
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
 import no.nav.tilleggsstonader.soknad.person.PersonService
+import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.prosessering.LagPdfTask
 import no.nav.tilleggsstonader.soknad.prosessering.SendNotifikasjonTask
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
@@ -51,11 +52,13 @@ class SøknadService(
         mottattTidspunkt: LocalDateTime,
         søknad: SøknadBarnetilsynDto,
     ): UUID {
-        verifiserHarGyldigeBarn(ident, søknad)
+        val barn = personService.hentSøker(Fødselsnummer(ident)).barn.associateBy { it.ident }
+        verifiserHarGyldigeBarn(søknad, barn)
+
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
         val opprettetSøknad = lagreSøknad(
             type = Stønadstype.BARNETILSYN,
-            søknadsskjema = barnetilsynMapper.map(ident, mottattTidspunkt, søknad),
+            søknadsskjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
             vedlegg = vedlegg,
         )
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
@@ -81,10 +84,12 @@ class SøknadService(
         throw RuntimeException("Feilet henting av vedlegg=$id", e)
     }
 
-    private fun verifiserHarGyldigeBarn(personIdent: String, søknad: SøknadBarnetilsynDto) {
-        val barnIdenter = personService.hentSøker(Fødselsnummer(personIdent)).barn.map { it.ident }.toSet()
+    private fun verifiserHarGyldigeBarn(
+        søknad: SøknadBarnetilsynDto,
+        barnIdenter: Map<String, Barn>,
+    ) {
         val barnIdenterSøknad = søknad.barnMedBarnepass.map { it.ident }
-        if (!barnIdenter.containsAll(barnIdenterSøknad)) {
+        if (!barnIdenter.keys.containsAll(barnIdenterSøknad)) {
             error("Prøver å sende inn identer på barnen($barnIdenterSøknad) som ikke finnes på søkeren ($barnIdenter)")
         }
     }

@@ -4,9 +4,11 @@ import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapp
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
+import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 object SøknadTestUtil {
@@ -17,7 +19,7 @@ object SøknadTestUtil {
         lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsksjema(søknadDto))
 
     fun lagSøknadsksjema(søknadDto: SøknadBarnetilsynDto) =
-        BarnetilsynMapper().map("ident", mottattTidspunkt, søknadDto)
+        BarnetilsynMapper().map("ident", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
 
     fun lagSøknad(stønadstype: Stønadstype, søknadsskjema: Søknadsskjema<*>): Søknad {
         return Søknad(
@@ -26,5 +28,17 @@ object SøknadTestUtil {
             personIdent = "1",
             opprettetTid = LocalDateTime.now(),
         )
+    }
+
+    fun mapBarn(søknad: SøknadBarnetilsynDto): Map<String, Barn> {
+        return søknad.barnMedBarnepass.associate {
+            it.ident to Barn(
+                ident = it.ident,
+                fornavn = "Fornavn",
+                visningsnavn = "Fornavn Etternavn",
+                fødselsdato = LocalDate.of(2023, 1, 1),
+                alder = 4,
+            )
+        }
     }
 }

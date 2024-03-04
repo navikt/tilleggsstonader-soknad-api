@@ -17,7 +17,8 @@ class SøknadTreeWalkerTest {
     inner class Barnetilsyn {
         @Test
         fun `skal mappe barnetilsyn`() {
-            val søknadsskjema = SøknadTreeWalker.mapSøknad(lagSøknadsksjema(SøknadBarnetilsynUtil.søknad), emptyList())
+            val søknad = SøknadBarnetilsynUtil.søknad
+            val søknadsskjema = SøknadTreeWalker.mapSøknad(lagSøknadsksjema(søknad), emptyList())
             assertExpected(
                 "søknad/barnetilsyn_verdiliste.json",
                 objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(søknadsskjema),
