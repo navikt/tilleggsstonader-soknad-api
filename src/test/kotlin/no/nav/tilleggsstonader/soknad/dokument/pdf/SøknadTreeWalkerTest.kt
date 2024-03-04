@@ -1,13 +1,10 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
-import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
-import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknadsskjema
-import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.mapBarn
+import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknadsksjema
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnMedBarnepass
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
@@ -21,14 +18,10 @@ class SøknadTreeWalkerTest {
         @Test
         fun `skal mappe barnetilsyn`() {
             val søknad = SøknadBarnetilsynUtil.søknad
-            val barn = mapBarn(søknad)
-            val result = SøknadTreeWalker.mapSøknad(
-                lagSøknadsskjema(BarnetilsynMapper().map(søknad, barn, Språkkode.NB)),
-                emptyList(),
-            )
+            val søknadsskjema = SøknadTreeWalker.mapSøknad(lagSøknadsksjema(søknad), emptyList())
             assertExpected(
                 "søknad/barnetilsyn_verdiliste.json",
-                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result),
+                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(søknadsskjema),
             )
         }
     }
@@ -42,8 +35,9 @@ class SøknadTreeWalkerTest {
                 startetIFemte = null,
                 årsak = null,
             )
-        val søknad = SøknadBarnetilsynUtil.søknad.copy(barnMedBarnepass = listOf(barnMedBarnepass))
-        val søknadsskjema = lagSøknadsskjema(BarnetilsynMapper().map(søknad, mapBarn(søknad), Språkkode.NB))
+        val søknad =
+            SøknadBarnetilsynUtil.søknad.copy(barnMedBarnepass = listOf(barnMedBarnepass), dokumentasjon = emptyList())
+        val søknadsskjema = lagSøknadsksjema(søknad)
         val result = SøknadTreeWalker.mapSøknad(søknadsskjema, emptyList())
         assertExpected(
             "søknad/barnetilsyn_verdiliste_nullverdier.json",

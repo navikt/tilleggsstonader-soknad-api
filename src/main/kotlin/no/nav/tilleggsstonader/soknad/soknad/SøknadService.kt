@@ -1,10 +1,10 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.familie.prosessering.internal.TaskService
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider
-import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
+import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.Skjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
@@ -48,23 +48,17 @@ class SøknadService(
 
     @Transactional
     fun lagreSøknad(
-        personIdent: String,
+        ident: String,
         mottattTidspunkt: LocalDateTime,
         søknad: SøknadBarnetilsynDto,
     ): UUID {
-        val barn = personService.hentSøker(Fødselsnummer(personIdent)).barn.associateBy { it.ident }
+        val barn = personService.hentSøker(Fødselsnummer(ident)).barn.associateBy { it.ident }
         verifiserHarGyldigeBarn(søknad, barn)
 
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
-        val type = Stønadstype.BARNETILSYN
-        val språkkode = Språkkode.NB
-
         val opprettetSøknad = lagreSøknad(
-            type = type,
-            personIdent = personIdent,
-            mottattTidspunkt = mottattTidspunkt,
-            søknad = barnetilsynMapper.map(søknad, barn, språkkode),
-            språkkode = språkkode,
+            type = Stønadstype.BARNETILSYN,
+            søknadsskjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
             vedlegg = vedlegg,
         )
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
@@ -100,20 +94,16 @@ class SøknadService(
         }
     }
 
-    private fun <T> lagreSøknad(
+    private fun <T : Skjema> lagreSøknad(
         type: Stønadstype,
-        personIdent: String,
-        mottattTidspunkt: LocalDateTime,
-        søknad: T,
-        språkkode: Språkkode,
+        søknadsskjema: Søknadsskjema<T>,
         vedlegg: List<Vedleggholder>,
     ): Søknad {
-        val søknadsskjema = Søknadsskjema(personIdent, mottattTidspunkt, språkkode, søknad)
         val søknadDb = søknadRepository.insert(
             Søknad(
                 type = type,
-                personIdent = personIdent,
-                søknadJson = JsonWrapper(ObjectMapperProvider.objectMapper.writeValueAsString(søknadsskjema)),
+                personIdent = søknadsskjema.ident,
+                søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
             ),
         )
         lagreVedlegg(søknadDb, vedlegg)
