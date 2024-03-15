@@ -33,6 +33,8 @@ spec:
       cpu: 500m
   secureLogs:
     enabled: true
+  kafka:
+    pool: nav-prod
   gcp:
     sqlInstances:
       - type: POSTGRES_15
@@ -52,21 +54,19 @@ spec:
       rules:
         - application: tilleggsstonader-soknad
         - application: tilleggsstonader-prosessering
-        - application: familie-dokument
-          namespace: teamfamilie
     outbound:
       rules:
         - application: tilleggsstonader-integrasjoner
         - application: tilleggsstonader-htmlify
         - application: tilleggsstonader-sak
+        - application: familie-dokument
+          namespace: teamfamilie
         - application: kodeverk-api
           namespace: team-rocket
       external:
         - host: pdl-api.prod-fss-pub.nais.io
   tokenx:
     enabled: true
-  kafka:
-    pool: nav-prod
   azure:
     application:
       enabled: true
