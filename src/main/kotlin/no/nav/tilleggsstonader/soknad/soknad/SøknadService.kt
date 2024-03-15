@@ -1,10 +1,10 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.familie.prosessering.internal.TaskService
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider
-import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
+import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.Skjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
@@ -12,6 +12,7 @@ import no.nav.tilleggsstonader.soknad.dokument.FamilieVedleggClient
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
 import no.nav.tilleggsstonader.soknad.person.PersonService
+import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.prosessering.LagPdfTask
 import no.nav.tilleggsstonader.soknad.prosessering.SendNotifikasjonTask
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
@@ -39,27 +40,23 @@ class SøknadService(
         return søknadRepository.findByIdOrThrow(id)
     }
 
-    fun finnVedleggTitlerForSøknad(id: UUID) = vedleggRepository.finnTitlerForSøknadId(id)
-
     fun oppdaterSøknad(søknad: Søknad) {
         søknadRepository.update(søknad)
     }
 
     @Transactional
     fun lagreSøknad(
-        personIdent: String,
+        ident: String,
         mottattTidspunkt: LocalDateTime,
         søknad: SøknadBarnetilsynDto,
     ): UUID {
-        verifiserHarGyldigeBarn(personIdent, søknad)
+        val barn = personService.hentSøker(Fødselsnummer(ident)).barn.associateBy { it.ident }
+        verifiserHarGyldigeBarn(søknad, barn)
+
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
-        val type = Stønadstype.BARNETILSYN
         val opprettetSøknad = lagreSøknad(
-            type = type,
-            personIdent = personIdent,
-            mottattTidspunkt = mottattTidspunkt,
-            søknad = barnetilsynMapper.map(søknad),
-            språkkode = Språkkode.NB,
+            type = Stønadstype.BARNETILSYN,
+            søknadsskjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
             vedlegg = vedlegg,
         )
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
@@ -85,28 +82,26 @@ class SøknadService(
         throw RuntimeException("Feilet henting av vedlegg=$id", e)
     }
 
-    private fun verifiserHarGyldigeBarn(personIdent: String, søknad: SøknadBarnetilsynDto) {
-        val barnIdenter = personService.hentSøker(Fødselsnummer(personIdent)).barn.map { it.ident }.toSet()
+    private fun verifiserHarGyldigeBarn(
+        søknad: SøknadBarnetilsynDto,
+        barnIdenter: Map<String, Barn>,
+    ) {
         val barnIdenterSøknad = søknad.barnMedBarnepass.map { it.ident }
-        if (!barnIdenter.containsAll(barnIdenterSøknad)) {
+        if (!barnIdenter.keys.containsAll(barnIdenterSøknad)) {
             error("Prøver å sende inn identer på barnen($barnIdenterSøknad) som ikke finnes på søkeren ($barnIdenter)")
         }
     }
 
-    private fun <T> lagreSøknad(
+    private fun <T : Skjema> lagreSøknad(
         type: Stønadstype,
-        personIdent: String,
-        mottattTidspunkt: LocalDateTime,
-        søknad: T,
-        språkkode: Språkkode,
+        søknadsskjema: Søknadsskjema<T>,
         vedlegg: List<Vedleggholder>,
     ): Søknad {
-        val søknadsskjema = Søknadsskjema(personIdent, mottattTidspunkt, språkkode, søknad)
         val søknadDb = søknadRepository.insert(
             Søknad(
                 type = type,
-                personIdent = personIdent,
-                søknadJson = JsonWrapper(ObjectMapperProvider.objectMapper.writeValueAsString(søknadsskjema)),
+                personIdent = søknadsskjema.ident,
+                søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
             ),
         )
         lagreVedlegg(søknadDb, vedlegg)

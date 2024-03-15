@@ -50,7 +50,7 @@ class VedleggRepositoryTest : IntegrationTest() {
             Vedlegg(
                 id = UUID.randomUUID(),
                 søknadId = søknad.id,
-                type = Vedleggstype.EKSEMPEL,
+                type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
                 navn = "charlie.pdf",
                 innhold = byteArrayOf(13),
             ),

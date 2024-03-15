@@ -22,7 +22,7 @@ class SøknadController(
     fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
         val mottattTidspunkt = LocalDateTime.now()
         søknadService.lagreSøknad(
-            personIdent = EksternBrukerUtils.hentFnrFraToken(),
+            ident = EksternBrukerUtils.hentFnrFraToken(),
             mottattTidspunkt = mottattTidspunkt,
             søknad = søknad,
         )

@@ -9,10 +9,6 @@ import java.util.Locale
 
 object Feltformaterer {
 
-    fun mapVedlegg(vedleggTitler: List<String>): List<Verdi> {
-        return vedleggTitler.map { Verdi(it) }
-    }
-
     fun mapVerdi(verdi: Any?): String {
         if (verdi == null) {
             return ""

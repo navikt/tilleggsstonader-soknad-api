@@ -52,7 +52,9 @@ class SøknadServiceTest {
     @BeforeEach
     fun setUp() {
         every { søknadRepository.insert(any()) } answers { firstArg() }
-        every { person.barn } returns søknad.barnMedBarnepass.map { Barn(it.ident, "navn", LocalDate.now(), 3) }
+        every { person.barn } returns søknad.barnMedBarnepass.map {
+            Barn(it.ident, "fornavn", "fornavn etternavn", LocalDate.now(), 3)
+        }
         every { personService.hentSøker(Fødselsnummer(personIdent)) } returns person
         every { vedleggRepository.insertAll(capture(vedleggSlot)) } answers { firstArg() }
     }
@@ -79,7 +81,7 @@ class SøknadServiceTest {
 
             val lagretVedlegg = vedleggSlot.captured.single()
             assertThat(lagretVedlegg.id).isEqualTo(vedlegg.id)
-            assertThat(lagretVedlegg.type).isEqualTo(Vedleggstype.EKSEMPEL)
+            assertThat(lagretVedlegg.type).isEqualTo(Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE)
             assertThat(lagretVedlegg.søknadId).isEqualTo(søknadId)
             assertThat(lagretVedlegg.navn).isEqualTo(vedlegg.navn)
             assertThat(lagretVedlegg.innhold).isEqualTo(byteArrayOf(12))
@@ -99,7 +101,7 @@ class SøknadServiceTest {
 
     private fun lagDokumentasjonFelt(vedlegg: Dokument) = listOf(
         DokumentasjonFelt(
-            type = Vedleggstype.EKSEMPEL,
+            type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
             label = "label",
             harSendtInn = false,
             opplastedeVedlegg = listOf(vedlegg),

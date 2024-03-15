@@ -61,6 +61,8 @@ spec:
         - application: tilleggsstonader-sak
         - application: familie-dokument
           namespace: teamfamilie
+        - application: kodeverk-api
+          namespace: team-rocket
       external:
         - host: pdl-api.prod-fss-pub.nais.io
   tokenx:

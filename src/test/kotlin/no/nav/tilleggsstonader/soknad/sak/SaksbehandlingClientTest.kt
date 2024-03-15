@@ -5,7 +5,7 @@ import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
-import no.nav.tilleggsstonader.kontrakter.sak.journalføring.AutomatiskJournalføringRequest
+import no.nav.tilleggsstonader.kontrakter.sak.journalføring.HåndterSøknadRequest
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -22,7 +22,7 @@ class SaksbehandlingClientTest {
                 .willReturn(WireMock.created()),
         )
 
-        client.sendTilSak(AutomatiskJournalføringRequest("ident", "journalpost", Stønadstype.BARNETILSYN))
+        client.sendTilSak(HåndterSøknadRequest("ident", "journalpost", Stønadstype.BARNETILSYN))
 
         wireMockServer.verify(1, RequestPatternBuilder.allRequests())
     }
