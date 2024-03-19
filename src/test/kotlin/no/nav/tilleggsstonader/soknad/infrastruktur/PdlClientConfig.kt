@@ -14,6 +14,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.Fødsel
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Navn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
+import no.nav.tilleggsstonader.soknad.person.pdl.dto.Vegadresse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -68,7 +69,7 @@ fun navn(
 
 fun lagPdlSøker(
     adressebeskyttelse: AdressebeskyttelseGradering = AdressebeskyttelseGradering.UGRADERT,
-    bostedsadresse: Bostedsadresse = Bostedsadresse(null, null),
+    bostedsadresse: Bostedsadresse = Bostedsadresse(vegadresse(), null),
     forelderBarnRelasjon: List<ForelderBarnRelasjon> = emptyList(),
     navn: Navn = navn(),
 ) = PdlSøker(
@@ -76,6 +77,14 @@ fun lagPdlSøker(
     bostedsadresse = listOf(bostedsadresse),
     forelderBarnRelasjon = forelderBarnRelasjon,
     navn = listOf(navn),
+)
+
+private fun vegadresse() = Vegadresse(
+    husnummer = "3",
+    husbokstav = "a",
+    bruksenhetsnummer = null,
+    adressenavn = "Hildes vei",
+    postnummer = "0100",
 )
 
 fun lagPdlBarn(
