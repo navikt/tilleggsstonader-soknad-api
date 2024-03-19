@@ -5,12 +5,12 @@ import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAvsnitt
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
@@ -34,6 +34,7 @@ enum class HtmlFeltType {
     VERDI,
     LINJE,
 }
+
 data class Avsnitt(
     val label: String,
     val verdier: List<HtmlFelt>,
@@ -48,13 +49,9 @@ data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
 
 object SøknadTreeWalker {
 
-    fun mapSøknad(
-        søknad: Søknadsskjema<*>,
-        vedleggTitler: List<String>,
-    ): Avsnitt {
+    fun mapSøknad(søknad: Søknadsskjema<*>): Avsnitt {
         val finnFelter = mapFelter(søknad.skjema, søknad.språk)
-        val vedlegg = Avsnitt("Vedlegg", Feltformaterer.mapVedlegg(vedleggTitler))
-        return Avsnitt(tittelSøknadsskjema(søknad), finnFelter + vedlegg)
+        return Avsnitt(tittelSøknadsskjema(søknad), finnFelter)
     }
 
     /**
@@ -77,8 +74,17 @@ object SøknadTreeWalker {
             is EnumFelt<*> -> listOf(
                 Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer))),
             )
+
             is EnumFlereValgFelt<*> -> listOf(
-                Avsnitt(label = entitet.label, verdier = listOf(Verdi(verdi = mapVerdi(entitet.verdier.map { it.label }), alternativer = entitet.alternativer))),
+                Avsnitt(
+                    label = entitet.label,
+                    verdier = listOf(
+                        Verdi(
+                            verdi = mapVerdi(entitet.verdier.map { it.label }),
+                            alternativer = entitet.alternativer,
+                        ),
+                    ),
+                ),
             )
 
             is DokumentasjonFelt -> emptyList()

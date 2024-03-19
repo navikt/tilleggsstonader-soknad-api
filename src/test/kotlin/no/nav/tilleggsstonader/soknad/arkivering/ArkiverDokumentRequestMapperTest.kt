@@ -47,5 +47,5 @@ internal class ArkiverDokumentRequestMapperTest {
     )
 
     private fun lagVedlegg() =
-        Vedlegg(UUID.randomUUID(), UUID.randomUUID(), Vedleggstype.EKSEMPEL, "navn", byteArrayOf(12))
+        Vedlegg(UUID.randomUUID(), UUID.randomUUID(), Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE, "navn", byteArrayOf(12))
 }

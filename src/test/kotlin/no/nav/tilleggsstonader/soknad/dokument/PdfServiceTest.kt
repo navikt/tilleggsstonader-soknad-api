@@ -39,7 +39,6 @@ class PdfServiceTest {
     fun setUp() {
         justRun { søknadService.oppdaterSøknad(capture(oppdaterSøknadSlot)) }
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
-        every { søknadService.finnVedleggTitlerForSøknad(any()) } returns listOf("Vedlegg1.png", "Vedlegg2.png")
     }
 
     @Test
@@ -67,7 +66,9 @@ class PdfServiceTest {
         val restTemplate = TestRestTemplate().restTemplate
         restTemplate.messageConverters.removeIf { it is MappingJackson2HttpMessageConverter }
         restTemplate.messageConverters.add(MappingJackson2HttpMessageConverter(objectMapper))
-        return HtmlifyClient(URI.create("https://tilleggsstonader-htmlify.intern.dev.nav.no"), restTemplate)
+        val url = "https://tilleggsstonader-htmlify.intern.dev.nav.no"
+        // val url = "http://localhost:8001"
+        return HtmlifyClient(URI.create(url), restTemplate)
     }
 
     @Suppress("unused")

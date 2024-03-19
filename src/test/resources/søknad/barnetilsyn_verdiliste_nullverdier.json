@@ -1,5 +1,5 @@
 {
-  "label" : "Søknad om barnetilsyn <brevkode>",
+  "label" : "Søknad om barnetilsyn NAV 11-12.15",
   "verdier" : [ {
     "label" : "Hovedytelse",
     "verdier" : [ {
@@ -45,7 +45,7 @@
     "verdier" : [ {
       "label" : "Navn",
       "verdier" : [ {
-        "verdi" : "Navn",
+        "verdi" : "Fornavn Etternavn",
         "alternativer" : null,
         "type" : "VERDI"
       } ],
@@ -67,10 +67,6 @@
       } ],
       "type" : "AVSNITT"
     } ],
-    "type" : "AVSNITT"
-  }, {
-    "label" : "Vedlegg",
-    "verdier" : [ ],
     "type" : "AVSNITT"
   } ],
   "type" : "AVSNITT"

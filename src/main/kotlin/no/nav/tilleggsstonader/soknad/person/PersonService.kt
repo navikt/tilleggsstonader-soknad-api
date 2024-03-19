@@ -2,7 +2,6 @@ package no.nav.tilleggsstonader.soknad.person
 
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.infrastruktur.exception.GradertBrukerException
-import no.nav.tilleggsstonader.soknad.person.dto.Adresse
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
@@ -20,12 +19,14 @@ import java.time.Period
 class PersonService(
     private val pdlClient: PdlClient,
     private val pdlClientCredentialClient: PdlClientCredentialClient,
+    private val adresseMapper: AdresseMapper,
 ) {
 
     fun hentSøker(fødselsnummer: Fødselsnummer): PersonMedBarnDto {
         val søker = pdlClient.hentSøker(fødselsnummer)
         val barn = hentBarn(søker)
 
+        // TODO (hvordan) skal vi håndtere kode6?
         if (søkerEllerBarnErGradert(søker, barn)) {
             throw GradertBrukerException()
         }
@@ -35,12 +36,9 @@ class PersonService(
         }
 
         return PersonMedBarnDto(
-            navn = søker.navn.first().visningsnavn(),
-            adresse = Adresse(
-                adresse = "En vei 34",
-                postnummer = "0152",
-                poststed = "Oslo",
-            ),
+            fornavn = søker.navn.first().fornavn,
+            visningsnavn = søker.navn.first().visningsnavn(),
+            adresse = adresseMapper.tilFormatertAdresse(søker),
             telefonnr = "950863265",
             epost = "mail@gmail.com",
             kontonr = "1234.56.78910",
@@ -56,7 +54,8 @@ class PersonService(
                 val alder = Period.between(fødselsdato, LocalDate.now()).years
                 Barn(
                     ident = ident,
-                    navn = pdlBarn.navn.first().visningsnavn(),
+                    fornavn = pdlBarn.navn.first().fornavn,
+                    visningsnavn = pdlBarn.navn.first().visningsnavn(),
                     fødselsdato = fødselsdato,
                     alder = alder,
                 )
