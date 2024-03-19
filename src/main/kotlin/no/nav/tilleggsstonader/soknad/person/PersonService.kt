@@ -10,7 +10,6 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.Familierelasjonsrolle
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
 import no.nav.tilleggsstonader.soknad.person.pdl.erStrengtFortrolig
-import no.nav.tilleggsstonader.soknad.util.EnvUtil
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -30,18 +29,11 @@ class PersonService(
         if (søkerEllerBarnErGradert(søker, barn)) {
             throw GradertBrukerException()
         }
-        // TODO fjern mockdata
-        if (EnvUtil.erIProd()) {
-            error("Fikse mocket data")
-        }
 
         return PersonMedBarnDto(
             fornavn = søker.navn.first().fornavn,
             visningsnavn = søker.navn.first().visningsnavn(),
             adresse = adresseMapper.tilFormatertAdresse(søker),
-            telefonnr = "950863265",
-            epost = "mail@gmail.com",
-            kontonr = "1234.56.78910",
             barn = mapBarn(barn),
         )
     }

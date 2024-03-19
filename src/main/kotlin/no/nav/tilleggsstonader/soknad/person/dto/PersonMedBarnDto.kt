@@ -6,9 +6,6 @@ data class PersonMedBarnDto(
     val fornavn: String,
     val visningsnavn: String,
     val adresse: String,
-    val telefonnr: String,
-    val epost: String,
-    val kontonr: String,
     val barn: List<Barn>,
 )
 
