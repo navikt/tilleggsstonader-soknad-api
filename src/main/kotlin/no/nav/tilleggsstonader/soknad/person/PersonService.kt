@@ -59,7 +59,7 @@ class PersonService(
                     fødselsdato = fødselsdato,
                     alder = alder,
                 )
-            }
+            }.sortedBy { it.alder }
 
     private fun erILive(pdlBarn: PdlBarn) =
         pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
