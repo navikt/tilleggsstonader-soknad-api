@@ -34,7 +34,6 @@ object VedleggMapper {
         return dokumentasjon.map {
             Dokument(
                 label = it.type.tittel,
-                labelSendtInnTidligere = "Har sendt inn tidligere: ${Feltformaterer.mapVerdi(it.harSendtInn)}",
                 labelAntall = "Antall: ${it.opplastedeVedlegg.count()}",
             )
         }
