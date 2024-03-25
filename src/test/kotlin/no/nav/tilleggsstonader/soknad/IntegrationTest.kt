@@ -47,6 +47,7 @@ class DefaultRestTemplateConfiguration {
     "mock-sak",
     "mock-vedlegg",
     "mock-kodeverk",
+    "mock-aktivitet",
 )
 @EnableMockOAuth2Server
 abstract class IntegrationTest {
