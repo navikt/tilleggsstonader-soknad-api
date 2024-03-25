@@ -1,8 +1,9 @@
 package no.nav.tilleggsstonader.soknad.aktivitet
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
+import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
+import org.slf4j.LoggerFactory
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,8 +17,17 @@ class AktivitetController(
     private val aktivitetService: AktivitetService,
 ) {
 
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     @GetMapping
-    fun hentAktiviteter(): List<AktivitetArenaDto> {
-        return aktivitetService.hentAktiviteter(EksternBrukerUtils.hentFnrFraToken())
+    fun hentAktiviteter(): AktiviteterDto {
+        val ident = EksternBrukerUtils.hentFnrFraToken()
+        return try {
+            AktiviteterDto(aktivitetService.hentAktiviteter(ident), sukkess = true)
+        } catch (e: Exception) {
+            logger.error("Feilet henting av aktiviteter")
+            secureLogger.error("Feiltet henting av aktiviteter for ident=$ident", e)
+            AktiviteterDto(emptyList(), sukkess = false)
+        }
     }
 }
