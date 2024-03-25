@@ -1,7 +1,10 @@
 package no.nav.tilleggsstonader.soknad.kodeverk
 
 import no.nav.tilleggsstonader.kontrakter.kodeverk.KodeverkDto
+import no.nav.tilleggsstonader.kontrakter.kodeverk.KodeverkSpråk
 import no.nav.tilleggsstonader.kontrakter.kodeverk.hentGjeldende
+import no.nav.tilleggsstonader.kontrakter.kodeverk.mapTerm
+import no.nav.tilleggsstonader.soknad.kodeverk.KodeverkUtil.UGYLDIGE_LANDKODER
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.Cacheable
@@ -19,6 +22,17 @@ class KodeverkService(
     private val logger = LoggerFactory.getLogger(javaClass)
     fun hentPoststed(postnummer: String?) = hentKodeverdi("poststed", postnummer) {
         cachedKodeverkService.hentPoststed().hentGjeldende(it)
+    }
+
+    fun hentLandkoder(språk: KodeverkSpråk) = hentLandkoderForSpråk(språk)
+
+    private fun hentLandkoderForSpråk(språk: KodeverkSpråk): Map<String, String> {
+        require(språk == KodeverkSpråk.BOKMÅL) {
+            "Har ikke støtte i klienten for å håndtere annet språk enn ${KodeverkSpråk.BOKMÅL}"
+        }
+        return cachedKodeverkService.hentLandkoder()
+            .mapTerm(språk)
+            .filterKeys { it !in UGYLDIGE_LANDKODER }
     }
 
     private fun hentKodeverdi(type: String, kode: String?, hentKodeverdiFunction: Function1<String, String?>): String {
@@ -39,4 +53,7 @@ class CachedKodeverkService(
 ) {
     @Cacheable(sync = true)
     fun hentPoststed(): KodeverkDto = kodeverkClient.hentPostnummer()
+
+    @Cacheable(sync = true)
+    fun hentLandkoder(): KodeverkDto = kodeverkClient.hentLandkoder()
 }

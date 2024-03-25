@@ -18,17 +18,36 @@ class KodeverkClientConfig {
     @Bean
     fun kodeverkClient(): KodeverkClient {
         val client = mockk<KodeverkClient>()
+        val fom = LocalDate.now().minusYears(3)
+        val tom = LocalDate.now().plusYears(3)
         every { client.hentPostnummer() } returns KodeverkDto(
             mapOf(
                 "Postnummer" to listOf(
                     BetydningDto(
-                        LocalDate.now(),
-                        LocalDate.now(),
+                        fom,
+                        tom,
                         mapOf("nb" to BeskrivelseDto("0010", "Oslo")),
                     ),
                 ),
             ),
         )
+        every { client.hentLandkoder() } returns KodeverkDto(
+            mapOf(
+                "Landkoder" to listOf(
+                    BetydningDto(
+                        fom,
+                        tom,
+                        mapOf("nb" to BeskrivelseDto("SWE", "SVERIGE")),
+                    ),
+                    BetydningDto(
+                        fom,
+                        tom,
+                        mapOf("nb" to BeskrivelseDto("NOR", "NORGE")),
+                    ),
+                ),
+            ),
+        )
+
         return client
     }
 }

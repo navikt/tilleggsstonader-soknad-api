@@ -39,6 +39,7 @@ class KodeverkInitializer(
 
     private fun sync() {
         syncKodeverk("Postnummer", kodeverkService::hentPoststed)
+        syncKodeverk("Landkoder", kodeverkService::hentLandkoder)
     }
 
     private fun syncKodeverk(navn: String, henter: () -> Unit) {
