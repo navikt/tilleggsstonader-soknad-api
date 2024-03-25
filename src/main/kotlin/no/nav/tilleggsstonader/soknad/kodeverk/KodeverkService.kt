@@ -51,9 +51,9 @@ class KodeverkService(
 class CachedKodeverkService(
     private val kodeverkClient: KodeverkClient,
 ) {
-    @Cacheable(sync = true)
+    @Cacheable("poststed", sync = true)
     fun hentPoststed(): KodeverkDto = kodeverkClient.hentPostnummer()
 
-    @Cacheable(sync = true)
+    @Cacheable("landkoder", sync = true)
     fun hentLandkoder(): KodeverkDto = kodeverkClient.hentLandkoder()
 }
