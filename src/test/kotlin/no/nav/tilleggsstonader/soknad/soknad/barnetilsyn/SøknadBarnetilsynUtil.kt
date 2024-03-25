@@ -47,7 +47,6 @@ object SøknadBarnetilsynUtil {
     private fun lagDokumentasjonFelt() = DokumentasjonFelt(
         type = Vedleggstype.UTGIFTER_PASS_ANNET,
         label = "Vedlegglabel",
-        harSendtInn = true,
         opplastedeVedlegg = listOf(
             Dokument(
                 id = UUID.fromString("98fd0f9b-1206-4918-80d9-e76f85ba1b39"),
@@ -59,7 +58,6 @@ object SøknadBarnetilsynUtil {
     private fun lagDokumentasjonFeltBarn() = DokumentasjonFelt(
         type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
         label = "Vedlegglabel",
-        harSendtInn = false,
         opplastedeVedlegg = listOf(
             Dokument(
                 id = UUID.fromString("3e5f0073-036b-4da1-af82-787fecdbb481"),

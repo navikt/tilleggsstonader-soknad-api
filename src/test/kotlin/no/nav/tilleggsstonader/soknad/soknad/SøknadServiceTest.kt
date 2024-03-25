@@ -103,7 +103,6 @@ class SøknadServiceTest {
         DokumentasjonFelt(
             type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
             label = "label",
-            harSendtInn = false,
             opplastedeVedlegg = listOf(vedlegg),
         ),
     )

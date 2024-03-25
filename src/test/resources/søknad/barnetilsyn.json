@@ -96,7 +96,6 @@
     "dokumentasjon" : [ {
       "type" : "UTGIFTER_PASS_ANNET",
       "label" : "Vedlegglabel",
-      "harSendtInn" : true,
       "opplastedeVedlegg" : [ {
         "id" : "98fd0f9b-1206-4918-80d9-e76f85ba1b39",
         "navn" : "Navn på vedlegg"
@@ -105,7 +104,6 @@
     }, {
       "type" : "UTGIFTER_PASS_SFO_AKS_BARNEHAGE",
       "label" : "Vedlegglabel",
-      "harSendtInn" : false,
       "opplastedeVedlegg" : [ {
         "id" : "3e5f0073-036b-4da1-af82-787fecdbb481",
         "navn" : "Navn på vedlegg"

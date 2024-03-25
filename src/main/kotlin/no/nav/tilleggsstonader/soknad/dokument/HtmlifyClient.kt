@@ -43,6 +43,5 @@ data class DokumentasjonAvsnitt(
 
 data class Dokument(
     val label: String,
-    val labelSendtInnTidligere: String,
     val labelAntall: String,
 )
