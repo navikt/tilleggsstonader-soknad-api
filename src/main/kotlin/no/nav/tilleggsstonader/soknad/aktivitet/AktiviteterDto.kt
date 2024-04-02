@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 data class AktiviteterDto(
     val aktiviteter: List<AktivitetDto>,
-    val sukkess: Boolean,
+    val suksess: Boolean,
 )
 
 data class AktivitetDto(

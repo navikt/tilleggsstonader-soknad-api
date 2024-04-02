@@ -23,11 +23,11 @@ class AktivitetController(
     fun hentAktiviteter(): AktiviteterDto {
         val ident = EksternBrukerUtils.hentFnrFraToken()
         return try {
-            AktiviteterDto(aktivitetService.hentAktiviteter(ident).map { it.tilDto() }, sukkess = true)
+            AktiviteterDto(aktivitetService.hentAktiviteter(ident).map { it.tilDto() }, suksess = true)
         } catch (e: Exception) {
             logger.error("Feilet henting av aktiviteter")
             secureLogger.error("Feiltet henting av aktiviteter for ident=$ident", e)
-            AktiviteterDto(emptyList(), sukkess = false)
+            AktiviteterDto(emptyList(), suksess = false)
         }
     }
 }
