@@ -11,19 +11,161 @@
       } ],
       "type" : "AVSNITT"
     }, {
-      "label" : "Bodd sammenhengende?",
+      "label" : "Arbeid og opphold",
       "verdier" : [ {
-        "verdi" : "Ja",
-        "alternativer" : [ ],
-        "type" : "VERDI"
-      } ],
-      "type" : "AVSNITT"
-    }, {
-      "label" : "Planlegger du å bo i Norge de neste 12 månedene?",
-      "verdier" : [ {
-        "verdi" : "Ja",
-        "alternativer" : [ ],
-        "type" : "VERDI"
+        "label" : "Jobber du i et annet land enn Norge?",
+        "verdier" : [ {
+          "verdi" : "Ja",
+          "alternativer" : [ ],
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Hvilket land jobber du i?",
+        "verdier" : [ {
+          "verdi" : "Sverige",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Mottar du pengestøttene fra et annet land enn Norge?",
+        "verdier" : [ {
+          "verdi" : "Sykepenger",
+          "alternativer" : [ "Sykepenger", "Annet" ],
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Hvilket land mottar du pengestøtte fra?",
+        "verdier" : [ {
+          "verdi" : "Sverige",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Jobber du i et annet land enn Norge?",
+        "verdier" : [ {
+          "verdi" : "Ja",
+          "alternativer" : [ ],
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Opphold utenfor norge siste 12 månedene",
+        "verdier" : [ {
+          "label" : "Hvilket land har du oppholdt deg i?",
+          "verdier" : [ {
+            "verdi" : "Sverige",
+            "alternativer" : null,
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "label" : "Hva gjorde du i dette landet?",
+          "verdier" : [ {
+            "verdi" : "Jobb",
+            "alternativer" : [ "Jobb", "Studier" ],
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "label" : "Fom",
+          "verdier" : [ {
+            "verdi" : "01.01.2024",
+            "alternativer" : null,
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "label" : "Fom",
+          "verdier" : [ {
+            "verdi" : "01.01.2024",
+            "alternativer" : null,
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "type" : "LINJE"
+        }, {
+          "label" : "Hvilket land har du oppholdt deg i?",
+          "verdier" : [ {
+            "verdi" : "Sverige",
+            "alternativer" : null,
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "label" : "Hva gjorde du i dette landet?",
+          "verdier" : [ {
+            "verdi" : "Jobb",
+            "alternativer" : [ "Jobb", "Studier" ],
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "label" : "Fom",
+          "verdier" : [ {
+            "verdi" : "01.01.2024",
+            "alternativer" : null,
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "label" : "Fom",
+          "verdier" : [ {
+            "verdi" : "01.01.2024",
+            "alternativer" : null,
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Jobber du i et annet land enn Norge?",
+        "verdier" : [ {
+          "verdi" : "Ja",
+          "alternativer" : [ ],
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Opphold utenfor norge neste 12 månedene",
+        "verdier" : [ {
+          "label" : "Hvilket land har du oppholdt deg i?",
+          "verdier" : [ {
+            "verdi" : "Sverige",
+            "alternativer" : null,
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "label" : "Hva gjorde du i dette landet?",
+          "verdier" : [ {
+            "verdi" : "Jobb",
+            "alternativer" : [ "Jobb", "Studier" ],
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "label" : "Fom",
+          "verdier" : [ {
+            "verdi" : "01.01.2024",
+            "alternativer" : null,
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        }, {
+          "label" : "Fom",
+          "verdier" : [ {
+            "verdi" : "01.01.2024",
+            "alternativer" : null,
+            "type" : "VERDI"
+          } ],
+          "type" : "AVSNITT"
+        } ],
+        "type" : "AVSNITT"
       } ],
       "type" : "AVSNITT"
     } ],
