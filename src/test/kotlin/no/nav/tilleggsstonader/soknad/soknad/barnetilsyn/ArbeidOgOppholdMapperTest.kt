@@ -7,7 +7,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ArbeidOgOpphold
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.MottarPengestøtteTyper
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.OppholdUtenforNorge
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakOppholdUtenforNorge
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.ArbeidOgOppholdMapper.mapArbeidOgOpphold
@@ -98,7 +98,7 @@ class ArbeidOgOppholdMapperTest {
 
     private fun harPengestøtteAnnetLand() = EnumFlereValgFelt(
         label = "harPengestøtteAnnetLand",
-        verdier = listOf(VerdiFelt(MottarPengestøtteTyper.ANNEN_PENGESTØTTE, "Annen pengestøtte")),
+        verdier = listOf(VerdiFelt(TypePengestøtte.ANNEN_PENGESTØTTE, "Annen pengestøtte")),
         alternativer = emptyList(),
     )
 
@@ -110,7 +110,7 @@ class ArbeidOgOppholdMapperTest {
     private fun arbeidOgOppholdDto(
         jobberIAnnetLand: EnumFelt<JaNei>? = null,
         jobbAnnetLand: SelectFelt<String>? = null,
-        harPengestøtteAnnetLand: EnumFlereValgFelt<MottarPengestøtteTyper>? = null,
+        harPengestøtteAnnetLand: EnumFlereValgFelt<TypePengestøtte>? = null,
         pengestøtteAnnetLand: SelectFelt<String>? = null,
         harOppholdUtenforNorgeSiste12mnd: EnumFelt<JaNei>? = null,
         oppholdUtenforNorgeSiste12mnd: List<OppholdUtenforNorgeDto> = emptyList(),

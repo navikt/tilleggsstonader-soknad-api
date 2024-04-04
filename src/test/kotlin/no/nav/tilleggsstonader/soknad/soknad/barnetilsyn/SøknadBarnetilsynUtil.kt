@@ -10,7 +10,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.MottarPengestøtteTyper
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakOppholdUtenforNorge
@@ -53,7 +53,7 @@ object SøknadBarnetilsynUtil {
         jobbAnnetLand = SelectFelt("Hvilket land jobber du i?", "SWE", "Sverige"),
         harPengestøtteAnnetLand = EnumFlereValgFelt(
             "Mottar du pengestøttene fra et annet land enn Norge?",
-            listOf(VerdiFelt(MottarPengestøtteTyper.SYKEPENGER, "Sykepenger")),
+            listOf(VerdiFelt(TypePengestøtte.SYKEPENGER, "Sykepenger")),
             listOf("Sykepenger", "Annet"),
         ),
         pengestøtteAnnetLand = SelectFelt("Hvilket land mottar du pengestøtte fra?", "SWE", "Sverige"),

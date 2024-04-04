@@ -7,7 +7,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.MottarPengestøtteTyper
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakOppholdUtenforNorge
@@ -28,7 +28,7 @@ data class HovedytelseDto(
 data class ArbeidOgOppholdDto(
     val jobberIAnnetLand: EnumFelt<JaNei>?,
     val jobbAnnetLand: SelectFelt<String>?,
-    val harPengestøtteAnnetLand: EnumFlereValgFelt<MottarPengestøtteTyper>?,
+    val harPengestøtteAnnetLand: EnumFlereValgFelt<TypePengestøtte>?,
     val pengestøtteAnnetLand: SelectFelt<String>?,
     val harOppholdUtenforNorgeSiste12mnd: EnumFelt<JaNei>?,
     val oppholdUtenforNorgeSiste12mnd: List<OppholdUtenforNorgeDto>,
