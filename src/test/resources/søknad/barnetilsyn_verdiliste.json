@@ -6,7 +6,7 @@
       "label" : "Hovedytelse?",
       "verdier" : [ {
         "verdi" : "AAP, Overgangsstønad",
-        "alternativer" : [ "Alt1", "Alt2" ],
+        "alternativer" : "Alternativer: Alt1, Alt2",
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -16,7 +16,7 @@
         "label" : "Jobber du i et annet land enn Norge?",
         "verdier" : [ {
           "verdi" : "Ja",
-          "alternativer" : [ ],
+          "alternativer" : "Alternativer: ",
           "type" : "VERDI"
         } ],
         "type" : "AVSNITT"
@@ -32,7 +32,7 @@
         "label" : "Mottar du pengestøttene fra et annet land enn Norge?",
         "verdier" : [ {
           "verdi" : "Sykepenger",
-          "alternativer" : [ "Sykepenger", "Annet" ],
+          "alternativer" : "Alternativer: Sykepenger, Annet",
           "type" : "VERDI"
         } ],
         "type" : "AVSNITT"
@@ -48,12 +48,12 @@
         "label" : "Jobber du i et annet land enn Norge?",
         "verdier" : [ {
           "verdi" : "Ja",
-          "alternativer" : [ ],
+          "alternativer" : "Alternativer: ",
           "type" : "VERDI"
         } ],
         "type" : "AVSNITT"
       }, {
-        "label" : "Opphold utenfor norge siste 12 månedene",
+        "label" : "Opphold utenfor norge siste 12 mnd",
         "verdier" : [ {
           "label" : "Hvilket land har du oppholdt deg i?",
           "verdier" : [ {
@@ -66,7 +66,7 @@
           "label" : "Hva gjorde du i dette landet?",
           "verdier" : [ {
             "verdi" : "Jobb",
-            "alternativer" : [ "Jobb", "Studier" ],
+            "alternativer" : "Alternativer: Jobb, Studier",
             "type" : "VERDI"
           } ],
           "type" : "AVSNITT"
@@ -100,7 +100,7 @@
           "label" : "Hva gjorde du i dette landet?",
           "verdier" : [ {
             "verdi" : "Jobb",
-            "alternativer" : [ "Jobb", "Studier" ],
+            "alternativer" : "Alternativer: Jobb, Studier",
             "type" : "VERDI"
           } ],
           "type" : "AVSNITT"
@@ -126,12 +126,12 @@
         "label" : "Jobber du i et annet land enn Norge?",
         "verdier" : [ {
           "verdi" : "Ja",
-          "alternativer" : [ ],
+          "alternativer" : "Alternativer: ",
           "type" : "VERDI"
         } ],
         "type" : "AVSNITT"
       }, {
-        "label" : "Opphold utenfor norge neste 12 månedene",
+        "label" : "Opphold utenfor norge neste 12 mnd",
         "verdier" : [ {
           "label" : "Hvilket land har du oppholdt deg i?",
           "verdier" : [ {
@@ -144,7 +144,7 @@
           "label" : "Hva gjorde du i dette landet?",
           "verdier" : [ {
             "verdi" : "Jobb",
-            "alternativer" : [ "Jobb", "Studier" ],
+            "alternativer" : "Alternativer: Jobb, Studier",
             "type" : "VERDI"
           } ],
           "type" : "AVSNITT"
@@ -176,7 +176,7 @@
       "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
       "verdier" : [ {
         "verdi" : "Ja",
-        "alternativer" : [ "Alt1", "Alt2" ],
+        "alternativer" : "Alternativer: Alt1, Alt2",
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -204,7 +204,7 @@
       "label" : "Type barnepass",
       "verdier" : [ {
         "verdi" : "Svartekst",
-        "alternativer" : [ "Alt1", "Alt2" ],
+        "alternativer" : "Alternativer: Alt1, Alt2",
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -212,7 +212,7 @@
       "label" : "Har startet i 5. klasse?",
       "verdier" : [ {
         "verdi" : "Ja",
-        "alternativer" : [ ],
+        "alternativer" : "Alternativer: ",
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -220,7 +220,7 @@
       "label" : "Årsak?",
       "verdier" : [ {
         "verdi" : "Mye borte",
-        "alternativer" : [ ],
+        "alternativer" : "Alternativer: ",
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -246,7 +246,7 @@
       "label" : "Type barnepass",
       "verdier" : [ {
         "verdi" : "Svartekst",
-        "alternativer" : [ ],
+        "alternativer" : "Alternativer: ",
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -254,7 +254,7 @@
       "label" : "Har startet i 5. klasse?",
       "verdier" : [ {
         "verdi" : "Ja",
-        "alternativer" : [ ],
+        "alternativer" : "Alternativer: ",
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -262,7 +262,7 @@
       "label" : "Årsak?",
       "verdier" : [ {
         "verdi" : "Mye borte",
-        "alternativer" : [ ],
+        "alternativer" : "Alternativer: ",
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"

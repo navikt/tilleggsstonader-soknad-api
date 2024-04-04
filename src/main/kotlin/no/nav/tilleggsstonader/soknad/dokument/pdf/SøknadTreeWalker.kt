@@ -16,6 +16,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.OppholdUtenforNorge
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
+import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAlternativer
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAvsnitt
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeNeste12mnd
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeSiste12mnd
@@ -48,7 +49,7 @@ data class Avsnitt(
 
 data class Verdi(
     val verdi: String,
-    val alternativer: List<String>? = null,
+    val alternativer: String? = null,
 ) : HtmlFelt(HtmlFeltType.VERDI)
 
 data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
@@ -83,7 +84,7 @@ object SøknadTreeWalker {
             is SelectFelt<*> -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst)))))
             is DatoFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is EnumFelt<*> -> listOf(
-                Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer))),
+                Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = mapAlternativer(entitet.alternativer, språk)))),
             )
 
             is EnumFlereValgFelt<*> -> listOf(
@@ -92,7 +93,7 @@ object SøknadTreeWalker {
                     verdier = listOf(
                         Verdi(
                             verdi = mapVerdi(entitet.verdier.map { it.label }),
-                            alternativer = entitet.alternativer,
+                            alternativer = mapAlternativer(entitet.alternativer, språk),
                         ),
                     ),
                 ),
@@ -102,6 +103,9 @@ object SøknadTreeWalker {
             else -> error("Kan ikke mappe entitet=$entitet")
         }
     }
+
+    private fun mapAlternativer(alternativer: List<String>, språk: Språkkode): String =
+        "${tittelAlternativer(språk)}: ${alternativer.joinToString(", ")}"
 
     /**
      * I de tilfeller man eks har en liste med Barn, så er det ønskelig å lage en Horisontallinje mellom barnen

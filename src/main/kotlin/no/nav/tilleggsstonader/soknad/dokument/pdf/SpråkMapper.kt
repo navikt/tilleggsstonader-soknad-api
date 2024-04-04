@@ -41,12 +41,17 @@ object SpråkMapper {
     )
 
     fun tittelOppholdUtenforNorgeSiste12mnd(språk: Språkkode) = when (språk) {
-        Språkkode.NB -> "Opphold utenfor norge siste 12 månedene"
+        Språkkode.NB -> "Opphold utenfor Norge siste 12 mnd"
         else -> error("Mangler mapping av $språk")
     }
 
     fun tittelOppholdUtenforNorgeNeste12mnd(språk: Språkkode) = when (språk) {
-        Språkkode.NB -> "Opphold utenfor norge neste 12 månedene"
+        Språkkode.NB -> "Opphold utenfor Norge neste 12 mnd"
+        else -> error("Mangler mapping av $språk")
+    }
+
+    fun tittelAlternativer(språk: Språkkode) = when (språk) {
+        Språkkode.NB -> "Alternativer"
         else -> error("Mangler mapping av $språk")
     }
 }
