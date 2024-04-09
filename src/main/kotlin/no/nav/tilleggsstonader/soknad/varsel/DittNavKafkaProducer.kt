@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.varsel
 
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
+import no.nav.tms.varsel.action.Produsent
 import no.nav.tms.varsel.action.Sensitivitet
 import no.nav.tms.varsel.action.Tekst
 import no.nav.tms.varsel.action.Varseltype
@@ -15,6 +16,15 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
 
     @Value("\${KAFKA_TOPIC_DITTNAV}")
     private lateinit var topic: String
+
+    @Value("\${NAIS_CLUSTER_NAME}")
+    private lateinit var cluster: String
+
+    @Value("\${NAIS_NAMESPACE}")
+    private lateinit var namespace: String
+
+    @Value("\${NAIS_APP_NAME}")
+    private lateinit var appName: String
 
     fun sendToKafka(
         fnr: String,
@@ -31,6 +41,7 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
                 tekst = melding,
                 default = true,
             )
+            produsent = produsent()
         }
 
         runCatching {
@@ -42,5 +53,17 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
             throw RuntimeException(errorMessage)
         }
         return kafkaBeskjedJson
+    }
+
+    private fun produsent(): Produsent? {
+        return if (cluster.isBlank() || namespace.isBlank() || appName.isBlank()) {
+            null
+        } else {
+            Produsent(
+                cluster = cluster,
+                namespace = namespace,
+                appnavn = appName,
+            )
+        }
     }
 }

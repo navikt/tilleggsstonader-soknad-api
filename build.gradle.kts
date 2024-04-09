@@ -77,7 +77,7 @@ dependencies {
 
     //Kafka
     implementation("org.springframework.kafka:spring-kafka")
-    implementation("no.nav.tms.varsel:kotlin-builder:1.0.2")
+    implementation("no.nav.tms.varsel:kotlin-builder:1.0.3")
 
 
     // Test

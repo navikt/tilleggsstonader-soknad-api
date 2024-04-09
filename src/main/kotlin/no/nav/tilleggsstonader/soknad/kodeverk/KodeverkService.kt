@@ -37,6 +37,6 @@ class KodeverkService(
 class CachedKodeverkService(
     private val kodeverkClient: KodeverkClient,
 ) {
-    @Cacheable(sync = true)
+    @Cacheable("poststed", sync = true)
     fun hentPoststed(): KodeverkDto = kodeverkClient.hentPostnummer()
 }
