@@ -15,17 +15,113 @@
         } ],
         "alternativer" : [ "Alt1", "Alt2" ]
       },
-      "boddSammenhengende" : {
-        "label" : "Bodd sammenhengende?",
-        "verdi" : "JA",
-        "svarTekst" : "Ja",
-        "alternativer" : [ ]
-      },
-      "planleggerBoINorgeNeste12mnd" : {
-        "label" : "Planlegger du å bo i Norge de neste 12 månedene?",
-        "verdi" : "JA",
-        "svarTekst" : "Ja",
-        "alternativer" : [ ]
+      "boddSammenhengende" : null,
+      "planleggerBoINorgeNeste12mnd" : null,
+      "arbeidOgOpphold" : {
+        "jobberIAnnetLand" : {
+          "label" : "Jobber du i et annet land enn Norge?",
+          "verdi" : "JA",
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
+        },
+        "jobbAnnetLand" : {
+          "label" : "Hvilket land jobber du i?",
+          "verdi" : "SWE",
+          "svarTekst" : "Sverige"
+        },
+        "harPengestøtteAnnetLand" : {
+          "label" : "Mottar du pengestøttene fra et annet land enn Norge?",
+          "verdier" : [ {
+            "verdi" : "SYKEPENGER",
+            "label" : "Sykepenger"
+          } ],
+          "alternativer" : [ "Sykepenger", "Annet" ]
+        },
+        "pengestøtteAnnetLand" : {
+          "label" : "Hvilket land mottar du pengestøtte fra?",
+          "verdi" : "SWE",
+          "svarTekst" : "Sverige"
+        },
+        "harOppholdUtenforNorgeSiste12mnd" : {
+          "label" : "Jobber du i et annet land enn Norge?",
+          "verdi" : "JA",
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
+        },
+        "oppholdUtenforNorgeSiste12mnd" : [ {
+          "land" : {
+            "label" : "Hvilket land har du oppholdt deg i?",
+            "verdi" : "SWE",
+            "svarTekst" : "Sverige"
+          },
+          "årsak" : {
+            "label" : "Hva gjorde du i dette landet?",
+            "verdier" : [ {
+              "verdi" : "JOBB",
+              "label" : "Jobb"
+            } ],
+            "alternativer" : [ "Jobb", "Studier" ]
+          },
+          "fom" : {
+            "label" : "Fom",
+            "verdi" : "2024-01-01"
+          },
+          "tom" : {
+            "label" : "Fom",
+            "verdi" : "2024-01-01"
+          }
+        }, {
+          "land" : {
+            "label" : "Hvilket land har du oppholdt deg i?",
+            "verdi" : "SWE",
+            "svarTekst" : "Sverige"
+          },
+          "årsak" : {
+            "label" : "Hva gjorde du i dette landet?",
+            "verdier" : [ {
+              "verdi" : "JOBB",
+              "label" : "Jobb"
+            } ],
+            "alternativer" : [ "Jobb", "Studier" ]
+          },
+          "fom" : {
+            "label" : "Fom",
+            "verdi" : "2024-01-01"
+          },
+          "tom" : {
+            "label" : "Fom",
+            "verdi" : "2024-01-01"
+          }
+        } ],
+        "harOppholdUtenforNorgeNeste12mnd" : {
+          "label" : "Jobber du i et annet land enn Norge?",
+          "verdi" : "JA",
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
+        },
+        "oppholdUtenforNorgeNeste12mnd" : [ {
+          "land" : {
+            "label" : "Hvilket land har du oppholdt deg i?",
+            "verdi" : "SWE",
+            "svarTekst" : "Sverige"
+          },
+          "årsak" : {
+            "label" : "Hva gjorde du i dette landet?",
+            "verdier" : [ {
+              "verdi" : "JOBB",
+              "label" : "Jobb"
+            } ],
+            "alternativer" : [ "Jobb", "Studier" ]
+          },
+          "fom" : {
+            "label" : "Fom",
+            "verdi" : "2024-01-01"
+          },
+          "tom" : {
+            "label" : "Fom",
+            "verdi" : "2024-01-01"
+          }
+        } ]
       }
     },
     "aktivitet" : {

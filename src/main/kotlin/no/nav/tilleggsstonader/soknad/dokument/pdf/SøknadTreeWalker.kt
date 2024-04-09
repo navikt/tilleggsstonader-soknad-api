@@ -1,18 +1,25 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
+import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ArbeidOgOpphold
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.OppholdUtenforNorge
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
+import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAlternativer
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAvsnitt
+import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeNeste12mnd
+import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeSiste12mnd
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
@@ -42,7 +49,7 @@ data class Avsnitt(
 
 data class Verdi(
     val verdi: String,
-    val alternativer: List<String>? = null,
+    val alternativer: String? = null,
 ) : HtmlFelt(HtmlFeltType.VERDI)
 
 data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
@@ -61,18 +68,23 @@ object SøknadTreeWalker {
         return when (entitet) {
             is SøknadsskjemaBarnetilsyn,
             is BarnMedBarnepass,
+            is OppholdUtenforNorge,
             -> finnFelter(entitet, språk)
 
             is HovedytelseAvsnitt,
             is AktivitetAvsnitt,
             is BarnAvsnitt,
+            is ArbeidOgOpphold,
             -> listOf(Avsnitt(tittelAvsnitt(entitet, språk), finnFelter(entitet, språk)))
 
+            is ListeMedTittel -> listOf(Avsnitt(entitet.tittel, mapListe(entitet.list, språk)))
             is List<*> -> mapListe(entitet, språk)
 
             is TekstFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
+            is SelectFelt<*> -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst)))))
+            is DatoFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is EnumFelt<*> -> listOf(
-                Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = entitet.alternativer))),
+                Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = mapAlternativer(entitet.alternativer, språk)))),
             )
 
             is EnumFlereValgFelt<*> -> listOf(
@@ -81,7 +93,7 @@ object SøknadTreeWalker {
                     verdier = listOf(
                         Verdi(
                             verdi = mapVerdi(entitet.verdier.map { it.label }),
-                            alternativer = entitet.alternativer,
+                            alternativer = mapAlternativer(entitet.alternativer, språk),
                         ),
                     ),
                 ),
@@ -92,13 +104,16 @@ object SøknadTreeWalker {
         }
     }
 
+    private fun mapAlternativer(alternativer: List<String>, språk: Språkkode): String =
+        "${tittelAlternativer(språk)}: ${alternativer.joinToString(", ")}"
+
     /**
      * I de tilfeller man eks har en liste med Barn, så er det ønskelig å lage en Horisontallinje mellom barnen
      */
     private fun mapListe(
         entitet: List<*>,
         språk: Språkkode,
-    ) = entitet.filterNotNull().mapIndexed { index, it ->
+    ): List<HtmlFelt> = entitet.filterNotNull().mapIndexed { index, it ->
         val felter = mapFelter(it, språk)
         if (index != 0) {
             listOf(HorisontalLinje) + felter
@@ -110,19 +125,26 @@ object SøknadTreeWalker {
     private fun finnFelter(
         entitet: Any,
         språk: Språkkode,
-    ) = finnParametere(entitet).map { mapFelter(it, språk) }.flatten()
+    ) = finnParametere(entitet, språk).map { mapFelter(it, språk) }.flatten()
 
     private data class SpecialHåndtering<T : Any, OUT : Any>(
         val kClass: KClass<T>,
         val kProperty1: KProperty1<T, OUT>,
-        val mapper: (verdi: OUT) -> Any,
+        val mapper: (verdi: OUT, språk: Språkkode) -> Any,
     )
 
     // Hvis det skulle bli behov for specialhåndtering
     // eks SpecialHåndtering(BarnMedBarnepass::class, BarnMedBarnepass::ident) { TekstFelt("Fødselsnummer", "", it) },
-    private val specialHåndtering = setOf<SpecialHåndtering<*, *>>().associateBy { Pair(it.kClass, it.kProperty1) }
+    private val specialHåndtering = setOf<SpecialHåndtering<*, *>>(
+        SpecialHåndtering(ArbeidOgOpphold::class, ArbeidOgOpphold::oppholdUtenforNorgeSiste12mnd) { verdi, språk ->
+            ListeMedTittel(tittelOppholdUtenforNorgeSiste12mnd(språk), verdi)
+        },
+        SpecialHåndtering(ArbeidOgOpphold::class, ArbeidOgOpphold::oppholdUtenforNorgeNeste12mnd) { verdi, språk ->
+            ListeMedTittel(tittelOppholdUtenforNorgeNeste12mnd(språk), verdi)
+        },
+    ).associateBy { Pair(it.kClass, it.kProperty1) }
 
-    private fun finnParametere(entitet: Any): List<Any> {
+    private fun finnParametere(entitet: Any, språk: Språkkode): List<Any> {
         return konstruktørparametere(entitet)
             .asSequence()
             .map { finnSøknadsfelt(entitet, it) }
@@ -132,8 +154,8 @@ object SøknadTreeWalker {
                 val parametere = specialHåndtering[Pair(entitet::class, it)]
                 if (parametere != null && feltverdi != null) {
                     @Suppress("UNCHECKED_CAST")
-                    val mapper = parametere.mapper as (verdi: Any) -> Map<String, Any>
-                    mapper.invoke(feltverdi)
+                    val mapper = parametere.mapper as (verdi: Any, språk: Språkkode) -> Map<String, Any>
+                    mapper.invoke(feltverdi, språk)
                 } else {
                     feltverdi
                 }
@@ -157,4 +179,6 @@ object SøknadTreeWalker {
      * Konstruktørparametere er det eneste som gir oss en garantert rekkefølge for feltene, så vi henter disse først.
      */
     private fun konstruktørparametere(entity: Any) = entity::class.primaryConstructor?.parameters ?: emptyList()
+
+    private data class ListeMedTittel(val tittel: String, val list: List<*>)
 }
