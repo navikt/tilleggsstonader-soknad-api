@@ -53,7 +53,7 @@
         } ],
         "type" : "AVSNITT"
       }, {
-        "label" : "Opphold utenfor norge siste 12 mnd",
+        "label" : "Opphold utenfor Norge siste 12 mnd",
         "verdier" : [ {
           "label" : "Hvilket land har du oppholdt deg i?",
           "verdier" : [ {
@@ -131,7 +131,7 @@
         } ],
         "type" : "AVSNITT"
       }, {
-        "label" : "Opphold utenfor norge neste 12 mnd",
+        "label" : "Opphold utenfor Norge neste 12 mnd",
         "verdier" : [ {
           "label" : "Hvilket land har du oppholdt deg i?",
           "verdier" : [ {
