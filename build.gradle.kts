@@ -1,5 +1,5 @@
 val javaVersion = JavaLanguageVersion.of(21)
-val tilleggsstønaderLibsVersion = "2024.03.11-08.21.f30618621f1d"
+val tilleggsstønaderLibsVersion = "2024.04.02-08.44.ef5242ac90bc"
 val tilleggsstønaderKontrakterVersion = "2024.04.11-13.15.b59effcf8e2d"
 val familieProsesseringVersion = "2.20240214140223_83c31de"
 val tokenSupportVersion = "4.1.4"
@@ -77,7 +77,7 @@ dependencies {
 
     //Kafka
     implementation("org.springframework.kafka:spring-kafka")
-    implementation("no.nav.tms.varsel:kotlin-builder:1.0.3")
+    implementation("no.nav.tms.varsel:kotlin-builder:1.0.3-test-3")
 
 
     // Test
