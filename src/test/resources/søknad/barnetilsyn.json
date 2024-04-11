@@ -190,7 +190,7 @@
       } ]
     },
     "dokumentasjon" : [ {
-      "type" : "UTGIFTER_PASS_ANNET",
+      "type" : "UTGIFTER_PASS_PRIVAT",
       "label" : "Vedlegglabel",
       "opplastedeVedlegg" : [ {
         "id" : "98fd0f9b-1206-4918-80d9-e76f85ba1b39",
