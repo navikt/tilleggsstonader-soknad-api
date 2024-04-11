@@ -29,7 +29,7 @@
         } ],
         "type" : "AVSNITT"
       }, {
-        "label" : "Mottar du pengestøttene fra et annet land enn Norge?",
+        "label" : "Mottar du pengestøtte fra et annet land enn Norge?",
         "verdier" : [ {
           "verdi" : "Sykepenger",
           "alternativer" : "Alternativer: Sykepenger, Annet",

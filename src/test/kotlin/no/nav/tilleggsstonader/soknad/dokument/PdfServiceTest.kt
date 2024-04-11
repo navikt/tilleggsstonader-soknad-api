@@ -53,6 +53,13 @@ class PdfServiceTest {
         assertThat(oppdaterSøknadSlot.captured.søknadPdf).isEqualTo(pdfBytes)
     }
 
+    @Test
+    fun `html skal være formattert for å enklere kunne sjekke diff`() {
+        val erIkkeFormatert = FileUtil.readFile("søknad/barnetilsyn.html").split("\n")
+            .none { it.contains("<body") && it.contains("<div") }
+        assertThat(erIkkeFormatert).isTrue()
+    }
+
     private fun assertGenerertHtml(filnavn: String) {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
         FileUtil.skrivTilFil(filnavn, htmlSlot.captured)
