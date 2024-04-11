@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.infrastruktur.config
 
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
+import no.nav.tilleggsstonader.soknad.infrastruktur.exception.GradertBrukerException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
@@ -22,5 +23,11 @@ class ApiExceptionHandler {
         logger.error("Ukjent feil status=${responseStatus.value()}")
         secureLogger.error("Ukjent feil status=${responseStatus.value()}", throwable)
         return ProblemDetail.forStatusAndDetail(responseStatus, "Ukjent feil")
+    }
+
+    @ExceptionHandler(GradertBrukerException::class)
+    fun handleThrowable(throwable: GradertBrukerException): ProblemDetail {
+        secureLogger.warn("Gradert bruker svarer med status=400")
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "ROUTING_GAMMEL_SØKNAD")
     }
 }

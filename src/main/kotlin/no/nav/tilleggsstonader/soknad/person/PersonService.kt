@@ -25,7 +25,6 @@ class PersonService(
         val søker = pdlClient.hentSøker(fødselsnummer)
         val barn = hentBarn(søker)
 
-        // TODO (hvordan) skal vi håndtere kode6?
         if (søkerEllerBarnErGradert(søker, barn)) {
             throw GradertBrukerException()
         }
