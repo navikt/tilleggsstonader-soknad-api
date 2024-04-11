@@ -85,7 +85,7 @@ object SøknadBarnetilsynUtil {
     )
 
     private fun lagDokumentasjonFelt() = DokumentasjonFelt(
-        type = Vedleggstype.UTGIFTER_PASS_ANNET,
+        type = Vedleggstype.UTGIFTER_PASS_PRIVAT,
         label = "Vedlegglabel",
         opplastedeVedlegg = listOf(
             Dokument(
