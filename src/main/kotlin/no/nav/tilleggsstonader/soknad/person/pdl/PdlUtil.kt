@@ -30,14 +30,14 @@ object PdlUtil {
     }
 }
 
-fun List<Adressebeskyttelse>.gradering(): AdressebeskyttelseGradering =
-    this.singleOrNull()?.gradering ?: AdressebeskyttelseGradering.UGRADERT
+val fortroligeGraderinger = setOf(
+    AdressebeskyttelseGradering.FORTROLIG,
+    AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+    AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND,
+)
 
-fun List<Adressebeskyttelse>.erStrengtFortrolig(): Boolean {
-    val gradering = gradering()
-    return gradering == AdressebeskyttelseGradering.STRENGT_FORTROLIG ||
-        gradering == AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
-}
+fun List<Adressebeskyttelse>.fortroligEllerStrengtFortrolig(): Boolean =
+    this.any { fortroligeGraderinger.contains(it.gradering) }
 
 inline fun <reified DATA : Any, reified RESULT : Any> feilsjekkOgReturnerData(
     ident: String?,

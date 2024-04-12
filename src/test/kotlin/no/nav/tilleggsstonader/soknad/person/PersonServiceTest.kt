@@ -32,7 +32,7 @@ class PersonServiceTest {
     }
 
     @Test
-    fun `søker er gradert FORTROLIG - skal ikke kaste feil`() {
+    fun `søker er gradert FORTROLIG - skal kaste feil`() {
         every { pdlClient.hentSøker(any()) } returns
             lagPdlSøker(adressebeskyttelse = AdressebeskyttelseGradering.FORTROLIG)
 

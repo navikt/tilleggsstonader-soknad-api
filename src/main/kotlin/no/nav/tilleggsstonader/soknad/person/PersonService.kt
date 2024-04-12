@@ -9,7 +9,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Familierelasjonsrolle
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
-import no.nav.tilleggsstonader.soknad.person.pdl.erStrengtFortrolig
+import no.nav.tilleggsstonader.soknad.person.pdl.fortroligEllerStrengtFortrolig
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -65,6 +65,6 @@ class PersonService(
         søker: PdlSøker,
         barn: Map<String, PdlBarn>,
     ) =
-        søker.adressebeskyttelse.erStrengtFortrolig() ||
-            barn.values.any { it.adressebeskyttelse.erStrengtFortrolig() }
+        søker.adressebeskyttelse.fortroligEllerStrengtFortrolig() ||
+            barn.values.any { it.adressebeskyttelse.fortroligEllerStrengtFortrolig() }
 }
