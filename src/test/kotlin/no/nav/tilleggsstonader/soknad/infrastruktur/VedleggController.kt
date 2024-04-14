@@ -32,15 +32,15 @@ class VedleggController {
     fun addAttachment(
         @PathVariable("bucket") bucket: String,
         @RequestParam("file") multipartFile: MultipartFile,
-    ): ResponseEntity<Map<String, String>> {
+    ): ResponseEntity<Any> {
         if (multipartFile.isEmpty) {
-            error("Dokument mangler")
+            return ResponseEntity("CODE=DOCUMENT_MISSING", HttpStatus.BAD_REQUEST)
         }
 
         val bytes = multipartFile.bytes
 
         if (bytes.size > 10 * 1024 * 1024) {
-            error("Størrelse")
+            return ResponseEntity("CODE=IMAGE_DIMENSIONS_TOO_SMALL", HttpStatus.BAD_REQUEST)
         }
 
         val uuid = UUID.randomUUID()
