@@ -34,13 +34,13 @@ class VedleggController {
         @RequestParam("file") multipartFile: MultipartFile,
     ): ResponseEntity<Any> {
         if (multipartFile.isEmpty) {
-            return ResponseEntity("CODE=DOCUMENT_MISSING", HttpStatus.BAD_REQUEST)
+            return ResponseEntity(mapOf("melding" to "CODE=DOCUMENT_MISSING"), HttpStatus.BAD_REQUEST)
         }
 
         val bytes = multipartFile.bytes
 
         if (bytes.size > 10 * 1024 * 1024) {
-            return ResponseEntity("CODE=IMAGE_DIMENSIONS_TOO_SMALL", HttpStatus.BAD_REQUEST)
+            return ResponseEntity(mapOf("melding" to "CODE=IMAGE_TOO_LARGE"), HttpStatus.BAD_REQUEST)
         }
 
         val uuid = UUID.randomUUID()
