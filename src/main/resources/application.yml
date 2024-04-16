@@ -6,11 +6,12 @@ server:
   shutdown: graceful
   servlet:
     context-path: /
-    multipart:
-      max-file-size: 200MB
-      max-request-size: 200MB
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   mvc:
     format:
       date: iso
