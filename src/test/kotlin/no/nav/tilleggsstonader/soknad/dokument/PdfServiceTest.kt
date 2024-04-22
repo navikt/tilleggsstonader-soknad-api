@@ -74,7 +74,7 @@ class PdfServiceTest {
         restTemplate.messageConverters.removeIf { it is MappingJackson2HttpMessageConverter }
         restTemplate.messageConverters.add(MappingJackson2HttpMessageConverter(objectMapper))
         val url = "https://tilleggsstonader-htmlify.intern.dev.nav.no"
-        //val url = "http://localhost:8001"
+        // val url = "http://localhost:8001"
         return HtmlifyClient(URI.create(url), restTemplate)
     }
 

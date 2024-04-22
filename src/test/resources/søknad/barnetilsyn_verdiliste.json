@@ -14,7 +14,7 @@
       "label" : "Jobber du i et annet land enn Norge?",
       "verdier" : [ {
         "verdi" : "Ja",
-        "alternativer" : "Alternativer: ",
+        "alternativer" : null,
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -46,7 +46,7 @@
       "label" : "Jobber du i et annet land enn Norge?",
       "verdier" : [ {
         "verdi" : "Ja",
-        "alternativer" : "Alternativer: ",
+        "alternativer" : null,
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -124,7 +124,7 @@
       "label" : "Jobber du i et annet land enn Norge?",
       "verdier" : [ {
         "verdi" : "Ja",
-        "alternativer" : "Alternativer: ",
+        "alternativer" : null,
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
@@ -210,7 +210,7 @@
     "label" : "Har startet i 5. klasse?",
     "verdier" : [ {
       "verdi" : "Ja",
-      "alternativer" : "Alternativer: ",
+      "alternativer" : null,
       "type" : "VERDI"
     } ],
     "type" : "AVSNITT"
@@ -218,7 +218,7 @@
     "label" : "Årsak?",
     "verdier" : [ {
       "verdi" : "Mye borte",
-      "alternativer" : "Alternativer: ",
+      "alternativer" : null,
       "type" : "VERDI"
     } ],
     "type" : "AVSNITT"
@@ -244,7 +244,7 @@
     "label" : "Type barnepass",
     "verdier" : [ {
       "verdi" : "Svartekst",
-      "alternativer" : "Alternativer: ",
+      "alternativer" : null,
       "type" : "VERDI"
     } ],
     "type" : "AVSNITT"
@@ -252,7 +252,7 @@
     "label" : "Har startet i 5. klasse?",
     "verdier" : [ {
       "verdi" : "Ja",
-      "alternativer" : "Alternativer: ",
+      "alternativer" : null,
       "type" : "VERDI"
     } ],
     "type" : "AVSNITT"
@@ -260,7 +260,7 @@
     "label" : "Årsak?",
     "verdier" : [ {
       "verdi" : "Mye borte",
-      "alternativer" : "Alternativer: ",
+      "alternativer" : null,
       "type" : "VERDI"
     } ],
     "type" : "AVSNITT"

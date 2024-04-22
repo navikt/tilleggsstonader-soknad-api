@@ -81,29 +81,45 @@ object SøknadTreeWalker {
             is TekstFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is SelectFelt<*> -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst)))))
             is DatoFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
-            is EnumFelt<*> -> listOf(
-                Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst), alternativer = mapAlternativer(entitet.alternativer, språk)))),
-            )
+            is EnumFelt<*> -> listOf(mapEnumFelt(entitet, språk))
 
-            is EnumFlereValgFelt<*> -> listOf(
-                Avsnitt(
-                    label = entitet.label,
-                    verdier = listOf(
-                        Verdi(
-                            verdi = mapVerdi(entitet.verdier.map { it.label }),
-                            alternativer = mapAlternativer(entitet.alternativer, språk),
-                        ),
-                    ),
-                ),
-            )
+            is EnumFlereValgFelt<*> -> listOf(mapEnumFlereValgFelt(entitet, språk))
 
             is DokumentasjonFelt -> emptyList()
             else -> error("Kan ikke mappe entitet=$entitet")
         }
     }
 
-    private fun mapAlternativer(alternativer: List<String>, språk: Språkkode): String =
-        "${tittelAlternativer(språk)}: ${alternativer.joinToString(", ")}"
+    private fun mapEnumFlereValgFelt(
+        entitet: EnumFlereValgFelt<*>,
+        språk: Språkkode,
+    ) = Avsnitt(
+        label = entitet.label,
+        verdier = listOf(
+            Verdi(
+                verdi = mapVerdi(entitet.verdier.map { it.label }),
+                alternativer = mapAlternativer(entitet.alternativer, språk),
+            ),
+        ),
+    )
+
+    private fun mapEnumFelt(
+        entitet: EnumFelt<*>,
+        språk: Språkkode,
+    ) = Avsnitt(
+        entitet.label,
+        listOf(
+            Verdi(
+                mapVerdi(entitet.svarTekst),
+                alternativer = mapAlternativer(entitet.alternativer, språk),
+            ),
+        ),
+    )
+
+    private fun mapAlternativer(alternativer: List<String>, språk: Språkkode): String? =
+        alternativer
+            .takeIf { it.isNotEmpty() }
+            ?.let { "${tittelAlternativer(språk)}: ${it.joinToString(", ")}" }
 
     /**
      * I de tilfeller man eks har en liste med Barn, så er det ønskelig å lage en Horisontallinje mellom barnen
