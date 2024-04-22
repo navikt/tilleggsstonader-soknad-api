@@ -18,7 +18,8 @@ class SøknadController(
     private val søknadService: SøknadService,
 ) {
 
-    @PostMapping("barnetilsyn")
+    // todo fjerne "barnetilsyn" når pass-barn er tatt i bruk
+    @PostMapping("barnetilsyn", "pass-barn")
     fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
         val mottattTidspunkt = LocalDateTime.now()
         søknadService.lagreSøknad(
