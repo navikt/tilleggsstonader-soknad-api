@@ -36,9 +36,7 @@ import kotlin.reflect.full.primaryConstructor
 sealed class HtmlFelt(val type: HtmlFeltType)
 
 enum class HtmlFeltType {
-    AVSNITT,
-    VERDI,
-    LINJE,
+    AVSNITT, VERDI, LINJE,
 }
 
 data class Avsnitt(
@@ -55,8 +53,8 @@ data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
 
 object SøknadTreeWalker {
 
-    fun mapSøknad(søknad: Søknadsskjema<*>): List<HtmlFelt> {
-        return mapFelter(søknad.skjema, søknad.språk)
+    fun mapSøknad(søknad: Søknadsskjema<*>, søkerinformasjon: Søkerinformasjon): List<HtmlFelt> {
+        return listOf(søkerinformasjon.tilAvsnitt(søknad.språk)) + mapFelter(søknad.skjema, søknad.språk)
     }
 
     /**
@@ -117,9 +115,7 @@ object SøknadTreeWalker {
     )
 
     private fun mapAlternativer(alternativer: List<String>, språk: Språkkode): String? =
-        alternativer
-            .takeIf { it.isNotEmpty() }
-            ?.let { "${tittelAlternativer(språk)}: ${it.joinToString(", ")}" }
+        alternativer.takeIf { it.isNotEmpty() }?.let { "${tittelAlternativer(språk)}: ${it.joinToString(", ")}" }
 
     /**
      * I de tilfeller man eks har en liste med Barn, så er det ønskelig å lage en Horisontallinje mellom barnen
@@ -159,29 +155,25 @@ object SøknadTreeWalker {
     ).associateBy { Pair(it.kClass, it.kProperty1) }
 
     private fun finnParametere(entitet: Any, språk: Språkkode): List<Any> {
-        return konstruktørparametere(entitet)
-            .asSequence()
-            .map { finnSøknadsfelt(entitet, it) }
-            .filter { it.visibility == KVisibility.PUBLIC }
-            .mapNotNull {
+        return konstruktørparametere(entitet).asSequence().map { finnSøknadsfelt(entitet, it) }
+            .filter { it.visibility == KVisibility.PUBLIC }.mapNotNull {
                 val feltverdi = getFeltverdi(it, entitet)
                 val parametere = specialHåndtering[Pair(entitet::class, it)]
                 if (parametere != null && feltverdi != null) {
                     @Suppress("UNCHECKED_CAST")
-                    val mapper = parametere.mapper as (verdi: Any, språk: Språkkode) -> Map<String, Any>
+                    val mapper =
+                        parametere.mapper as (verdi: Any, språk: Språkkode) -> Map<String, Any>
                     mapper.invoke(feltverdi, språk)
                 } else {
                     feltverdi
                 }
-            }
-            .toList()
+            }.toList()
     }
 
     /**
      * Henter ut verdien for felt på entitet.
      */
-    private fun getFeltverdi(felt: KProperty1<out Any, Any?>, entitet: Any) =
-        felt.getter.call(entitet)
+    private fun getFeltverdi(felt: KProperty1<out Any, Any?>, entitet: Any) = felt.getter.call(entitet)
 
     /**
      * Finn første (og eneste) felt på entiteten som har samme navn som konstruktørparameter.

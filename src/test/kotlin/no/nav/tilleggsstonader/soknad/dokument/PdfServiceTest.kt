@@ -5,6 +5,8 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.slot
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.soknad.person.PersonService
+import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknad
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
@@ -27,8 +29,9 @@ class PdfServiceTest {
     private val søknadService = mockk<SøknadService>()
     private val familieDokumentClient = mockk<FamilieDokumentClient>()
     private val htmlifyClient = lagHtmlifyClient()
+    private val personService = mockk<PersonService>()
 
-    private val pdfService = PdfService(søknadService, htmlifyClient, familieDokumentClient)
+    private val pdfService = PdfService(søknadService, personService, htmlifyClient, familieDokumentClient)
 
     val oppdaterSøknadSlot = slot<Søknad>()
 
@@ -38,6 +41,8 @@ class PdfServiceTest {
     @BeforeEach
     fun setUp() {
         justRun { søknadService.oppdaterSøknad(capture(oppdaterSøknadSlot)) }
+        every { personService.hentSøker(any()) } returns
+            PersonMedBarnDto("", "Fornavn etternavn", "", emptyList())
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
     }
 
