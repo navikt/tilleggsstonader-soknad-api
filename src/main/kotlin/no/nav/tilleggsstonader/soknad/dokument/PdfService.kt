@@ -5,6 +5,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapp
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
+import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
 import no.nav.tilleggsstonader.soknad.dokument.pdf.VedleggMapper.mapVedlegg
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
@@ -22,10 +23,11 @@ class PdfService(
     fun lagPdf(søknadId: UUID) {
         val søknad = søknadService.hentSøknad(søknadId)
         val søknadsskjema = parseSøknadsskjema(søknad)
-        val feltMap = mapSøknad(søknadsskjema)
+        val felter = mapSøknad(søknadsskjema)
         val html = htmlifyClient.generateHtml(
             stønadstype = søknad.type,
-            avsnitt = feltMap,
+            tittel = tittelSøknadsskjema(søknadsskjema),
+            felter = felter,
             mottattTidspunkt = søknadsskjema.mottattTidspunkt,
             dokumentasjon = mapVedlegg(søknadsskjema),
         )

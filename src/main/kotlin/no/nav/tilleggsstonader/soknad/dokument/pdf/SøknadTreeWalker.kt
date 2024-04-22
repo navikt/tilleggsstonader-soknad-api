@@ -20,7 +20,6 @@ import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAlternativ
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAvsnitt
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeNeste12mnd
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeSiste12mnd
-import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
 import kotlin.reflect.KProperty1
@@ -56,9 +55,8 @@ data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
 
 object SøknadTreeWalker {
 
-    fun mapSøknad(søknad: Søknadsskjema<*>): Avsnitt {
-        val finnFelter = mapFelter(søknad.skjema, søknad.språk)
-        return Avsnitt(tittelSøknadsskjema(søknad), finnFelter)
+    fun mapSøknad(søknad: Søknadsskjema<*>): List<HtmlFelt> {
+        return mapFelter(søknad.skjema, søknad.språk)
     }
 
     /**

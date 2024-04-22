@@ -12,7 +12,6 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.client.postForEntity
@@ -41,8 +40,8 @@ class PdfServiceTest {
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
     }
 
+    // @Disabled // html-fila må prettyfies etter at den har blitt generert, htmlify returnerer all html som en rad
     @Test
-    @Disabled // html-fila må prettyfies etter at den har blitt generert, htmlify returnerer all html som en rad
     fun `skal lage pdf fra barnetilsyn`() {
         val søknad = lagSøknad(SøknadBarnetilsynUtil.søknad)
         every { søknadService.hentSøknad(søknad.id) } returns søknad
@@ -73,8 +72,8 @@ class PdfServiceTest {
         val restTemplate = TestRestTemplate().restTemplate
         restTemplate.messageConverters.removeIf { it is MappingJackson2HttpMessageConverter }
         restTemplate.messageConverters.add(MappingJackson2HttpMessageConverter(objectMapper))
-        val url = "https://tilleggsstonader-htmlify.intern.dev.nav.no"
-        // val url = "http://localhost:8001"
+        // val url = "https://tilleggsstonader-htmlify.intern.dev.nav.no"
+        val url = "http://localhost:8001"
         return HtmlifyClient(URI.create(url), restTemplate)
     }
 

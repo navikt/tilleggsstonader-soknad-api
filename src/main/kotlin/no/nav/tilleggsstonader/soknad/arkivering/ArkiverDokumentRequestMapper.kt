@@ -64,7 +64,7 @@ object ArkiverDokumentRequestMapper {
 
 fun Dokumenttype?.dokumentTittel(): String {
     return when (this) {
-        Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om barnetilsyn"
+        Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om støtte til pass av barn"
         else -> error("Mangler mapping av $this")
     }
 }

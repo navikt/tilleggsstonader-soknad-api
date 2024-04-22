@@ -1,8 +1,9 @@
 package no.nav.tilleggsstonader.soknad.dokument
 
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.sak.DokumentBrevkode
 import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
-import no.nav.tilleggsstonader.soknad.dokument.pdf.Avsnitt
+import no.nav.tilleggsstonader.soknad.dokument.pdf.HtmlFelt
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -20,7 +21,8 @@ class HtmlifyClient(
 
     fun generateHtml(
         stønadstype: Stønadstype,
-        avsnitt: Avsnitt,
+        tittel: String,
+        felter: List<HtmlFelt>,
         mottattTidspunkt: LocalDateTime,
         dokumentasjon: List<DokumentasjonAvsnitt>,
     ): String {
@@ -28,8 +30,10 @@ class HtmlifyClient(
             UriComponentsBuilder.fromUri(uri).pathSegment("api", "soknad").toUriString(),
             mapOf(
                 "type" to stønadstype,
+                "tittel" to tittel,
+                "skjemanummer" to DokumentBrevkode.valueOf(stønadstype.name).verdi,
                 "mottattTidspunkt" to mottattTidspunkt,
-                "avsnitt" to avsnitt,
+                "felter" to felter,
                 "dokumentasjon" to dokumentasjon,
             ),
         )
