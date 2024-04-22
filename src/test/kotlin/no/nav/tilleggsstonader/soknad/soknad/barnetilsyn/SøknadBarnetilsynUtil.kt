@@ -10,6 +10,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AnnenAktivitetType
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
@@ -31,12 +32,21 @@ object SøknadBarnetilsynUtil {
             arbeidOgOpphold = arbeidOgOppholdDto(),
         ),
         aktivitet = Aktivitet(
-            utdanning = EnumFelt(
-                "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
-                JaNei.JA,
-                "Ja",
-                listOf("Alt1", "Alt2"),
+            aktiviteter = EnumFlereValgFelt(
+                "Hvilken aktivitet søker du om støtte i forbindelse med?",
+                listOf(
+                    VerdiFelt("1", "Aktivitet: 22. april 2024 - 22. april 2024"),
+                    VerdiFelt("ANNET", "Annet"),
+                ),
+                listOf("Alt1: 22. april 2024 - 22. april 2024", "Alt2: 22. april 2024 - 22. april 2024"),
             ),
+            annenAktivitet = EnumFelt(
+                "Hvilken arbeidsrettet aktivitet har du? ",
+                AnnenAktivitetType.TILTAK,
+                "Tiltak / arbeidsrettet aktivitet",
+                listOf(),
+            ),
+            lønnetAktivitet = EnumFelt("Mottar du lønn gjennom ett tiltak?", JaNei.NEI, "Nei", listOf()),
         ),
         barnMedBarnepass = listOf(
             lagBarn("08921997974"),

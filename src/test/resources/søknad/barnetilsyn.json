@@ -125,12 +125,30 @@
       }
     },
     "aktivitet" : {
-      "utdanning" : {
-        "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
-        "verdi" : "JA",
-        "svarTekst" : "Ja",
-        "alternativer" : [ "Alt1", "Alt2" ]
-      }
+      "aktiviteter" : {
+        "label" : "Hvilken aktivitet søker du om støtte i forbindelse med?",
+        "verdier" : [ {
+          "verdi" : "1",
+          "label" : "Aktivitet: 22. april 2024 - 22. april 2024"
+        }, {
+          "verdi" : "ANNET",
+          "label" : "Annet"
+        } ],
+        "alternativer" : [ "Alt1: 22. april 2024 - 22. april 2024", "Alt2: 22. april 2024 - 22. april 2024" ]
+      },
+      "annenAktivitet" : {
+        "label" : "Hvilken arbeidsrettet aktivitet har du? ",
+        "verdi" : "TILTAK",
+        "svarTekst" : "Tiltak / arbeidsrettet aktivitet",
+        "alternativer" : [ ]
+      },
+      "lønnetAktivitet" : {
+        "label" : "Mottar du lønn gjennom ett tiltak?",
+        "verdi" : "NEI",
+        "svarTekst" : "Nei",
+        "alternativer" : [ ]
+      },
+      "utdanning" : null
     },
     "barn" : {
       "barnMedBarnepass" : [ {

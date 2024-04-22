@@ -66,6 +66,8 @@ class BarnetilsynMapper {
     }
 
     private fun mapAktivitet(dto: SøknadBarnetilsynDto) = AktivitetAvsnitt(
-        utdanning = dto.aktivitet.utdanning,
+        aktiviteter = dto.aktivitet.aktiviteter,
+        annenAktivitet = dto.aktivitet.annenAktivitet,
+        lønnetAktivitet = dto.aktivitet.lønnetAktivitet,
     )
 }
