@@ -7,6 +7,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AnnenAktivitetType
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
@@ -44,7 +45,9 @@ data class OppholdUtenforNorgeDto(
 )
 
 data class Aktivitet(
-    val utdanning: EnumFelt<JaNei>,
+    val aktiviteter: EnumFlereValgFelt<String>?,
+    val annenAktivitet: EnumFelt<AnnenAktivitetType>?,
+    val lønnetAktivitet: EnumFelt<JaNei>?,
 )
 
 data class BarnMedBarnepass(
