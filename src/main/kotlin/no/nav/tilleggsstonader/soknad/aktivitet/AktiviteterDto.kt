@@ -18,7 +18,7 @@ data class AktivitetDto(
     val fom: LocalDate,
     val tom: LocalDate?,
     val typeNavn: String,
-    val erUtdanning: Boolean?,
+    val erUtdanning: Boolean,
     val arrangør: String?,
 )
 
@@ -31,7 +31,7 @@ fun AktivitetArenaDto.tilDto(): AktivitetDto? {
         fom = fom,
         tom = tom,
         typeNavn = typeNavn,
-        erUtdanning = erUtdanning,
+        erUtdanning = erUtdanning == true,
         arrangør = arrangør,
     )
 }
