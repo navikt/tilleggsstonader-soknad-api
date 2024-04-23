@@ -37,6 +37,13 @@ class PersonService(
         )
     }
 
+    /**
+     * Skal kun brukes for å hente navn til søknad-pdf, og gjøres uten context av bruker
+     */
+    fun hentNavnMedClientCredential(ident: String): String {
+        return pdlClientCredentialClient.hentNavn(ident).navn.first().visningsnavn()
+    }
+
     private fun mapBarn(barn: Map<String, PdlBarn>) =
         barn.entries
             .filter { erILive(it.value) }

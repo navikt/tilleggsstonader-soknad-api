@@ -5,7 +5,6 @@ import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapp
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
-import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Søkerinformasjon
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
@@ -40,10 +39,8 @@ class PdfService(
     }
 
     private fun hentSøkerinformasjon(søknad: Søknad): Søkerinformasjon {
-        val ident = søknad.personIdent
-        val person = personService.hentSøker(Fødselsnummer(ident))
-        val søkerinformasjon = Søkerinformasjon(ident = ident, person.visningsnavn)
-        return søkerinformasjon
+        val navn = personService.hentNavnMedClientCredential(søknad.personIdent)
+        return Søkerinformasjon(ident = søknad.personIdent, navn = navn)
     }
 
     private fun parseSøknadsskjema(
