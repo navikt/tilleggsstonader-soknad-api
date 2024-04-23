@@ -19,13 +19,13 @@ object SøknadTestUtil {
         lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsksjema(søknadDto))
 
     fun lagSøknadsksjema(søknadDto: SøknadBarnetilsynDto) =
-        BarnetilsynMapper().map("ident", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
+        BarnetilsynMapper().map("25518735813", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
 
     fun lagSøknad(stønadstype: Stønadstype, søknadsskjema: Søknadsskjema<*>): Søknad {
         return Søknad(
             søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
             type = stønadstype,
-            personIdent = "1",
+            personIdent = søknadsskjema.ident,
             opprettetTid = LocalDateTime.now(),
         )
     }
