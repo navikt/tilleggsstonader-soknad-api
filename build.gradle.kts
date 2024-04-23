@@ -1,5 +1,5 @@
 val javaVersion = JavaLanguageVersion.of(21)
-val tilleggsstønaderLibsVersion = "2024.03.11-08.21.f30618621f1d"
+val tilleggsstønaderLibsVersion = "2024.04.02-08.44.ef5242ac90bc"
 val tilleggsstønaderKontrakterVersion = "2024.04.22-17.43.13ce9372a627"
 val familieProsesseringVersion = "2.20240214140223_83c31de"
 val tokenSupportVersion = "4.1.4"
@@ -17,7 +17,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.51.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
 
-    id("org.springframework.boot") version "3.2.4"
+    id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("plugin.spring") version "1.9.23"
 
@@ -77,7 +77,7 @@ dependencies {
 
     //Kafka
     implementation("org.springframework.kafka:spring-kafka")
-    implementation("no.nav.tms.varsel:kotlin-builder:1.0.3")
+    implementation("no.nav.tms.varsel:kotlin-builder:1.0.4")
 
 
     // Test
