@@ -12,8 +12,8 @@ class AktivitetService(
 
     @Cacheable("aktivitet", cacheManager = "aktivitetCache")
     fun hentAktiviteter(ident: String): List<AktivitetArenaDto> {
-        val fom = LocalDate.now().minusYears(1)
-        val tom = LocalDate.now().plusYears(1)
+        val fom = LocalDate.now().minusMonths(3)
+        val tom = LocalDate.now().plusMonths(3)
         return aktivitetClient.hentAKtiviteter(ident, fom, tom)
     }
 }

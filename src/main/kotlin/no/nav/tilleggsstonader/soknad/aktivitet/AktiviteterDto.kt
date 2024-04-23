@@ -1,39 +1,37 @@
 package no.nav.tilleggsstonader.soknad.aktivitet
 
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
-import no.nav.tilleggsstonader.kontrakter.aktivitet.Kilde
-import no.nav.tilleggsstonader.kontrakter.aktivitet.StatusAktivitet
 import java.time.LocalDate
 
+/**
+ * @param aktiviteter er stønadsberrittgede aktiviteter
+ * @param harAktiviteter sier om det finnes aktiviteter generellt, då [aktiviteter] er filtrerte aktiviteter
+ */
 data class AktiviteterDto(
     val aktiviteter: List<AktivitetDto>,
+    val harAktiviteter: Boolean,
     val suksess: Boolean,
 )
 
 data class AktivitetDto(
     val id: String,
-    val fom: LocalDate?,
+    val fom: LocalDate,
     val tom: LocalDate?,
-    val type: String,
     val typeNavn: String,
-    val status: StatusAktivitet?,
-    val statusArena: String?,
-    val erStønadsberettiget: Boolean?,
-    val erUtdanning: Boolean?,
+    val erUtdanning: Boolean,
     val arrangør: String?,
-    val kilde: Kilde,
 )
 
-fun AktivitetArenaDto.tilDto() = AktivitetDto(
-    id = id,
-    fom = fom,
-    tom = tom,
-    type = type,
-    typeNavn = typeNavn,
-    status = status,
-    statusArena = statusArena,
-    erStønadsberettiget = erStønadsberettiget,
-    erUtdanning = erUtdanning,
-    arrangør = arrangør,
-    kilde = kilde,
-)
+fun AktivitetArenaDto.tilDto(): AktivitetDto? {
+    val fom = this.fom ?: return null
+    if (this.erStønadsberettiget != true) return null
+
+    return AktivitetDto(
+        id = id,
+        fom = fom,
+        tom = tom,
+        typeNavn = typeNavn,
+        erUtdanning = erUtdanning == true,
+        arrangør = arrangør,
+    )
+}
