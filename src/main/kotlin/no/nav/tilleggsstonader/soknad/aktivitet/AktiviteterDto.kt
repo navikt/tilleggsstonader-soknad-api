@@ -24,7 +24,6 @@ data class AktivitetDto(
 
 fun AktivitetArenaDto.tilDto(): AktivitetDto? {
     val fom = this.fom ?: return null
-    if (this.erStønadsberettiget != true) return null
 
     return AktivitetDto(
         id = id,
@@ -35,3 +34,11 @@ fun AktivitetArenaDto.tilDto(): AktivitetDto? {
         arrangør = arrangør,
     )
 }
+
+/**
+ * Kun de som er stønadsberettiget og gir rett til å søke på skal kunne søkes på
+ * Av noen grunn får aktiviteter med status=fullført en tom status
+ */
+fun List<AktivitetArenaDto>.gjeldende() = this
+    .filter { it.erStønadsberettiget == true }
+    .filter { it.status == null || it.status?.rettTilÅSøke == true }

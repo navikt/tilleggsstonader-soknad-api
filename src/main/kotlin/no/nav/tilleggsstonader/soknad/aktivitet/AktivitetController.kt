@@ -25,13 +25,13 @@ class AktivitetController(
         return try {
             val aktiviteter = aktivitetService.hentAktiviteter(ident)
             AktiviteterDto(
-                aktiviteter = aktiviteter.mapNotNull { it.tilDto() },
+                aktiviteter = aktiviteter.gjeldende().mapNotNull { it.tilDto() },
                 harAktiviteter = aktiviteter.isNotEmpty(),
                 suksess = true,
             )
         } catch (e: Exception) {
-            logger.error("Feilet henting av aktiviteter")
-            secureLogger.error("Feiltet henting av aktiviteter for ident=$ident", e)
+            logger.warn("Feilet henting av aktiviteter")
+            secureLogger.warn("Feiltet henting av aktiviteter for ident=$ident", e)
             AktiviteterDto(emptyList(), harAktiviteter = false, suksess = false)
         }
     }
