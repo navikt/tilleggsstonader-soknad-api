@@ -32,11 +32,34 @@ class AktiviteterDtoKtTest {
         fun `returnerer null hvis fom mangler`() {
             assertThat(dto(fom = null).tilDto()).isNull()
         }
+    }
+
+    @Nested
+    inner class Gjeldende {
+        @Test
+        fun `skal inneholde de som gir rett til tilleggsstømader`() {
+            assertThat(listOf(dto(erStønadsberettiget = true)).gjeldende()).hasSize(1)
+        }
 
         @Test
-        fun `returnerer null hvis erStønadsberettiget=false`() {
-            assertThat(dto(erStønadsberettiget = false).tilDto()).isNull()
-            assertThat(dto(erStønadsberettiget = null).tilDto()).isNull()
+        fun `skal filtrere bort erStønadsberettiget=false eller null`() {
+            assertThat(listOf(dto(erStønadsberettiget = false)).gjeldende()).isEmpty()
+            assertThat(listOf(dto(erStønadsberettiget = null)).gjeldende()).isEmpty()
+        }
+
+        @Test
+        fun `skal inneholde de som mangler status eller gir rett å søke på`() {
+            assertThat(listOf(dto(status = null)).gjeldende()).hasSize(1)
+            assertThat(listOf(dto(status = StatusAktivitet.AKTUELL)).gjeldende()).hasSize(1)
+            assertThat(listOf(dto(status = StatusAktivitet.BEHOV)).gjeldende()).hasSize(1)
+        }
+
+        @Test
+        fun `skal filtrere bort de som mangler status eller gir rett å søke på`() {
+            assertThat(listOf(dto(status = StatusAktivitet.IKKE_AKTUELL)).gjeldende()).isEmpty()
+            assertThat(listOf(dto(status = StatusAktivitet.FEILREGISTRERT)).gjeldende()).isEmpty()
+            assertThat(listOf(dto(status = StatusAktivitet.PLANLAGT)).gjeldende()).isEmpty()
+            assertThat(listOf(dto(status = StatusAktivitet.VENTELISTE)).gjeldende()).isEmpty()
         }
     }
 
