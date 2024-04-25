@@ -1,4 +1,4 @@
-package no.nav.tilleggsstonader.sak.infrastruktur.config
+package no.nav.tilleggsstonader.soknad.infrastruktur.config
 
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest

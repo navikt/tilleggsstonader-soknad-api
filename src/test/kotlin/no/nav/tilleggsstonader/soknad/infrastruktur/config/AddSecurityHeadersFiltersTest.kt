@@ -1,10 +1,9 @@
-package no.nav.tilleggsstonader.sak.infrastruktur.config
+package no.nav.tilleggsstonader.soknad.infrastruktur
 
 import no.nav.security.token.support.core.api.Unprotected
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -36,9 +35,8 @@ class AddSecurityHeadersFiltersTest : IntegrationTest() {
     }
 }
 
-@Profile("!prod")
 @RestController
-@RequestMapping("/api/ping")
+@RequestMapping("api/ping")
 @Unprotected
 class PingController {
 
