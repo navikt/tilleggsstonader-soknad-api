@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.person.pdl
 
+import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlUtil.httpHeaders
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBolkResponse
@@ -12,11 +13,8 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøkerNavn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøkerNavnData
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
-import org.springframework.web.client.RestOperations
-import org.springframework.web.client.exchange
+import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
@@ -25,19 +23,15 @@ class PdlClientCredentialClient(
     @Value("\${clients.pdl.uri}")
     private val pdlUrl: URI,
     @Qualifier("azureClientCredential")
-    private val restOperations: RestOperations,
-) {
+    restTemplate: RestTemplate,
+) : AbstractRestClient(restTemplate) {
 
     fun hentNavn(ident: String): PdlSøkerNavn {
         val pdlPersonRequest = PdlPersonRequest(
             variables = PdlPersonRequestVariables(ident),
             query = PdlUtil.søkerQuery,
         )
-        val pdlResponse = restOperations.exchange<PdlResponse<PdlSøkerNavnData>>(
-            graphqlUri,
-            HttpMethod.POST,
-            HttpEntity(pdlPersonRequest, httpHeaders),
-        ).body ?: error("Mangler body")
+        val pdlResponse = postForEntity<PdlResponse<PdlSøkerNavnData>>(graphqlUri, pdlPersonRequest, httpHeaders)
         return feilsjekkOgReturnerData(ident, pdlResponse) { it.person }
     }
 
@@ -47,15 +41,11 @@ class PdlClientCredentialClient(
             variables = PdlPersonBolkRequestVariables(personIdenter),
             query = PdlUtil.barnQuery,
         )
-        val pdlResponse = restOperations.exchange<PdlBolkResponse<PdlBarn>>(
-            graphqlUri,
-            HttpMethod.POST,
-            HttpEntity(pdlPersonRequest, httpHeaders),
-        ).body ?: error("Mangler body")
+        val pdlResponse = postForEntity<PdlBolkResponse<PdlBarn>>(graphqlUri, pdlPersonRequest, httpHeaders)
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
     private val graphqlUri = UriComponentsBuilder.fromUri(pdlUrl)
         .pathSegment("graphql")
-        .build().toUri()
+        .toUriString()
 }
