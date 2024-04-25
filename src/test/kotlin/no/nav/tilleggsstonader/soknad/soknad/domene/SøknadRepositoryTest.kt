@@ -30,6 +30,14 @@ class SøknadRepositoryTest : IntegrationTest() {
         }.isInstanceOf(OptimisticLockingFailureException::class.java)
     }
 
+    @Test
+    fun `skal finne antall søknader per type`() {
+        lagreSøknad()
+        lagreSøknad()
+        assertThat(søknadRepository.finnAntallPerType())
+            .containsExactly(AntallPerType(Stønadstype.BARNETILSYN, 2))
+    }
+
     private fun lagreSøknad() = søknadRepository.insert(
         Søknad(
             type = Stønadstype.BARNETILSYN,

@@ -7,6 +7,7 @@ import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.InsertUp
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.RepositoryInterface
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
+import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.stereotype.Repository
@@ -14,7 +15,13 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Repository
-interface SøknadRepository : RepositoryInterface<Søknad, UUID>, InsertUpdateRepository<Søknad>
+interface SøknadRepository : RepositoryInterface<Søknad, UUID>, InsertUpdateRepository<Søknad> {
+
+    @Query("SELECT type, count(*) as count FROM soknad GROUP BY type")
+    fun finnAntallPerType(): List<AntallPerType>
+}
+
+data class AntallPerType(val type: Stønadstype, val count: Long)
 
 @Table("soknad")
 data class Søknad(
