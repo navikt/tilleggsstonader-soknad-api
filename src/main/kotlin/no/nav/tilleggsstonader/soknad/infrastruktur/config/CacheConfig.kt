@@ -18,7 +18,7 @@ class CacheConfig {
     /**
      * Må ha en primary når man har flere cacher
      */
-    @Bean
+    @Bean("shortCache")
     @Primary
     fun cacheManager(): CacheManager = object : ConcurrentMapCacheManager() {
         override fun createConcurrentMapCache(name: String): Cache {

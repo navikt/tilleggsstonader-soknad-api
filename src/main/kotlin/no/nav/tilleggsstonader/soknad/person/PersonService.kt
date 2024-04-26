@@ -10,6 +10,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.Familierelasjonsrolle
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
 import no.nav.tilleggsstonader.soknad.person.pdl.fortroligEllerStrengtFortrolig
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -21,6 +22,7 @@ class PersonService(
     private val adresseMapper: AdresseMapper,
 ) {
 
+    @Cacheable("hentSøker", cacheManager = "shortCache")
     fun hentSøker(fødselsnummer: Fødselsnummer): PersonMedBarnDto {
         val søker = pdlClient.hentSøker(fødselsnummer)
         val barn = hentBarn(søker)
