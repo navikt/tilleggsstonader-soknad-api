@@ -1,4 +1,4 @@
-package no.nav.tilleggsstonader.soknad.infrastruktur
+package no.nav.tilleggsstonader.soknad.infrastruktur.config
 
 import no.nav.security.token.support.core.api.Unprotected
 import no.nav.tilleggsstonader.soknad.IntegrationTest
