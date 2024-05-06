@@ -2,6 +2,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
+import no.nav.tilleggsstonader.libs.utils.osloNow
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,7 +22,7 @@ class SøknadController(
     // todo fjerne "barnetilsyn" når pass-barn er tatt i bruk
     @PostMapping("barnetilsyn", "pass-av-barn")
     fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
-        val mottattTidspunkt = LocalDateTime.now()
+        val mottattTidspunkt = osloNow()
         søknadService.lagreSøknad(
             ident = EksternBrukerUtils.hentFnrFraToken(),
             mottattTidspunkt = mottattTidspunkt,
