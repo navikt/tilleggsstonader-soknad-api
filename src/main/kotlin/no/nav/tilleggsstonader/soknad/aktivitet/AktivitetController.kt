@@ -25,7 +25,7 @@ class AktivitetController(
         return try {
             val aktiviteter = aktivitetService.hentAktiviteter(ident)
             AktiviteterDto(
-                aktiviteter = aktiviteter.gjeldende().mapNotNull { it.tilDto() },
+                aktiviteter = aktiviteter.gjeldende().mapNotNull { it.tilDto() }.sortedByDescending { it.fom },
                 harAktiviteter = aktiviteter.isNotEmpty(),
                 suksess = true,
             )
