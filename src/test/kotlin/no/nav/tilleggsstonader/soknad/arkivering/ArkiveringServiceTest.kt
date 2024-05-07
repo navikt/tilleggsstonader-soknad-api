@@ -15,7 +15,6 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
 
 internal class ArkiveringServiceTest {
 
