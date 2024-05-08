@@ -3,8 +3,8 @@ package no.nav.tilleggsstonader.soknad.util
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
 import no.nav.tilleggsstonader.kontrakter.aktivitet.Kilde
 import no.nav.tilleggsstonader.kontrakter.aktivitet.StatusAktivitet
+import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import java.math.BigDecimal
-import java.time.LocalDate
 
 object AktivitetArenaDtoUtil {
 
@@ -12,8 +12,8 @@ object AktivitetArenaDtoUtil {
         id: String,
     ) = AktivitetArenaDto(
         id = id,
-        fom = LocalDate.now(),
-        tom = LocalDate.now(),
+        fom = osloDateNow(),
+        tom = osloDateNow(),
         type = "Type",
         typeNavn = "Type navn",
         status = StatusAktivitet.AKTUELL,

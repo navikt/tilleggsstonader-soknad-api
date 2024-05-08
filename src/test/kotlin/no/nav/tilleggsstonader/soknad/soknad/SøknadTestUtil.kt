@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
+import no.nav.tilleggsstonader.libs.utils.osloNow
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
@@ -26,7 +27,7 @@ object SøknadTestUtil {
             søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
             type = stønadstype,
             personIdent = søknadsskjema.ident,
-            opprettetTid = LocalDateTime.now(),
+            opprettetTid = osloNow(),
         )
     }
 
