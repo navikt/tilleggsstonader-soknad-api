@@ -9,8 +9,8 @@ import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
-import no.nav.tilleggsstonader.libs.utils.osloNow
 import no.nav.tilleggsstonader.libs.utils.osloDateNow
+import no.nav.tilleggsstonader.libs.utils.osloNow
 import no.nav.tilleggsstonader.soknad.dokument.FamilieVedleggClient
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
