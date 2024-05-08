@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.person
 
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
+import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import no.nav.tilleggsstonader.soknad.infrastruktur.exception.GradertBrukerException
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
@@ -11,7 +12,6 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
 import no.nav.tilleggsstonader.soknad.person.pdl.fortroligEllerStrengtFortrolig
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 import java.time.Period
 
 @Service
@@ -49,7 +49,7 @@ class PersonService(
             .filter { erILive(it.value) }
             .map { (ident, pdlBarn) ->
                 val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
-                val alder = Period.between(fødselsdato, LocalDate.now()).years
+                val alder = Period.between(fødselsdato, osloDateNow()).years
                 Barn(
                     ident = ident,
                     fornavn = pdlBarn.navn.first().fornavn,
