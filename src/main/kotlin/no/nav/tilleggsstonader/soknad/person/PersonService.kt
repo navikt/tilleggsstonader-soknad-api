@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.person
 
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
+import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import no.nav.tilleggsstonader.soknad.infrastruktur.exception.GradertBrukerException
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
@@ -9,9 +10,8 @@ import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Familierelasjonsrolle
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
-import no.nav.tilleggsstonader.soknad.person.pdl.erStrengtFortrolig
+import no.nav.tilleggsstonader.soknad.person.pdl.fortroligEllerStrengtFortrolig
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 import java.time.Period
 
 @Service
@@ -25,7 +25,6 @@ class PersonService(
         val søker = pdlClient.hentSøker(fødselsnummer)
         val barn = hentBarn(søker)
 
-        // TODO (hvordan) skal vi håndtere kode6?
         if (søkerEllerBarnErGradert(søker, barn)) {
             throw GradertBrukerException()
         }
@@ -38,12 +37,19 @@ class PersonService(
         )
     }
 
+    /**
+     * Skal kun brukes for å hente navn til søknad-pdf, og gjøres uten context av bruker
+     */
+    fun hentNavnMedClientCredential(ident: String): String {
+        return pdlClientCredentialClient.hentNavn(ident).navn.first().visningsnavn()
+    }
+
     private fun mapBarn(barn: Map<String, PdlBarn>) =
         barn.entries
             .filter { erILive(it.value) }
             .map { (ident, pdlBarn) ->
                 val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
-                val alder = Period.between(fødselsdato, LocalDate.now()).years
+                val alder = Period.between(fødselsdato, osloDateNow()).years
                 Barn(
                     ident = ident,
                     fornavn = pdlBarn.navn.first().fornavn,
@@ -66,6 +72,6 @@ class PersonService(
         søker: PdlSøker,
         barn: Map<String, PdlBarn>,
     ) =
-        søker.adressebeskyttelse.erStrengtFortrolig() ||
-            barn.values.any { it.adressebeskyttelse.erStrengtFortrolig() }
+        søker.adressebeskyttelse.fortroligEllerStrengtFortrolig() ||
+            barn.values.any { it.adressebeskyttelse.fortroligEllerStrengtFortrolig() }
 }

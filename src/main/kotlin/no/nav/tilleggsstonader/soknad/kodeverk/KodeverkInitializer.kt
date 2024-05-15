@@ -38,16 +38,17 @@ class KodeverkInitializer(
     }
 
     private fun sync() {
-        syncKodeverk("Postnummer", kodeverkService::hentPoststed)
+        syncKodeverk("Poststed", kodeverkService::hentPoststed)
     }
 
     private fun syncKodeverk(navn: String, henter: () -> Unit) {
         try {
             MDC.put(MDCConstants.MDC_CALL_ID, UUID.randomUUID().toString())
-            logger.info("Henter $navn")
+            logger.info("Henter kodeverk=$navn")
             henter.invoke()
+            logger.info("Hentet kodeverk=$navn")
         } catch (e: Exception) {
-            logger.warn("Feilet henting av $navn ${e.message}")
+            logger.warn("Feilet synk av kodeverk=$navn ${e.message}")
         } finally {
             MDC.clear()
         }

@@ -1,73 +1,247 @@
-{
-  "label" : "Søknad om barnetilsyn NAV 11-12.15",
+[ {
+  "label" : "Søker",
   "verdier" : [ {
-    "label" : "Hovedytelse",
+    "label" : "Fødselsnummer",
     "verdier" : [ {
-      "label" : "Hovedytelse?",
-      "verdier" : [ {
-        "verdi" : "AAP, Overgangsstønad",
-        "alternativer" : [ "Alt1", "Alt2" ],
-        "type" : "VERDI"
-      } ],
-      "type" : "AVSNITT"
-    }, {
-      "label" : "Bodd sammenhengende?",
-      "verdier" : [ {
-        "verdi" : "Ja",
-        "alternativer" : [ ],
-        "type" : "VERDI"
-      } ],
-      "type" : "AVSNITT"
-    }, {
-      "label" : "Planlegger du å bo i Norge de neste 12 månedene?",
-      "verdier" : [ {
-        "verdi" : "Ja",
-        "alternativer" : [ ],
-        "type" : "VERDI"
-      } ],
-      "type" : "AVSNITT"
+      "verdi" : "25518735813",
+      "alternativer" : null,
+      "type" : "VERDI"
     } ],
     "type" : "AVSNITT"
   }, {
-    "label" : "Aktivitet",
+    "label" : "Navn",
     "verdier" : [ {
-      "label" : "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
-      "verdier" : [ {
-        "verdi" : "Ja",
-        "alternativer" : [ "Alt1", "Alt2" ],
-        "type" : "VERDI"
-      } ],
-      "type" : "AVSNITT"
+      "verdi" : "Fornavn Etternavn",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
+}, {
+  "label" : "Hovedytelse",
+  "verdier" : [ {
+    "label" : "Hovedytelse?",
+    "verdier" : [ {
+      "verdi" : "AAP, Overgangsstønad",
+      "alternativer" : "Alternativer: Alt1, Alt2",
+      "type" : "VERDI"
     } ],
     "type" : "AVSNITT"
   }, {
-    "label" : "Barn",
+    "label" : "Arbeid og opphold",
     "verdier" : [ {
-      "label" : "Navn",
+      "label" : "Jobber du i et annet land enn Norge?",
       "verdier" : [ {
-        "verdi" : "Fornavn Etternavn",
+        "verdi" : "Ja",
         "alternativer" : null,
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
     }, {
-      "label" : "Fødselsnummer",
+      "label" : "Hvilket land jobber du i?",
       "verdier" : [ {
-        "verdi" : "ident",
+        "verdi" : "Sverige",
         "alternativer" : null,
         "type" : "VERDI"
       } ],
       "type" : "AVSNITT"
     }, {
-      "label" : "label",
+      "label" : "Mottar du pengestøtte fra et annet land enn Norge?",
       "verdier" : [ {
-        "verdi" : "svar",
-        "alternativer" : [ ],
+        "verdi" : "Sykepenger",
+        "alternativer" : "Alternativer: Sykepenger, Annet",
         "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Hvilket land mottar du pengestøtte fra?",
+      "verdier" : [ {
+        "verdi" : "Sverige",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Jobber du i et annet land enn Norge?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Opphold utenfor Norge siste 12 mnd",
+      "verdier" : [ {
+        "label" : "Hvilket land har du oppholdt deg i?",
+        "verdier" : [ {
+          "verdi" : "Sverige",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Hva gjorde du i dette landet?",
+        "verdier" : [ {
+          "verdi" : "Jobb",
+          "alternativer" : "Alternativer: Jobb, Studier",
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "type" : "LINJE"
+      }, {
+        "label" : "Hvilket land har du oppholdt deg i?",
+        "verdier" : [ {
+          "verdi" : "Sverige",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Hva gjorde du i dette landet?",
+        "verdier" : [ {
+          "verdi" : "Jobb",
+          "alternativer" : "Alternativer: Jobb, Studier",
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Jobber du i et annet land enn Norge?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Opphold utenfor Norge neste 12 mnd",
+      "verdier" : [ {
+        "label" : "Hvilket land har du oppholdt deg i?",
+        "verdier" : [ {
+          "verdi" : "Sverige",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Hva gjorde du i dette landet?",
+        "verdier" : [ {
+          "verdi" : "Jobb",
+          "alternativer" : "Alternativer: Jobb, Studier",
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
       } ],
       "type" : "AVSNITT"
     } ],
     "type" : "AVSNITT"
   } ],
   "type" : "AVSNITT"
-}
+}, {
+  "label" : "Aktivitet",
+  "verdier" : [ {
+    "label" : "Hvilken aktivitet søker du om støtte i forbindelse med?",
+    "verdier" : [ {
+      "verdi" : "Aktivitet: 22. april 2024 - 22. april 2024, Annet",
+      "alternativer" : "Alternativer: Alt1: 22. april 2024 - 22. april 2024, Alt2: 22. april 2024 - 22. april 2024",
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Hvilken arbeidsrettet aktivitet har du? ",
+    "verdier" : [ {
+      "verdi" : "Tiltak / arbeidsrettet aktivitet",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Mottar du lønn gjennom ett tiltak?",
+    "verdier" : [ {
+      "verdi" : "Nei",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
+}, {
+  "label" : "Barn",
+  "verdier" : [ {
+    "label" : "Navn",
+    "verdier" : [ {
+      "verdi" : "Fornavn Etternavn",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Fødselsnummer",
+    "verdier" : [ {
+      "verdi" : "ident",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "label",
+    "verdier" : [ {
+      "verdi" : "svar",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
+} ]

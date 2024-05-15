@@ -13,14 +13,17 @@ import org.junit.jupiter.api.Test
 
 class SøknadTreeWalkerTest {
 
+    val søkerinformasjon = Søkerinformasjon("25518735813", "Fornavn Etternavn")
+
     @Nested
     inner class Barnetilsyn {
         @Test
         fun `skal mappe barnetilsyn`() {
-            val søknadsskjema = SøknadTreeWalker.mapSøknad(lagSøknadsksjema(SøknadBarnetilsynUtil.søknad))
+            val søknadsksjema = lagSøknadsksjema(SøknadBarnetilsynUtil.søknad)
+            val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsksjema, søkerinformasjon)
             assertExpected(
                 "søknad/barnetilsyn_verdiliste.json",
-                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(søknadsskjema),
+                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(htmlFelter),
             )
         }
     }
@@ -37,7 +40,7 @@ class SøknadTreeWalkerTest {
         val søknad =
             SøknadBarnetilsynUtil.søknad.copy(barnMedBarnepass = listOf(barnMedBarnepass), dokumentasjon = emptyList())
         val søknadsskjema = lagSøknadsksjema(søknad)
-        val result = SøknadTreeWalker.mapSøknad(søknadsskjema)
+        val result = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
         assertExpected(
             "søknad/barnetilsyn_verdiliste_nullverdier.json",
             objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result),

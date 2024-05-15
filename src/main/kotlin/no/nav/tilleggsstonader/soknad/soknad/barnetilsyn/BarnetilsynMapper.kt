@@ -8,6 +8,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
+import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.ArbeidOgOppholdMapper.mapArbeidOgOpphold
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass as BarnMedBarnepassKontrakt
@@ -35,28 +36,25 @@ class BarnetilsynMapper {
         )
     }
 
-    private fun mapHovedytelse(dto: SøknadBarnetilsynDto) =
-        HovedytelseAvsnitt(
-            hovedytelse = dto.hovedytelse.ytelse,
-            boddSammenhengende = dto.hovedytelse.boddSammenhengende,
-            planleggerBoINorgeNeste12mnd = dto.hovedytelse.planleggerBoINorgeNeste12mnd,
-        )
+    private fun mapHovedytelse(dto: SøknadBarnetilsynDto) = HovedytelseAvsnitt(
+        hovedytelse = dto.hovedytelse.ytelse,
+        arbeidOgOpphold = mapArbeidOgOpphold(dto.hovedytelse.arbeidOgOpphold),
+    )
 
     private fun mapBarn(
         dto: SøknadBarnetilsynDto,
         pdlBarn: Map<String, Barn>,
         språkkode: Språkkode,
-    ) =
-        dto.barnMedBarnepass.map {
-            val barn = pdlBarn[it.ident] ?: error("Finner ikke barn=${it.ident} i barn fra PDL")
-            BarnMedBarnepassKontrakt(
-                navn = TekstFelt(labelNavn(språkkode), barn.visningsnavn),
-                ident = TekstFelt(labelFødselsnummer(språkkode), it.ident),
-                type = it.type,
-                startetIFemte = it.startetIFemte,
-                årsak = it.årsak,
-            )
-        }
+    ) = dto.barnMedBarnepass.map {
+        val barn = pdlBarn[it.ident] ?: error("Finner ikke barn=${it.ident} i barn fra PDL")
+        BarnMedBarnepassKontrakt(
+            navn = TekstFelt(labelNavn(språkkode), barn.visningsnavn),
+            ident = TekstFelt(labelFødselsnummer(språkkode), it.ident),
+            type = it.type,
+            startetIFemte = it.startetIFemte,
+            årsak = it.årsak,
+        )
+    }
 
     private fun labelNavn(språkkode: Språkkode) = when (språkkode) {
         Språkkode.NB -> "Navn"
@@ -68,6 +66,8 @@ class BarnetilsynMapper {
     }
 
     private fun mapAktivitet(dto: SøknadBarnetilsynDto) = AktivitetAvsnitt(
-        utdanning = dto.aktivitet.utdanning,
+        aktiviteter = dto.aktivitet.aktiviteter,
+        annenAktivitet = dto.aktivitet.annenAktivitet,
+        lønnetAktivitet = dto.aktivitet.lønnetAktivitet,
     )
 }

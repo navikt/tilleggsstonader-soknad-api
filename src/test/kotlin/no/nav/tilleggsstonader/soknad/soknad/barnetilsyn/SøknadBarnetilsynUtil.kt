@@ -1,15 +1,21 @@
 package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
 import no.nav.tilleggsstonader.kontrakter.felles.Hovedytelse
+import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Dokument
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
+import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AnnenAktivitetType
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakOppholdUtenforNorge
+import java.time.LocalDate
 import java.util.UUID
 
 object SøknadBarnetilsynUtil {
@@ -23,16 +29,24 @@ object SøknadBarnetilsynUtil {
                 ),
                 alternativer = listOf("Alt1", "Alt2"),
             ),
-            boddSammenhengende = EnumFelt("Bodd sammenhengende?", JaNei.JA, "Ja", emptyList()),
-            planleggerBoINorgeNeste12mnd = EnumFelt("Planlegger du å bo i Norge de neste 12 månedene?", JaNei.JA, "Ja", emptyList()),
+            arbeidOgOpphold = arbeidOgOppholdDto(),
         ),
         aktivitet = Aktivitet(
-            utdanning = EnumFelt(
-                "Skal du søke om støtte til pass av barn i forbindelse med denne utdanningen?",
-                JaNei.JA,
-                "Ja",
-                listOf("Alt1", "Alt2"),
+            aktiviteter = EnumFlereValgFelt(
+                "Hvilken aktivitet søker du om støtte i forbindelse med?",
+                listOf(
+                    VerdiFelt("1", "Aktivitet: 22. april 2024 - 22. april 2024"),
+                    VerdiFelt("ANNET", "Annet"),
+                ),
+                listOf("Alt1: 22. april 2024 - 22. april 2024", "Alt2: 22. april 2024 - 22. april 2024"),
             ),
+            annenAktivitet = EnumFelt(
+                "Hvilken arbeidsrettet aktivitet har du? ",
+                AnnenAktivitetType.TILTAK,
+                "Tiltak / arbeidsrettet aktivitet",
+                listOf(),
+            ),
+            lønnetAktivitet = EnumFelt("Mottar du lønn gjennom ett tiltak?", JaNei.NEI, "Nei", listOf()),
         ),
         barnMedBarnepass = listOf(
             lagBarn("08921997974"),
@@ -44,8 +58,44 @@ object SøknadBarnetilsynUtil {
         dokumentasjon = listOf(lagDokumentasjonFelt(), lagDokumentasjonFeltBarn()),
     )
 
+    private fun arbeidOgOppholdDto() = ArbeidOgOppholdDto(
+        jobberIAnnetLand = EnumFelt("Jobber du i et annet land enn Norge?", JaNei.JA, "Ja", emptyList()),
+        jobbAnnetLand = SelectFelt("Hvilket land jobber du i?", "SWE", "Sverige"),
+        harPengestøtteAnnetLand = EnumFlereValgFelt(
+            "Mottar du pengestøtte fra et annet land enn Norge?",
+            listOf(VerdiFelt(TypePengestøtte.SYKEPENGER, "Sykepenger")),
+            listOf("Sykepenger", "Annet"),
+        ),
+        pengestøtteAnnetLand = SelectFelt("Hvilket land mottar du pengestøtte fra?", "SWE", "Sverige"),
+        harOppholdUtenforNorgeSiste12mnd = EnumFelt(
+            "Jobber du i et annet land enn Norge?",
+            JaNei.JA,
+            "Ja",
+            emptyList(),
+        ),
+        oppholdUtenforNorgeSiste12mnd = listOf(oppholdUtenforNorgeDto(), oppholdUtenforNorgeDto()),
+        harOppholdUtenforNorgeNeste12mnd = EnumFelt(
+            "Jobber du i et annet land enn Norge?",
+            JaNei.JA,
+            "Ja",
+            emptyList(),
+        ),
+        oppholdUtenforNorgeNeste12mnd = listOf(oppholdUtenforNorgeDto()),
+    )
+
+    private fun oppholdUtenforNorgeDto() = OppholdUtenforNorgeDto(
+        land = SelectFelt("Hvilket land har du oppholdt deg i?", "SWE", "Sverige"),
+        årsak = EnumFlereValgFelt(
+            "Hva gjorde du i dette landet?",
+            listOf(VerdiFelt(ÅrsakOppholdUtenforNorge.JOBB, "Jobb")),
+            alternativer = listOf("Jobb", "Studier"),
+        ),
+        fom = DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
+        tom = DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
+    )
+
     private fun lagDokumentasjonFelt() = DokumentasjonFelt(
-        type = Vedleggstype.UTGIFTER_PASS_ANNET,
+        type = Vedleggstype.UTGIFTER_PASS_PRIVAT,
         label = "Vedlegglabel",
         opplastedeVedlegg = listOf(
             Dokument(

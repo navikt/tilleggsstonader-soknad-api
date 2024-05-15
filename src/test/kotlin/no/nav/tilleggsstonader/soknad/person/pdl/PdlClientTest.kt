@@ -13,7 +13,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.springframework.boot.web.client.RestTemplateBuilder
-import org.springframework.web.client.RestOperations
 import java.net.URI
 
 class PdlClientTest {
@@ -39,7 +38,7 @@ class PdlClientTest {
     }
 
     companion object {
-        private val restOperations: RestOperations = RestTemplateBuilder().build()
+        private val restOperations = RestTemplateBuilder().build()
         lateinit var pdlClient: PdlClient
         lateinit var wiremockServerItem: WireMockServer
 

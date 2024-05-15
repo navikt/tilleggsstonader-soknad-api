@@ -1,6 +1,9 @@
 package no.nav.tilleggsstonader.soknad.infrastruktur
 
+import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.core.api.Unprotected
+import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
+import no.nav.tilleggsstonader.libs.test.assertions.catchThrowableOfType
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchException
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.HttpServerErrorException.InternalServerError
 import org.springframework.web.client.exchange
 import org.springframework.web.client.getForEntity
@@ -68,7 +72,7 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal håndtere ukjent feil`() {
-        var response = catchException { restTemplate.getForEntity<String>(localhost("api/test/error")) }
+        val response = catchException { restTemplate.getForEntity<String>(localhost("api/test/error")) }
         assertThat(response).isInstanceOf(InternalServerError::class.java)
         assertInternalServerError(response as InternalServerError)
     }
@@ -85,6 +89,24 @@ class TestControllerTest : IntegrationTest() {
         val response = catchException { restTemplate.exchange<TestObject>(localhost("api/test/error"), HttpMethod.GET) }
         assertThat(response).isInstanceOf(InternalServerError::class.java)
         assertInternalServerError(response as InternalServerError)
+    }
+
+    @Test
+    fun `skal håndtere kall mot endepunkt som ikke eksisterer`() {
+        val response = catchException {
+            restTemplate.exchange<TestObject>(localhost("api/test/finnes-ikke"), HttpMethod.GET)
+        }
+        assertThat(response).isInstanceOf(HttpClientErrorException.NotFound::class.java)
+    }
+
+    @Test
+    fun `skal håndtere kall mot protected endepunkt uten token`() {
+        val response = catchThrowableOfType<HttpClientErrorException.Unauthorized> {
+            restTemplate.exchange<TestObject>(localhost("api/test/protected-feil"), HttpMethod.GET)
+        }
+        assertThat(response).isInstanceOf(HttpClientErrorException.Unauthorized::class.java)
+        assertThat(response.statusCode).isEqualTo(HttpStatus.UNAUTHORIZED)
+        assertThat(response.responseHeaders?.contentType).isEqualTo(APPLICATION_PROBLEM_JSON)
     }
 
     private fun assertInternalServerError(response: InternalServerError) {
@@ -115,6 +137,18 @@ class TestController {
 
     @GetMapping("error")
     fun error() {
+        error("error")
+    }
+
+    @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
+    @GetMapping("protected")
+    fun protected(): Map<String, String> {
+        return mapOf()
+    }
+
+    @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
+    @GetMapping("protected-feil")
+    fun protectedError() {
         error("error")
     }
 }

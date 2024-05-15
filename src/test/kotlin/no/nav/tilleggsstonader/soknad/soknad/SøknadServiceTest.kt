@@ -9,6 +9,8 @@ import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
+import no.nav.tilleggsstonader.libs.utils.osloDateNow
+import no.nav.tilleggsstonader.libs.utils.osloNow
 import no.nav.tilleggsstonader.soknad.dokument.FamilieVedleggClient
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
@@ -22,8 +24,6 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.UUID
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg as VedleggDomene
 
@@ -53,7 +53,7 @@ class SøknadServiceTest {
     fun setUp() {
         every { søknadRepository.insert(any()) } answers { firstArg() }
         every { person.barn } returns søknad.barnMedBarnepass.map {
-            Barn(it.ident, "fornavn", "fornavn etternavn", LocalDate.now(), 3)
+            Barn(it.ident, "fornavn", "fornavn etternavn", osloDateNow(), 3)
         }
         every { personService.hentSøker(Fødselsnummer(personIdent)) } returns person
         every { vedleggRepository.insertAll(capture(vedleggSlot)) } answers { firstArg() }
@@ -64,7 +64,7 @@ class SøknadServiceTest {
         every { person.barn } returns emptyList()
 
         assertThatThrownBy {
-            service.lagreSøknad(personIdent, LocalDateTime.now(), søknad)
+            service.lagreSøknad(personIdent, osloNow(), søknad)
         }.hasMessageContaining("Prøver å sende inn identer på barnen")
     }
 
@@ -77,7 +77,7 @@ class SøknadServiceTest {
 
             val dokumentasjon = lagDokumentasjonFelt(vedlegg)
             val søknadId =
-                service.lagreSøknad(personIdent, LocalDateTime.now(), søknad.copy(dokumentasjon = dokumentasjon))
+                service.lagreSøknad(personIdent, osloNow(), søknad.copy(dokumentasjon = dokumentasjon))
 
             val lagretVedlegg = vedleggSlot.captured.single()
             assertThat(lagretVedlegg.id).isEqualTo(vedlegg.id)
@@ -94,7 +94,7 @@ class SøknadServiceTest {
 
             val dokumentasjon = lagDokumentasjonFelt(vedlegg)
             assertThatThrownBy {
-                service.lagreSøknad(personIdent, LocalDateTime.now(), søknad.copy(dokumentasjon = dokumentasjon))
+                service.lagreSøknad(personIdent, osloNow(), søknad.copy(dokumentasjon = dokumentasjon))
             }.hasMessageContaining("Feilet henting av vedlegg=${vedlegg.id}")
         }
     }

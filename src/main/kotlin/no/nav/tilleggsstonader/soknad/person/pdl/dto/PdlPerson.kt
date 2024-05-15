@@ -5,10 +5,16 @@ import java.time.LocalDate
 
 data class PdlSøkerData(val person: PdlSøker?)
 
+data class PdlSøkerNavnData(val person: PdlSøkerNavn?)
+
 data class PdlSøker(
     val adressebeskyttelse: List<Adressebeskyttelse>,
     val bostedsadresse: List<Bostedsadresse>,
     val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
+    val navn: List<Navn>,
+)
+
+data class PdlSøkerNavn(
     val navn: List<Navn>,
 )
 

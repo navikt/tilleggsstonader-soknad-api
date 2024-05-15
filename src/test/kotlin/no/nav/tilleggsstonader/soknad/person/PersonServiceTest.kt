@@ -13,7 +13,6 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 
 class PersonServiceTest {
 
@@ -32,11 +31,13 @@ class PersonServiceTest {
     }
 
     @Test
-    fun `søker er gradert FORTROLIG - skal ikke kaste feil`() {
+    fun `søker er gradert FORTROLIG - skal kaste feil`() {
         every { pdlClient.hentSøker(any()) } returns
             lagPdlSøker(adressebeskyttelse = AdressebeskyttelseGradering.FORTROLIG)
 
-        assertDoesNotThrow { service.hentSøker(identSøker) }
+        assertThatThrownBy {
+            service.hentSøker(identSøker)
+        }.isInstanceOf(GradertBrukerException::class.java)
     }
 
     @Test

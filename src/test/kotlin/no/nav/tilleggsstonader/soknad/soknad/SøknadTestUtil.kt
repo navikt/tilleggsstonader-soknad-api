@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
+import no.nav.tilleggsstonader.libs.utils.osloNow
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
@@ -19,14 +20,14 @@ object SøknadTestUtil {
         lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsksjema(søknadDto))
 
     fun lagSøknadsksjema(søknadDto: SøknadBarnetilsynDto) =
-        BarnetilsynMapper().map("ident", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
+        BarnetilsynMapper().map("25518735813", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
 
     fun lagSøknad(stønadstype: Stønadstype, søknadsskjema: Søknadsskjema<*>): Søknad {
         return Søknad(
             søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
             type = stønadstype,
-            personIdent = "1",
-            opprettetTid = LocalDateTime.now(),
+            personIdent = søknadsskjema.ident,
+            opprettetTid = osloNow(),
         )
     }
 

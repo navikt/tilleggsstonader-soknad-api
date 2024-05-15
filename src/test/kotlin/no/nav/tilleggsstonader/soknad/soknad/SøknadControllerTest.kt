@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
@@ -18,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.web.client.postForEntity
-import java.time.LocalDate
 
 class SøknadControllerTest : IntegrationTest() {
 
@@ -37,7 +37,7 @@ class SøknadControllerTest : IntegrationTest() {
     fun `skal kunne sende inn en komplett søknad for barnetilsyn`() {
         val request = HttpEntity(SøknadBarnetilsynUtil.søknad, headers)
         val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/barnetilsyn"), request)
-        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
+        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(osloDateNow())
 
         verifiserLagretSøknad(Stønadstype.BARNETILSYN, "søknad/barnetilsyn.json")
     }

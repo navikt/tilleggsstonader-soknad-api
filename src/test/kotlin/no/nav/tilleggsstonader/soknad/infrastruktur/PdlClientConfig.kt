@@ -14,6 +14,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.Fødsel
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Navn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
+import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøkerNavn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Vegadresse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -57,6 +58,8 @@ class PdlClientConfig {
                 navn = navn(fornavn = "Espen", etternavn = "Askeladden"),
             )
             every { client.hentBarn(any()) } returns listOf(barn1, barn2).toMap()
+
+            every { client.hentNavn(any()) } returns PdlSøkerNavn(listOf(navn()))
         }
     }
 }
