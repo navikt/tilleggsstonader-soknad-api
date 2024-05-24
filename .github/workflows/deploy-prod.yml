@@ -1,9 +1,13 @@
-name: Build, push, and deploy app to dev and prod
+name: Build and deploy to dev and prod
 
 on:
   push:
     branches:
       - 'main'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
@@ -16,12 +20,13 @@ jobs:
   build:
     name: Build, push and deploy to dev-gcp and prod-gcp
     runs-on: ubuntu-latest
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
 
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -55,6 +60,7 @@ jobs:
     name: Deploy to GCP
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
       - name: Deploy til dev-gcp
