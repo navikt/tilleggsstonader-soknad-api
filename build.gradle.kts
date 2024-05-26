@@ -1,10 +1,10 @@
 val javaVersion = JavaLanguageVersion.of(21)
 val tilleggsstønaderLibsVersion = "2024.05.08-08.38.544e65c0c5a6"
-val tilleggsstønaderKontrakterVersion = "2024.04.22-17.43.13ce9372a627"
-val familieProsesseringVersion = "2.20240214140223_83c31de"
-val tokenSupportVersion = "4.1.4"
+val tilleggsstønaderKontrakterVersion = "2024.05.24-15.33.06bde086ebd7"
+val familieProsesseringVersion = "2.20240426120029_490d299"
+val tokenSupportVersion = "4.1.7"
 val wiremockVersion = "3.0.1"
-val testcontainerVersion = "1.19.7"
+val testcontainerVersion = "1.19.8"
 
 group = "no.nav.tilleggsstonader.soknad"
 version = "1.0.0"
@@ -12,14 +12,14 @@ version = "1.0.0"
 plugins {
     application
 
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.0.0"
     id("com.diffplug.spotless") version "6.25.0"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
 
-    id("org.springframework.boot") version "3.2.4"
-    id("io.spring.dependency-management") version "1.1.4"
-    kotlin("plugin.spring") version "1.9.23"
+    id("org.springframework.boot") version "3.3.0"
+    id("io.spring.dependency-management") version "1.1.5"
+    kotlin("plugin.spring") version "2.0.0"
 
     id("org.cyclonedx.bom") version "1.8.2"
 }
@@ -77,13 +77,13 @@ dependencies {
 
     //Kafka
     implementation("org.springframework.kafka:spring-kafka")
-    implementation("no.nav.tms.varsel:kotlin-builder:1.0.3")
+    implementation("no.nav.tms.varsel:kotlin-builder:1.0.4")
 
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
-    testImplementation("io.mockk:mockk:1.13.10")
+    testImplementation("io.mockk:mockk:1.13.11")
 
     testImplementation("org.testcontainers:postgresql:$testcontainerVersion")
 
