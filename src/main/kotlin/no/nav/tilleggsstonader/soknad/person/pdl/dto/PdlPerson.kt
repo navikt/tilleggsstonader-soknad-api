@@ -21,13 +21,13 @@ data class PdlSøkerNavn(
 data class PdlBarn(
     val adressebeskyttelse: List<Adressebeskyttelse>,
     val navn: List<Navn>,
-    @JsonProperty("foedsel")
-    val fødsel: List<Fødsel>,
+    @JsonProperty("foedselsdato")
+    val fødselsdato: List<Fødselsdato>,
     @JsonProperty("doedsfall")
     val dødsfall: List<Dødsfall>,
 )
 
-data class Fødsel(
+data class Fødselsdato(
     @JsonProperty("foedselsaar")
     val fødselsår: Int?,
     @JsonProperty("foedselsdato")

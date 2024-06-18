@@ -48,7 +48,7 @@ class PersonService(
         barn.entries
             .filter { erILive(it.value) }
             .map { (ident, pdlBarn) ->
-                val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+                val fødselsdato = pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
                 val alder = Period.between(fødselsdato, osloDateNow()).years
                 Barn(
                     ident = ident,

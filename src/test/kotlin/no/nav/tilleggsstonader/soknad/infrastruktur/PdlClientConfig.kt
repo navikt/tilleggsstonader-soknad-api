@@ -10,7 +10,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.Adressebeskyttelse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Bostedsadresse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.ForelderBarnRelasjon
-import no.nav.tilleggsstonader.soknad.person.pdl.dto.Fødsel
+import no.nav.tilleggsstonader.soknad.person.pdl.dto.Fødselsdato
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Navn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
@@ -101,7 +101,7 @@ fun lagPdlBarn(
         PdlBarn(
             adressebeskyttelse = listOf(Adressebeskyttelse(adressebeskyttelse)),
             navn = listOf(navn),
-            fødsel = listOf(Fødsel(fødselsår = fødselsdato.year, fødselsdato = fødselsdato)),
+            fødselsdato = listOf(Fødselsdato(fødselsår = fødselsdato.year, fødselsdato = fødselsdato)),
             dødsfall = emptyList(),
         ),
     )
