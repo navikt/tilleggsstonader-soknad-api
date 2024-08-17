@@ -11,7 +11,6 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Familierelasjonsrolle
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
-import no.nav.tilleggsstonader.soknad.person.pdl.fortroligEllerStrengtFortrolig
 import no.nav.tilleggsstonader.soknad.person.pdl.gradering
 import org.springframework.stereotype.Service
 import java.time.Period
@@ -48,18 +47,24 @@ class PersonService(
         return barn.entries
             .filter { erILive(it.value) }
             .filter { harLikEllerLavereGradering(it.value, søkersGradering) }
-            .map { (ident, pdlBarn) ->
-                val fødselsdato =
-                    pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
-                val alder = Period.between(fødselsdato, osloDateNow()).years
-                Barn(
-                    ident = ident,
-                    fornavn = pdlBarn.navn.first().fornavn,
-                    visningsnavn = pdlBarn.navn.first().visningsnavn(),
-                    fødselsdato = fødselsdato,
-                    alder = alder,
-                )
-            }.sortedBy { it.alder }
+            .map { (ident, pdlBarn) -> mapBarn(ident, pdlBarn) }
+            .sortedBy { it.alder }
+    }
+
+    private fun mapBarn(
+        ident: String,
+        pdlBarn: PdlBarn,
+    ): Barn {
+        val fødselsdato =
+            pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+        val alder = Period.between(fødselsdato, osloDateNow()).years
+        return Barn(
+            ident = ident,
+            fornavn = pdlBarn.navn.first().fornavn,
+            visningsnavn = pdlBarn.navn.first().visningsnavn(),
+            fødselsdato = fødselsdato,
+            alder = alder,
+        )
     }
 
     private fun harLikEllerLavereGradering(
