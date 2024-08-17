@@ -5,6 +5,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.dto.Adressebeskyttelse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBolkResponse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlResponse
+import no.nav.tilleggsstonader.soknad.util.CollectionUtil.singleOrNullOrError
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -38,6 +39,9 @@ val fortroligeGraderinger = setOf(
 
 fun List<Adressebeskyttelse>.fortroligEllerStrengtFortrolig(): Boolean =
     this.any { fortroligeGraderinger.contains(it.gradering) }
+
+fun List<Adressebeskyttelse>.gradering(): AdressebeskyttelseGradering =
+    this.singleOrNullOrError()?.gradering ?: AdressebeskyttelseGradering.UGRADERT
 
 inline fun <reified DATA : Any, reified RESULT : Any> feilsjekkOgReturnerData(
     ident: String?,
