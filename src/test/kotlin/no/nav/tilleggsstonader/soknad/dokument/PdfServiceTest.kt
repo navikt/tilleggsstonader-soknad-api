@@ -42,7 +42,7 @@ class PdfServiceTest {
     fun setUp() {
         justRun { søknadService.oppdaterSøknad(capture(oppdaterSøknadSlot)) }
         every { personService.hentSøker(any()) } returns
-            PersonMedBarnDto("", "Fornavn etternavn", "", emptyList())
+            PersonMedBarnDto("", "Fornavn etternavn", "", emptyList(), false)
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
     }
 

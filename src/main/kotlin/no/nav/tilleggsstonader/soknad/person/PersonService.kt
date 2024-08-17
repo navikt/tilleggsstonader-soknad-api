@@ -31,6 +31,7 @@ class PersonService(
             visningsnavn = søker.navn.first().visningsnavn(),
             adresse = adresseMapper.tilFormatertAdresse(søker),
             barn = mapBarn(søker, barn),
+            harBarnMedHøyereGradering = harBarnMedHøyereGradering(søker, barn),
         )
     }
 
@@ -46,7 +47,13 @@ class PersonService(
 
         return barn.entries
             .filter { erILive(it.value) }
-            .filter { harLikEllerLavereGradering(it.value, søkersGradering) }
+            .filter {
+                val harLikEllerLavereGradering = it.value.harLikEllerLavereGradering(søkersGradering)
+                if (!harLikEllerLavereGradering) {
+                    secureLogger.info("Filtrert bort barn pga gradering")
+                }
+                harLikEllerLavereGradering
+            }
             .map { (ident, pdlBarn) -> mapBarn(ident, pdlBarn) }
             .sortedBy { it.alder }
     }
@@ -55,8 +62,7 @@ class PersonService(
         ident: String,
         pdlBarn: PdlBarn,
     ): Barn {
-        val fødselsdato =
-            pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+        val fødselsdato = pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
         val alder = Period.between(fødselsdato, osloDateNow()).years
         return Barn(
             ident = ident,
@@ -67,16 +73,16 @@ class PersonService(
         )
     }
 
-    private fun harLikEllerLavereGradering(
-        barn: PdlBarn,
-        søkersGradering: AdressebeskyttelseGradering,
+    private fun harBarnMedHøyereGradering(
+        søker: PdlSøker,
+        barn: Map<String, PdlBarn>,
     ): Boolean {
-        val harLikEllerLavereGradering = barn.adressebeskyttelse.gradering().nivå <= søkersGradering.nivå
-        if (!harLikEllerLavereGradering) {
-            secureLogger.info("Filtrer bort barn pga gradering")
-        }
-        return harLikEllerLavereGradering
+        val søkersGradering = søker.adressebeskyttelse.gradering()
+        return barn.entries.any { !it.value.harLikEllerLavereGradering(søkersGradering) }
     }
+
+    private fun PdlBarn.harLikEllerLavereGradering(søkersGradering: AdressebeskyttelseGradering) =
+        adressebeskyttelse.gradering().nivå <= søkersGradering.nivå
 
     private fun erILive(pdlBarn: PdlBarn) =
         pdlBarn.dødsfall.firstOrNull()?.dødsdato == null

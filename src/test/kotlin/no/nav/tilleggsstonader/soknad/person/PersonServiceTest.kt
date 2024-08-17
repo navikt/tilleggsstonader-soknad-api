@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlBarn
 import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlSøker
+import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
@@ -49,29 +50,44 @@ class PersonServiceTest {
         fun `søker ugradert - skal kun inneholde barn som er ugradert`() {
             mockSøker(AdressebeskyttelseGradering.UGRADERT)
 
-            assertForventedeBarn(ugradertBarn)
+            val dto = service.hentSøker(identSøker)
+            assertForventedeBarn(dto, ugradertBarn)
+            assertThat(dto.harBarnMedHøyereGradering).isTrue()
         }
 
         @Test
         fun `søker fortrolig - skal inneholde barn som har lik eller lavere gradering`() {
             mockSøker(AdressebeskyttelseGradering.FORTROLIG)
 
-            assertForventedeBarn(ugradertBarn, fortroligBarn)
+            val dto = service.hentSøker(identSøker)
+            assertForventedeBarn(dto, ugradertBarn, fortroligBarn)
+            assertThat(dto.harBarnMedHøyereGradering).isTrue()
         }
 
         @Test
         fun `søker strengt fortrolig - skal inneholde barn som har lik eller lavere gradering`() {
             mockSøker(AdressebeskyttelseGradering.STRENGT_FORTROLIG)
 
-            assertForventedeBarn(ugradertBarn, fortroligBarn, strengtFortroligBarn, strengtFortroligUtlandBarn)
+            val dto = service.hentSøker(identSøker)
+            assertForventedeBarn(
+                dto,
+                ugradertBarn,
+                fortroligBarn,
+                strengtFortroligBarn,
+                strengtFortroligUtlandBarn,
+            )
+            assertThat(dto.harBarnMedHøyereGradering).isFalse()
         }
 
         private fun mockSøker(adressebeskyttelseGradering: AdressebeskyttelseGradering) {
             every { pdlClient.hentSøker(any()) } returns lagPdlSøker(adressebeskyttelse = adressebeskyttelseGradering)
         }
 
-        private fun assertForventedeBarn(vararg forventedeBarn: Pair<String, PdlBarn>) {
-            assertThat(service.hentSøker(identSøker).barn.map { it.ident })
+        private fun assertForventedeBarn(
+            dto: PersonMedBarnDto,
+            vararg forventedeBarn: Pair<String, PdlBarn>,
+        ) {
+            assertThat(dto.barn.map { it.ident })
                 .containsAnyElementsOf(forventedeBarn.map { it.first })
         }
     }

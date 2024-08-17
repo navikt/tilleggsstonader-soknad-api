@@ -7,6 +7,7 @@ data class PersonMedBarnDto(
     val visningsnavn: String,
     val adresse: String,
     val barn: List<Barn>,
+    val harBarnMedHøyereGradering: Boolean,
 )
 
 data class Barn(
