@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
+import no.nav.tilleggsstonader.soknad.infrastruktur.exception.GradertBrukerException
 import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlBarn
 import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlSøker
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
@@ -12,6 +13,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -46,41 +48,60 @@ class PersonServiceTest {
             every { pdlClientCredentialClient.hentBarn(any()) } returns barn
         }
 
-        @Test
-        fun `søker ugradert - skal kun inneholde barn som er ugradert`() {
-            mockSøker(AdressebeskyttelseGradering.UGRADERT)
+        @Nested
+        inner class SøkerBarnGradering {
 
-            val dto = service.hentSøker(identSøker)
-            assertForventedeBarn(dto, ugradertBarn)
-            assertThat(dto.harBarnMedHøyereGradering).isTrue()
-        }
+            @Test
+            fun `søker ugradert med fortrolige barn skal kaste feil`() {
+                mockSøker(AdressebeskyttelseGradering.UGRADERT)
+                mockBarn(ugradertBarn, fortroligBarn)
 
-        @Test
-        fun `søker fortrolig - skal inneholde barn som har lik eller lavere gradering`() {
-            mockSøker(AdressebeskyttelseGradering.FORTROLIG)
+                assertThatThrownBy {
+                    service.hentSøker(identSøker)
+                }.isInstanceOf(GradertBrukerException::class.java)
+            }
 
-            val dto = service.hentSøker(identSøker)
-            assertForventedeBarn(dto, ugradertBarn, fortroligBarn)
-            assertThat(dto.harBarnMedHøyereGradering).isTrue()
-        }
+            @Test
+            fun `søker fortrolig med strengt fortrolig barn skal kaste feil`() {
+                mockSøker(AdressebeskyttelseGradering.FORTROLIG)
+                mockBarn(strengtFortroligBarn)
 
-        @Test
-        fun `søker strengt fortrolig - skal inneholde barn som har lik eller lavere gradering`() {
-            mockSøker(AdressebeskyttelseGradering.STRENGT_FORTROLIG)
+                assertThatThrownBy {
+                    service.hentSøker(identSøker)
+                }.isInstanceOf(GradertBrukerException::class.java)
+            }
 
-            val dto = service.hentSøker(identSøker)
-            assertForventedeBarn(
-                dto,
-                ugradertBarn,
-                fortroligBarn,
-                strengtFortroligBarn,
-                strengtFortroligUtlandBarn,
-            )
-            assertThat(dto.harBarnMedHøyereGradering).isFalse()
+            @Test
+            fun `søker fortrolig med fortrolig barn skal inneholde ugradert og fortrolig barn`() {
+                mockSøker(AdressebeskyttelseGradering.FORTROLIG)
+                mockBarn(ugradertBarn, fortroligBarn)
+
+                val dto = service.hentSøker(identSøker)
+                assertForventedeBarn(dto, ugradertBarn, fortroligBarn)
+            }
+
+            @Test
+            fun `søker strengt fortrolig - skal ikke kaste feil uansett gradering på barn`() {
+                mockSøker(AdressebeskyttelseGradering.STRENGT_FORTROLIG)
+                mockBarn(ugradertBarn, fortroligBarn, strengtFortroligBarn, strengtFortroligUtlandBarn)
+
+                val dto = service.hentSøker(identSøker)
+                assertForventedeBarn(
+                    dto,
+                    ugradertBarn,
+                    fortroligBarn,
+                    strengtFortroligBarn,
+                    strengtFortroligUtlandBarn,
+                )
+            }
         }
 
         private fun mockSøker(adressebeskyttelseGradering: AdressebeskyttelseGradering) {
             every { pdlClient.hentSøker(any()) } returns lagPdlSøker(adressebeskyttelse = adressebeskyttelseGradering)
+        }
+
+        private fun mockBarn(vararg barn: Pair<String, PdlBarn>) {
+            every { pdlClientCredentialClient.hentBarn(any()) } returns barn.toMap()
         }
 
         private fun assertForventedeBarn(

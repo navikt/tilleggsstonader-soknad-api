@@ -1,13 +1,12 @@
 package no.nav.tilleggsstonader.soknad.person
 
-import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.libs.utils.osloDateNow
+import no.nav.tilleggsstonader.soknad.infrastruktur.exception.GradertBrukerException
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
-import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Familierelasjonsrolle
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
@@ -26,12 +25,15 @@ class PersonService(
         val søker = pdlClient.hentSøker(fødselsnummer)
         val barn = hentBarn(søker)
 
+        if (harBarnMedHøyereGradering(søker, barn)) {
+            throw GradertBrukerException()
+        }
+
         return PersonMedBarnDto(
             fornavn = søker.navn.first().fornavn,
             visningsnavn = søker.navn.first().visningsnavn(),
             adresse = adresseMapper.tilFormatertAdresse(søker),
-            barn = mapBarn(søker, barn),
-            harBarnMedHøyereGradering = harBarnMedHøyereGradering(søker, barn),
+            barn = mapBarn(barn),
         )
     }
 
@@ -42,21 +44,11 @@ class PersonService(
         return pdlClientCredentialClient.hentNavn(ident).navn.first().visningsnavn()
     }
 
-    private fun mapBarn(søker: PdlSøker, barn: Map<String, PdlBarn>): List<Barn> {
-        val søkersGradering = søker.adressebeskyttelse.gradering()
-
-        return barn.entries
+    private fun mapBarn(barn: Map<String, PdlBarn>) =
+        barn.entries
             .filter { erILive(it.value) }
-            .filter {
-                val harLikEllerLavereGradering = it.value.harLikEllerLavereGradering(søkersGradering)
-                if (!harLikEllerLavereGradering) {
-                    secureLogger.info("Filtrert bort barn pga gradering")
-                }
-                harLikEllerLavereGradering
-            }
             .map { (ident, pdlBarn) -> mapBarn(ident, pdlBarn) }
             .sortedBy { it.alder }
-    }
 
     private fun mapBarn(
         ident: String,
@@ -78,11 +70,8 @@ class PersonService(
         barn: Map<String, PdlBarn>,
     ): Boolean {
         val søkersGradering = søker.adressebeskyttelse.gradering()
-        return barn.entries.any { !it.value.harLikEllerLavereGradering(søkersGradering) }
+        return barn.entries.any { it.value.adressebeskyttelse.gradering().nivå > søkersGradering.nivå }
     }
-
-    private fun PdlBarn.harLikEllerLavereGradering(søkersGradering: AdressebeskyttelseGradering) =
-        adressebeskyttelse.gradering().nivå <= søkersGradering.nivå
 
     private fun erILive(pdlBarn: PdlBarn) =
         pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
