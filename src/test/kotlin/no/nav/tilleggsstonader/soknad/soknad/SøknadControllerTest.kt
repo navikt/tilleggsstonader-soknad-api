@@ -1,17 +1,24 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.mockk.every
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import no.nav.tilleggsstonader.soknad.IntegrationTest
+import no.nav.tilleggsstonader.soknad.infrastruktur.PdlClientConfig.Companion.resetPdlClientMock
+import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlBarn
 import no.nav.tilleggsstonader.soknad.person.PersonService
+import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
+import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
@@ -19,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.web.client.postForEntity
+import java.time.LocalDate
 
 class SøknadControllerTest : IntegrationTest() {
 
@@ -28,9 +36,17 @@ class SøknadControllerTest : IntegrationTest() {
     @Autowired
     lateinit var søknadRepository: SøknadRepository
 
+    @Autowired
+    lateinit var pdlClientCredentialClient: PdlClientCredentialClient
+
     @BeforeEach
     fun setUp() {
         headers.setBearerAuth(søkerBearerToken(tokenSubject))
+    }
+
+    @AfterEach
+    override fun tearDown() {
+        resetPdlClientMock(pdlClientCredentialClient)
     }
 
     @Test
@@ -49,6 +65,19 @@ class SøknadControllerTest : IntegrationTest() {
         assertThatThrownBy {
             restTemplate.postForEntity<Kvittering>(localhost("api/soknad/barnetilsyn"), request)
         }.hasMessage("""401 : "{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/soknad/barnetilsyn"}"""")
+    }
+
+    @Test
+    fun `skal feile hvis man prøver å sende inn søknad hvis barn har høyere gradering enn søker`() {
+        val request = HttpEntity(SøknadBarnetilsynUtil.søknad, headers)
+
+        val identBarn = FnrGenerator.generer(LocalDate.now().minusYears(3))
+        val barn = lagPdlBarn(identBarn, adressebeskyttelse = AdressebeskyttelseGradering.FORTROLIG)
+        every { pdlClientCredentialClient.hentBarn(any()) } returns mapOf(barn)
+
+        assertThatThrownBy {
+            restTemplate.postForEntity<Kvittering>(localhost("api/soknad/barnetilsyn"), request)
+        }.hasMessage("""400 : "{"type":"about:blank","title":"Bad Request","status":400,"detail":"ROUTING_GAMMEL_SØKNAD","instance":"/api/soknad/barnetilsyn"}"""")
     }
 
     private fun verifiserLagretSøknad(stønadstype: Stønadstype, filnavn: String) {

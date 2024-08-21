@@ -40,12 +40,12 @@ data class Dødsfall(
 
 data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
 
-enum class AdressebeskyttelseGradering {
+enum class AdressebeskyttelseGradering(val nivå: Int) {
 
-    STRENGT_FORTROLIG,
-    STRENGT_FORTROLIG_UTLAND,
-    FORTROLIG,
-    UGRADERT,
+    STRENGT_FORTROLIG(2),
+    STRENGT_FORTROLIG_UTLAND(2),
+    FORTROLIG(1),
+    UGRADERT(0),
 }
 
 data class Bostedsadresse(val vegadresse: Vegadresse?, val matrikkeladresse: Matrikkeladresse?)

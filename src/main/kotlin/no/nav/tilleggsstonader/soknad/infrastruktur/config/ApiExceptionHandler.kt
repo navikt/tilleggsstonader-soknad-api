@@ -52,7 +52,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(GradertBrukerException::class)
     fun handleThrowable(throwable: GradertBrukerException): ProblemDetail {
-        secureLogger.warn("Gradert bruker svarer med status=400")
+        secureLogger.warn("Brukeren inneholder barn som har høyere gradering enn søker status=400")
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "ROUTING_GAMMEL_SØKNAD")
     }
 }

@@ -10,7 +10,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Familierelasjonsrolle
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlSøker
-import no.nav.tilleggsstonader.soknad.person.pdl.fortroligEllerStrengtFortrolig
+import no.nav.tilleggsstonader.soknad.person.pdl.gradering
 import org.springframework.stereotype.Service
 import java.time.Period
 
@@ -25,7 +25,7 @@ class PersonService(
         val søker = pdlClient.hentSøker(fødselsnummer)
         val barn = hentBarn(søker)
 
-        if (søkerEllerBarnErGradert(søker, barn)) {
+        if (harBarnMedHøyereGradering(søker, barn)) {
             throw GradertBrukerException()
         }
 
@@ -47,17 +47,31 @@ class PersonService(
     private fun mapBarn(barn: Map<String, PdlBarn>) =
         barn.entries
             .filter { erILive(it.value) }
-            .map { (ident, pdlBarn) ->
-                val fødselsdato = pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
-                val alder = Period.between(fødselsdato, osloDateNow()).years
-                Barn(
-                    ident = ident,
-                    fornavn = pdlBarn.navn.first().fornavn,
-                    visningsnavn = pdlBarn.navn.first().visningsnavn(),
-                    fødselsdato = fødselsdato,
-                    alder = alder,
-                )
-            }.sortedBy { it.alder }
+            .map { (ident, pdlBarn) -> mapBarn(ident, pdlBarn) }
+            .sortedBy { it.alder }
+
+    private fun mapBarn(
+        ident: String,
+        pdlBarn: PdlBarn,
+    ): Barn {
+        val fødselsdato = pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+        val alder = Period.between(fødselsdato, osloDateNow()).years
+        return Barn(
+            ident = ident,
+            fornavn = pdlBarn.navn.first().fornavn,
+            visningsnavn = pdlBarn.navn.first().visningsnavn(),
+            fødselsdato = fødselsdato,
+            alder = alder,
+        )
+    }
+
+    private fun harBarnMedHøyereGradering(
+        søker: PdlSøker,
+        barn: Map<String, PdlBarn>,
+    ): Boolean {
+        val søkersGradering = søker.adressebeskyttelse.gradering()
+        return barn.entries.any { it.value.adressebeskyttelse.gradering().nivå > søkersGradering.nivå }
+    }
 
     private fun erILive(pdlBarn: PdlBarn) =
         pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
@@ -67,11 +81,4 @@ class PersonService(
             .mapNotNull { it.relatertPersonsIdent }
         return pdlClientCredentialClient.hentBarn(barnIdenter)
     }
-
-    private fun søkerEllerBarnErGradert(
-        søker: PdlSøker,
-        barn: Map<String, PdlBarn>,
-    ) =
-        søker.adressebeskyttelse.fortroligEllerStrengtFortrolig() ||
-            barn.values.any { it.adressebeskyttelse.fortroligEllerStrengtFortrolig() }
 }
