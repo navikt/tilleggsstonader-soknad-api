@@ -42,6 +42,7 @@ spec:
   gcp:
     sqlInstances:
       - type: POSTGRES_15
+        tier: db-f1-micro
         diskAutoresize: true
         cascadingDelete: false
         highAvailability: false
