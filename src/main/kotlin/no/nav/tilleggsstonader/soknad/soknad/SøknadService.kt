@@ -21,6 +21,8 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
+import no.nav.tilleggsstonader.soknad.soknad.laeremidler.LæremidlerMapper
+import no.nav.tilleggsstonader.soknad.soknad.laeremidler.SøknadLæremidlerDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -31,6 +33,7 @@ class SøknadService(
     private val søknadRepository: SøknadRepository,
     private val vedleggRepository: VedleggRepository,
     private val barnetilsynMapper: BarnetilsynMapper,
+    private val læremidlerMapper: LæremidlerMapper,
     private val taskService: TaskService,
     private val personService: PersonService,
     private val familieVedleggClient: FamilieVedleggClient,
@@ -60,6 +63,24 @@ class SøknadService(
             søknadsskjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
             vedlegg = vedlegg,
         )
+        taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
+        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
+        return opprettetSøknad.id
+    }
+
+    @Transactional
+    fun lagreLæremidlerSøknad(
+        ident: String,
+        mottattTidspunkt: LocalDateTime,
+        søknad: SøknadLæremidlerDto,
+    ): UUID {
+        val vedlegg = hentVedlegg(søknad.dokumentasjon)
+        val opprettetSøknad = lagreSøknad(
+            type = Stønadstype.LÆREMIDLER,
+            søknadsskjema = læremidlerMapper.map(ident, mottattTidspunkt, søknad),
+            vedlegg = vedlegg,
+        )
+
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
         taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
         return opprettetSøknad.id
