@@ -28,6 +28,7 @@ class SendNotifikasjonTask(
     private fun lagNotifikasjonsMelding(stønadstype: Stønadstype): String {
         return when (stønadstype) {
             Stønadstype.BARNETILSYN -> "Vi har mottatt søknaden din om pass av barn."
+            Stønadstype.LÆREMIDLER -> "Vi har mottatt søknaden din om læremidler."
         }
     }
 

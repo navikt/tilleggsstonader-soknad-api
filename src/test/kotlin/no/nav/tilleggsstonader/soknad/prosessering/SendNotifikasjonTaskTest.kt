@@ -19,11 +19,19 @@ class SendNotifikasjonTaskTest {
     private val sendNotifikasjonTask = SendNotifikasjonTask(dittNavKafkaProducer, søknadService)
 
     @Test
-    fun `Task blir kjørt for å sende notifikasjon`() {
-        val søknad = opprettSøknad()
+    fun `Task blir kjørt for å sende notifikasjon om mottatt søknad om tilsyn barn`() {
+        val søknad = opprettSøknad(Stønadstype.BARNETILSYN)
         every { søknadService.hentSøknad(fromString(SØKNAD_ID)) } returns søknad
         sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknad))
         verifiserForventetKallMed("Vi har mottatt søknaden din om pass av barn.")
+    }
+
+    @Test
+    fun `Task blir kjørt for å sende notifikasjon om mottatt søknad om læremidler`() {
+        val søknad = opprettSøknad(Stønadstype.LÆREMIDLER)
+        every { søknadService.hentSøknad(fromString(SØKNAD_ID)) } returns søknad
+        sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknad))
+        verifiserForventetKallMed("Vi har mottatt søknaden din om læremidler.")
     }
 
     private fun verifiserForventetKallMed(forventetTekst: String) {
@@ -37,11 +45,11 @@ class SendNotifikasjonTaskTest {
         }
     }
 
-    private fun opprettSøknad(): Søknad {
+    private fun opprettSøknad(type: Stønadstype): Søknad {
         return Søknad(
             id = UUID.fromString(SØKNAD_ID),
             søknadJson = JsonWrapper(""),
-            type = Stønadstype.BARNETILSYN,
+            type = type,
             personIdent = FNR,
         )
     }
