@@ -10,6 +10,8 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ArbeidOgOpphold
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.OppholdUtenforNorge
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakOppholdUtenforNorge
+import no.nav.tilleggsstonader.soknad.soknad.ArbeidOgOppholdDto
+import no.nav.tilleggsstonader.soknad.soknad.OppholdUtenforNorgeDto
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.ArbeidOgOppholdMapper.mapArbeidOgOpphold
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

@@ -2,6 +2,8 @@ package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ArbeidOgOpphold
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.OppholdUtenforNorge
+import no.nav.tilleggsstonader.soknad.soknad.ArbeidOgOppholdDto
+import no.nav.tilleggsstonader.soknad.soknad.OppholdUtenforNorgeDto
 
 object ArbeidOgOppholdMapper {
 
