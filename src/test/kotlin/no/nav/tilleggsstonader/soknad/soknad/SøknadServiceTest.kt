@@ -19,6 +19,7 @@ import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
+import no.nav.tilleggsstonader.soknad.soknad.laeremidler.LæremidlerMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
@@ -38,6 +39,7 @@ class SøknadServiceTest {
         søknadRepository = søknadRepository,
         vedleggRepository = vedleggRepository,
         barnetilsynMapper = BarnetilsynMapper(),
+        læremidlerMapper = LæremidlerMapper(),
         taskService = mockk<TaskService>(relaxed = true),
         personService = personService,
         familieVedleggClient = familieVedleggClient,
