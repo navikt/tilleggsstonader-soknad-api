@@ -15,8 +15,6 @@
         } ],
         "alternativer" : [ "Alt1", "Alt2" ]
       },
-      "boddSammenhengende" : null,
-      "planleggerBoINorgeNeste12mnd" : null,
       "arbeidOgOpphold" : {
         "jobberIAnnetLand" : {
           "label" : "Jobber du i et annet land enn Norge?",
