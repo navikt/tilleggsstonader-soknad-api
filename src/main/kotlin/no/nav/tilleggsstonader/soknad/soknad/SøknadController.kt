@@ -4,6 +4,7 @@ import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.libs.utils.osloNow
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
+import no.nav.tilleggsstonader.soknad.soknad.laeremidler.SøknadLæremidlerDto
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -23,6 +24,17 @@ class SøknadController(
     fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
         val mottattTidspunkt = osloNow()
         søknadService.lagreSøknad(
+            ident = EksternBrukerUtils.hentFnrFraToken(),
+            mottattTidspunkt = mottattTidspunkt,
+            søknad = søknad,
+        )
+        return Kvittering(mottattTidspunkt = mottattTidspunkt)
+    }
+
+    @PostMapping("laeremidler")
+    fun sendInnLæremidler(@RequestBody søknad: SøknadLæremidlerDto): Kvittering {
+        val mottattTidspunkt = osloNow()
+        søknadService.lagreLæremidlerSøknad(
             ident = EksternBrukerUtils.hentFnrFraToken(),
             mottattTidspunkt = mottattTidspunkt,
             søknad = søknad,

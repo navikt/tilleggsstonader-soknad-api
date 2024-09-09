@@ -14,6 +14,7 @@ import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
+import no.nav.tilleggsstonader.soknad.soknad.laeremidler.SøknadLæremidlerUtil
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
@@ -47,6 +48,7 @@ class SøknadControllerTest : IntegrationTest() {
     @AfterEach
     override fun tearDown() {
         resetPdlClientMock(pdlClientCredentialClient)
+        super.tearDown()
     }
 
     @Test
@@ -56,6 +58,15 @@ class SøknadControllerTest : IntegrationTest() {
         assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(osloDateNow())
 
         verifiserLagretSøknad(Stønadstype.BARNETILSYN, "søknad/barnetilsyn.json")
+    }
+
+    @Test
+    fun `skal kunne sende inn en komplett søknad for læremidler`() {
+        val request = HttpEntity(SøknadLæremidlerUtil.søknad, headers)
+        val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/laeremidler"), request)
+        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(osloDateNow())
+
+        verifiserLagretSøknad(Stønadstype.LÆREMIDLER, "søknad/læremidler.json")
     }
 
     @Test

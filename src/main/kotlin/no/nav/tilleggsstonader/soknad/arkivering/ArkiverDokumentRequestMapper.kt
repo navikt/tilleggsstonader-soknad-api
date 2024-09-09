@@ -39,10 +39,12 @@ object ArkiverDokumentRequestMapper {
 
     private fun typeHoveddokument(type: Stønadstype): Dokumenttype = when (type) {
         Stønadstype.BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD
+        Stønadstype.LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD
     }
 
     private fun typeVedlegg(type: Stønadstype): Dokumenttype = when (type) {
         Stønadstype.BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD_VEDLEGG
+        Stønadstype.LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD_VEDLEGG
     }
 
     private fun mapVedlegg(vedlegg: List<Vedlegg>, stønadstype: Stønadstype): List<Dokument> {

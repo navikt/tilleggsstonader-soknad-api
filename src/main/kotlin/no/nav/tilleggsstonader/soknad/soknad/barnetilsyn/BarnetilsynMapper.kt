@@ -6,9 +6,8 @@ import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.ArbeidOgOppholdMapper.mapArbeidOgOpphold
+import no.nav.tilleggsstonader.soknad.soknad.SøknadMapper
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass as BarnMedBarnepassKontrakt
@@ -28,18 +27,13 @@ class BarnetilsynMapper {
             mottattTidspunkt = mottattTidspunkt,
             språk = språkkode,
             skjema = SøknadsskjemaBarnetilsyn(
-                hovedytelse = mapHovedytelse(dto),
+                hovedytelse = SøknadMapper.mapHovedytelse(dto.hovedytelse),
                 aktivitet = mapAktivitet(dto),
                 barn = BarnAvsnitt(mapBarn(dto, pdlBarn, språkkode)),
                 dokumentasjon = dto.dokumentasjon,
             ),
         )
     }
-
-    private fun mapHovedytelse(dto: SøknadBarnetilsynDto) = HovedytelseAvsnitt(
-        hovedytelse = dto.hovedytelse.ytelse,
-        arbeidOgOpphold = mapArbeidOgOpphold(dto.hovedytelse.arbeidOgOpphold),
-    )
 
     private fun mapBarn(
         dto: SøknadBarnetilsynDto,
