@@ -18,6 +18,8 @@ import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.laeremidler.LæremidlerMapper
+import no.nav.tilleggsstonader.soknad.soknad.laeremidler.SøknadLæremidlerDto
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -26,10 +28,13 @@ object SøknadTestUtil {
     private val mottattTidspunkt = LocalDateTime.of(2023, 1, 1, 12, 13, 0)
 
     fun lagSøknad(søknadDto: SøknadBarnetilsynDto): Søknad =
-        lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsksjema(søknadDto))
+        lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsskjema(søknadDto))
 
-    fun lagSøknadsksjema(søknadDto: SøknadBarnetilsynDto) =
+    fun lagSøknadsskjema(søknadDto: SøknadBarnetilsynDto) =
         BarnetilsynMapper().map("25518735813", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
+
+    fun lagSøknadsskjema(søknadDto: SøknadLæremidlerDto) =
+        LæremidlerMapper().map("25518735813", mottattTidspunkt, søknadDto)
 
     fun lagSøknad(stønadstype: Stønadstype, søknadsskjema: Søknadsskjema<*>): Søknad {
         return Søknad(

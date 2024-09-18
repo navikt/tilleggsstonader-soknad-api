@@ -1,20 +1,14 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
-import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
-import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
-import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.*
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ArbeidOgOpphold
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.OppholdUtenforNorge
+import no.nav.tilleggsstonader.kontrakter.søknad.laeremidler.UtdanningAvsnitt
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAlternativer
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAvsnitt
@@ -65,13 +59,15 @@ object SøknadTreeWalker {
             is SøknadsskjemaBarnetilsyn,
             is BarnMedBarnepass,
             is OppholdUtenforNorge,
+            is SøknadsskjemaLæremidler,
             -> finnFelter(entitet, språk)
 
             is HovedytelseAvsnitt,
             is AktivitetAvsnitt,
             is BarnAvsnitt,
+            is UtdanningAvsnitt,
             is ArbeidOgOpphold,
-            -> listOf(Avsnitt(tittelAvsnitt(entitet, språk), finnFelter(entitet, språk)))
+            -> listOf(Avsnitt(label = tittelAvsnitt(entitet, språk), verdier = finnFelter(entitet, språk)))
 
             is ListeMedTittel -> listOf(Avsnitt(entitet.tittel, mapListe(entitet.list, språk)))
             is List<*> -> mapListe(entitet, språk)
