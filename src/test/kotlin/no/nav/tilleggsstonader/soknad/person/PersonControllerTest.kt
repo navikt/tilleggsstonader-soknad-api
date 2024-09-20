@@ -52,10 +52,25 @@ class PersonControllerTest : IntegrationTest() {
 
         verify(exactly = 1) { pdlClient.hentSøker(Fødselsnummer(personident)) }
         assertThat(response.body!!.visningsnavn).isEqualTo("fornavn etternavn")
+        assertThat(response.body!!.barn).hasSize(2)
+    }
+
+    @Test
+    fun `skal kunne hente person med barn fra pdl`() {
+        val response = hentPersonMedBarn()
+
+        verify(exactly = 1) { pdlClient.hentSøker(Fødselsnummer(personident)) }
+        assertThat(response.body!!.visningsnavn).isEqualTo("fornavn etternavn")
+        assertThat(response.body!!.barn).hasSize(2)
     }
 
     private fun hentPerson(): ResponseEntity<PersonMedBarnDto> {
         val url = localhost("api/person")
+        return restTemplate.exchange<PersonMedBarnDto>(url, HttpMethod.GET, HttpEntity(null, headers))
+    }
+
+    private fun hentPersonMedBarn(): ResponseEntity<PersonMedBarnDto> {
+        val url = localhost("api/person/med-barn")
         return restTemplate.exchange<PersonMedBarnDto>(url, HttpMethod.GET, HttpEntity(null, headers))
     }
 }

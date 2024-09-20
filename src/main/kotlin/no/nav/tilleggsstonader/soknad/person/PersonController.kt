@@ -21,4 +21,9 @@ class PersonController(
     fun hentSøker(): PersonMedBarnDto {
         return personService.hentSøker(Fødselsnummer(EksternBrukerUtils.hentFnrFraToken()))
     }
+
+    @GetMapping("med-barn")
+    fun hentSøkerMedBarn(): PersonMedBarnDto {
+        return personService.hentSøker(Fødselsnummer(EksternBrukerUtils.hentFnrFraToken())) // TODO uten barn
+    }
 }
