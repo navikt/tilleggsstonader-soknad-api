@@ -18,7 +18,7 @@ class AktivitetClient(
     restTemplate: RestTemplate,
 ) : AbstractRestClient(restTemplate) {
 
-    fun hentAKtiviteter(ident: String, fom: LocalDate, tom: LocalDate): List<AktivitetArenaDto> {
+    fun hentAktiviteter(ident: String, fom: LocalDate, tom: LocalDate): List<AktivitetArenaDto> {
         val uriVariables = mutableMapOf<String, Any>(
             "fom" to fom,
             "tom" to tom,

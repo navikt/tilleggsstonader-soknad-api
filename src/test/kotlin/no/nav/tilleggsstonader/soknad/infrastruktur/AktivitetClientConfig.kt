@@ -27,7 +27,7 @@ class AktivitetClientConfig {
     companion object {
         fun resetMock(client: AktivitetClient) {
             clearMocks(client)
-            every { client.hentAKtiviteter(any(), any(), any()) } returns listOf(aktivitetArenaDto("1"))
+            every { client.hentAktiviteter(any(), any(), any()) } returns listOf(aktivitetArenaDto("1"))
         }
     }
 }

@@ -21,8 +21,8 @@ class AktivitetServiceTest : IntegrationTest() {
 
     @BeforeEach
     fun setUp() {
-        every { aktivitetClient.hentAKtiviteter("1", any(), any()) } returns listOf(aktivitetArenaDto("10"))
-        every { aktivitetClient.hentAKtiviteter("2", any(), any()) } returns listOf(aktivitetArenaDto("20"))
+        every { aktivitetClient.hentAktiviteter("1", any(), any()) } returns listOf(aktivitetArenaDto("10"))
+        every { aktivitetClient.hentAktiviteter("2", any(), any()) } returns listOf(aktivitetArenaDto("20"))
     }
 
     @AfterEach
@@ -40,7 +40,7 @@ class AktivitetServiceTest : IntegrationTest() {
         assertThat(aktivitetIdent1.single().id).isEqualTo("10")
         assertThat(aktivitetIdent2.single().id).isEqualTo("20")
 
-        verify(exactly = 1) { aktivitetClient.hentAKtiviteter("1", any(), any()) }
-        verify(exactly = 1) { aktivitetClient.hentAKtiviteter("2", any(), any()) }
+        verify(exactly = 1) { aktivitetClient.hentAktiviteter("1", any(), any()) }
+        verify(exactly = 1) { aktivitetClient.hentAktiviteter("2", any(), any()) }
     }
 }
