@@ -1,6 +1,6 @@
 val javaVersion = JavaLanguageVersion.of(21)
 val tilleggsstønaderLibsVersion = "2024.09.13-14.55.90172c4319d3"
-val tilleggsstønaderKontrakterVersion = "2024.09.09-09.47.5509d21fe29d"
+val tilleggsstønaderKontrakterVersion = "2024.09.20-10.20.696495fbaa64"
 val familieProsesseringVersion = "2.20240916095727_7fab7b4"
 val tokenSupportVersion = "5.0.5"
 val wiremockVersion = "3.0.1"
@@ -17,7 +17,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.51.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
 
-    id("org.springframework.boot") version "3.3.3"
+    id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.6"
     kotlin("plugin.spring") version "2.0.20"
 
