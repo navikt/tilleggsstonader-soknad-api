@@ -42,7 +42,6 @@ class SøknadTreeWalkerTest {
         }
     }
 
-
     @Test
     fun `skal håndtere felter med nullverdier`() {
         val barnMedBarnepass =
