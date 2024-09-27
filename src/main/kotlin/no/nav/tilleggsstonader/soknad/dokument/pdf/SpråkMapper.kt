@@ -3,11 +3,13 @@ package no.nav.tilleggsstonader.soknad.dokument.pdf
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ArbeidOgOpphold
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.OppholdUtenforNorge
+import no.nav.tilleggsstonader.kontrakter.søknad.laeremidler.UtdanningAvsnitt
 import kotlin.reflect.KClass
 
 object SpråkMapper {
@@ -26,6 +28,9 @@ object SpråkMapper {
         SøknadsskjemaBarnetilsyn::class to mapOf(
             Språkkode.NB to "Søknad om støtte til pass av barn",
         ),
+        SøknadsskjemaLæremidler::class to mapOf(
+            Språkkode.NB to "Søknad om støtte til læremidler",
+        ),
     )
 
     /**
@@ -37,6 +42,7 @@ object SpråkMapper {
         OppholdUtenforNorge::class to mapOf(Språkkode.NB to "Arbeid og opphold"),
         AktivitetAvsnitt::class to mapOf(Språkkode.NB to "Aktivitet"),
         BarnAvsnitt::class to mapOf(Språkkode.NB to "Barn"),
+        UtdanningAvsnitt::class to mapOf(Språkkode.NB to "Utdanning"),
     )
 
     fun tittelOppholdUtenforNorgeSiste12mnd(språk: Språkkode) = when (språk) {
