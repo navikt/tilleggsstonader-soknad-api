@@ -57,8 +57,17 @@ class PersonServiceTest {
                 mockBarn(ugradertBarn, fortroligBarn)
 
                 assertThatThrownBy {
-                    service.hentSøker(identSøker)
+                    service.hentSøker(identSøker, medBarn = true)
                 }.isInstanceOf(GradertBrukerException::class.java)
+            }
+
+            @Test
+            fun `søker ugradert med fortrolige barn, men skal ikke ha med barn, skal ikke kaste feil`() {
+                mockSøker(AdressebeskyttelseGradering.UGRADERT)
+                mockBarn(ugradertBarn, fortroligBarn)
+
+                val søker = service.hentSøker(identSøker, medBarn = false)
+                assertThat(søker.barn).isEmpty()
             }
 
             @Test
@@ -67,7 +76,7 @@ class PersonServiceTest {
                 mockBarn(strengtFortroligBarn)
 
                 assertThatThrownBy {
-                    service.hentSøker(identSøker)
+                    service.hentSøker(identSøker, medBarn = true)
                 }.isInstanceOf(GradertBrukerException::class.java)
             }
 
@@ -76,7 +85,7 @@ class PersonServiceTest {
                 mockSøker(AdressebeskyttelseGradering.FORTROLIG)
                 mockBarn(ugradertBarn, fortroligBarn)
 
-                val dto = service.hentSøker(identSøker)
+                val dto = service.hentSøker(identSøker, medBarn = true)
                 assertForventedeBarn(dto, ugradertBarn, fortroligBarn)
             }
 
@@ -85,7 +94,7 @@ class PersonServiceTest {
                 mockSøker(AdressebeskyttelseGradering.STRENGT_FORTROLIG)
                 mockBarn(ugradertBarn, fortroligBarn, strengtFortroligBarn, strengtFortroligUtlandBarn)
 
-                val dto = service.hentSøker(identSøker)
+                val dto = service.hentSøker(identSøker, medBarn = true)
                 assertForventedeBarn(
                     dto,
                     ugradertBarn,

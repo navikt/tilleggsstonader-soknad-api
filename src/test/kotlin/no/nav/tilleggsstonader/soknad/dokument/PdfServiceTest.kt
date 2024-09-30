@@ -41,7 +41,7 @@ class PdfServiceTest {
     @BeforeEach
     fun setUp() {
         justRun { søknadService.oppdaterSøknad(capture(oppdaterSøknadSlot)) }
-        every { personService.hentSøker(any()) } returns
+        every { personService.hentSøker(any(), any()) } returns
             PersonMedBarnDto("", "Fornavn etternavn", "", emptyList())
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
     }

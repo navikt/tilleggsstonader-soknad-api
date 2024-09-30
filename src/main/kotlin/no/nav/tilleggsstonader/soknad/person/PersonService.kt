@@ -21,9 +21,13 @@ class PersonService(
     private val adresseMapper: AdresseMapper,
 ) {
 
-    fun hentSøker(fødselsnummer: Fødselsnummer): PersonMedBarnDto {
+    fun hentSøker(fødselsnummer: Fødselsnummer, medBarn: Boolean): PersonMedBarnDto {
         val søker = pdlClient.hentSøker(fødselsnummer)
-        val barn = hentBarn(søker)
+        val barn = if (medBarn) {
+            hentBarn(søker)
+        } else {
+            emptyMap()
+        }
 
         if (harBarnMedHøyereGradering(søker, barn)) {
             throw GradertBrukerException()

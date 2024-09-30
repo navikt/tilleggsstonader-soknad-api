@@ -53,7 +53,7 @@ class SøknadService(
         mottattTidspunkt: LocalDateTime,
         søknad: SøknadBarnetilsynDto,
     ): UUID {
-        val barn = personService.hentSøker(Fødselsnummer(ident)).barn.associateBy { it.ident }
+        val barn = personService.hentSøker(Fødselsnummer(ident), medBarn = true).barn.associateBy { it.ident }
         verifiserHarGyldigeBarn(søknad, barn)
         // todo verifiser valgte aktiviteter
 

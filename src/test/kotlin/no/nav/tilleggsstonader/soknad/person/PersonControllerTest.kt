@@ -47,12 +47,12 @@ class PersonControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `skal kunne hente person fra pdl`() {
+    fun `skal kunne hente person fra pdl uten å ta med barn`() {
         val response = hentPerson()
 
         verify(exactly = 1) { pdlClient.hentSøker(Fødselsnummer(personident)) }
         assertThat(response.body!!.visningsnavn).isEqualTo("fornavn etternavn")
-        assertThat(response.body!!.barn).hasSize(2)
+        assertThat(response.body!!.barn).hasSize(0)
     }
 
     @Test
