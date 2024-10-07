@@ -19,7 +19,7 @@ import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
-import no.nav.tilleggsstonader.soknad.soknad.laeremidler.LæremidlerMapper
+import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach

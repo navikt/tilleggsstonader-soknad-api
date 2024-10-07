@@ -1,4 +1,4 @@
-package no.nav.tilleggsstonader.soknad.soknad.laeremidler
+package no.nav.tilleggsstonader.soknad.soknad.læremidler
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema

@@ -21,8 +21,8 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
-import no.nav.tilleggsstonader.soknad.soknad.laeremidler.LæremidlerMapper
-import no.nav.tilleggsstonader.soknad.soknad.laeremidler.SøknadLæremidlerDto
+import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
+import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime

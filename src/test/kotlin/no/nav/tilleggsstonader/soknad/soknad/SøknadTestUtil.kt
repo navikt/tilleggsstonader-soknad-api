@@ -18,8 +18,8 @@ import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
-import no.nav.tilleggsstonader.soknad.soknad.laeremidler.LæremidlerMapper
-import no.nav.tilleggsstonader.soknad.soknad.laeremidler.SøknadLæremidlerDto
+import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
+import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
 import java.time.LocalDate
 import java.time.LocalDateTime
 

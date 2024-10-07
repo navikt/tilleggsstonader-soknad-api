@@ -6,7 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknadsskjema
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
-import no.nav.tilleggsstonader.soknad.soknad.laeremidler.SøknadLæremidlerUtil
+import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
