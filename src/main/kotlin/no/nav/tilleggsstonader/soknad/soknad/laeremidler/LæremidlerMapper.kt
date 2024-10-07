@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad.laeremidler
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
-import no.nav.tilleggsstonader.kontrakter.søknad.laeremidler.UtdanningAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMapper
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime

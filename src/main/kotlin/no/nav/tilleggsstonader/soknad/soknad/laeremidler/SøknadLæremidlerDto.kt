@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad.laeremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
-import no.nav.tilleggsstonader.kontrakter.søknad.laeremidler.AnnenUtdanningType
+import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.AnnenUtdanningType
 import no.nav.tilleggsstonader.soknad.soknad.HovedytelseDto
 
 data class SøknadLæremidlerDto(

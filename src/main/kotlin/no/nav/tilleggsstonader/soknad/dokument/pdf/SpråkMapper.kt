@@ -9,7 +9,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOpphold
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
-import no.nav.tilleggsstonader.kontrakter.søknad.laeremidler.UtdanningAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
 import kotlin.reflect.KClass
 
 object SpråkMapper {
