@@ -63,7 +63,7 @@ class SøknadControllerTest : IntegrationTest() {
     @Test
     fun `skal kunne sende inn en komplett søknad for læremidler`() {
         val request = HttpEntity(SøknadLæremidlerUtil.søknad, headers)
-        val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/laeremidler"), request)
+        val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/laremidler"), request)
         assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(osloDateNow())
 
         verifiserLagretSøknad(Stønadstype.LÆREMIDLER, "søknad/læremidler.json")
