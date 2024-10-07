@@ -54,7 +54,7 @@ class SøknadControllerTest : IntegrationTest() {
     @Test
     fun `skal kunne sende inn en komplett søknad for barnetilsyn`() {
         val request = HttpEntity(SøknadBarnetilsynUtil.søknad, headers)
-        val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/barnetilsyn"), request)
+        val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
         assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(osloDateNow())
 
         verifiserLagretSøknad(Stønadstype.BARNETILSYN, "søknad/barnetilsyn.json")
@@ -74,8 +74,8 @@ class SøknadControllerTest : IntegrationTest() {
         headers.remove(HttpHeaders.AUTHORIZATION)
         val request = HttpEntity<Any>(emptyMap<String, String>(), headers)
         assertThatThrownBy {
-            restTemplate.postForEntity<Kvittering>(localhost("api/soknad/barnetilsyn"), request)
-        }.hasMessage("""401 : "{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/soknad/barnetilsyn"}"""")
+            restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
+        }.hasMessage("""401 : "{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/soknad/pass-av-barn"}"""")
     }
 
     @Test
@@ -87,8 +87,8 @@ class SøknadControllerTest : IntegrationTest() {
         every { pdlClientCredentialClient.hentBarn(any()) } returns mapOf(barn)
 
         assertThatThrownBy {
-            restTemplate.postForEntity<Kvittering>(localhost("api/soknad/barnetilsyn"), request)
-        }.hasMessage("""400 : "{"type":"about:blank","title":"Bad Request","status":400,"detail":"ROUTING_GAMMEL_SØKNAD","instance":"/api/soknad/barnetilsyn"}"""")
+            restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
+        }.hasMessage("""400 : "{"type":"about:blank","title":"Bad Request","status":400,"detail":"ROUTING_GAMMEL_SØKNAD","instance":"/api/soknad/pass-av-barn"}"""")
     }
 
     private fun verifiserLagretSøknad(stønadstype: Stønadstype, filnavn: String) {
