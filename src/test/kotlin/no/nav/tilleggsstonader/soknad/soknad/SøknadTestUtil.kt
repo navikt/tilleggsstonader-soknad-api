@@ -30,6 +30,9 @@ object SøknadTestUtil {
     fun lagSøknad(søknadDto: SøknadBarnetilsynDto): Søknad =
         lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsskjema(søknadDto))
 
+    fun lagSøknad(søknadDto: SøknadLæremidlerDto): Søknad =
+        lagSøknad(Stønadstype.LÆREMIDLER, lagSøknadsskjema(søknadDto))
+
     fun lagSøknadsskjema(søknadDto: SøknadBarnetilsynDto) =
         BarnetilsynMapper().map("25518735813", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
 

@@ -75,6 +75,8 @@ class SøknadService(
         søknad: SøknadLæremidlerDto,
     ): UUID {
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
+        // todo verifiser valgte aktiviteter
+
         val opprettetSøknad = lagreSøknad(
             type = Stønadstype.LÆREMIDLER,
             søknadsskjema = læremidlerMapper.map(ident, mottattTidspunkt, søknad),

@@ -4,16 +4,20 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.slot
+import no.nav.security.mock.oauth2.http.html
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknad
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
+import no.nav.tilleggsstonader.soknad.util.FileUtil.listFiles
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.client.postForEntity
@@ -45,22 +49,44 @@ class PdfServiceTest {
     }
 
     @Disabled // html-fila må prettyfies etter at den har blitt generert, htmlify returnerer all html som en rad
-    @Test
-    fun `skal lage pdf fra barnetilsyn`() {
-        val søknad = lagSøknad(SøknadBarnetilsynUtil.søknad)
-        every { søknadService.hentSøknad(søknad.id) } returns søknad
+    @Nested
+    inner class GenereringAvPdf {
+        @Test
+        fun `skal lage pdf fra barnetilsyn`() {
+            val søknad = lagSøknad(SøknadBarnetilsynUtil.søknad)
+            every { søknadService.hentSøknad(søknad.id) } returns søknad
 
-        pdfService.lagPdf(søknad.id)
+            pdfService.lagPdf(søknad.id)
 
-        assertGenerertHtml("søknad/barnetilsyn/barnetilsyn.html")
-        assertThat(oppdaterSøknadSlot.captured.søknadPdf).isEqualTo(pdfBytes)
+            assertGenerertHtml("søknad/barnetilsyn/barnetilsyn.html")
+            assertThat(oppdaterSøknadSlot.captured.søknadPdf).isEqualTo(pdfBytes)
+        }
+
+        @Test
+        fun `skal lage pdf fra læremidler`() {
+            val søknad = lagSøknad(SøknadLæremidlerUtil.søknad)
+            every { søknadService.hentSøknad(søknad.id) } returns søknad
+
+            pdfService.lagPdf(søknad.id)
+
+            assertGenerertHtml("søknad/læremidler/læremidler.html")
+            assertThat(oppdaterSøknadSlot.captured.søknadPdf).isEqualTo(pdfBytes)
+        }
     }
 
     @Test
     fun `html skal være formattert for å enklere kunne sjekke diff`() {
-        val erIkkeFormatert = FileUtil.readFile("søknad/barnetilsyn/barnetilsyn.html").split("\n")
-            .none { it.contains("<body") && it.contains("<div") }
-        assertThat(erIkkeFormatert).isTrue()
+        val htmlFiler = listFiles("søknad")
+            .flatMap { it.walk() }
+            .filter { it.name.endsWith(".html") }
+            .map { it.toString().let { it.substring(it.lastIndexOf("søknad/")) } }
+
+        assertThat(htmlFiler).isNotEmpty
+        htmlFiler.forEach { fil ->
+            val erIkkeFormatert = FileUtil.readFile(fil).split("\n")
+                .none { it.contains("<body") && it.contains("<div") }
+            assertThat(erIkkeFormatert).isTrue()
+        }
     }
 
     private fun assertGenerertHtml(filnavn: String) {
