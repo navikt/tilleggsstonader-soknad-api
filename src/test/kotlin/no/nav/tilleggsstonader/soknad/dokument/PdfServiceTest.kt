@@ -6,7 +6,6 @@ import io.mockk.mockk
 import io.mockk.slot
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.soknad.person.PersonService
-import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknad
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
@@ -41,8 +40,7 @@ class PdfServiceTest {
     @BeforeEach
     fun setUp() {
         justRun { søknadService.oppdaterSøknad(capture(oppdaterSøknadSlot)) }
-        every { personService.hentSøker(any(), any()) } returns
-            PersonMedBarnDto("", "Fornavn etternavn", "", emptyList())
+        every { personService.hentNavnMedClientCredential(any()) } returns "Fornavn etternavn"
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
     }
 
@@ -54,13 +52,13 @@ class PdfServiceTest {
 
         pdfService.lagPdf(søknad.id)
 
-        assertGenerertHtml("søknad/barnetilsyn.html")
+        assertGenerertHtml("søknad/barnetilsyn/barnetilsyn.html")
         assertThat(oppdaterSøknadSlot.captured.søknadPdf).isEqualTo(pdfBytes)
     }
 
     @Test
     fun `html skal være formattert for å enklere kunne sjekke diff`() {
-        val erIkkeFormatert = FileUtil.readFile("søknad/barnetilsyn.html").split("\n")
+        val erIkkeFormatert = FileUtil.readFile("søknad/barnetilsyn/barnetilsyn.html").split("\n")
             .none { it.contains("<body") && it.contains("<div") }
         assertThat(erIkkeFormatert).isTrue()
     }

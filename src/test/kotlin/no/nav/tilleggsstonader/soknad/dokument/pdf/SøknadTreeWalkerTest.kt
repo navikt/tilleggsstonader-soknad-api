@@ -23,7 +23,7 @@ class SøknadTreeWalkerTest {
             val søknadsskjema = lagSøknadsskjema(SøknadBarnetilsynUtil.søknad)
             val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
             assertExpected(
-                "søknad/barnetilsyn_verdiliste.json",
+                "søknad/barnetilsyn/barnetilsyn_verdiliste.json",
                 objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(htmlFelter),
             )
         }
@@ -36,7 +36,7 @@ class SøknadTreeWalkerTest {
             val søknadsskjema = lagSøknadsskjema(SøknadLæremidlerUtil.søknad)
             val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
             assertExpected(
-                "søknad/læremidler_verdiliste.json",
+                "søknad/læremidler/læremidler_verdiliste.json",
                 objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(htmlFelter),
             )
         }
@@ -56,7 +56,7 @@ class SøknadTreeWalkerTest {
         val søknadsskjema = lagSøknadsskjema(søknad)
         val result = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
         assertExpected(
-            "søknad/barnetilsyn_verdiliste_nullverdier.json",
+            "søknad/barnetilsyn/barnetilsyn_verdiliste_nullverdier.json",
             objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result),
         )
     }

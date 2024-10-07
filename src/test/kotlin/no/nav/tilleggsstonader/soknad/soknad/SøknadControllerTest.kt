@@ -57,7 +57,7 @@ class SøknadControllerTest : IntegrationTest() {
         val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
         assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(osloDateNow())
 
-        verifiserLagretSøknad(Stønadstype.BARNETILSYN, "søknad/barnetilsyn.json")
+        verifiserLagretSøknad(Stønadstype.BARNETILSYN, "søknad/barnetilsyn/barnetilsyn.json")
     }
 
     @Test
@@ -66,7 +66,7 @@ class SøknadControllerTest : IntegrationTest() {
         val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/laremidler"), request)
         assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(osloDateNow())
 
-        verifiserLagretSøknad(Stønadstype.LÆREMIDLER, "søknad/læremidler.json")
+        verifiserLagretSøknad(Stønadstype.LÆREMIDLER, "søknad/læremidler/læremidler.json")
     }
 
     @Test
