@@ -31,7 +31,7 @@ class SøknadController(
         return Kvittering(mottattTidspunkt = mottattTidspunkt)
     }
 
-    @PostMapping("laeremidler")
+    @PostMapping("laremidler")
     fun sendInnLæremidler(@RequestBody søknad: SøknadLæremidlerDto): Kvittering {
         val mottattTidspunkt = osloNow()
         søknadService.lagreLæremidlerSøknad(
