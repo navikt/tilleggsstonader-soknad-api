@@ -7,6 +7,8 @@ object FileUtil {
     fun readFile(filnavn: String): String = FileUtil::class.java.classLoader.getResource(filnavn)!!.readText()
     fun readBytes(filnavn: String): ByteArray = FileUtil::class.java.classLoader.getResource(filnavn)!!.readBytes()
 
+    fun listFiles(folder: String): Array<File> = File(FileUtil::class.java.classLoader.getResource(folder)!!.toURI()).listFiles()!!
+
     @Suppress("unused")
     fun skrivJsonTilFil(navn: String, data: Any) {
         skrivTilFil(navn, objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data))

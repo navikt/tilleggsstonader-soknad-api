@@ -191,6 +191,14 @@
 }, {
   "label" : "Utdanning",
   "verdier" : [ {
+    "label" : "Hvilken utdanning eller opplæring søker du om støtte til læremidler for",
+    "verdier" : [ {
+      "verdi" : "Høyere utdanning: 22. april 2024 - 22. april 2024, Annet",
+      "alternativer" : "Alternativer: Alt1: 22. april 2024 - 22. april 2024, Alt2: 22. april 2024 - 22. april 2024",
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
     "label" : "Hva slags utdanning eller opplæring skal du ta?",
     "verdier" : [ {
       "verdi" : "Utdanning på fagskole, høgskole eller universitet",
