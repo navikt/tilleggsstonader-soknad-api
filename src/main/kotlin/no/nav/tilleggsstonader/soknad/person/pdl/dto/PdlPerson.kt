@@ -10,6 +10,8 @@ data class PdlSøkerNavnData(val person: PdlSøkerNavn?)
 data class PdlSøker(
     val adressebeskyttelse: List<Adressebeskyttelse>,
     val bostedsadresse: List<Bostedsadresse>,
+    @JsonProperty("foedselsdato")
+    val fødselsdato: List<Fødselsdato>,
     val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
     val navn: List<Navn>,
 )

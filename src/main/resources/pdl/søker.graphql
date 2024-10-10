@@ -18,6 +18,10 @@ query($ident: ID!){
                 postnummer
             }
         }
+        foedselsdato {
+            foedselsaar
+            foedselsdato
+        }
         forelderBarnRelasjon {
             relatertPersonsIdent
             relatertPersonsRolle

@@ -33,8 +33,12 @@ class PersonService(
             throw GradertBrukerException()
         }
 
+        val fødselsdato = søker.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+        val alder = Period.between(fødselsdato, osloDateNow()).years
+
         return PersonMedBarnDto(
             fornavn = søker.navn.first().fornavn,
+            alder = alder,
             visningsnavn = søker.navn.first().visningsnavn(),
             adresse = adresseMapper.tilFormatertAdresse(søker),
             barn = mapBarn(barn),

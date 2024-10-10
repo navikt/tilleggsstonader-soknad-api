@@ -35,6 +35,7 @@ class PdlClientTest {
         assertThat(response.adressebeskyttelse.single().gradering).isEqualTo(AdressebeskyttelseGradering.UGRADERT)
         assertThat(response.bostedsadresse).hasSize(1)
         assertThat(response.forelderBarnRelasjon).hasSize(1)
+        assertThat(response.fødselsdato).hasSize(1)
     }
 
     companion object {

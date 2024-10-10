@@ -4,6 +4,7 @@ import java.time.LocalDate
 
 data class PersonMedBarnDto(
     val fornavn: String,
+    val alder: Int,
     val visningsnavn: String,
     val adresse: String,
     val barn: List<Barn>,

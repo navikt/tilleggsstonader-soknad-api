@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
+import java.time.LocalDate
 
 @Configuration
 @Profile("mock-pdl")
@@ -75,11 +76,13 @@ fun lagPdlSøker(
     bostedsadresse: Bostedsadresse = Bostedsadresse(vegadresse(), null),
     forelderBarnRelasjon: List<ForelderBarnRelasjon> = emptyList(),
     navn: Navn = navn(),
+    fødselsdato: Fødselsdato = Fødselsdato(fødselsår = 2000, fødselsdato = LocalDate.of(2000, 1, 1)),
 ) = PdlSøker(
     adressebeskyttelse = listOf(Adressebeskyttelse(adressebeskyttelse)),
     bostedsadresse = listOf(bostedsadresse),
     forelderBarnRelasjon = forelderBarnRelasjon,
     navn = listOf(navn),
+    fødselsdato = listOf(fødselsdato),
 )
 
 private fun vegadresse() = Vegadresse(

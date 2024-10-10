@@ -25,6 +25,12 @@
           "ukjentBosted": null
         }
       ],
+      "foedselsdato": [
+        {
+          "foedselsaar": 2000,
+          "foedselsdato": "2000-01-01"
+        }
+      ],
       "forelderBarnRelasjon": [
         {
           "relatertPersonsIdent":"00000011111",
