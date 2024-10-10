@@ -55,7 +55,7 @@ class SøknadServiceTest {
     fun setUp() {
         every { søknadRepository.insert(any()) } answers { firstArg() }
         every { person.barn } returns søknad.barnMedBarnepass.map {
-            Barn(it.ident, "fornavn", "fornavn etternavn", osloDateNow(), 2020, 3)
+            Barn(it.ident, "fornavn", "fornavn etternavn", osloDateNow(), 3)
         }
         every { personService.hentSøker(Fødselsnummer(personIdent), true) } returns person
         every { vedleggRepository.insertAll(capture(vedleggSlot)) } answers { firstArg() }

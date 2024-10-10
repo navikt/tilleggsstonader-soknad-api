@@ -14,6 +14,5 @@ data class Barn(
     val fornavn: String,
     val visningsnavn: String,
     val fødselsdato: LocalDate,
-    val fødselsår: Int,
     val alder: Int,
 )
