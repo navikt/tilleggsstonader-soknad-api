@@ -58,13 +58,16 @@ class PersonService(
         ident: String,
         pdlBarn: PdlBarn,
     ): Barn {
-        val fødselsdato = pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+        val fødselsdatoPdl = pdlBarn.fødselsdato.firstOrNull() ?: error("Barn mangler liste med fødselsdato registrert")
+        val fødselsdato = fødselsdatoPdl.fødselsdato ?: error("Person har inget fødselsdato")
+
         val alder = Period.between(fødselsdato, osloDateNow()).years
         return Barn(
             ident = ident,
             fornavn = pdlBarn.navn.first().fornavn,
             visningsnavn = pdlBarn.navn.first().visningsnavn(),
             fødselsdato = fødselsdato,
+            fødselsår = fødselsdatoPdl.fødselsår ?: error("Person mangler fødselsår"),
             alder = alder,
         )
     }

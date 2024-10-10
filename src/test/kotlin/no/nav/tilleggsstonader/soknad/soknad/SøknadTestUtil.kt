@@ -55,6 +55,7 @@ object SøknadTestUtil {
                 fornavn = "Fornavn",
                 visningsnavn = "Fornavn Etternavn",
                 fødselsdato = LocalDate.of(2023, 1, 1),
+                fødselsår = 2023,
                 alder = 4,
             )
         }
