@@ -1,10 +1,10 @@
 val javaVersion = JavaLanguageVersion.of(21)
 val tilleggsstønaderLibsVersion = "2024.09.13-14.55.90172c4319d3"
-val tilleggsstønaderKontrakterVersion = "2024.10.08-11.22.27e271896570"
-val familieProsesseringVersion = "2.20240916095727_7fab7b4"
+val tilleggsstønaderKontrakterVersion = "2024.10.23-08.49.09c6398487aa"
+val familieProsesseringVersion = "2.20241011144712_deb1f2c"
 val tokenSupportVersion = "5.0.5"
 val wiremockVersion = "3.0.1"
-val testcontainerVersion = "1.20.1"
+val testcontainerVersion = "1.20.3"
 
 group = "no.nav.tilleggsstonader.soknad"
 version = "1.0.0"
@@ -83,7 +83,7 @@ dependencies {
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
-    testImplementation("io.mockk:mockk:1.13.12")
+    testImplementation("io.mockk:mockk:1.13.13")
 
     testImplementation("org.testcontainers:postgresql:$testcontainerVersion")
 
