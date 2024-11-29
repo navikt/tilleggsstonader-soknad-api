@@ -25,8 +25,8 @@ object SøknadLæremidlerUtil {
                 svarTekst = "Utdanning på fagskole, høgskole eller universitet",
                 alternativer = listOf(),
             ),
-            mottarUtstyrsstipend = EnumFelt(
-                label = "Mottar du utstyrsstipend fra Statens lånekasse?",
+            erLærlingEllerLiknende = EnumFelt(
+                label = "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",
                 verdi = JaNei.JA,
                 svarTekst = "Ja",
                 alternativer = listOf(),

@@ -76,7 +76,7 @@ fun lagPdlSøker(
     bostedsadresse: Bostedsadresse = Bostedsadresse(vegadresse(), null),
     forelderBarnRelasjon: List<ForelderBarnRelasjon> = emptyList(),
     navn: Navn = navn(),
-    fødselsdato: Fødselsdato = Fødselsdato(fødselsår = 2000, fødselsdato = LocalDate.of(2000, 1, 1)),
+    fødselsdato: Fødselsdato = Fødselsdato(fødselsår = 2005, fødselsdato = LocalDate.of(2005, 1, 1)),
 ) = PdlSøker(
     adressebeskyttelse = listOf(Adressebeskyttelse(adressebeskyttelse)),
     bostedsadresse = listOf(bostedsadresse),

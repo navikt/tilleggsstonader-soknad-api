@@ -207,7 +207,7 @@
     } ],
     "type" : "AVSNITT"
   }, {
-    "label" : "Mottar du utstyrsstipend fra Statens lånekasse?",
+    "label" : "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",
     "verdier" : [ {
       "verdi" : "Ja",
       "alternativer" : null,

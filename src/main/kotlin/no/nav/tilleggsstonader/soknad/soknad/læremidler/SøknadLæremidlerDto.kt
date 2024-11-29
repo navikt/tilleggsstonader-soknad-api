@@ -16,6 +16,6 @@ data class SøknadLæremidlerDto(
 data class Utdanning(
     val aktiviteter: EnumFlereValgFelt<String>?,
     val annenUtdanning: EnumFelt<AnnenUtdanningType>?,
-    val mottarUtstyrsstipend: EnumFelt<JaNei>?,
+    val erLærlingEllerLiknende: EnumFelt<JaNei>?,
     val harFunksjonsnedsettelse: EnumFelt<JaNei>,
 )
