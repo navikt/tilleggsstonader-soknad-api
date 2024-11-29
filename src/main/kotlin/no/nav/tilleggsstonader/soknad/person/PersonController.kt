@@ -1,12 +1,17 @@
 package no.nav.tilleggsstonader.soknad.person
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
+import no.nav.tilleggsstonader.soknad.person.pdl.logger
+import no.nav.tilleggsstonader.soknad.sak.SaksbehandlingClient
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 class PersonController(
     private val personService: PersonService,
+    private val saksbehandlingClient: SaksbehandlingClient,
 ) {
 
     @GetMapping
@@ -25,5 +31,12 @@ class PersonController(
     @GetMapping("med-barn")
     fun hentSøkerMedBarn(): PersonMedBarnDto {
         return personService.hentSøker(Fødselsnummer(EksternBrukerUtils.hentFnrFraToken()), medBarn = true)
+    }
+
+    @GetMapping("behandlingStatus")
+    fun hentBehandlingsStatusMedFødselsnummer(@RequestParam("stonadstype") stonadstype: Stønadstype): Boolean {
+        val fødselsnummer = EksternBrukerUtils.hentFnrFraToken()
+        logger.info("hello the fødselsnummmer is fødselsnummer" +fødselsnummer)
+        return saksbehandlingClient.hentBehandlingStatus(IdentStønadstype(fødselsnummer, stonadstype))
     }
 }
