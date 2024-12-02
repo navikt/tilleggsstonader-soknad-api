@@ -151,7 +151,8 @@
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
-      }
+      },
+      "mottarUtstyrsstipend": null
     },
     "dokumentasjon" : [ ]
   }
