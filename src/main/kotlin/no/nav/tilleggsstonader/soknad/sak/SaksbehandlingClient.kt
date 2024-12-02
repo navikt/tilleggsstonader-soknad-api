@@ -3,7 +3,6 @@ package no.nav.tilleggsstonader.soknad.sak
 import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
 import no.nav.tilleggsstonader.kontrakter.sak.journalføring.HåndterSøknadRequest
 import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
-import no.nav.tilleggsstonader.soknad.person.pdl.logger
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -19,7 +18,6 @@ class SaksbehandlingClient(
 ) : AbstractRestClient(restTemplate) {
 
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern").build()
-    private val behandlingUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "behandling").build()
 
     fun sendTilSak(request: HåndterSøknadRequest) {
         val uri = UriComponentsBuilder.fromUri(sakUri.toUri())
@@ -33,19 +31,12 @@ class SaksbehandlingClient(
         return postForEntity<SkalRoutesINyLøsning>(uri, request).skalBehandlesINyLøsning
     }
     fun hentBehandlingStatus(request: IdentStønadstype): Boolean {
-        logger.info("hello ident nummer is" +request.ident)
         val uri = UriComponentsBuilder.fromUri(sakUri.toUri())
             .pathSegment("harBehandling").build().toUriString()
-        logger.info("hello uri is" +uri)
-        logger.info("hello  request is" +request)
-        logger.info("hello ident nummer is" +request.ident)
         return postForEntity<Boolean>(uri, request)
     }
 }
 
 private data class SkalRoutesINyLøsning(
     val skalBehandlesINyLøsning: Boolean,
-)
-private data class HarBehandling(
-    val harBehandling: Boolean,
 )
