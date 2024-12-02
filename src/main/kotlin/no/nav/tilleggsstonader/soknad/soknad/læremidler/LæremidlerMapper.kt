@@ -32,7 +32,7 @@ class LæremidlerMapper {
     private fun mapUtdanning(dto: SøknadLæremidlerDto) = UtdanningAvsnitt(
         aktiviteter = dto.utdanning.aktiviteter,
         annenUtdanning = dto.utdanning.annenUtdanning,
-        mottarUtstyrsstipend = dto.utdanning.mottarUtstyrsstipend,
+        erLærlingEllerLiknende = dto.utdanning.erLærlingEllerLiknende,
         harFunksjonsnedsettelse = dto.utdanning.harFunksjonsnedsettelse,
     )
 }

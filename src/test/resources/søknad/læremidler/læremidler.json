@@ -140,8 +140,8 @@
         "svarTekst" : "Utdanning på fagskole, høgskole eller universitet",
         "alternativer" : [ ]
       },
-      "mottarUtstyrsstipend" : {
-        "label" : "Mottar du utstyrsstipend fra Statens lånekasse?",
+      "erLærlingEllerLiknende" : {
+        "label" : "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
@@ -151,7 +151,8 @@
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
-      }
+      },
+      "mottarUtstyrsstipend": null
     },
     "dokumentasjon" : [ ]
   }
