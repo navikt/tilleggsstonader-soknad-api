@@ -33,6 +33,7 @@ class LæremidlerMapper {
         aktiviteter = dto.utdanning.aktiviteter,
         annenUtdanning = dto.utdanning.annenUtdanning,
         erLærlingEllerLiknende = dto.utdanning.erLærlingEllerLiknende,
+        harTidligereFullførtVgs = dto.utdanning.harTidligereFullførtVgs,
         harFunksjonsnedsettelse = dto.utdanning.harFunksjonsnedsettelse,
     )
 }

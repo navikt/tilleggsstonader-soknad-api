@@ -31,6 +31,12 @@ object SøknadLæremidlerUtil {
                 svarTekst = "Ja",
                 alternativer = listOf(),
             ),
+            harTidligereFullførtVgs = EnumFelt(
+                label = "Har du tidligere fullført videregående skole?",
+                verdi = JaNei.JA,
+                svarTekst = "Ja",
+                alternativer = listOf(),
+            ),
             harFunksjonsnedsettelse = EnumFelt(
                 label = "Har du en funksjonsnedsettelse som gir deg særlig store utgifter til læremidler?",
                 verdi = JaNei.JA,

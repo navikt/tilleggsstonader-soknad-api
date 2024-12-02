@@ -146,6 +146,12 @@
         "svarTekst" : "Ja",
         "alternativer" : [ ]
       },
+      "harTidligereFullførtVgs" : {
+        "label" : "Har du tidligere fullført videregående skole?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
+      },
       "harFunksjonsnedsettelse" : {
         "label" : "Har du en funksjonsnedsettelse som gir deg særlig store utgifter til læremidler?",
         "verdi" : "JA",

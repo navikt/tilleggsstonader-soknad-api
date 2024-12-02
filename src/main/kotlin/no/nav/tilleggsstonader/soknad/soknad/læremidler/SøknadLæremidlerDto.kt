@@ -17,5 +17,6 @@ data class Utdanning(
     val aktiviteter: EnumFlereValgFelt<String>?,
     val annenUtdanning: EnumFelt<AnnenUtdanningType>?,
     val erLærlingEllerLiknende: EnumFelt<JaNei>?,
+    val harTidligereFullførtVgs: EnumFelt<JaNei>?,
     val harFunksjonsnedsettelse: EnumFelt<JaNei>,
 )
