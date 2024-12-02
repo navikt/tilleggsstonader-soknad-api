@@ -6,7 +6,6 @@ import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
-import no.nav.tilleggsstonader.soknad.person.pdl.logger
 import no.nav.tilleggsstonader.soknad.sak.SaksbehandlingClient
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
