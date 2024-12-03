@@ -33,7 +33,7 @@ class PersonController(
     }
 
     @GetMapping("behandlingStatus")
-    fun hentBehandlingsStatusMedFødselsnummer(@RequestParam("stonadstype") stonadstype: Stønadstype): Boolean {
+    fun hentBehandlingsstatus(@RequestParam("stonadstype") stonadstype: Stønadstype): Boolean {
         val fødselsnummer = EksternBrukerUtils.hentFnrFraToken()
         return saksbehandlingClient.hentBehandlingStatus(IdentStønadstype(fødselsnummer, stonadstype))
     }
