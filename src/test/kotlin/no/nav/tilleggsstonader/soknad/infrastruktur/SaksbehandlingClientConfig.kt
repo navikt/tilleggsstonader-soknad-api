@@ -19,6 +19,7 @@ class SaksbehandlingClientConfig {
         val client = mockk<SaksbehandlingClient>()
         every { client.skalRoutesTilNyLøsning(any()) } answers { true }
         justRun { client.sendTilSak(any()) }
+        every { client.harBehandlingUnderArbeid(any()) } answers { false }
         return client
     }
 }
