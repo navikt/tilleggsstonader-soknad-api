@@ -5,6 +5,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.AnnenUtdanningType
+import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.soknad.soknad.HovedytelseDto
 
 data class SøknadLæremidlerDto(
@@ -16,7 +17,6 @@ data class SøknadLæremidlerDto(
 data class Utdanning(
     val aktiviteter: EnumFlereValgFelt<String>?,
     val annenUtdanning: EnumFelt<AnnenUtdanningType>?,
-    val erLærlingEllerLiknende: EnumFelt<JaNei>?,
-    val harTidligereFullførtVgs: EnumFelt<JaNei>?,
+    val harRettTilUtstyrsstipend: HarRettTilUtstyrsstipend?,
     val harFunksjonsnedsettelse: EnumFelt<JaNei>,
 )
