@@ -140,17 +140,19 @@
         "svarTekst" : "Utdanning på fagskole, høgskole eller universitet",
         "alternativer" : [ ]
       },
-      "erLærlingEllerLiknende" : {
-        "label" : "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",
-        "verdi" : "JA",
-        "svarTekst" : "Ja",
-        "alternativer" : [ ]
-      },
-      "harTidligereFullførtVgs" : {
-        "label" : "Har du tidligere fullført videregående skole?",
-        "verdi" : "JA",
-        "svarTekst" : "Ja",
-        "alternativer" : [ ]
+      "harRettTilUtstyrsstipend" : {
+        "erLærlingEllerLiknende" : {
+          "label" : "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",
+          "verdi" : "JA",
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
+        },
+        "harTidligereFullførtVgs" : {
+          "label" : "Har du tidligere fullført videregående skole?",
+          "verdi" : "JA",
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
+        }
       },
       "harFunksjonsnedsettelse" : {
         "label" : "Har du en funksjonsnedsettelse som gir deg særlig store utgifter til læremidler?",

@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad.læremidler
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
+import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMapper
 import org.springframework.stereotype.Service
@@ -32,8 +33,10 @@ class LæremidlerMapper {
     private fun mapUtdanning(dto: SøknadLæremidlerDto) = UtdanningAvsnitt(
         aktiviteter = dto.utdanning.aktiviteter,
         annenUtdanning = dto.utdanning.annenUtdanning,
-        erLærlingEllerLiknende = dto.utdanning.erLærlingEllerLiknende,
-        harTidligereFullførtVgs = dto.utdanning.harTidligereFullførtVgs,
+        harRettTilUtstyrsstipend = HarRettTilUtstyrsstipend(
+            erLærlingEllerLiknende = dto.utdanning.harRettTilUtstyrsstipend?.erLærlingEllerLiknende,
+            harTidligereFullførtVgs = dto.utdanning.harRettTilUtstyrsstipend?.harTidligereFullførtVgs,
+        ),
         harFunksjonsnedsettelse = dto.utdanning.harFunksjonsnedsettelse,
     )
 }

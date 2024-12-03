@@ -16,6 +16,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOpphold
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
+import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAlternativer
@@ -68,6 +69,7 @@ object SøknadTreeWalker {
             is BarnMedBarnepass,
             is OppholdUtenforNorge,
             is SøknadsskjemaLæremidler,
+            is HarRettTilUtstyrsstipend,
             -> finnFelter(entitet, språk)
 
             is HovedytelseAvsnitt,

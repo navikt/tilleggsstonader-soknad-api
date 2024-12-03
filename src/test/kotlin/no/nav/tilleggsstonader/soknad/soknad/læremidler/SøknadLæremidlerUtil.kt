@@ -5,6 +5,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.AnnenUtdanningType
+import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 
 object SøknadLæremidlerUtil {
@@ -25,17 +26,19 @@ object SøknadLæremidlerUtil {
                 svarTekst = "Utdanning på fagskole, høgskole eller universitet",
                 alternativer = listOf(),
             ),
-            erLærlingEllerLiknende = EnumFelt(
-                label = "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",
-                verdi = JaNei.JA,
-                svarTekst = "Ja",
-                alternativer = listOf(),
-            ),
-            harTidligereFullførtVgs = EnumFelt(
-                label = "Har du tidligere fullført videregående skole?",
-                verdi = JaNei.JA,
-                svarTekst = "Ja",
-                alternativer = listOf(),
+            harRettTilUtstyrsstipend = HarRettTilUtstyrsstipend(
+                erLærlingEllerLiknende = EnumFelt(
+                    label = "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",
+                    verdi = JaNei.JA,
+                    svarTekst = "Ja",
+                    alternativer = listOf(),
+                ),
+                harTidligereFullførtVgs = EnumFelt(
+                    label = "Har du tidligere fullført videregående skole?",
+                    verdi = JaNei.JA,
+                    svarTekst = "Ja",
+                    alternativer = listOf(),
+                ),
             ),
             harFunksjonsnedsettelse = EnumFelt(
                 label = "Har du en funksjonsnedsettelse som gir deg særlig store utgifter til læremidler?",
