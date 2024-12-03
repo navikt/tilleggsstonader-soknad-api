@@ -140,6 +140,8 @@
         "svarTekst" : "Utdanning på fagskole, høgskole eller universitet",
         "alternativer" : [ ]
       },
+      "erLærlingEllerLiknende": null,
+      "harTidligereFullførtVgs": null,
       "harRettTilUtstyrsstipend" : {
         "erLærlingEllerLiknende" : {
           "label" : "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",

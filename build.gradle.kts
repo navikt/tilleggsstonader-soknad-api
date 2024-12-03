@@ -1,6 +1,6 @@
 val javaVersion = JavaLanguageVersion.of(21)
 val tilleggsstønaderLibsVersion = "2024.10.30-09.56.91115fdcae1e"
-val tilleggsstønaderKontrakterVersion = "2024.12.03-10.10.cd4d83ce13fb"
+val tilleggsstønaderKontrakterVersion = "2024.12.03-16.13.446dde2e3a5a"
 val familieProsesseringVersion = "2.20241011144712_deb1f2c"
 val tokenSupportVersion = "5.0.8"
 val wiremockVersion = "3.0.1"
