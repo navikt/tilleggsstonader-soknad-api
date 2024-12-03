@@ -30,9 +30,9 @@ class SaksbehandlingClient(
             .pathSegment("routing-soknad").build().toUriString()
         return postForEntity<SkalRoutesINyLøsning>(uri, request).skalBehandlesINyLøsning
     }
-    fun hentBehandlingStatus(request: IdentStønadstype): Boolean {
+    fun harBehandlingUnderArbeid(request: IdentStønadstype): Boolean {
         val uri = UriComponentsBuilder.fromUri(sakUri.toUri())
-            .pathSegment("harBehandling").build().toUriString()
+            .pathSegment("ekstern", "har-behandling").build().toUriString()
         return postForEntity<Boolean>(uri, request)
     }
 }
