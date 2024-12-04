@@ -4,6 +4,7 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
+import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.sak.journalføring.HåndterSøknadRequest
 import org.junit.jupiter.api.AfterAll
@@ -23,6 +24,23 @@ class SaksbehandlingClientTest {
         )
 
         client.sendTilSak(HåndterSøknadRequest("ident", "journalpost", Stønadstype.BARNETILSYN))
+
+        wireMockServer.verify(1, RequestPatternBuilder.allRequests())
+    }
+
+    @Test
+    fun `Skal kalle på riktig endepunkt når harBehandlingUnderArbeid blir kjørt`() {
+        wireMockServer.stubFor(
+            WireMock.post("/api/ekstern/har-behandling")
+                .willReturn(
+                    WireMock.aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBody("true")
+                        .withStatus(200),
+                ),
+        )
+
+        client.harBehandlingUnderArbeid(IdentStønadstype("ident", Stønadstype.BARNETILSYN))
 
         wireMockServer.verify(1, RequestPatternBuilder.allRequests())
     }

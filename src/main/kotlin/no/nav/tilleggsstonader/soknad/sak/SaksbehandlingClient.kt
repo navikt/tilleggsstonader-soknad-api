@@ -32,7 +32,7 @@ class SaksbehandlingClient(
     }
     fun harBehandlingUnderArbeid(request: IdentStønadstype): Boolean {
         val uri = UriComponentsBuilder.fromUri(sakUri.toUri())
-            .pathSegment("ekstern", "har-behandling").build().toUriString()
+            .pathSegment("har-behandling").build().toUriString()
         return postForEntity<Boolean>(uri, request)
     }
 }
