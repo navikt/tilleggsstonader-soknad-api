@@ -42,7 +42,10 @@ class SaksbehandlingClientTest {
 
         client.harBehandlingUnderArbeid(IdentStønadstype("ident", Stønadstype.BARNETILSYN))
 
-        wireMockServer.verify(1, RequestPatternBuilder.allRequests())
+        wireMockServer.verify(
+            1,
+            WireMock.postRequestedFor(WireMock.urlEqualTo("/api/ekstern/har-behandling")),
+        )
     }
 
     companion object {
