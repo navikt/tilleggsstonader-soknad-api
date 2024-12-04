@@ -79,8 +79,8 @@ class AktiviteterDtoKtTest {
 
         @Test
         fun `skal returnere true hvis type er på vgs nivå`() {
-            assertThat(dto(type = "GRUFAGYRKE").erUtdanningPåVgsNivå()).isTrue()
-            assertThat(dto(type = "ENKFAGYRKE").erUtdanningPåVgsNivå()).isTrue()
+            assertThat(dto(type = "GRUFAGYRKE", erUtdanning = false).erUtdanningPåVgsNivå()).isTrue()
+            assertThat(dto(type = "ENKFAGYRKE", erUtdanning = false).erUtdanningPåVgsNivå()).isTrue()
             assertThat(dto(type = "OUTDEF").erUtdanningPåVgsNivå()).isTrue()
         }
     }

@@ -40,10 +40,6 @@ fun AktivitetArenaDto.tilDto(): AktivitetDto? {
 }
 
 fun AktivitetArenaDto.erUtdanningPåVgsNivå(): Boolean {
-    if (erUtdanning == false) {
-        return false
-    }
-
     val typeAktiviteterPåVgsNivå = setOf(
         TypeAktivitet.GRUFAGYRKE.name,
         TypeAktivitet.ENKFAGYRKE.name,
