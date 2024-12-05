@@ -162,7 +162,7 @@ clients:
     audience: ${CLIENT_ENV}-gcp:teamfamilie:familie-dokument
     scope: api://${CLIENT_ENV}-gcp.teamfamilie.familie-dokument/.default
   pdl:
-    uri: https://pdl-api.prod-fss-pub.nais.io
+    uri: https://pdl-api.${CLIENT_ENV}-fss-pub.nais.io
     audience: ${CLIENT_ENV}-fss:pdl:pdl-api
     scope: api://${CLIENT_ENV}-fss.pdl.pdl-api/.default
   sak:

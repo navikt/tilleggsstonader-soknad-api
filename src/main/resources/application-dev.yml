@@ -4,9 +4,5 @@ prosessering:
 CLIENT_ENV: dev
 
 clients:
-  pdl:
-    uri: https://pdl-api-q1.dev-fss-pub.nais.io
-    audience: dev-fss:pdl:pdl-api-q1
-    scope: api://dev-fss.pdl.pdl-api-q1/.default
   kodeverk:
     uri: https://kodeverk-api.nav.no

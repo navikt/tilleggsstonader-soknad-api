@@ -13,6 +13,6 @@ clients:
     audience: dev-gcp:teamfamilie:familie-dokument
     scope: api://dev-gcp.teamfamilie.familie-dokument/.default
   pdl:
-    uri: https://pdl-api-q1.dev.intern.nav.no
-    audience: dev-fss:pdl:pdl-api-q1
-    scope: api://dev-fss.pdl.pdl-api-q1/.default
+    uri: https://pdl-api.dev.intern.nav.no
+    audience: dev-fss:pdl:pdl-api
+    scope: api://dev-fss.pdl.pdl-api/.default
