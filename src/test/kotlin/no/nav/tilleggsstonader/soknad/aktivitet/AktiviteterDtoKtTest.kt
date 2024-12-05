@@ -24,6 +24,7 @@ class AktiviteterDtoKtTest {
                     tom = osloDateNow().plusDays(1),
                     typeNavn = "typeNavn",
                     erUtdanning = true,
+                    erUtdanningPåVgsNivå = false,
                     arrangør = "arrangør",
                 ),
             )
@@ -61,6 +62,26 @@ class AktiviteterDtoKtTest {
             assertThat(listOf(dto(status = StatusAktivitet.FEILREGISTRERT)).gjeldende()).isEmpty()
             assertThat(listOf(dto(status = StatusAktivitet.PLANLAGT)).gjeldende()).isEmpty()
             assertThat(listOf(dto(status = StatusAktivitet.VENTELISTE)).gjeldende()).isEmpty()
+        }
+    }
+
+    @Nested
+    inner class `Er utdanning på vgs nivå` {
+        @Test
+        fun `skal returnere false hvis erUtdanning=false`() {
+            assertThat(dto(erUtdanning = false).erUtdanningPåVgsNivå()).isFalse()
+        }
+
+        @Test
+        fun `skal returnere false hvis type ikke er på vgs nivå`() {
+            assertThat(dto(type = "type").erUtdanningPåVgsNivå()).isFalse()
+        }
+
+        @Test
+        fun `skal returnere true hvis type er på vgs nivå`() {
+            assertThat(dto(type = "GRUFAGYRKE", erUtdanning = false).erUtdanningPåVgsNivå()).isTrue()
+            assertThat(dto(type = "ENKFAGYRKE", erUtdanning = false).erUtdanningPåVgsNivå()).isTrue()
+            assertThat(dto(type = "OUTDEF").erUtdanningPåVgsNivå()).isTrue()
         }
     }
 

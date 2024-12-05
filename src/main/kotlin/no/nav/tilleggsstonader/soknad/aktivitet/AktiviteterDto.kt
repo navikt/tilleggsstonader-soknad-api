@@ -1,7 +1,9 @@
 package no.nav.tilleggsstonader.soknad.aktivitet
 
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
+import no.nav.tilleggsstonader.kontrakter.aktivitet.TypeAktivitet
 import java.time.LocalDate
+import kotlin.Boolean
 
 /**
  * @param aktiviteter er stønadsberrittgede aktiviteter
@@ -19,6 +21,7 @@ data class AktivitetDto(
     val tom: LocalDate?,
     val typeNavn: String,
     val erUtdanning: Boolean,
+    val erUtdanningPåVgsNivå: Boolean,
     val arrangør: String?,
 )
 
@@ -31,8 +34,19 @@ fun AktivitetArenaDto.tilDto(): AktivitetDto? {
         tom = tom,
         typeNavn = typeNavn,
         erUtdanning = erUtdanning == true,
+        erUtdanningPåVgsNivå = this.erUtdanningPåVgsNivå(),
         arrangør = arrangør,
     )
+}
+
+fun AktivitetArenaDto.erUtdanningPåVgsNivå(): Boolean {
+    val typeAktiviteterPåVgsNivå = setOf(
+        TypeAktivitet.GRUFAGYRKE.name,
+        TypeAktivitet.ENKFAGYRKE.name,
+        TypeAktivitet.OUTDEF.name,
+    )
+
+    return typeAktiviteterPåVgsNivå.contains(type)
 }
 
 /**
