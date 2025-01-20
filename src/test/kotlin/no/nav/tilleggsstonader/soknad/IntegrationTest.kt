@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.cache.CacheManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jdbc.core.JdbcAggregateOperations
@@ -74,11 +75,15 @@ abstract class IntegrationTest {
     @Autowired
     private lateinit var jdbcAggregateOperations: JdbcAggregateOperations
 
+    @Autowired
+    private lateinit var cacheManagers: List<CacheManager>
+
     @AfterEach
     fun tearDown() {
         headers.clear()
         clearClientMocks()
         resetDatabase()
+        clearCaches()
     }
 
     private fun resetDatabase() {
@@ -93,6 +98,13 @@ abstract class IntegrationTest {
 
     private fun clearClientMocks() {
         resetPdlClientMock(pdlClient)
+    }
+
+    private fun clearCaches() {
+        cacheManagers.forEach {
+            it.cacheNames.mapNotNull { cacheName -> it.getCache(cacheName) }
+                .forEach { cache -> cache.clear() }
+        }
     }
 
     protected fun localhost(path: String): String {
