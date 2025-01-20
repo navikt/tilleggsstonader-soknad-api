@@ -1,7 +1,6 @@
 package no.nav.tilleggsstonader.soknad.aktivitet
 
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
-import no.nav.tilleggsstonader.kontrakter.aktivitet.TypeAktivitet
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import org.slf4j.LoggerFactory
@@ -29,9 +28,7 @@ class AktivitetService(
      * Eks filtrerer denne bort [INDOP] som er av gruppetype [SAK]
      */
     private fun skalVises(it: AktivitetArenaDto) = try {
-        // Ikke alle aktiviteter har fått flagg "stønadsberettiget" i Arena selv om de skulle hatt det
-        // Eks FORSFAGGRU så der trenger vi å sjekke om vi har satt at den har rettTilStønad
-        it.erStønadsberettiget == true || TypeAktivitet.valueOf(it.type).rettTilStønad
+        it.erStønadsberettiget == true
     } catch (e: Exception) {
         logger.error("TypeAktivitet mangler mapping, se secure logs for detaljer.")
         secureLogger.error("TypeAktivitet=${it.type} mangler mapping. Vennligst oppdater TypeAktivitet med ny type.")

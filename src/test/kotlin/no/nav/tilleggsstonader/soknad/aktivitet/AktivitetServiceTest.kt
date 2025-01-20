@@ -56,21 +56,4 @@ class AktivitetServiceTest : IntegrationTest() {
         val aktiviteter = aktivitetService.hentAktiviteter("1")
         assertThat(aktiviteter).isEmpty()
     }
-
-    @Test
-    fun `skal returnere typer som ikke er stønadsberettiget fra arena men overstyrt fra oss`() {
-        val type = TypeAktivitet.FORSFAGGRU
-        every { aktivitetClient.hentAktiviteter("1", any(), any()) } returns listOf(
-            aktivitetArenaDto(
-                "10",
-                type = type,
-                erStønadsberettiget = false,
-            ),
-        )
-
-        val aktiviteter = aktivitetService.hentAktiviteter("1")
-        assertThat(aktiviteter).hasSize(1)
-        assertThat(aktiviteter.single().erStønadsberettiget).isFalse()
-        assertThat(type.rettTilStønad).isTrue()
-    }
 }
