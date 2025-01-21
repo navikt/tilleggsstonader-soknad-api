@@ -7,7 +7,6 @@ import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 
 @Service
 class AktivitetService(
@@ -18,7 +17,7 @@ class AktivitetService(
 
     @Cacheable("aktivitet", cacheManager = "aktivitetCache")
     fun hentAktiviteter(ident: String, stønadstype: Stønadstype): List<AktivitetArenaDto> {
-        val fom = finnDatoAktivitetSkalHentesFra(stønadstype)
+        val fom = osloDateNow().minusMonths(stønadstype.antallMånederBakITiden())
         val tom = osloDateNow().plusMonths(3)
         return aktivitetClient.hentAktiviteter(ident, fom, tom)
             .filter(::skalVises)
@@ -37,11 +36,8 @@ class AktivitetService(
         false
     }
 
-    private fun finnDatoAktivitetSkalHentesFra(stønadstype: Stønadstype): LocalDate {
-        return when (stønadstype) {
-            Stønadstype.BARNETILSYN -> osloDateNow().minusMonths(3)
-            Stønadstype.LÆREMIDLER -> osloDateNow().minusMonths(6)
-            else -> osloDateNow().minusMonths(3)
-        }
+    private fun Stønadstype.antallMånederBakITiden(): Long = when (this) {
+        Stønadstype.BARNETILSYN -> 3
+        Stønadstype.LÆREMIDLER -> 6
     }
 }
