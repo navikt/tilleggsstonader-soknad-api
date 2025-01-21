@@ -40,7 +40,7 @@ class AktivitetController(
         }
     }
 
-    @PostMapping("v2")
+    @PostMapping
     fun hentAktiviteterV2(@RequestBody request: AktivitetRequest): AktiviteterDto {
         val ident = EksternBrukerUtils.hentFnrFraToken()
         return try {
