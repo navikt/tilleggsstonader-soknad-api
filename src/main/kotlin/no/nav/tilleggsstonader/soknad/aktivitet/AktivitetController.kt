@@ -7,7 +7,6 @@ import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -25,7 +24,7 @@ class AktivitetController(
 
     @Deprecated("Erstattes av endepunkt som sender med stønadstype for å kunne variere hvor langt tilbake man henter aktiviteter")
     @GetMapping
-    fun hentAktiviteter(@PathVariable stønadstype: Stønadstype): AktiviteterDto {
+    fun hentAktiviteter(): AktiviteterDto {
         val ident = EksternBrukerUtils.hentFnrFraToken()
         return try {
             val aktiviteter = aktivitetService.hentAktiviteter(ident, Stønadstype.BARNETILSYN)
