@@ -2,6 +2,7 @@ package no.nav.tilleggsstonader.soknad.aktivitet
 
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
 import no.nav.tilleggsstonader.kontrakter.aktivitet.TypeAktivitet
+import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import java.time.LocalDate
 import kotlin.Boolean
 
@@ -56,3 +57,7 @@ fun AktivitetArenaDto.erUtdanningPåVgsNivå(): Boolean {
 fun List<AktivitetArenaDto>.gjeldende() = this
     .filter { it.erStønadsberettiget == true }
     .filter { it.status == null || it.status?.rettTilÅSøke == true }
+
+data class AktivitetRequest(
+    val stønadstype: Stønadstype,
+)

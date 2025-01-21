@@ -15,8 +15,8 @@ object AktivitetArenaDtoUtil {
         type: TypeAktivitet = TypeAktivitet.JOBBK,
     ) = AktivitetArenaDto(
         id = id,
-        fom = osloDateNow(),
-        tom = osloDateNow(),
+        fom = osloDateNow().minusMonths(7),
+        tom = osloDateNow().minusMonths(5),
         type = type.name,
         typeNavn = "Type navn",
         status = StatusAktivitet.AKTUELL,
