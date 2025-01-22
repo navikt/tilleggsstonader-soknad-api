@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.aktivitet
 
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
+import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import org.slf4j.LoggerFactory
@@ -15,8 +16,8 @@ class AktivitetService(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @Cacheable("aktivitet", cacheManager = "aktivitetCache")
-    fun hentAktiviteter(ident: String): List<AktivitetArenaDto> {
-        val fom = osloDateNow().minusMonths(3)
+    fun hentAktiviteter(ident: String, stønadstype: Stønadstype): List<AktivitetArenaDto> {
+        val fom = osloDateNow().minusMonths(stønadstype.antallMånederBakITiden())
         val tom = osloDateNow().plusMonths(3)
         return aktivitetClient.hentAktiviteter(ident, fom, tom)
             .filter(::skalVises)
@@ -33,5 +34,10 @@ class AktivitetService(
         logger.error("TypeAktivitet mangler mapping, se secure logs for detaljer.")
         secureLogger.error("TypeAktivitet=${it.type} mangler mapping. Vennligst oppdater TypeAktivitet med ny type.")
         false
+    }
+
+    private fun Stønadstype.antallMånederBakITiden(): Long = when (this) {
+        Stønadstype.BARNETILSYN -> 3
+        Stønadstype.LÆREMIDLER -> 6
     }
 }

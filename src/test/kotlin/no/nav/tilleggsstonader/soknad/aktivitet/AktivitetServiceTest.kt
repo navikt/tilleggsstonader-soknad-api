@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.aktivitet
 import io.mockk.every
 import io.mockk.verify
 import no.nav.tilleggsstonader.kontrakter.aktivitet.TypeAktivitet
+import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.AktivitetClientConfig.Companion.resetMock
 import no.nav.tilleggsstonader.soknad.util.AktivitetArenaDtoUtil.aktivitetArenaDto
@@ -30,10 +31,10 @@ class AktivitetServiceTest : IntegrationTest() {
         every { aktivitetClient.hentAktiviteter("1", any(), any()) } returns listOf(aktivitetArenaDto("10"))
         every { aktivitetClient.hentAktiviteter("2", any(), any()) } returns listOf(aktivitetArenaDto("20"))
 
-        aktivitetService.hentAktiviteter("1")
-        val aktivitetIdent1 = aktivitetService.hentAktiviteter("1")
-        aktivitetService.hentAktiviteter("2")
-        val aktivitetIdent2 = aktivitetService.hentAktiviteter("2")
+        aktivitetService.hentAktiviteter("1", Stønadstype.BARNETILSYN)
+        val aktivitetIdent1 = aktivitetService.hentAktiviteter("1", Stønadstype.BARNETILSYN)
+        aktivitetService.hentAktiviteter("2", Stønadstype.BARNETILSYN)
+        val aktivitetIdent2 = aktivitetService.hentAktiviteter("2", Stønadstype.BARNETILSYN)
 
         assertThat(aktivitetIdent1.single().id).isEqualTo("10")
         assertThat(aktivitetIdent2.single().id).isEqualTo("20")
@@ -53,7 +54,7 @@ class AktivitetServiceTest : IntegrationTest() {
             ),
         )
 
-        val aktiviteter = aktivitetService.hentAktiviteter("1")
+        val aktiviteter = aktivitetService.hentAktiviteter("1", Stønadstype.BARNETILSYN)
         assertThat(aktiviteter).isEmpty()
     }
 }
