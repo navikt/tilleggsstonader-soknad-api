@@ -14,7 +14,6 @@ class ArkiverSøknadTask(
     private val arkiveringService: ArkiveringService,
     private val taskService: TaskService,
 ) : AsyncTaskStep {
-
     override fun doTask(task: Task) {
         val søknadId = UUID.fromString(task.payload)
         arkiveringService.journalførSøknad(søknadId, task.callId)
@@ -27,8 +26,6 @@ class ArkiverSøknadTask(
     companion object {
         const val TYPE = "ARKIVER_SØKNAD"
 
-        fun opprettTask(task: Task): Task {
-            return Task(TYPE, task.payload, task.metadata)
-        }
+        fun opprettTask(task: Task): Task = Task(TYPE, task.payload, task.metadata)
     }
 }

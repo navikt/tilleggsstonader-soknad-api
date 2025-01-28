@@ -36,10 +36,14 @@ import kotlin.reflect.full.primaryConstructor
  * [Verdi] brukes For [EnumFelt], [TekstFelt] etc for å plukke ut selve verdiet og vise det frem i html'en
  * [HorisontalLinje] brukes i eks tilfeller der man har en liste med Barn, og lager en linje mellom hvert barn
  */
-sealed class HtmlFelt(val type: HtmlFeltType)
+sealed class HtmlFelt(
+    val type: HtmlFeltType,
+)
 
 enum class HtmlFeltType {
-    AVSNITT, VERDI, LINJE,
+    AVSNITT,
+    VERDI,
+    LINJE,
 }
 
 data class Avsnitt(
@@ -55,16 +59,19 @@ data class Verdi(
 data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
 
 object SøknadTreeWalker {
-
-    fun mapSøknad(søknad: Søknadsskjema<*>, søkerinformasjon: Søkerinformasjon): List<HtmlFelt> {
-        return listOf(søkerinformasjon.tilAvsnitt(søknad.språk)) + mapFelter(søknad.skjema, søknad.språk)
-    }
+    fun mapSøknad(
+        søknad: Søknadsskjema<*>,
+        søkerinformasjon: Søkerinformasjon,
+    ): List<HtmlFelt> = listOf(søkerinformasjon.tilAvsnitt(søknad.språk)) + mapFelter(søknad.skjema, søknad.språk)
 
     /**
      * For å ha litt mer kontroll så må alle typer definieres
      */
-    private fun mapFelter(entitet: Any?, språk: Språkkode): List<HtmlFelt> {
-        return when (entitet) {
+    private fun mapFelter(
+        entitet: Any?,
+        språk: Språkkode,
+    ): List<HtmlFelt> =
+        when (entitet) {
             is SøknadsskjemaBarnetilsyn,
             is BarnMedBarnepass,
             is OppholdUtenforNorge,
@@ -92,19 +99,19 @@ object SøknadTreeWalker {
             is DokumentasjonFelt -> emptyList()
             else -> error("Kan ikke mappe entitet=$entitet")
         }
-    }
 
     private fun mapEnumFlereValgFelt(
         entitet: EnumFlereValgFelt<*>,
         språk: Språkkode,
     ) = Avsnitt(
         label = entitet.label,
-        verdier = listOf(
-            Verdi(
-                verdi = mapVerdi(entitet.verdier.map { it.label }),
-                alternativer = mapAlternativer(entitet.alternativer, språk),
+        verdier =
+            listOf(
+                Verdi(
+                    verdi = mapVerdi(entitet.verdier.map { it.label }),
+                    alternativer = mapAlternativer(entitet.alternativer, språk),
+                ),
             ),
-        ),
     )
 
     private fun mapEnumFelt(
@@ -120,8 +127,10 @@ object SøknadTreeWalker {
         ),
     )
 
-    private fun mapAlternativer(alternativer: List<String>, språk: Språkkode): String? =
-        alternativer.takeIf { it.isNotEmpty() }?.let { "${tittelAlternativer(språk)}: ${it.joinToString(", ")}" }
+    private fun mapAlternativer(
+        alternativer: List<String>,
+        språk: Språkkode,
+    ): String? = alternativer.takeIf { it.isNotEmpty() }?.let { "${tittelAlternativer(språk)}: ${it.joinToString(", ")}" }
 
     /**
      * I de tilfeller man eks har en liste med Barn, så er det ønskelig å lage en Horisontallinje mellom barnen
@@ -129,14 +138,17 @@ object SøknadTreeWalker {
     private fun mapListe(
         entitet: List<*>,
         språk: Språkkode,
-    ): List<HtmlFelt> = entitet.filterNotNull().mapIndexed { index, it ->
-        val felter = mapFelter(it, språk)
-        if (index != 0) {
-            listOf(HorisontalLinje) + felter
-        } else {
-            felter
-        }
-    }.flatten()
+    ): List<HtmlFelt> =
+        entitet
+            .filterNotNull()
+            .mapIndexed { index, it ->
+                val felter = mapFelter(it, språk)
+                if (index != 0) {
+                    listOf(HorisontalLinje) + felter
+                } else {
+                    felter
+                }
+            }.flatten()
 
     private fun finnFelter(
         entitet: Any,
@@ -151,18 +163,25 @@ object SøknadTreeWalker {
 
     // Hvis det skulle bli behov for specialhåndtering
     // eks SpecialHåndtering(BarnMedBarnepass::class, BarnMedBarnepass::ident) { TekstFelt("Fødselsnummer", "", it) },
-    private val specialHåndtering = setOf<SpecialHåndtering<*, *>>(
-        SpecialHåndtering(ArbeidOgOpphold::class, ArbeidOgOpphold::oppholdUtenforNorgeSiste12mnd) { verdi, språk ->
-            ListeMedTittel(tittelOppholdUtenforNorgeSiste12mnd(språk), verdi)
-        },
-        SpecialHåndtering(ArbeidOgOpphold::class, ArbeidOgOpphold::oppholdUtenforNorgeNeste12mnd) { verdi, språk ->
-            ListeMedTittel(tittelOppholdUtenforNorgeNeste12mnd(språk), verdi)
-        },
-    ).associateBy { Pair(it.kClass, it.kProperty1) }
+    private val specialHåndtering =
+        setOf<SpecialHåndtering<*, *>>(
+            SpecialHåndtering(ArbeidOgOpphold::class, ArbeidOgOpphold::oppholdUtenforNorgeSiste12mnd) { verdi, språk ->
+                ListeMedTittel(tittelOppholdUtenforNorgeSiste12mnd(språk), verdi)
+            },
+            SpecialHåndtering(ArbeidOgOpphold::class, ArbeidOgOpphold::oppholdUtenforNorgeNeste12mnd) { verdi, språk ->
+                ListeMedTittel(tittelOppholdUtenforNorgeNeste12mnd(språk), verdi)
+            },
+        ).associateBy { Pair(it.kClass, it.kProperty1) }
 
-    private fun finnParametere(entitet: Any, språk: Språkkode): List<Any> {
-        return konstruktørparametere(entitet).asSequence().map { finnSøknadsfelt(entitet, it) }
-            .filter { it.visibility == KVisibility.PUBLIC }.mapNotNull {
+    private fun finnParametere(
+        entitet: Any,
+        språk: Språkkode,
+    ): List<Any> =
+        konstruktørparametere(entitet)
+            .asSequence()
+            .map { finnSøknadsfelt(entitet, it) }
+            .filter { it.visibility == KVisibility.PUBLIC }
+            .mapNotNull {
                 val feltverdi = getFeltverdi(it, entitet)
                 val parametere = specialHåndtering[Pair(entitet::class, it)]
                 if (parametere != null && feltverdi != null) {
@@ -174,23 +193,30 @@ object SøknadTreeWalker {
                     feltverdi
                 }
             }.toList()
-    }
 
     /**
      * Henter ut verdien for felt på entitet.
      */
-    private fun getFeltverdi(felt: KProperty1<out Any, Any?>, entitet: Any) = felt.getter.call(entitet)
+    private fun getFeltverdi(
+        felt: KProperty1<out Any, Any?>,
+        entitet: Any,
+    ) = felt.getter.call(entitet)
 
     /**
      * Finn første (og eneste) felt på entiteten som har samme navn som konstruktørparameter.
      */
-    private fun finnSøknadsfelt(entity: Any, konstruktørparameter: KParameter) =
-        entity::class.declaredMemberProperties.first { it.name == konstruktørparameter.name }
+    private fun finnSøknadsfelt(
+        entity: Any,
+        konstruktørparameter: KParameter,
+    ) = entity::class.declaredMemberProperties.first { it.name == konstruktørparameter.name }
 
     /**
      * Konstruktørparametere er det eneste som gir oss en garantert rekkefølge for feltene, så vi henter disse først.
      */
     private fun konstruktørparametere(entity: Any) = entity::class.primaryConstructor?.parameters ?: emptyList()
 
-    private data class ListeMedTittel(val tittel: String, val list: List<*>)
+    private data class ListeMedTittel(
+        val tittel: String,
+        val list: List<*>,
+    )
 }

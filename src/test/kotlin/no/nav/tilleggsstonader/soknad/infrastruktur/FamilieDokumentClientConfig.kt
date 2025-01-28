@@ -11,7 +11,6 @@ import java.util.UUID
 @Configuration
 @Profile("mock-dokument")
 class FamilieDokumentClientConfig {
-
     @Bean
     fun integrasjonerClient(): IntegrasjonerClient {
         val client = mockk<IntegrasjonerClient>()

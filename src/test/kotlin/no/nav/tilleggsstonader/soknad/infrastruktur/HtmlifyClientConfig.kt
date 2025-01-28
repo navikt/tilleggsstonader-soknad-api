@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Profile
 @Configuration
 @Profile("mock-htmlify")
 class HtmlifyClientConfig {
-
     @Bean
     fun htmlifyClient(): HtmlifyClient {
         val client = mockk<HtmlifyClient>()

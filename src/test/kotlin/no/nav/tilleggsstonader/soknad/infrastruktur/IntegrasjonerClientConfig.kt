@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Profile
 @Configuration
 @Profile("mock-integrasjoner")
 class IntegrasjonerClientConfig {
-
     @Bean
     fun familieDokumentClient(): FamilieDokumentClient {
         val client = mockk<FamilieDokumentClient>()

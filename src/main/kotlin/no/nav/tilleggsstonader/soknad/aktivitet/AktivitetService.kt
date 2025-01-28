@@ -12,14 +12,17 @@ import org.springframework.stereotype.Service
 class AktivitetService(
     private val aktivitetClient: AktivitetClient,
 ) {
-
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @Cacheable("aktivitet", cacheManager = "aktivitetCache")
-    fun hentAktiviteter(ident: String, stønadstype: Stønadstype): List<AktivitetArenaDto> {
+    fun hentAktiviteter(
+        ident: String,
+        stønadstype: Stønadstype,
+    ): List<AktivitetArenaDto> {
         val fom = osloDateNow().minusMonths(stønadstype.antallMånederBakITiden())
         val tom = osloDateNow().plusMonths(3)
-        return aktivitetClient.hentAktiviteter(ident, fom, tom)
+        return aktivitetClient
+            .hentAktiviteter(ident, fom, tom)
             .filter(::skalVises)
     }
 
@@ -28,16 +31,18 @@ class AktivitetService(
      * Tar med alle som er markert som [erStønadsberettiget]
      * Eks filtrerer denne bort [INDOP] som er av gruppetype [SAK]
      */
-    private fun skalVises(it: AktivitetArenaDto) = try {
-        it.erStønadsberettiget == true
-    } catch (e: Exception) {
-        logger.error("TypeAktivitet mangler mapping, se secure logs for detaljer.")
-        secureLogger.error("TypeAktivitet=${it.type} mangler mapping. Vennligst oppdater TypeAktivitet med ny type.")
-        false
-    }
+    private fun skalVises(it: AktivitetArenaDto) =
+        try {
+            it.erStønadsberettiget == true
+        } catch (e: Exception) {
+            logger.error("TypeAktivitet mangler mapping, se secure logs for detaljer.")
+            secureLogger.error("TypeAktivitet=${it.type} mangler mapping. Vennligst oppdater TypeAktivitet med ny type.")
+            false
+        }
 
-    private fun Stønadstype.antallMånederBakITiden(): Long = when (this) {
-        Stønadstype.BARNETILSYN -> 3
-        Stønadstype.LÆREMIDLER -> 6
-    }
+    private fun Stønadstype.antallMånederBakITiden(): Long =
+        when (this) {
+            Stønadstype.BARNETILSYN -> 3
+            Stønadstype.LÆREMIDLER -> 6
+        }
 }

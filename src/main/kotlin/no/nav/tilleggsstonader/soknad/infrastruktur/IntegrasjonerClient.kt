@@ -21,7 +21,6 @@ class IntegrasjonerClient(
     @Qualifier("azureClientCredential")
     restTemplate: RestTemplate,
 ) : AbstractRestClient(restTemplate) {
-
     private val logger = LoggerFactory.getLogger(javaClass)
 
     private val sendInnUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "arkiv").toUriString()

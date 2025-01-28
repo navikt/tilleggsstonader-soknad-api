@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service
 class AdresseMapper(
     private val kodeverkService: KodeverkService,
 ) {
-
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun tilFormatertAdresse(pdlSøker: PdlSøker): String {
@@ -23,14 +22,15 @@ class AdresseMapper(
                 tilFormatertAdresse(bosted.vegadresse)
             }
 
-            bosted.matrikkeladresse != null -> joinNotNullOrEmpty(
-                bosted.matrikkeladresse.tilleggsnavn,
+            bosted.matrikkeladresse != null ->
                 joinNotNullOrEmpty(
-                    bosted.matrikkeladresse.postnummer,
-                    hentPoststed(bosted.matrikkeladresse.postnummer),
-                ),
-                separator = ", ",
-            ) ?: ""
+                    bosted.matrikkeladresse.tilleggsnavn,
+                    joinNotNullOrEmpty(
+                        bosted.matrikkeladresse.postnummer,
+                        hentPoststed(bosted.matrikkeladresse.postnummer),
+                    ),
+                    separator = ", ",
+                ) ?: ""
 
             else -> "".also { logger.info("Søker har hverken vegadresse eller matrikkeladresse") }
         }
@@ -51,6 +51,5 @@ class AdresseMapper(
             separator = ", ",
         ) ?: ""
 
-    private fun hentPoststed(postnummer: String?) =
-        kodeverkService.hentPoststed(postnummer)
+    private fun hentPoststed(postnummer: String?) = kodeverkService.hentPoststed(postnummer)
 }

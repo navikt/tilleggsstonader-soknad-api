@@ -28,7 +28,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import java.net.URI
 
 class PdfServiceTest {
-
     private val søknadService = mockk<SøknadService>()
     private val familieDokumentClient = mockk<FamilieDokumentClient>()
     private val htmlifyClient = lagHtmlifyClient()
@@ -76,15 +75,19 @@ class PdfServiceTest {
 
     @Test
     fun `html skal være formattert for å enklere kunne sjekke diff`() {
-        val htmlFiler = listFiles("søknad")
-            .flatMap { it.walk() }
-            .filter { it.name.endsWith(".html") }
-            .map { it.toString().let { it.substring(it.lastIndexOf("søknad/")) } }
+        val htmlFiler =
+            listFiles("søknad")
+                .flatMap { it.walk() }
+                .filter { it.name.endsWith(".html") }
+                .map { it.toString().let { it.substring(it.lastIndexOf("søknad/")) } }
 
         assertThat(htmlFiler).isNotEmpty
         htmlFiler.forEach { fil ->
-            val erIkkeFormatert = FileUtil.readFile(fil).split("\n")
-                .none { it.contains("<body") && it.contains("<div") }
+            val erIkkeFormatert =
+                FileUtil
+                    .readFile(fil)
+                    .split("\n")
+                    .none { it.contains("<body") && it.contains("<div") }
             assertThat(erIkkeFormatert).isTrue()
         }
     }
@@ -108,14 +111,18 @@ class PdfServiceTest {
     }
 
     @Suppress("unused")
-    private fun generatePdf(html: String, name: String) {
+    private fun generatePdf(
+        html: String,
+        name: String,
+    ) {
         val url = "https://familie-dokument.intern.dev.nav.no/api/html-til-pdf"
-        val request = HttpEntity(
-            html,
-            HttpHeaders().apply {
-                accept = listOf(MediaType.APPLICATION_PDF)
-            },
-        )
+        val request =
+            HttpEntity(
+                html,
+                HttpHeaders().apply {
+                    accept = listOf(MediaType.APPLICATION_PDF)
+                },
+            )
         val pdf = TestRestTemplate().postForEntity<ByteArray>(url, request).body!!
         FileUtil.skrivTilFil(name, pdf)
     }

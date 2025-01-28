@@ -33,10 +33,8 @@ val tokenSubject = "12345678911"
 // Slett denne når RestTemplateConfiguration er tatt i bruk?
 @Configuration
 class DefaultRestTemplateConfiguration {
-
     @Bean
-    fun restTemplate(restTemplateBuilder: RestTemplateBuilder) =
-        restTemplateBuilder.build()
+    fun restTemplate(restTemplateBuilder: RestTemplateBuilder) = restTemplateBuilder.build()
 }
 
 @ExtendWith(SpringExtension::class)
@@ -56,7 +54,6 @@ class DefaultRestTemplateConfiguration {
 )
 @EnableMockOAuth2Server
 abstract class IntegrationTest {
-
     @Suppress("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     protected lateinit var restTemplate: RestTemplate
@@ -90,7 +87,6 @@ abstract class IntegrationTest {
         listOf(
             TaskLogg::class,
             Task::class,
-
             Vedlegg::class,
             Søknad::class,
         ).forEach { jdbcAggregateOperations.deleteAll(it.java) }
@@ -102,41 +98,39 @@ abstract class IntegrationTest {
 
     private fun clearCaches() {
         cacheManagers.forEach {
-            it.cacheNames.mapNotNull { cacheName -> it.getCache(cacheName) }
+            it.cacheNames
+                .mapNotNull { cacheName -> it.getCache(cacheName) }
                 .forEach { cache -> cache.clear() }
         }
     }
 
-    protected fun localhost(path: String): String {
-        return "$LOCALHOST$port/$path"
-    }
+    protected fun localhost(path: String): String = "$LOCALHOST$port/$path"
 
-    protected fun søkerBearerToken(personident: String = FnrGenerator.generer()): String {
-        return mockOAuth2Server.token(subject = personident)
-    }
+    protected fun søkerBearerToken(personident: String = FnrGenerator.generer()): String = mockOAuth2Server.token(subject = personident)
 
     private fun MockOAuth2Server.token(
         subject: String,
         issuerId: String = "tokenx",
         clientId: String = UUID.randomUUID().toString(),
         audience: String = "tilleggsstonader-app",
-        claims: Map<String, Any> = mapOf(
-            "acr" to "Level4",
-            "pid" to subject,
-        ),
-    ): String {
-        return this.issueToken(
-            issuerId,
-            clientId,
-            DefaultOAuth2TokenCallback(
-                issuerId = issuerId,
-                subject = subject,
-                audience = listOf(audience),
-                claims = claims,
-                expiry = 3600,
+        claims: Map<String, Any> =
+            mapOf(
+                "acr" to "Level4",
+                "pid" to subject,
             ),
-        ).serialize()
-    }
+    ): String =
+        this
+            .issueToken(
+                issuerId,
+                clientId,
+                DefaultOAuth2TokenCallback(
+                    issuerId = issuerId,
+                    subject = subject,
+                    audience = listOf(audience),
+                    claims = claims,
+                    expiry = 3600,
+                ),
+            ).serialize()
 
     companion object {
         private const val LOCALHOST = "http://localhost:"

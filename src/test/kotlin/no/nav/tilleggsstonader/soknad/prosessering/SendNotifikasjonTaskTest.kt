@@ -9,11 +9,9 @@ import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.varsel.DittNavKafkaProducer
 import org.junit.jupiter.api.Test
-import java.util.*
-import java.util.UUID.fromString
+import java.util.UUID
 
 class SendNotifikasjonTaskTest {
-
     private val søknadService = mockk<SøknadService>()
     private val dittNavKafkaProducer = mockk<DittNavKafkaProducer>(relaxed = true)
     private val sendNotifikasjonTask = SendNotifikasjonTask(dittNavKafkaProducer, søknadService)
@@ -21,7 +19,7 @@ class SendNotifikasjonTaskTest {
     @Test
     fun `Task blir kjørt for å sende notifikasjon om mottatt søknad om tilsyn barn`() {
         val søknad = opprettSøknad(Stønadstype.BARNETILSYN)
-        every { søknadService.hentSøknad(fromString(SØKNAD_ID)) } returns søknad
+        every { søknadService.hentSøknad(UUID.fromString(SØKNAD_ID)) } returns søknad
         sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknad))
         verifiserForventetKallMed("Vi har mottatt søknaden din om pass av barn.")
     }
@@ -29,14 +27,14 @@ class SendNotifikasjonTaskTest {
     @Test
     fun `Task blir kjørt for å sende notifikasjon om mottatt søknad om læremidler`() {
         val søknad = opprettSøknad(Stønadstype.LÆREMIDLER)
-        every { søknadService.hentSøknad(fromString(SØKNAD_ID)) } returns søknad
+        every { søknadService.hentSøknad(UUID.fromString(SØKNAD_ID)) } returns søknad
         sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknad))
         verifiserForventetKallMed("Vi har mottatt søknaden din om læremidler.")
     }
 
     private fun verifiserForventetKallMed(forventetTekst: String) {
         verify(exactly = 1) {
-            søknadService.hentSøknad(fromString(SØKNAD_ID))
+            søknadService.hentSøknad(UUID.fromString(SØKNAD_ID))
             dittNavKafkaProducer.sendToKafka(
                 FNR,
                 forventetTekst,
@@ -45,14 +43,13 @@ class SendNotifikasjonTaskTest {
         }
     }
 
-    private fun opprettSøknad(type: Stønadstype): Søknad {
-        return Søknad(
+    private fun opprettSøknad(type: Stønadstype): Søknad =
+        Søknad(
             id = UUID.fromString(SØKNAD_ID),
             søknadJson = JsonWrapper(""),
             type = type,
             personIdent = FNR,
         )
-    }
 
     companion object {
         private const val FNR = "12345678901"

@@ -25,7 +25,6 @@ import java.time.LocalDate
 @Configuration
 @Profile("mock-pdl")
 class PdlClientConfig {
-
     @Bean
     @Primary
     fun pdlClient(): PdlClient {
@@ -50,14 +49,16 @@ class PdlClientConfig {
 
         fun resetPdlClientMock(client: PdlClientCredentialClient) {
             clearMocks(client)
-            val barn1 = lagPdlBarn(
-                ident = "08921997974",
-                navn = navn(fornavn = "Ronja", etternavn = "Røverdatter"),
-            )
-            val barn2 = lagPdlBarn(
-                ident = "43921075201",
-                navn = navn(fornavn = "Espen", etternavn = "Askeladden"),
-            )
+            val barn1 =
+                lagPdlBarn(
+                    ident = "08921997974",
+                    navn = navn(fornavn = "Ronja", etternavn = "Røverdatter"),
+                )
+            val barn2 =
+                lagPdlBarn(
+                    ident = "43921075201",
+                    navn = navn(fornavn = "Espen", etternavn = "Askeladden"),
+                )
             every { client.hentBarn(any()) } returns listOf(barn1, barn2).toMap()
 
             every { client.hentNavn(any()) } returns PdlSøkerNavn(listOf(navn()))
@@ -85,13 +86,14 @@ fun lagPdlSøker(
     fødselsdato = listOf(fødselsdato),
 )
 
-private fun vegadresse() = Vegadresse(
-    husnummer = "3",
-    husbokstav = "a",
-    bruksenhetsnummer = null,
-    adressenavn = "Hildes vei",
-    postnummer = "0100",
-)
+private fun vegadresse() =
+    Vegadresse(
+        husnummer = "3",
+        husbokstav = "a",
+        bruksenhetsnummer = null,
+        adressenavn = "Hildes vei",
+        postnummer = "0100",
+    )
 
 fun lagPdlBarn(
     ident: String,

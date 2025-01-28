@@ -20,14 +20,17 @@ class PersonService(
     private val pdlClientCredentialClient: PdlClientCredentialClient,
     private val adresseMapper: AdresseMapper,
 ) {
-
-    fun hentSøker(fødselsnummer: Fødselsnummer, medBarn: Boolean): PersonMedBarnDto {
+    fun hentSøker(
+        fødselsnummer: Fødselsnummer,
+        medBarn: Boolean,
+    ): PersonMedBarnDto {
         val søker = pdlClient.hentSøker(fødselsnummer)
-        val barn = if (medBarn) {
-            hentBarn(søker)
-        } else {
-            emptyMap()
-        }
+        val barn =
+            if (medBarn) {
+                hentBarn(søker)
+            } else {
+                emptyMap()
+            }
 
         if (harBarnMedHøyereGradering(søker, barn)) {
             throw GradertBrukerException()
@@ -48,9 +51,12 @@ class PersonService(
     /**
      * Skal kun brukes for å hente navn til søknad-pdf, og gjøres uten context av bruker
      */
-    fun hentNavnMedClientCredential(ident: String): String {
-        return pdlClientCredentialClient.hentNavn(ident).navn.first().visningsnavn()
-    }
+    fun hentNavnMedClientCredential(ident: String): String =
+        pdlClientCredentialClient
+            .hentNavn(ident)
+            .navn
+            .first()
+            .visningsnavn()
 
     private fun mapBarn(barn: Map<String, PdlBarn>) =
         barn.entries
@@ -78,15 +84,20 @@ class PersonService(
         barn: Map<String, PdlBarn>,
     ): Boolean {
         val søkersGradering = søker.adressebeskyttelse.gradering()
-        return barn.entries.any { it.value.adressebeskyttelse.gradering().nivå > søkersGradering.nivå }
+        return barn.entries.any {
+            it.value.adressebeskyttelse
+                .gradering()
+                .nivå > søkersGradering.nivå
+        }
     }
 
-    private fun erILive(pdlBarn: PdlBarn) =
-        pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
+    private fun erILive(pdlBarn: PdlBarn) = pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
 
     private fun hentBarn(søker: PdlSøker): Map<String, PdlBarn> {
-        val barnIdenter = søker.forelderBarnRelasjon.filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
-            .mapNotNull { it.relatertPersonsIdent }
+        val barnIdenter =
+            søker.forelderBarnRelasjon
+                .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
+                .mapNotNull { it.relatertPersonsIdent }
         return pdlClientCredentialClient.hentBarn(barnIdenter)
     }
 }

@@ -41,11 +41,12 @@ fun AktivitetArenaDto.tilDto(): AktivitetDto? {
 }
 
 fun AktivitetArenaDto.erUtdanningPåVgsNivå(): Boolean {
-    val typeAktiviteterPåVgsNivå = setOf(
-        TypeAktivitet.GRUFAGYRKE.name,
-        TypeAktivitet.ENKFAGYRKE.name,
-        TypeAktivitet.OUTDEF.name,
-    )
+    val typeAktiviteterPåVgsNivå =
+        setOf(
+            TypeAktivitet.GRUFAGYRKE.name,
+            TypeAktivitet.ENKFAGYRKE.name,
+            TypeAktivitet.OUTDEF.name,
+        )
 
     return typeAktiviteterPåVgsNivå.contains(type)
 }
@@ -54,9 +55,10 @@ fun AktivitetArenaDto.erUtdanningPåVgsNivå(): Boolean {
  * Kun de som er stønadsberettiget og gir rett til å søke på skal kunne søkes på
  * Av noen grunn får aktiviteter med status=fullført en tom status
  */
-fun List<AktivitetArenaDto>.gjeldende() = this
-    .filter { it.erStønadsberettiget == true }
-    .filter { it.status == null || it.status?.rettTilÅSøke == true }
+fun List<AktivitetArenaDto>.gjeldende() =
+    this
+        .filter { it.erStønadsberettiget == true }
+        .filter { it.status == null || it.status?.rettTilÅSøke == true }
 
 data class AktivitetRequest(
     val stønadstype: Stønadstype,

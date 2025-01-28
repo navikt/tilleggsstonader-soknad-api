@@ -12,8 +12,9 @@ import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
 @Service
-class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
-
+class DittNavKafkaProducer(
+    val kafkaTemplate: KafkaTemplate<String, String>,
+) {
     @Value("\${KAFKA_TOPIC_DITTNAV}")
     private lateinit var topic: String
 
@@ -31,18 +32,20 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
         melding: String,
         eventId: String,
     ): String {
-        val kafkaBeskjedJson = VarselActionBuilder.opprett {
-            type = Varseltype.Beskjed
-            varselId = eventId
-            sensitivitet = Sensitivitet.Substantial
-            ident = fnr
-            tekster += Tekst(
-                spraakkode = "nb",
-                tekst = melding,
-                default = true,
-            )
-            produsent = produsent()
-        }
+        val kafkaBeskjedJson =
+            VarselActionBuilder.opprett {
+                type = Varseltype.Beskjed
+                varselId = eventId
+                sensitivitet = Sensitivitet.Substantial
+                ident = fnr
+                tekster +=
+                    Tekst(
+                        spraakkode = "nb",
+                        tekst = melding,
+                        default = true,
+                    )
+                produsent = produsent()
+            }
 
         runCatching {
             val producerRecord = ProducerRecord(topic, eventId, kafkaBeskjedJson)
@@ -55,8 +58,8 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
         return kafkaBeskjedJson
     }
 
-    private fun produsent(): Produsent? {
-        return if (cluster.isBlank() || namespace.isBlank() || appName.isBlank()) {
+    private fun produsent(): Produsent? =
+        if (cluster.isBlank() || namespace.isBlank() || appName.isBlank()) {
             null
         } else {
             Produsent(
@@ -65,5 +68,4 @@ class DittNavKafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>) {
                 appnavn = appName,
             )
         }
-    }
 }

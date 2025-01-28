@@ -3,9 +3,13 @@ package no.nav.tilleggsstonader.soknad.person.pdl.dto
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
 
-data class PdlSøkerData(val person: PdlSøker?)
+data class PdlSøkerData(
+    val person: PdlSøker?,
+)
 
-data class PdlSøkerNavnData(val person: PdlSøkerNavn?)
+data class PdlSøkerNavnData(
+    val person: PdlSøkerNavn?,
+)
 
 data class PdlSøker(
     val adressebeskyttelse: List<Adressebeskyttelse>,
@@ -40,17 +44,23 @@ data class Dødsfall(
     @JsonProperty("doedsdato") val dødsdato: LocalDate?,
 )
 
-data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
+data class Adressebeskyttelse(
+    val gradering: AdressebeskyttelseGradering,
+)
 
-enum class AdressebeskyttelseGradering(val nivå: Int) {
-
+enum class AdressebeskyttelseGradering(
+    val nivå: Int,
+) {
     STRENGT_FORTROLIG(2),
     STRENGT_FORTROLIG_UTLAND(2),
     FORTROLIG(1),
     UGRADERT(0),
 }
 
-data class Bostedsadresse(val vegadresse: Vegadresse?, val matrikkeladresse: Matrikkeladresse?)
+data class Bostedsadresse(
+    val vegadresse: Vegadresse?,
+    val matrikkeladresse: Matrikkeladresse?,
+)
 
 data class Vegadresse(
     val husnummer: String?,
@@ -60,7 +70,10 @@ data class Vegadresse(
     val postnummer: String?,
 )
 
-data class Matrikkeladresse(val tilleggsnavn: String?, val postnummer: String?)
+data class Matrikkeladresse(
+    val tilleggsnavn: String?,
+    val postnummer: String?,
+)
 
 data class ForelderBarnRelasjon(
     val relatertPersonsIdent: String?,
@@ -74,13 +87,15 @@ enum class Familierelasjonsrolle {
     MEDMOR,
 }
 
-data class Navn(val fornavn: String, val mellomnavn: String?, val etternavn: String) {
-
-    fun visningsnavn(): String {
-        return if (mellomnavn.isNullOrEmpty()) {
+data class Navn(
+    val fornavn: String,
+    val mellomnavn: String?,
+    val etternavn: String,
+) {
+    fun visningsnavn(): String =
+        if (mellomnavn.isNullOrEmpty()) {
             "$fornavn $etternavn"
         } else {
             "$fornavn $mellomnavn $etternavn"
         }
-    }
 }

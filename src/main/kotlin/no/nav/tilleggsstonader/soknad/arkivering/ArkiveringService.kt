@@ -14,8 +14,10 @@ class ArkiveringService(
     private val søknadService: SøknadService,
     private val vedleggRepository: VedleggRepository,
 ) {
-
-    fun journalførSøknad(søknadId: UUID, callId: String) {
+    fun journalførSøknad(
+        søknadId: UUID,
+        callId: String,
+    ) {
         val søknad = søknadService.hentSøknad(søknadId)
         val vedlegg = vedleggRepository.findBySøknadId(søknadId)
         val journalpostId: String = send(søknad, vedlegg)
@@ -23,7 +25,10 @@ class ArkiveringService(
         søknadService.oppdaterSøknad(søknad.copy(journalpostId = journalpostId))
     }
 
-    private fun send(søknad: Søknad, vedlegg: List<Vedlegg>): String {
+    private fun send(
+        søknad: Søknad,
+        vedlegg: List<Vedlegg>,
+    ): String {
         val arkiverDokumentRequest = ArkiverDokumentRequestMapper.toDto(søknad, vedlegg)
         val dokumentResponse = integrasjonerClient.arkiver(arkiverDokumentRequest)
         return dokumentResponse.journalpostId

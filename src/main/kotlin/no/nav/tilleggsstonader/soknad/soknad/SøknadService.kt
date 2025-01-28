@@ -38,10 +38,7 @@ class SøknadService(
     private val personService: PersonService,
     private val familieVedleggClient: FamilieVedleggClient,
 ) {
-
-    fun hentSøknad(id: UUID): Søknad {
-        return søknadRepository.findByIdOrThrow(id)
-    }
+    fun hentSøknad(id: UUID): Søknad = søknadRepository.findByIdOrThrow(id)
 
     fun oppdaterSøknad(søknad: Søknad) {
         søknadRepository.update(søknad)
@@ -58,11 +55,12 @@ class SøknadService(
         // todo verifiser valgte aktiviteter
 
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
-        val opprettetSøknad = lagreSøknad(
-            type = Stønadstype.BARNETILSYN,
-            søknadsskjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
-            vedlegg = vedlegg,
-        )
+        val opprettetSøknad =
+            lagreSøknad(
+                type = Stønadstype.BARNETILSYN,
+                søknadsskjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
+                vedlegg = vedlegg,
+            )
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
         taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
         return opprettetSøknad.id
@@ -77,11 +75,12 @@ class SøknadService(
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
         // todo verifiser valgte aktiviteter
 
-        val opprettetSøknad = lagreSøknad(
-            type = Stønadstype.LÆREMIDLER,
-            søknadsskjema = læremidlerMapper.map(ident, mottattTidspunkt, søknad),
-            vedlegg = vedlegg,
-        )
+        val opprettetSøknad =
+            lagreSøknad(
+                type = Stønadstype.LÆREMIDLER,
+                søknadsskjema = læremidlerMapper.map(ident, mottattTidspunkt, søknad),
+                vedlegg = vedlegg,
+            )
 
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
         taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
@@ -100,11 +99,12 @@ class SøknadService(
             }
         }
 
-    private fun hentVedlegg(id: UUID) = try {
-        familieVedleggClient.hentVedlegg(id)
-    } catch (e: Exception) {
-        throw RuntimeException("Feilet henting av vedlegg=$id", e)
-    }
+    private fun hentVedlegg(id: UUID) =
+        try {
+            familieVedleggClient.hentVedlegg(id)
+        } catch (e: Exception) {
+            throw RuntimeException("Feilet henting av vedlegg=$id", e)
+        }
 
     private fun verifiserHarGyldigeBarn(
         søknad: SøknadBarnetilsynDto,
@@ -121,13 +121,14 @@ class SøknadService(
         søknadsskjema: Søknadsskjema<T>,
         vedlegg: List<Vedleggholder>,
     ): Søknad {
-        val søknadDb = søknadRepository.insert(
-            Søknad(
-                type = type,
-                personIdent = søknadsskjema.ident,
-                søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
-            ),
-        )
+        val søknadDb =
+            søknadRepository.insert(
+                Søknad(
+                    type = type,
+                    personIdent = søknadsskjema.ident,
+                    søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
+                ),
+            )
         lagreVedlegg(søknadDb, vedlegg)
         return søknadDb
     }

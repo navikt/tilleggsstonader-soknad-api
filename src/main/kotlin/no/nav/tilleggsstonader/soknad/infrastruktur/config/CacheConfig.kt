@@ -14,44 +14,55 @@ import java.util.concurrent.TimeUnit
 @Configuration
 @EnableCaching
 class CacheConfig {
-
     /**
      * Må ha en primary når man har flere cacher
      */
     @Bean
     @Primary
-    fun cacheManager(): CacheManager = object : ConcurrentMapCacheManager() {
-        override fun createConcurrentMapCache(name: String): Cache {
-            val concurrentMap = Caffeine
-                .newBuilder()
-                .maximumSize(1000)
-                .expireAfterWrite(5, TimeUnit.MINUTES)
-                .recordStats().build<Any, Any>().asMap()
-            return ConcurrentMapCache(name, concurrentMap, true)
+    fun cacheManager(): CacheManager =
+        object : ConcurrentMapCacheManager() {
+            override fun createConcurrentMapCache(name: String): Cache {
+                val concurrentMap =
+                    Caffeine
+                        .newBuilder()
+                        .maximumSize(1000)
+                        .expireAfterWrite(5, TimeUnit.MINUTES)
+                        .recordStats()
+                        .build<Any, Any>()
+                        .asMap()
+                return ConcurrentMapCache(name, concurrentMap, true)
+            }
         }
-    }
 
     @Bean("aktivitetCache")
-    fun aktivitetCache(): CacheManager = object : ConcurrentMapCacheManager() {
-        override fun createConcurrentMapCache(name: String): Cache {
-            val concurrentMap = Caffeine
-                .newBuilder()
-                .maximumSize(100)
-                .expireAfterWrite(10, TimeUnit.MINUTES)
-                .recordStats().build<Any, Any>().asMap()
-            return ConcurrentMapCache(name, concurrentMap, true)
+    fun aktivitetCache(): CacheManager =
+        object : ConcurrentMapCacheManager() {
+            override fun createConcurrentMapCache(name: String): Cache {
+                val concurrentMap =
+                    Caffeine
+                        .newBuilder()
+                        .maximumSize(100)
+                        .expireAfterWrite(10, TimeUnit.MINUTES)
+                        .recordStats()
+                        .build<Any, Any>()
+                        .asMap()
+                return ConcurrentMapCache(name, concurrentMap, true)
+            }
         }
-    }
 
     @Bean("kodeverkCache")
-    fun kodeverkCache(): CacheManager = object : ConcurrentMapCacheManager() {
-        override fun createConcurrentMapCache(name: String): Cache {
-            val concurrentMap = Caffeine
-                .newBuilder()
-                .maximumSize(1000)
-                .expireAfterWrite(24, TimeUnit.HOURS)
-                .recordStats().build<Any, Any>().asMap()
-            return ConcurrentMapCache(name, concurrentMap, true)
+    fun kodeverkCache(): CacheManager =
+        object : ConcurrentMapCacheManager() {
+            override fun createConcurrentMapCache(name: String): Cache {
+                val concurrentMap =
+                    Caffeine
+                        .newBuilder()
+                        .maximumSize(1000)
+                        .expireAfterWrite(24, TimeUnit.HOURS)
+                        .recordStats()
+                        .build<Any, Any>()
+                        .asMap()
+                return ConcurrentMapCache(name, concurrentMap, true)
+            }
         }
-    }
 }

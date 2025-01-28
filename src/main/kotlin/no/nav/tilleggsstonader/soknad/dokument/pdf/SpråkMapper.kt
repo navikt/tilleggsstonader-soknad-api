@@ -13,7 +13,6 @@ import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
 import kotlin.reflect.KClass
 
 object SpråkMapper {
-
     fun tittelSøknadsskjema(søknad: Søknadsskjema<*>): String {
         val kClass = søknad.skjema::class
         val språk = søknad.språk
@@ -21,42 +20,53 @@ object SpråkMapper {
             ?: error("Finner ikke språkmapping for ${kClass::class.java.simpleName}-$språk")
     }
 
-    fun tittelAvsnitt(kClass: Any, språk: Språkkode): String = avsnittSpråkmapper[kClass::class]?.get(språk)
-        ?: error("Finner ikke språkmapping for ${kClass::class.java.simpleName}-$språk")
+    fun tittelAvsnitt(
+        kClass: Any,
+        språk: Språkkode,
+    ): String =
+        avsnittSpråkmapper[kClass::class]?.get(språk)
+            ?: error("Finner ikke språkmapping for ${kClass::class.java.simpleName}-$språk")
 
-    private val tittelSøknadsskjemaMapper = mapOf<KClass<*>, Map<Språkkode, String>>(
-        SøknadsskjemaBarnetilsyn::class to mapOf(
-            Språkkode.NB to "Søknad om støtte til pass av barn",
-        ),
-        SøknadsskjemaLæremidler::class to mapOf(
-            Språkkode.NB to "Søknad om støtte til læremidler",
-        ),
-    )
+    private val tittelSøknadsskjemaMapper =
+        mapOf<KClass<*>, Map<Språkkode, String>>(
+            SøknadsskjemaBarnetilsyn::class to
+                mapOf(
+                    Språkkode.NB to "Søknad om støtte til pass av barn",
+                ),
+            SøknadsskjemaLæremidler::class to
+                mapOf(
+                    Språkkode.NB to "Søknad om støtte til læremidler",
+                ),
+        )
 
     /**
      * Avsnitt i skjemat har ikke labels, de definieres her
      */
-    private val avsnittSpråkmapper = mapOf<KClass<*>, Map<Språkkode, String>>(
-        HovedytelseAvsnitt::class to mapOf(Språkkode.NB to "Hovedytelse"),
-        ArbeidOgOpphold::class to mapOf(Språkkode.NB to "Arbeid og opphold"),
-        OppholdUtenforNorge::class to mapOf(Språkkode.NB to "Arbeid og opphold"),
-        AktivitetAvsnitt::class to mapOf(Språkkode.NB to "Aktivitet"),
-        BarnAvsnitt::class to mapOf(Språkkode.NB to "Barn"),
-        UtdanningAvsnitt::class to mapOf(Språkkode.NB to "Utdanning"),
-    )
+    private val avsnittSpråkmapper =
+        mapOf<KClass<*>, Map<Språkkode, String>>(
+            HovedytelseAvsnitt::class to mapOf(Språkkode.NB to "Hovedytelse"),
+            ArbeidOgOpphold::class to mapOf(Språkkode.NB to "Arbeid og opphold"),
+            OppholdUtenforNorge::class to mapOf(Språkkode.NB to "Arbeid og opphold"),
+            AktivitetAvsnitt::class to mapOf(Språkkode.NB to "Aktivitet"),
+            BarnAvsnitt::class to mapOf(Språkkode.NB to "Barn"),
+            UtdanningAvsnitt::class to mapOf(Språkkode.NB to "Utdanning"),
+        )
 
-    fun tittelOppholdUtenforNorgeSiste12mnd(språk: Språkkode) = when (språk) {
-        Språkkode.NB -> "Opphold utenfor Norge siste 12 mnd"
-        else -> error("Mangler mapping av $språk")
-    }
+    fun tittelOppholdUtenforNorgeSiste12mnd(språk: Språkkode) =
+        when (språk) {
+            Språkkode.NB -> "Opphold utenfor Norge siste 12 mnd"
+            else -> error("Mangler mapping av $språk")
+        }
 
-    fun tittelOppholdUtenforNorgeNeste12mnd(språk: Språkkode) = when (språk) {
-        Språkkode.NB -> "Opphold utenfor Norge neste 12 mnd"
-        else -> error("Mangler mapping av $språk")
-    }
+    fun tittelOppholdUtenforNorgeNeste12mnd(språk: Språkkode) =
+        when (språk) {
+            Språkkode.NB -> "Opphold utenfor Norge neste 12 mnd"
+            else -> error("Mangler mapping av $språk")
+        }
 
-    fun tittelAlternativer(språk: Språkkode) = when (språk) {
-        Språkkode.NB -> "Alternativer"
-        else -> error("Mangler mapping av $språk")
-    }
+    fun tittelAlternativer(språk: Språkkode) =
+        when (språk) {
+            Språkkode.NB -> "Alternativer"
+            else -> error("Mangler mapping av $språk")
+        }
 }

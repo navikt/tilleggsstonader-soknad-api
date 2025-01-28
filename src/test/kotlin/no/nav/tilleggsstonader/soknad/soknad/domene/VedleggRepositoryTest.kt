@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import java.util.UUID
 
 class VedleggRepositoryTest : IntegrationTest() {
-
     @Autowired
     lateinit var søknadRepository: SøknadRepository
 
@@ -28,7 +27,6 @@ class VedleggRepositoryTest : IntegrationTest() {
 
     @Nested
     inner class FindBySøknadId {
-
         @Test
         fun `skal finne vedlegg til søknad`() {
             val søknad = lagreSøknad()
@@ -56,11 +54,12 @@ class VedleggRepositoryTest : IntegrationTest() {
             ),
         )
 
-    private fun lagreSøknad() = søknadRepository.insert(
-        Søknad(
-            type = Stønadstype.BARNETILSYN,
-            personIdent = "123",
-            søknadJson = JsonWrapper("{}"),
-        ),
-    )
+    private fun lagreSøknad() =
+        søknadRepository.insert(
+            Søknad(
+                type = Stønadstype.BARNETILSYN,
+                personIdent = "123",
+                søknadJson = JsonWrapper("{}"),
+            ),
+        )
 }

@@ -4,23 +4,44 @@ import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapp
 import java.io.File
 
 object FileUtil {
-    fun readFile(filnavn: String): String = FileUtil::class.java.classLoader.getResource(filnavn)!!.readText()
-    fun readBytes(filnavn: String): ByteArray = FileUtil::class.java.classLoader.getResource(filnavn)!!.readBytes()
+    fun readFile(filnavn: String): String =
+        FileUtil::class.java.classLoader
+            .getResource(filnavn)!!
+            .readText()
 
-    fun listFiles(folder: String): Array<File> = File(FileUtil::class.java.classLoader.getResource(folder)!!.toURI()).listFiles()!!
+    fun readBytes(filnavn: String): ByteArray =
+        FileUtil::class.java.classLoader
+            .getResource(filnavn)!!
+            .readBytes()
+
+    fun listFiles(folder: String): Array<File> =
+        File(
+            FileUtil::class.java.classLoader
+                .getResource(folder)!!
+                .toURI(),
+        ).listFiles()!!
 
     @Suppress("unused")
-    fun skrivJsonTilFil(navn: String, data: Any) {
+    fun skrivJsonTilFil(
+        navn: String,
+        data: Any,
+    ) {
         skrivTilFil(navn, objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data))
     }
 
     @Suppress("unused")
-    fun skrivTilFil(navn: String, data: String) {
+    fun skrivTilFil(
+        navn: String,
+        data: String,
+    ) {
         skrivTilFil(navn, data.toByteArray())
     }
 
     @Suppress("unused")
-    fun skrivTilFil(navn: String, bytes: ByteArray) {
+    fun skrivTilFil(
+        navn: String,
+        bytes: ByteArray,
+    ) {
         if (!SKAL_SKRIVE_TIL_FIL) {
             return
         }

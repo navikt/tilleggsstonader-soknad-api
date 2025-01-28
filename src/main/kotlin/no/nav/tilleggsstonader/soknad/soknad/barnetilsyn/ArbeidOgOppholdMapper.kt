@@ -6,7 +6,6 @@ import no.nav.tilleggsstonader.soknad.soknad.ArbeidOgOppholdDto
 import no.nav.tilleggsstonader.soknad.soknad.OppholdUtenforNorgeDto
 
 object ArbeidOgOppholdMapper {
-
     fun mapArbeidOgOpphold(arbeidOgOpphold: ArbeidOgOppholdDto): ArbeidOgOpphold? {
         if (listOfNotNull(
                 arbeidOgOpphold.jobberIAnnetLand,
@@ -28,8 +27,8 @@ object ArbeidOgOppholdMapper {
         )
     }
 
-    private fun mapOpphold(liste: List<OppholdUtenforNorgeDto>): List<OppholdUtenforNorge> {
-        return liste.map {
+    private fun mapOpphold(liste: List<OppholdUtenforNorgeDto>): List<OppholdUtenforNorge> =
+        liste.map {
             OppholdUtenforNorge(
                 land = it.land,
                 årsak = it.årsak,
@@ -37,5 +36,4 @@ object ArbeidOgOppholdMapper {
                 tom = it.tom,
             )
         }
-    }
 }

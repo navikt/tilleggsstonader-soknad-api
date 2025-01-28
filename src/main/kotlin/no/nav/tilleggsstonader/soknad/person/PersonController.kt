@@ -21,19 +21,16 @@ class PersonController(
     private val personService: PersonService,
     private val saksbehandlingClient: SaksbehandlingClient,
 ) {
-
     @GetMapping
-    fun hentSøker(): PersonMedBarnDto {
-        return personService.hentSøker(Fødselsnummer(EksternBrukerUtils.hentFnrFraToken()), medBarn = false)
-    }
+    fun hentSøker(): PersonMedBarnDto = personService.hentSøker(Fødselsnummer(EksternBrukerUtils.hentFnrFraToken()), medBarn = false)
 
     @GetMapping("med-barn")
-    fun hentSøkerMedBarn(): PersonMedBarnDto {
-        return personService.hentSøker(Fødselsnummer(EksternBrukerUtils.hentFnrFraToken()), medBarn = true)
-    }
+    fun hentSøkerMedBarn(): PersonMedBarnDto = personService.hentSøker(Fødselsnummer(EksternBrukerUtils.hentFnrFraToken()), medBarn = true)
 
     @GetMapping("har-behandling")
-    fun harBehandlingUnderArbeid(@RequestParam("stonadstype") stønadstype: Stønadstype): Boolean {
+    fun harBehandlingUnderArbeid(
+        @RequestParam("stonadstype") stønadstype: Stønadstype,
+    ): Boolean {
         val fødselsnummer = EksternBrukerUtils.hentFnrFraToken()
         return saksbehandlingClient.harBehandlingUnderArbeid(IdentStønadstype(fødselsnummer, stønadstype))
     }

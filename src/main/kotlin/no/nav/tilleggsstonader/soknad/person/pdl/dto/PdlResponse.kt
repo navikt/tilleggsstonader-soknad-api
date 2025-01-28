@@ -5,29 +5,21 @@ data class PdlResponse<T>(
     val errors: List<PdlError>?,
     val extensions: PdlExtensions?,
 ) {
+    fun harFeil(): Boolean = errors != null && errors.isNotEmpty()
 
-    fun harFeil(): Boolean {
-        return errors != null && errors.isNotEmpty()
-    }
+    fun harAdvarsel(): Boolean = !extensions?.warnings.isNullOrEmpty()
 
-    fun harAdvarsel(): Boolean {
-        return !extensions?.warnings.isNullOrEmpty()
-    }
-
-    fun errorMessages(): String {
-        return errors?.joinToString { it -> it.message } ?: ""
-    }
+    fun errorMessages(): String = errors?.joinToString { it -> it.message } ?: ""
 }
 
-data class PdlBolkResponse<T>(val data: PersonBolk<T>?, val errors: List<PdlError>?, val extensions: PdlExtensions?) {
+data class PdlBolkResponse<T>(
+    val data: PersonBolk<T>?,
+    val errors: List<PdlError>?,
+    val extensions: PdlExtensions?,
+) {
+    fun errorMessages(): String = errors?.joinToString { it -> it.message } ?: ""
 
-    fun errorMessages(): String {
-        return errors?.joinToString { it -> it.message } ?: ""
-    }
-
-    fun harAdvarsel(): Boolean {
-        return !extensions?.warnings.isNullOrEmpty()
-    }
+    fun harAdvarsel(): Boolean = !extensions?.warnings.isNullOrEmpty()
 }
 
 data class PdlError(
@@ -35,13 +27,29 @@ data class PdlError(
     val extensions: PdlErrorExtensions?,
 )
 
-data class PdlErrorExtensions(val code: String?) {
-
+data class PdlErrorExtensions(
+    val code: String?,
+) {
     fun notFound() = code == "not_found"
 }
 
-data class PdlExtensions(val warnings: List<PdlWarning>?)
-data class PdlWarning(val details: Any?, val id: String?, val message: String?, val query: String?)
+data class PdlExtensions(
+    val warnings: List<PdlWarning>?,
+)
 
-data class PersonDataBolk<T>(val ident: String, val code: String, val person: T?)
-data class PersonBolk<T>(val personBolk: List<PersonDataBolk<T>>)
+data class PdlWarning(
+    val details: Any?,
+    val id: String?,
+    val message: String?,
+    val query: String?,
+)
+
+data class PersonDataBolk<T>(
+    val ident: String,
+    val code: String,
+    val person: T?,
+)
+
+data class PersonBolk<T>(
+    val personBolk: List<PersonDataBolk<T>>,
+)

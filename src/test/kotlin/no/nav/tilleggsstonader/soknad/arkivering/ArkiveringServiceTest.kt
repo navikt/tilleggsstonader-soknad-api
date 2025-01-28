@@ -17,24 +17,25 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class ArkiveringServiceTest {
-
     private val integrasjonerClient = mockk<IntegrasjonerClient>()
     private val søknadService = mockk<SøknadService>()
     private val vedleggRepository = mockk<VedleggRepository>()
 
-    val arkiveringService = ArkiveringService(
-        integrasjonerClient,
-        søknadService,
-        vedleggRepository,
-    )
+    val arkiveringService =
+        ArkiveringService(
+            integrasjonerClient,
+            søknadService,
+            vedleggRepository,
+        )
 
-    private val søknad = Søknad(
-        søknadJson = JsonWrapper(""),
-        type = Stønadstype.BARNETILSYN,
-        personIdent = "1",
-        opprettetTid = osloNow(),
-        søknadPdf = byteArrayOf(12),
-    )
+    private val søknad =
+        Søknad(
+            søknadJson = JsonWrapper(""),
+            type = Stønadstype.BARNETILSYN,
+            personIdent = "1",
+            opprettetTid = osloNow(),
+            søknadPdf = byteArrayOf(12),
+        )
 
     val oppdaterSøknadSlot = slot<Søknad>()
 

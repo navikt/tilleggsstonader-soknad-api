@@ -15,13 +15,17 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Repository
-interface SøknadRepository : RepositoryInterface<Søknad, UUID>, InsertUpdateRepository<Søknad> {
-
+interface SøknadRepository :
+    RepositoryInterface<Søknad, UUID>,
+    InsertUpdateRepository<Søknad> {
     @Query("SELECT type, count(*) as count FROM soknad GROUP BY type")
     fun finnAntallPerType(): List<AntallPerType>
 }
 
-data class AntallPerType(val type: Stønadstype, val count: Long)
+data class AntallPerType(
+    val type: Stønadstype,
+    val count: Long,
+)
 
 @Table("soknad")
 data class Søknad(
@@ -32,12 +36,9 @@ data class Søknad(
     val personIdent: String,
     @Column("soknad_json")
     val søknadJson: JsonWrapper,
-
     @Column("soknad_pdf")
     val søknadPdf: ByteArray? = null,
-
     val journalpostId: String? = null,
-
     @Version
     val version: Int = 0,
 ) {
@@ -55,7 +56,9 @@ data class Søknad(
         if (søknadPdf != null) {
             if (other.søknadPdf == null) return false
             if (!søknadPdf.contentEquals(other.søknadPdf)) return false
-        } else if (other.søknadPdf != null) return false
+        } else if (other.søknadPdf != null) {
+            return false
+        }
         if (journalpostId != other.journalpostId) return false
         return version == other.version
     }

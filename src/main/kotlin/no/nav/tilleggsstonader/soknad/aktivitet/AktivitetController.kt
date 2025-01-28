@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController
 class AktivitetController(
     private val aktivitetService: AktivitetService,
 ) {
-
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @Deprecated("Erstattes av endepunkt som sender med stønadstype for å kunne variere hvor langt tilbake man henter aktiviteter")
@@ -41,7 +40,9 @@ class AktivitetController(
     }
 
     @PostMapping
-    fun hentAktiviteterV2(@RequestBody request: AktivitetRequest): AktiviteterDto {
+    fun hentAktiviteterV2(
+        @RequestBody request: AktivitetRequest,
+    ): AktiviteterDto {
         val ident = EksternBrukerUtils.hentFnrFraToken()
         return try {
             val aktiviteter = aktivitetService.hentAktiviteter(ident, request.stønadstype)

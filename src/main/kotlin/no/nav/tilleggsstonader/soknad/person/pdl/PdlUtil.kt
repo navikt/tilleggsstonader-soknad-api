@@ -14,31 +14,32 @@ import org.springframework.http.HttpHeaders
 val logger: Logger = LoggerFactory.getLogger(PdlClient::class.java)
 
 object PdlUtil {
-    val httpHeaders = HttpHeaders().apply {
-        add("behandlingsnummer", "B289")
-    }
+    val httpHeaders =
+        HttpHeaders().apply {
+            add("behandlingsnummer", "B289")
+        }
 
     val søkerQuery = graphqlQuery("/pdl/søker.graphql")
 
     val barnQuery = graphqlQuery("/pdl/barn.graphql")
 
-    private fun graphqlQuery(path: String) = PdlUtil::class.java.getResource(path)!!
-        .readText()
-        .graphqlCompatible()
+    private fun graphqlQuery(path: String) =
+        PdlUtil::class.java
+            .getResource(path)!!
+            .readText()
+            .graphqlCompatible()
 
-    private fun String.graphqlCompatible(): String {
-        return StringUtils.normalizeSpace(this.replace("\n", ""))
-    }
+    private fun String.graphqlCompatible(): String = StringUtils.normalizeSpace(this.replace("\n", ""))
 }
 
-val fortroligeGraderinger = setOf(
-    AdressebeskyttelseGradering.FORTROLIG,
-    AdressebeskyttelseGradering.STRENGT_FORTROLIG,
-    AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND,
-)
+val fortroligeGraderinger =
+    setOf(
+        AdressebeskyttelseGradering.FORTROLIG,
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND,
+    )
 
-fun List<Adressebeskyttelse>.fortroligEllerStrengtFortrolig(): Boolean =
-    this.any { fortroligeGraderinger.contains(it.gradering) }
+fun List<Adressebeskyttelse>.fortroligEllerStrengtFortrolig(): Boolean = this.any { fortroligeGraderinger.contains(it.gradering) }
 
 fun List<Adressebeskyttelse>.gradering(): AdressebeskyttelseGradering =
     this.singleOrNullOrError()?.gradering ?: AdressebeskyttelseGradering.UGRADERT
@@ -77,7 +78,10 @@ inline fun <reified RESULT : Any> feilsjekkOgReturnerData(pdlResponse: PdlBolkRe
         throw PdlRequestException("Data er null fra PDL -  ${RESULT::class}. Se secure logg for detaljer.")
     }
 
-    val feil = pdlResponse.data.personBolk.filter { it.code != "ok" }.associate { it.ident to it.code }
+    val feil =
+        pdlResponse.data.personBolk
+            .filter { it.code != "ok" }
+            .associate { it.ident to it.code }
     if (feil.isNotEmpty()) {
         secureLogger.error("Feil ved henting av ${RESULT::class} fra PDL: $feil")
         throw PdlRequestException("Feil ved henting av ${RESULT::class} fra PDL. Se secure logg for detaljer.")

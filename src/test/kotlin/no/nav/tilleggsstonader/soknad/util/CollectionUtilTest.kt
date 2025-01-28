@@ -7,10 +7,8 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class CollectionUtilTest {
-
     @Nested
     inner class SingleOrNullOrError {
-
         @Test
         fun `under 2 element skal hente elementet eller null`() {
             assertThat(listOf(1).singleOrNullOrError()).isEqualTo(1)

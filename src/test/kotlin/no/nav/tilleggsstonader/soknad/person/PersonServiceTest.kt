@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class PersonServiceTest {
-
     private val pdlClient = mockk<PdlClient>()
     private val pdlClientCredentialClient = mockk<PdlClientCredentialClient>()
     private val adresseMapper = mockk<AdresseMapper>()
@@ -36,7 +35,6 @@ class PersonServiceTest {
 
     @Nested
     inner class FiltreringAvBarnBasertPåGradering {
-
         val ugradertBarn = lagBarn(AdressebeskyttelseGradering.UGRADERT)
         val fortroligBarn = lagBarn(AdressebeskyttelseGradering.FORTROLIG)
         val strengtFortroligBarn = lagBarn(AdressebeskyttelseGradering.STRENGT_FORTROLIG)
@@ -50,7 +48,6 @@ class PersonServiceTest {
 
         @Nested
         inner class SøkerBarnGradering {
-
             @Test
             fun `søker ugradert med fortrolige barn skal kaste feil`() {
                 mockSøker(AdressebeskyttelseGradering.UGRADERT)
@@ -122,8 +119,9 @@ class PersonServiceTest {
         }
     }
 
-    private fun lagBarn(gradering: AdressebeskyttelseGradering): Pair<String, PdlBarn> = lagPdlBarn(
-        FnrGenerator.generer(),
-        adressebeskyttelse = gradering,
-    )
+    private fun lagBarn(gradering: AdressebeskyttelseGradering): Pair<String, PdlBarn> =
+        lagPdlBarn(
+            FnrGenerator.generer(),
+            adressebeskyttelse = gradering,
+        )
 }

@@ -12,7 +12,6 @@ import java.util.concurrent.CompletableFuture
 @Configuration
 @Profile("mock-kafka")
 class KafkaTestConfig {
-
     @Bean
     fun kafkaTemplate(): KafkaTemplate<String, String> {
         val mock = mockk<KafkaTemplate<String, String>>(relaxed = true)

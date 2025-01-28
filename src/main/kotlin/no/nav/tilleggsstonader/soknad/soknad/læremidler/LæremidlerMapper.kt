@@ -11,7 +11,6 @@ import java.time.LocalDateTime
 
 @Service
 class LæremidlerMapper {
-
     fun map(
         ident: String,
         mottattTidspunkt: LocalDateTime,
@@ -22,21 +21,24 @@ class LæremidlerMapper {
             ident = ident,
             mottattTidspunkt = mottattTidspunkt,
             språk = språkkode,
-            skjema = SøknadsskjemaLæremidler(
-                hovedytelse = SøknadMapper.mapHovedytelse(dto.hovedytelse),
-                utdanning = mapUtdanning(dto),
-                dokumentasjon = dto.dokumentasjon,
-            ),
+            skjema =
+                SøknadsskjemaLæremidler(
+                    hovedytelse = SøknadMapper.mapHovedytelse(dto.hovedytelse),
+                    utdanning = mapUtdanning(dto),
+                    dokumentasjon = dto.dokumentasjon,
+                ),
         )
     }
 
-    private fun mapUtdanning(dto: SøknadLæremidlerDto) = UtdanningAvsnitt(
-        aktiviteter = dto.utdanning.aktiviteter,
-        annenUtdanning = dto.utdanning.annenUtdanning,
-        harRettTilUtstyrsstipend = HarRettTilUtstyrsstipend(
-            erLærlingEllerLiknende = dto.utdanning.harRettTilUtstyrsstipend?.erLærlingEllerLiknende,
-            harTidligereFullførtVgs = dto.utdanning.harRettTilUtstyrsstipend?.harTidligereFullførtVgs,
-        ),
-        harFunksjonsnedsettelse = dto.utdanning.harFunksjonsnedsettelse,
-    )
+    private fun mapUtdanning(dto: SøknadLæremidlerDto) =
+        UtdanningAvsnitt(
+            aktiviteter = dto.utdanning.aktiviteter,
+            annenUtdanning = dto.utdanning.annenUtdanning,
+            harRettTilUtstyrsstipend =
+                HarRettTilUtstyrsstipend(
+                    erLærlingEllerLiknende = dto.utdanning.harRettTilUtstyrsstipend?.erLærlingEllerLiknende,
+                    harTidligereFullførtVgs = dto.utdanning.harRettTilUtstyrsstipend?.harTidligereFullførtVgs,
+                ),
+            harFunksjonsnedsettelse = dto.utdanning.harFunksjonsnedsettelse,
+        )
 }

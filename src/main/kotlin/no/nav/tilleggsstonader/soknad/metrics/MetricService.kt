@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service
 class MetricService(
     private val søknadRepository: SøknadRepository,
 ) {
-
     private val antallRoutingsGauge = MultiGauge.builder("soknader_antall").register(Metrics.globalRegistry)
 
     @Scheduled(initialDelay = MetricUtil.FREKVENS_30_SEC, fixedDelay = MetricUtil.FREKVENS_30_MIN)
     fun antallRoutings() {
-        val rows = søknadRepository.finnAntallPerType().map {
-            MultiGauge.Row.of(Tags.of(Tag.of("ytelse", it.type.name)), it.count)
-        }
+        val rows =
+            søknadRepository.finnAntallPerType().map {
+                MultiGauge.Row.of(Tags.of(Tag.of("ytelse", it.type.name)), it.count)
+            }
         antallRoutingsGauge.register(rows, true)
     }
 }

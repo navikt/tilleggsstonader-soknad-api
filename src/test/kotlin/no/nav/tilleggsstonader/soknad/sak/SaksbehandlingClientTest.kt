@@ -15,11 +15,11 @@ import org.springframework.web.client.RestTemplate
 import java.net.URI
 
 class SaksbehandlingClientTest {
-
     @Test
     fun `skal håndtere 201 response uten body`() {
         wireMockServer.stubFor(
-            WireMock.post(WireMock.anyUrl())
+            WireMock
+                .post(WireMock.anyUrl())
                 .willReturn(WireMock.created()),
         )
 
@@ -31,9 +31,11 @@ class SaksbehandlingClientTest {
     @Test
     fun `Skal kalle på riktig endepunkt når harBehandlingUnderArbeid blir kjørt`() {
         wireMockServer.stubFor(
-            WireMock.post("/api/ekstern/har-behandling")
+            WireMock
+                .post("/api/ekstern/har-behandling")
                 .willReturn(
-                    WireMock.aResponse()
+                    WireMock
+                        .aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBody("true")
                         .withStatus(200),
