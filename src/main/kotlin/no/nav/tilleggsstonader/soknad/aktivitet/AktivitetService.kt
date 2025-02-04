@@ -19,7 +19,7 @@ class AktivitetService(
         ident: String,
         stønadstype: Stønadstype,
     ): List<AktivitetArenaDto> {
-        val fom = osloDateNow().minusMonths(stønadstype.antallMånederBakITiden())
+        val fom = osloDateNow().minusMonths(stønadstype.grunnlagAntallMånederBakITiden.toLong())
         val tom = osloDateNow().plusMonths(3)
         return aktivitetClient
             .hentAktiviteter(ident, fom, tom)
@@ -38,11 +38,5 @@ class AktivitetService(
             logger.error("TypeAktivitet mangler mapping, se secure logs for detaljer.")
             secureLogger.error("TypeAktivitet=${it.type} mangler mapping. Vennligst oppdater TypeAktivitet med ny type.")
             false
-        }
-
-    private fun Stønadstype.antallMånederBakITiden(): Long =
-        when (this) {
-            Stønadstype.BARNETILSYN -> 3
-            Stønadstype.LÆREMIDLER -> 6
         }
 }
