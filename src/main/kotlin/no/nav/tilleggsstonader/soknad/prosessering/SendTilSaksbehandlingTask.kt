@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service
 import java.util.UUID
 
 @Service
-@TaskStepBeskrivelse(taskStepType = SendTilSaksbehandlingTask.TYPE, beskrivelse = "Send den arkiverte journalposten/søknad til sak for videre håndtering")
+@TaskStepBeskrivelse(
+    taskStepType = SendTilSaksbehandlingTask.TYPE,
+    beskrivelse = "Send den arkiverte journalposten/søknad til sak for videre håndtering",
+)
 class SendTilSaksbehandlingTask(
     private val sendTilSaksbehandlingService: SendTilSaksbehandlingService,
-
 ) : AsyncTaskStep {
-
     override fun doTask(task: Task) {
         val søknadId = UUID.fromString(task.payload)
 
@@ -23,8 +24,6 @@ class SendTilSaksbehandlingTask(
     companion object {
         const val TYPE = "SEND_TIL_SAKSBEHANDLING"
 
-        fun opprettTask(task: Task): Task {
-            return Task(TYPE, task.payload, task.metadata)
-        }
+        fun opprettTask(task: Task): Task = Task(TYPE, task.payload, task.metadata)
     }
 }

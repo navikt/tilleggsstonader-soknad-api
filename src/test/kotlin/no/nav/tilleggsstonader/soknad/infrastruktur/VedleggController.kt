@@ -21,7 +21,6 @@ import java.util.UUID
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
 class VedleggController {
-
     val storage = mutableMapOf<UUID, ByteArray>()
 
     @PostMapping(
@@ -46,7 +45,8 @@ class VedleggController {
         val uuid = UUID.randomUUID()
 
         storage[uuid] = bytes
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
             .body(mapOf("dokumentId" to uuid.toString(), "filnavn" to multipartFile.originalFilename!!))
     }
 }

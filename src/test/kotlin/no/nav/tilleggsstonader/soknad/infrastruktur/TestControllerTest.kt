@@ -28,7 +28,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 class TestControllerTest : IntegrationTest() {
-
     val json = """{"tekst":"abc","dato":"2023-01-01","tidspunkt":"2023-01-01T12:00:03"}"""
     val feilJson =
         """{"type":"about:blank","title":"Internal Server Error","status":500,"detail":"Ukjent feil","instance":"/api/test/error"}"""
@@ -42,11 +41,12 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal kunne sende inn object`() {
-        val json = TestObject(
-            tekst = "abc",
-            dato = LocalDate.of(2023, 1, 1),
-            tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3),
-        )
+        val json =
+            TestObject(
+                tekst = "abc",
+                dato = LocalDate.of(2023, 1, 1),
+                tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3),
+            )
 
         val response = restTemplate.postForEntity<TestObject>(localhost("api/test"), json)
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
@@ -55,15 +55,17 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal kunne sende inn object med json header`() {
-        val json = TestObject(
-            tekst = "abc",
-            dato = LocalDate.of(2023, 1, 1),
-            tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3),
-        )
-        val jsonHeaders = HttpHeaders().apply {
-            contentType = APPLICATION_JSON
-            accept = listOf(APPLICATION_JSON)
-        }
+        val json =
+            TestObject(
+                tekst = "abc",
+                dato = LocalDate.of(2023, 1, 1),
+                tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3),
+            )
+        val jsonHeaders =
+            HttpHeaders().apply {
+                contentType = APPLICATION_JSON
+                accept = listOf(APPLICATION_JSON)
+            }
 
         val response = restTemplate.postForEntity<TestObject>(localhost("api/test"), HttpEntity(json, jsonHeaders))
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
@@ -93,17 +95,19 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal håndtere kall mot endepunkt som ikke eksisterer`() {
-        val response = catchException {
-            restTemplate.exchange<TestObject>(localhost("api/test/finnes-ikke"), HttpMethod.GET)
-        }
+        val response =
+            catchException {
+                restTemplate.exchange<TestObject>(localhost("api/test/finnes-ikke"), HttpMethod.GET)
+            }
         assertThat(response).isInstanceOf(HttpClientErrorException.NotFound::class.java)
     }
 
     @Test
     fun `skal håndtere kall mot protected endepunkt uten token`() {
-        val response = catchThrowableOfType<HttpClientErrorException.Unauthorized> {
-            restTemplate.exchange<TestObject>(localhost("api/test/protected-feil"), HttpMethod.GET)
-        }
+        val response =
+            catchThrowableOfType<HttpClientErrorException.Unauthorized> {
+                restTemplate.exchange<TestObject>(localhost("api/test/protected-feil"), HttpMethod.GET)
+            }
         assertThat(response).isInstanceOf(HttpClientErrorException.Unauthorized::class.java)
         assertThat(response.statusCode).isEqualTo(HttpStatus.UNAUTHORIZED)
         assertThat(response.responseHeaders?.contentType).isEqualTo(APPLICATION_PROBLEM_JSON)
@@ -120,20 +124,18 @@ class TestControllerTest : IntegrationTest() {
 @RequestMapping("/api/test")
 @Unprotected
 class TestController {
-
     @GetMapping
-    fun get(): TestObject {
-        return TestObject(
+    fun get(): TestObject =
+        TestObject(
             tekst = "abc",
             dato = LocalDate.of(2023, 1, 1),
             tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3),
         )
-    }
 
     @PostMapping
-    fun post(@RequestBody testObject: TestObject): TestObject {
-        return testObject
-    }
+    fun post(
+        @RequestBody testObject: TestObject,
+    ): TestObject = testObject
 
     @GetMapping("error")
     fun error() {
@@ -142,9 +144,7 @@ class TestController {
 
     @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
     @GetMapping("protected")
-    fun protected(): Map<String, String> {
-        return mapOf()
-    }
+    fun protected(): Map<String, String> = mapOf()
 
     @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
     @GetMapping("protected-feil")

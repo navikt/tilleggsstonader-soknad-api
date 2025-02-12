@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class AdresseMapperTest {
-
     val kodeverkService = mockk<KodeverkService>()
 
     val mapper = AdresseMapper(kodeverkService)
@@ -24,13 +23,14 @@ class AdresseMapperTest {
 
     @Test
     fun `skal mappe alle felter fra vegadresse`() {
-        val vegadresse = Vegadresse(
-            husnummer = "1",
-            husbokstav = "A",
-            bruksenhetsnummer = "0101",
-            adressenavn = "Min vei",
-            postnummer = "0010",
-        )
+        val vegadresse =
+            Vegadresse(
+                husnummer = "1",
+                husbokstav = "A",
+                bruksenhetsnummer = "0101",
+                adressenavn = "Min vei",
+                postnummer = "0010",
+            )
         val pdlSøker = lagPdlSøker(bostedsadresse = Bostedsadresse(vegadresse, matrikkeladresse = null))
 
         val adresse = mapper.tilFormatertAdresse(pdlSøker)
@@ -40,13 +40,14 @@ class AdresseMapperTest {
 
     @Test
     fun `skal mappe til tom streng hvis alle felter mangler på vegadresse`() {
-        val vegadresse = Vegadresse(
-            husnummer = null,
-            husbokstav = null,
-            bruksenhetsnummer = null,
-            adressenavn = null,
-            postnummer = null,
-        )
+        val vegadresse =
+            Vegadresse(
+                husnummer = null,
+                husbokstav = null,
+                bruksenhetsnummer = null,
+                adressenavn = null,
+                postnummer = null,
+            )
 
         val pdlSøker = lagPdlSøker(bostedsadresse = Bostedsadresse(vegadresse, matrikkeladresse = null))
 

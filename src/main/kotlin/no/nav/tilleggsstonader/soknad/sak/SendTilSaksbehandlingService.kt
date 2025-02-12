@@ -10,16 +10,16 @@ class SendTilSaksbehandlingService(
     private val sakbehandlingClient: SaksbehandlingClient,
     private val søknadService: SøknadService,
 ) {
-
     fun sendTilSak(søknadId: UUID) {
         val søknad = søknadService.hentSøknad(søknadId)
         val journalpostId = søknad.journalpostId ?: error("Søknad mangler journalpostId")
         sakbehandlingClient.sendTilSak(
-            request = HåndterSøknadRequest(
-                personIdent = søknad.personIdent,
-                journalpostId = journalpostId,
-                stønadstype = søknad.type,
-            ),
+            request =
+                HåndterSøknadRequest(
+                    personIdent = søknad.personIdent,
+                    journalpostId = journalpostId,
+                    stønadstype = søknad.type,
+                ),
         )
     }
 }

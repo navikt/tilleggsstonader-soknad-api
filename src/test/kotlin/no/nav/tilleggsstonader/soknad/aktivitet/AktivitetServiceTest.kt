@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 class AktivitetServiceTest : IntegrationTest() {
-
     @Autowired
     lateinit var aktivitetClient: AktivitetClient
 
@@ -46,13 +45,14 @@ class AktivitetServiceTest : IntegrationTest() {
     @Test
     fun `skal ikke returnere typer som ikke gir rett på stønaden`() {
         val type = TypeAktivitet.FLEKSJOBB
-        every { aktivitetClient.hentAktiviteter("1", any(), any()) } returns listOf(
-            aktivitetArenaDto(
-                "10",
-                type = type,
-                erStønadsberettiget = false,
-            ),
-        )
+        every { aktivitetClient.hentAktiviteter("1", any(), any()) } returns
+            listOf(
+                aktivitetArenaDto(
+                    "10",
+                    type = type,
+                    erStønadsberettiget = false,
+                ),
+            )
 
         val aktiviteter = aktivitetService.hentAktiviteter("1", Stønadstype.BARNETILSYN)
         assertThat(aktiviteter).isEmpty()

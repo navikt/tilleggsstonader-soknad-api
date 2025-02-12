@@ -17,9 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 class ApiExceptionHandler : ResponseEntityExceptionHandler() {
-    private fun rootCause(throwable: Throwable): String {
-        return NestedExceptionUtils.getMostSpecificCause(throwable).javaClass.simpleName
-    }
+    private fun rootCause(throwable: Throwable): String = NestedExceptionUtils.getMostSpecificCause(throwable).javaClass.simpleName
 
     override fun handleExceptionInternal(
         ex: Exception,
@@ -35,10 +33,13 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(Throwable::class)
     fun handleThrowable(throwable: Throwable): ProblemDetail {
-        val responseStatus = throwable::class.annotations.find { it is ResponseStatus }
-            ?.let { it as ResponseStatus }
-            ?.value
-            ?: HttpStatus.INTERNAL_SERVER_ERROR
+        val responseStatus =
+            throwable::class
+                .annotations
+                .find { it is ResponseStatus }
+                ?.let { it as ResponseStatus }
+                ?.value
+                ?: HttpStatus.INTERNAL_SERVER_ERROR
         if (throwable is JwtTokenUnauthorizedException) {
             logger.warn("JwtTokenUnauthorizedException - ${throwable.cause?.javaClass?.simpleName}")
         } else {

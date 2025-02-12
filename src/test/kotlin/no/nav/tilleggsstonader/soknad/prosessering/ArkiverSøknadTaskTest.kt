@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test
 import java.util.Properties
 
 internal class ArkiverSøknadTaskTest {
-
     private val taskService: TaskService = mockk()
     private val arkiverSøknadTask: ArkiverSøknadTask = ArkiverSøknadTask(mockk(), taskService)
 

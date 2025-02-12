@@ -1,6 +1,6 @@
 val javaVersion = JavaLanguageVersion.of(21)
 val tilleggsstønaderLibsVersion = "2025.01.21-10.26.933160d62458"
-val tilleggsstønaderKontrakterVersion = "2025.01.20-15.37.6726c3629420"
+val tilleggsstønaderKontrakterVersion = "2025.02.04-13.24.4713c49b1c78"
 val familieProsesseringVersion = "2.20241011144712_deb1f2c"
 val tokenSupportVersion = "5.0.8"
 val wiremockVersion = "3.0.1"
@@ -13,7 +13,7 @@ plugins {
     application
 
     kotlin("jvm") version "2.0.21"
-    id("com.diffplug.spotless") version "6.25.0"
+    id("com.diffplug.spotless") version "7.0.1"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
 
@@ -38,7 +38,7 @@ apply(plugin = "com.diffplug.spotless")
 
 spotless {
     kotlin {
-        ktlint("0.50.0")
+        ktlint("1.5.0")
     }
 }
 
@@ -75,10 +75,9 @@ dependencies {
 
     implementation("no.nav.tilleggsstonader.kontrakter:tilleggsstonader-kontrakter:$tilleggsstønaderKontrakterVersion")
 
-    //Kafka
+    // Kafka
     implementation("org.springframework.kafka:spring-kafka")
     implementation("no.nav.tms.varsel:kotlin-builder:2.0.0")
-
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")

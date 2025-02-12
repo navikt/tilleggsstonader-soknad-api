@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 class ArbeidOgOppholdMapperTest {
-
     @Test
     fun `skal mappe til null hvis alle hovedspørsmål er null`() {
         assertThat(mapArbeidOgOpphold(arbeidOgOppholdDto())).isNull()
@@ -33,76 +32,85 @@ class ArbeidOgOppholdMapperTest {
 
     @Test
     fun `skal mappe alle verdier`() {
-        val verdi = mapArbeidOgOpphold(
-            ArbeidOgOppholdDto(
+        val verdi =
+            mapArbeidOgOpphold(
+                ArbeidOgOppholdDto(
+                    jobberIAnnetLand = enumJaNei("jobberIAnnetLand"),
+                    jobbAnnetLand = SelectFelt("jobbAnnetLand", "SWE", "Sverige"),
+                    harPengestøtteAnnetLand = harPengestøtteAnnetLand(),
+                    pengestøtteAnnetLand = SelectFelt("pengestøtteAnnetLand", "SWE", "Sverige"),
+                    harOppholdUtenforNorgeSiste12mnd = enumJaNei("harOppholdUtenforNorgeSiste12mnd"),
+                    oppholdUtenforNorgeSiste12mnd =
+                        listOf(
+                            OppholdUtenforNorgeDto(
+                                SelectFelt("land", "SWE", "Sverige"),
+                                årsakJobb(),
+                                DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
+                                DatoFelt("Tom", LocalDate.of(2024, 1, 2)),
+                            ),
+                        ),
+                    harOppholdUtenforNorgeNeste12mnd = enumJaNei("harOppholdUtenforNorgeNeste12mnd"),
+                    oppholdUtenforNorgeNeste12mnd =
+                        listOf(
+                            OppholdUtenforNorgeDto(
+                                SelectFelt("land", "FIN", "Finland"),
+                                årsakFerie(),
+                                DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
+                                DatoFelt("Tom", LocalDate.of(2024, 1, 2)),
+                            ),
+                        ),
+                ),
+            )
+        val expected =
+            ArbeidOgOpphold(
                 jobberIAnnetLand = enumJaNei("jobberIAnnetLand"),
                 jobbAnnetLand = SelectFelt("jobbAnnetLand", "SWE", "Sverige"),
                 harPengestøtteAnnetLand = harPengestøtteAnnetLand(),
                 pengestøtteAnnetLand = SelectFelt("pengestøtteAnnetLand", "SWE", "Sverige"),
                 harOppholdUtenforNorgeSiste12mnd = enumJaNei("harOppholdUtenforNorgeSiste12mnd"),
-                oppholdUtenforNorgeSiste12mnd = listOf(
-                    OppholdUtenforNorgeDto(
-                        SelectFelt("land", "SWE", "Sverige"),
-                        årsakJobb(),
-                        DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
-                        DatoFelt("Tom", LocalDate.of(2024, 1, 2)),
+                oppholdUtenforNorgeSiste12mnd =
+                    listOf(
+                        OppholdUtenforNorge(
+                            SelectFelt("land", "SWE", "Sverige"),
+                            årsakJobb(),
+                            DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
+                            DatoFelt("Tom", LocalDate.of(2024, 1, 2)),
+                        ),
                     ),
-                ),
                 harOppholdUtenforNorgeNeste12mnd = enumJaNei("harOppholdUtenforNorgeNeste12mnd"),
-                oppholdUtenforNorgeNeste12mnd = listOf(
-                    OppholdUtenforNorgeDto(
-                        SelectFelt("land", "FIN", "Finland"),
-                        årsakFerie(),
-                        DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
-                        DatoFelt("Tom", LocalDate.of(2024, 1, 2)),
+                oppholdUtenforNorgeNeste12mnd =
+                    listOf(
+                        OppholdUtenforNorge(
+                            SelectFelt("land", "FIN", "Finland"),
+                            årsakFerie(),
+                            DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
+                            DatoFelt("Tom", LocalDate.of(2024, 1, 2)),
+                        ),
                     ),
-                ),
-            ),
-        )
-        val expected = ArbeidOgOpphold(
-            jobberIAnnetLand = enumJaNei("jobberIAnnetLand"),
-            jobbAnnetLand = SelectFelt("jobbAnnetLand", "SWE", "Sverige"),
-            harPengestøtteAnnetLand = harPengestøtteAnnetLand(),
-            pengestøtteAnnetLand = SelectFelt("pengestøtteAnnetLand", "SWE", "Sverige"),
-            harOppholdUtenforNorgeSiste12mnd = enumJaNei("harOppholdUtenforNorgeSiste12mnd"),
-            oppholdUtenforNorgeSiste12mnd = listOf(
-                OppholdUtenforNorge(
-                    SelectFelt("land", "SWE", "Sverige"),
-                    årsakJobb(),
-                    DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
-                    DatoFelt("Tom", LocalDate.of(2024, 1, 2)),
-                ),
-            ),
-            harOppholdUtenforNorgeNeste12mnd = enumJaNei("harOppholdUtenforNorgeNeste12mnd"),
-            oppholdUtenforNorgeNeste12mnd = listOf(
-                OppholdUtenforNorge(
-                    SelectFelt("land", "FIN", "Finland"),
-                    årsakFerie(),
-                    DatoFelt("Fom", LocalDate.of(2024, 1, 1)),
-                    DatoFelt("Tom", LocalDate.of(2024, 1, 2)),
-                ),
-            ),
-        )
+            )
         assertThat(verdi).isEqualTo(expected)
     }
 
-    private fun årsakJobb() = EnumFlereValgFelt(
-        "årsak",
-        listOf(VerdiFelt(ÅrsakOppholdUtenforNorge.JOBB, "Jobb")),
-        emptyList(),
-    )
+    private fun årsakJobb() =
+        EnumFlereValgFelt(
+            "årsak",
+            listOf(VerdiFelt(ÅrsakOppholdUtenforNorge.JOBB, "Jobb")),
+            emptyList(),
+        )
 
-    private fun årsakFerie() = EnumFlereValgFelt(
-        "årsak",
-        listOf(VerdiFelt(ÅrsakOppholdUtenforNorge.FERIE, "Ferie")),
-        emptyList(),
-    )
+    private fun årsakFerie() =
+        EnumFlereValgFelt(
+            "årsak",
+            listOf(VerdiFelt(ÅrsakOppholdUtenforNorge.FERIE, "Ferie")),
+            emptyList(),
+        )
 
-    private fun harPengestøtteAnnetLand() = EnumFlereValgFelt(
-        label = "harPengestøtteAnnetLand",
-        verdier = listOf(VerdiFelt(TypePengestøtte.ANNEN_PENGESTØTTE, "Annen pengestøtte")),
-        alternativer = emptyList(),
-    )
+    private fun harPengestøtteAnnetLand() =
+        EnumFlereValgFelt(
+            label = "harPengestøtteAnnetLand",
+            verdier = listOf(VerdiFelt(TypePengestøtte.ANNEN_PENGESTØTTE, "Annen pengestøtte")),
+            alternativer = emptyList(),
+        )
 
     private fun enumJaNei(
         label: String = "",

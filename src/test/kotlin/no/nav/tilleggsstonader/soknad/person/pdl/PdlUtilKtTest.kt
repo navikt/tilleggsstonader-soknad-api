@@ -7,10 +7,8 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class PdlUtilKtTest {
-
     @Nested
     inner class FortroligEllerStrengtFortrolig {
-
         @Test
         fun `graderinger utenom ugradert er fortrolig eller strengt fortrolig`() {
             AdressebeskyttelseGradering.entries.filter { it != AdressebeskyttelseGradering.UGRADERT }.forEach {
@@ -20,10 +18,11 @@ class PdlUtilKtTest {
 
         @Test
         fun `flere graderinger utenom ugradert er fortrolig eller strengt fortrolig`() {
-            val adressebeskyttelse = listOf(
-                Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT),
-                Adressebeskyttelse(AdressebeskyttelseGradering.FORTROLIG),
-            )
+            val adressebeskyttelse =
+                listOf(
+                    Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT),
+                    Adressebeskyttelse(AdressebeskyttelseGradering.FORTROLIG),
+                )
             assertThat(adressebeskyttelse.fortroligEllerStrengtFortrolig()).isTrue()
         }
 

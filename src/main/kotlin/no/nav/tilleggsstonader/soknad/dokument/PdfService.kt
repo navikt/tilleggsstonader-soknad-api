@@ -23,18 +23,18 @@ class PdfService(
     private val htmlifyClient: HtmlifyClient,
     private val dokumentClient: FamilieDokumentClient,
 ) {
-
     fun lagPdf(søknadId: UUID) {
         val søknad = søknadService.hentSøknad(søknadId)
         val søknadsskjema = parseSøknadsskjema(søknad)
         val felter = mapSøknad(søknadsskjema, hentSøkerinformasjon(søknad))
-        val html = htmlifyClient.generateHtml(
-            stønadstype = søknad.type,
-            tittel = tittelSøknadsskjema(søknadsskjema),
-            felter = felter,
-            mottattTidspunkt = søknadsskjema.mottattTidspunkt,
-            dokumentasjon = mapVedlegg(søknadsskjema),
-        )
+        val html =
+            htmlifyClient.generateHtml(
+                stønadstype = søknad.type,
+                tittel = tittelSøknadsskjema(søknadsskjema),
+                felter = felter,
+                mottattTidspunkt = søknadsskjema.mottattTidspunkt,
+                dokumentasjon = mapVedlegg(søknadsskjema),
+            )
         val pdf = dokumentClient.genererPdf(html)
         søknadService.oppdaterSøknad(søknad.copy(søknadPdf = pdf))
     }
@@ -44,9 +44,7 @@ class PdfService(
         return Søkerinformasjon(ident = søknad.personIdent, navn = navn)
     }
 
-    private fun parseSøknadsskjema(
-        søknad: Søknad,
-    ): Søknadsskjema<*> {
+    private fun parseSøknadsskjema(søknad: Søknad): Søknadsskjema<*> {
         val json = søknad.søknadJson.json
         return when (søknad.type) {
             Stønadstype.BARNETILSYN -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaBarnetilsyn>>(json)

@@ -22,17 +22,19 @@ class PdlClient(
     @Qualifier("tokenExchange")
     restTemplate: RestTemplate,
 ) : AbstractRestClient(restTemplate) {
-
     fun hentSøker(fødselsnummer: Fødselsnummer): PdlSøker {
-        val pdlPersonRequest = PdlPersonRequest(
-            variables = PdlPersonRequestVariables(fødselsnummer.verdi),
-            query = PdlUtil.søkerQuery,
-        )
+        val pdlPersonRequest =
+            PdlPersonRequest(
+                variables = PdlPersonRequestVariables(fødselsnummer.verdi),
+                query = PdlUtil.søkerQuery,
+            )
         val pdlResponse = postForEntity<PdlResponse<PdlSøkerData>>(graphqlUri, pdlPersonRequest, httpHeaders)
         return feilsjekkOgReturnerData(fødselsnummer.verdi, pdlResponse) { it.person }
     }
 
-    private val graphqlUri = UriComponentsBuilder.fromUri(pdlUrl)
-        .pathSegment("graphql")
-        .toUriString()
+    private val graphqlUri =
+        UriComponentsBuilder
+            .fromUri(pdlUrl)
+            .pathSegment("graphql")
+            .toUriString()
 }

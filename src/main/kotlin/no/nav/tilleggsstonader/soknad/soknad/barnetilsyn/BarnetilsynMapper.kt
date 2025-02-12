@@ -14,7 +14,6 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass a
 
 @Service
 class BarnetilsynMapper {
-
     fun map(
         ident: String,
         mottattTidspunkt: LocalDateTime,
@@ -26,12 +25,13 @@ class BarnetilsynMapper {
             ident = ident,
             mottattTidspunkt = mottattTidspunkt,
             språk = språkkode,
-            skjema = SøknadsskjemaBarnetilsyn(
-                hovedytelse = SøknadMapper.mapHovedytelse(dto.hovedytelse),
-                aktivitet = mapAktivitet(dto),
-                barn = BarnAvsnitt(mapBarn(dto, pdlBarn, språkkode)),
-                dokumentasjon = dto.dokumentasjon,
-            ),
+            skjema =
+                SøknadsskjemaBarnetilsyn(
+                    hovedytelse = SøknadMapper.mapHovedytelse(dto.hovedytelse),
+                    aktivitet = mapAktivitet(dto),
+                    barn = BarnAvsnitt(mapBarn(dto, pdlBarn, språkkode)),
+                    dokumentasjon = dto.dokumentasjon,
+                ),
         )
     }
 
@@ -50,18 +50,21 @@ class BarnetilsynMapper {
         )
     }
 
-    private fun labelNavn(språkkode: Språkkode) = when (språkkode) {
-        Språkkode.NB -> "Navn"
-        Språkkode.NN -> "Namn"
-    }
+    private fun labelNavn(språkkode: Språkkode) =
+        when (språkkode) {
+            Språkkode.NB -> "Navn"
+            Språkkode.NN -> "Namn"
+        }
 
-    private fun labelFødselsnummer(språkkode: Språkkode) = when (språkkode) {
-        Språkkode.NB, Språkkode.NN -> "Fødselsnummer"
-    }
+    private fun labelFødselsnummer(språkkode: Språkkode) =
+        when (språkkode) {
+            Språkkode.NB, Språkkode.NN -> "Fødselsnummer"
+        }
 
-    private fun mapAktivitet(dto: SøknadBarnetilsynDto) = AktivitetAvsnitt(
-        aktiviteter = dto.aktivitet.aktiviteter,
-        annenAktivitet = dto.aktivitet.annenAktivitet,
-        lønnetAktivitet = dto.aktivitet.lønnetAktivitet,
-    )
+    private fun mapAktivitet(dto: SøknadBarnetilsynDto) =
+        AktivitetAvsnitt(
+            aktiviteter = dto.aktivitet.aktiviteter,
+            annenAktivitet = dto.aktivitet.annenAktivitet,
+            lønnetAktivitet = dto.aktivitet.lønnetAktivitet,
+        )
 }

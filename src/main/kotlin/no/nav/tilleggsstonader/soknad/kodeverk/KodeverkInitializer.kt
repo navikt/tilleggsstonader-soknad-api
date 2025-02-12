@@ -23,7 +23,6 @@ class KodeverkInitializer(
     @Qualifier("kodeverkCache")
     private val cacheManager: CacheManager,
 ) : ApplicationListener<ApplicationReadyEvent> {
-
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @Scheduled(cron = HVER_DAG_KL_01)
@@ -41,7 +40,10 @@ class KodeverkInitializer(
         syncKodeverk("Poststed", kodeverkService::hentPoststed)
     }
 
-    private fun syncKodeverk(navn: String, henter: () -> Unit) {
+    private fun syncKodeverk(
+        navn: String,
+        henter: () -> Unit,
+    ) {
         try {
             MDC.put(MDCConstants.MDC_CALL_ID, UUID.randomUUID().toString())
             logger.info("Henter kodeverk=$navn")

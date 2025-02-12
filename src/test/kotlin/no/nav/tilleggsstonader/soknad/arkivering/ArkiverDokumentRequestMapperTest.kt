@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class ArkiverDokumentRequestMapperTest {
-
     @Test
     internal fun `barnetilsyn toDto - sjekk alle felt`() {
         val vedlegg = lagVedlegg()
@@ -39,7 +38,10 @@ internal class ArkiverDokumentRequestMapperTest {
         assertThat(dto.vedleggsdokumenter.first().filnavn).isEqualTo(vedlegg.id.toString())
     }
 
-    private fun lagSøknad(søknad: Any, type: Stønadstype) = Søknad(
+    private fun lagSøknad(
+        søknad: Any,
+        type: Stønadstype,
+    ) = Søknad(
         søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknad)),
         personIdent = "123",
         type = type,

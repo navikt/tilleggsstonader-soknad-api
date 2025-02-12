@@ -23,16 +23,11 @@ import javax.sql.DataSource
 @Configuration
 @EnableJdbcRepositories("no.nav.tilleggsstonader.soknad", "no.nav.familie.prosessering")
 class DatabaseConfiguration : AbstractJdbcConfiguration() {
+    @Bean
+    fun operations(dataSource: DataSource): NamedParameterJdbcOperations = NamedParameterJdbcTemplate(dataSource)
 
     @Bean
-    fun operations(dataSource: DataSource): NamedParameterJdbcOperations {
-        return NamedParameterJdbcTemplate(dataSource)
-    }
-
-    @Bean
-    fun transactionManager(dataSource: DataSource): PlatformTransactionManager {
-        return DataSourceTransactionManager(dataSource)
-    }
+    fun transactionManager(dataSource: DataSource): PlatformTransactionManager = DataSourceTransactionManager(dataSource)
 
     @Bean
     fun verifyIgnoreIfProd(
@@ -52,29 +47,23 @@ class DatabaseConfiguration : AbstractJdbcConfiguration() {
     }
 
     @Bean
-    override fun jdbcCustomConversions(): JdbcCustomConversions {
-        return JdbcCustomConversions(
+    override fun jdbcCustomConversions(): JdbcCustomConversions =
+        JdbcCustomConversions(
             listOf(
                 PGobjectTilJsonWrapperConverter(),
                 JsonWrapperTilPGobjectConverter(),
-
                 StringTilPropertiesWrapperConverter(),
                 PropertiesWrapperTilStringConverter(),
             ),
         )
-    }
 
     @ReadingConverter
     class PGobjectTilJsonWrapperConverter : Converter<PGobject, JsonWrapper?> {
-
-        override fun convert(pGobject: PGobject): JsonWrapper? {
-            return pGobject.value?.let { JsonWrapper(it) }
-        }
+        override fun convert(pGobject: PGobject): JsonWrapper? = pGobject.value?.let { JsonWrapper(it) }
     }
 
     @WritingConverter
     class JsonWrapperTilPGobjectConverter : Converter<JsonWrapper, PGobject> {
-
         override fun convert(jsonWrapper: JsonWrapper): PGobject =
             PGobject().apply {
                 type = "json"

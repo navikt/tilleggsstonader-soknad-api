@@ -11,7 +11,9 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Repository
-interface VedleggRepository : RepositoryInterface<Vedlegg, UUID>, InsertUpdateRepository<Vedlegg> {
+interface VedleggRepository :
+    RepositoryInterface<Vedlegg, UUID>,
+    InsertUpdateRepository<Vedlegg> {
     fun findBySøknadId(søknadId: UUID): List<Vedlegg>
 }
 
@@ -25,7 +27,6 @@ class Vedlegg(
     val innhold: ByteArray,
     val opprettetTid: LocalDateTime = SporbarUtils.now(),
 ) {
-
     /**
      * Pga Bytearray må vi legge inn equals/hashcode
      */

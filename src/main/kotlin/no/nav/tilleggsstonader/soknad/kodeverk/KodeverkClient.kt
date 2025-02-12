@@ -14,16 +14,15 @@ class KodeverkClient(
     @Value("\${clients.kodeverk.uri}")
     private val uri: URI,
     @Qualifier("azureClientCredential") restTemplate: RestTemplate,
-) :
-    AbstractRestClient(restTemplate) {
+) : AbstractRestClient(restTemplate) {
+    fun hentPostnummer(): KodeverkDto = getForEntity(kodeverkUri, null, mapOf("kodeverksnavn" to "Postnummer"))
 
-    fun hentPostnummer(): KodeverkDto =
-        getForEntity(kodeverkUri, null, mapOf("kodeverksnavn" to "Postnummer"))
-
-    private val kodeverkUri = UriComponentsBuilder.fromUri(uri)
-        .pathSegment("api", "v1", "kodeverk", "{kodeverksnavn}", "koder", "betydninger")
-        .queryParam("ekskluderUgyldige", "true") // henter ikke historikk
-        .queryParam("spraak", "nb")
-        .encode()
-        .toUriString()
+    private val kodeverkUri =
+        UriComponentsBuilder
+            .fromUri(uri)
+            .pathSegment("api", "v1", "kodeverk", "{kodeverksnavn}", "koder", "betydninger")
+            .queryParam("ekskluderUgyldige", "true") // henter ikke historikk
+            .queryParam("spraak", "nb")
+            .encode()
+            .toUriString()
 }

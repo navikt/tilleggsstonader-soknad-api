@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController
 class AktivitetController(
     private val aktivitetService: AktivitetService,
 ) {
-
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @PostMapping
-    fun hentAktiviteter(@RequestBody request: AktivitetRequest): AktiviteterDto {
+    fun hentAktiviteter(
+        @RequestBody request: AktivitetRequest,
+    ): AktiviteterDto {
         val ident = EksternBrukerUtils.hentFnrFraToken()
         return try {
             val aktiviteter = aktivitetService.hentAktiviteter(ident, request.stønadstype)

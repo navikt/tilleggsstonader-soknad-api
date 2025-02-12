@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Profile
 @Configuration
 @Profile("mock-vedlegg")
 class FamilieVedleggClientConfig {
-
     @Bean
     fun familieVedleggClient(): FamilieVedleggClient {
         val client = mockk<FamilieVedleggClient>()

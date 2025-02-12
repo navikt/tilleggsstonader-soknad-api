@@ -29,21 +29,21 @@ import java.util.UUID
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg as VedleggDomene
 
 class SøknadServiceTest {
-
     private val søknadRepository = mockk<SøknadRepository>()
     private val vedleggRepository = mockk<VedleggRepository>()
     private val personService = mockk<PersonService>()
     private val familieVedleggClient = mockk<FamilieVedleggClient>()
 
-    private val service = SøknadService(
-        søknadRepository = søknadRepository,
-        vedleggRepository = vedleggRepository,
-        barnetilsynMapper = BarnetilsynMapper(),
-        læremidlerMapper = LæremidlerMapper(),
-        taskService = mockk<TaskService>(relaxed = true),
-        personService = personService,
-        familieVedleggClient = familieVedleggClient,
-    )
+    private val service =
+        SøknadService(
+            søknadRepository = søknadRepository,
+            vedleggRepository = vedleggRepository,
+            barnetilsynMapper = BarnetilsynMapper(),
+            læremidlerMapper = LæremidlerMapper(),
+            taskService = mockk<TaskService>(relaxed = true),
+            personService = personService,
+            familieVedleggClient = familieVedleggClient,
+        )
 
     val personIdent = FnrGenerator.generer()
     val søknad = SøknadBarnetilsynUtil.søknad
@@ -54,9 +54,10 @@ class SøknadServiceTest {
     @BeforeEach
     fun setUp() {
         every { søknadRepository.insert(any()) } answers { firstArg() }
-        every { person.barn } returns søknad.barnMedBarnepass.map {
-            Barn(it.ident, "fornavn", "fornavn etternavn", osloDateNow(), 3)
-        }
+        every { person.barn } returns
+            søknad.barnMedBarnepass.map {
+                Barn(it.ident, "fornavn", "fornavn etternavn", osloDateNow(), 3)
+            }
         every { personService.hentSøker(Fødselsnummer(personIdent), true) } returns person
         every { vedleggRepository.insertAll(capture(vedleggSlot)) } answers { firstArg() }
     }
@@ -101,11 +102,12 @@ class SøknadServiceTest {
         }
     }
 
-    private fun lagDokumentasjonFelt(vedlegg: Dokument) = listOf(
-        DokumentasjonFelt(
-            type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
-            label = "label",
-            opplastedeVedlegg = listOf(vedlegg),
-        ),
-    )
+    private fun lagDokumentasjonFelt(vedlegg: Dokument) =
+        listOf(
+            DokumentasjonFelt(
+                type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
+                label = "label",
+                opplastedeVedlegg = listOf(vedlegg),
+            ),
+        )
 }

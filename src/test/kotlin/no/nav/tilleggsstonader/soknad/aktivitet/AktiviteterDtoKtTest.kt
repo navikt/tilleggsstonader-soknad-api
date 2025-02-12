@@ -11,10 +11,8 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 class AktiviteterDtoKtTest {
-
     @Nested
     inner class TilDto {
-
         @Test
         fun `happy case mapping`() {
             assertThat(dto().tilDto()).isEqualTo(

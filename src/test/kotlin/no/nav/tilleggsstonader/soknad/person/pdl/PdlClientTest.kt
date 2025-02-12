@@ -16,7 +16,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder
 import java.net.URI
 
 class PdlClientTest {
-
     @AfterEach
     fun afterEach() {
         wiremockServerItem.resetAll()
@@ -25,7 +24,8 @@ class PdlClientTest {
     @Test
     fun `skal kunne håndtere response for søker-query mot pdl`() {
         wiremockServerItem.stubFor(
-            WireMock.post(WireMock.anyUrl())
+            WireMock
+                .post(WireMock.anyUrl())
                 .willReturn(WireMock.okJson(readFile("pdl/søkerResponse.json"))),
         )
 

@@ -8,7 +8,6 @@ import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import java.math.BigDecimal
 
 object AktivitetArenaDtoUtil {
-
     fun aktivitetArenaDto(
         id: String,
         erStønadsberettiget: Boolean = true,

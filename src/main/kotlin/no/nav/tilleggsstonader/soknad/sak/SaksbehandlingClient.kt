@@ -16,23 +16,35 @@ class SaksbehandlingClient(
     @Qualifier("azureClientCredential")
     restTemplate: RestTemplate,
 ) : AbstractRestClient(restTemplate) {
-
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern").build()
 
     fun sendTilSak(request: HåndterSøknadRequest) {
-        val uri = UriComponentsBuilder.fromUri(sakUri.toUri())
-            .pathSegment("handter-soknad").build().toUriString()
+        val uri =
+            UriComponentsBuilder
+                .fromUri(sakUri.toUri())
+                .pathSegment("handter-soknad")
+                .build()
+                .toUriString()
         postForEntityNullable<Void>(uri, request)
     }
 
     fun skalRoutesTilNyLøsning(request: IdentStønadstype): Boolean {
-        val uri = UriComponentsBuilder.fromUri(sakUri.toUri())
-            .pathSegment("routing-soknad").build().toUriString()
+        val uri =
+            UriComponentsBuilder
+                .fromUri(sakUri.toUri())
+                .pathSegment("routing-soknad")
+                .build()
+                .toUriString()
         return postForEntity<SkalRoutesINyLøsning>(uri, request).skalBehandlesINyLøsning
     }
+
     fun harBehandlingUnderArbeid(request: IdentStønadstype): Boolean {
-        val uri = UriComponentsBuilder.fromUri(sakUri.toUri())
-            .pathSegment("har-behandling").build().toUriString()
+        val uri =
+            UriComponentsBuilder
+                .fromUri(sakUri.toUri())
+                .pathSegment("har-behandling")
+                .build()
+                .toUriString()
         return postForEntity<Boolean>(uri, request)
     }
 }

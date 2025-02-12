@@ -16,7 +16,6 @@ class LagPdfTask(
     private val pdfService: PdfService,
     private val taskService: TaskService,
 ) : AsyncTaskStep {
-
     override fun doTask(task: Task) {
         val søknadId = UUID.fromString(task.payload)
         pdfService.lagPdf(søknadId)
@@ -28,11 +27,13 @@ class LagPdfTask(
 
     companion object {
         const val TYPE = "LAG_PDF"
+
         fun opprettTask(søknad: Søknad): Task {
-            val properties = Properties().apply {
-                setProperty("søkersFødselsnummer", søknad.personIdent)
-                setProperty("type", søknad.type.name)
-            }
+            val properties =
+                Properties().apply {
+                    setProperty("søkersFødselsnummer", søknad.personIdent)
+                    setProperty("type", søknad.type.name)
+                }
             return Task(TYPE, søknad.id.toString(), properties)
         }
     }

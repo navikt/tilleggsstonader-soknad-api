@@ -14,57 +14,66 @@ import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 import java.util.UUID
 
 object SøknadBarnetilsynUtil {
-    val søknad = SøknadBarnetilsynDto(
-        hovedytelse = SøknadTestUtil.hovedytelseDto(),
-        aktivitet = Aktivitet(
-            aktiviteter = EnumFlereValgFelt(
-                "Hvilken aktivitet søker du om støtte i forbindelse med?",
-                listOf(
-                    VerdiFelt("1", "Aktivitet: 22. april 2024 - 22. april 2024"),
-                    VerdiFelt("ANNET", "Annet"),
+    val søknad =
+        SøknadBarnetilsynDto(
+            hovedytelse = SøknadTestUtil.hovedytelseDto(),
+            aktivitet =
+                Aktivitet(
+                    aktiviteter =
+                        EnumFlereValgFelt(
+                            "Hvilken aktivitet søker du om støtte i forbindelse med?",
+                            listOf(
+                                VerdiFelt("1", "Aktivitet: 22. april 2024 - 22. april 2024"),
+                                VerdiFelt("ANNET", "Annet"),
+                            ),
+                            listOf("Alt1: 22. april 2024 - 22. april 2024", "Alt2: 22. april 2024 - 22. april 2024"),
+                        ),
+                    annenAktivitet =
+                        EnumFelt(
+                            "Hvilken arbeidsrettet aktivitet har du? ",
+                            AnnenAktivitetType.TILTAK,
+                            "Tiltak / arbeidsrettet aktivitet",
+                            listOf(),
+                        ),
+                    lønnetAktivitet = EnumFelt("Mottar du lønn gjennom ett tiltak?", JaNei.NEI, "Nei", listOf()),
                 ),
-                listOf("Alt1: 22. april 2024 - 22. april 2024", "Alt2: 22. april 2024 - 22. april 2024"),
-            ),
-            annenAktivitet = EnumFelt(
-                "Hvilken arbeidsrettet aktivitet har du? ",
-                AnnenAktivitetType.TILTAK,
-                "Tiltak / arbeidsrettet aktivitet",
-                listOf(),
-            ),
-            lønnetAktivitet = EnumFelt("Mottar du lønn gjennom ett tiltak?", JaNei.NEI, "Nei", listOf()),
-        ),
-        barnMedBarnepass = listOf(
-            lagBarn("08921997974"),
-            lagBarn(
-                "43921075201",
-                EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList()),
-            ),
-        ),
-        dokumentasjon = listOf(lagDokumentasjonFelt(), lagDokumentasjonFeltBarn()),
-    )
+            barnMedBarnepass =
+                listOf(
+                    lagBarn("08921997974"),
+                    lagBarn(
+                        "43921075201",
+                        EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", emptyList()),
+                    ),
+                ),
+            dokumentasjon = listOf(lagDokumentasjonFelt(), lagDokumentasjonFeltBarn()),
+        )
 
-    private fun lagDokumentasjonFelt() = DokumentasjonFelt(
-        type = Vedleggstype.UTGIFTER_PASS_PRIVAT,
-        label = "Vedlegglabel",
-        opplastedeVedlegg = listOf(
-            Dokument(
-                id = UUID.fromString("98fd0f9b-1206-4918-80d9-e76f85ba1b39"),
-                "Navn på vedlegg",
-            ),
-        ),
-    )
+    private fun lagDokumentasjonFelt() =
+        DokumentasjonFelt(
+            type = Vedleggstype.UTGIFTER_PASS_PRIVAT,
+            label = "Vedlegglabel",
+            opplastedeVedlegg =
+                listOf(
+                    Dokument(
+                        id = UUID.fromString("98fd0f9b-1206-4918-80d9-e76f85ba1b39"),
+                        "Navn på vedlegg",
+                    ),
+                ),
+        )
 
-    private fun lagDokumentasjonFeltBarn() = DokumentasjonFelt(
-        type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
-        label = "Vedlegglabel",
-        opplastedeVedlegg = listOf(
-            Dokument(
-                id = UUID.fromString("3e5f0073-036b-4da1-af82-787fecdbb481"),
-                "Navn på vedlegg",
-            ),
-        ),
-        barnId = "08921997974",
-    )
+    private fun lagDokumentasjonFeltBarn() =
+        DokumentasjonFelt(
+            type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
+            label = "Vedlegglabel",
+            opplastedeVedlegg =
+                listOf(
+                    Dokument(
+                        id = UUID.fromString("3e5f0073-036b-4da1-af82-787fecdbb481"),
+                        "Navn på vedlegg",
+                    ),
+                ),
+            barnId = "08921997974",
+        )
 
     fun lagBarn(
         ident: String,
@@ -76,6 +85,5 @@ object SøknadBarnetilsynUtil {
         årsak = EnumFelt("Årsak?", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "Mye borte", emptyList()),
     )
 
-    private fun defaultTypeBarnepass() =
-        EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", listOf("Alt1", "Alt2"))
+    private fun defaultTypeBarnepass() = EnumFelt("Type barnepass", TypeBarnepass.BARNEHAGE_SFO_AKS, "Svartekst", listOf("Alt1", "Alt2"))
 }

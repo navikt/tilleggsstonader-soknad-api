@@ -5,6 +5,5 @@ import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
 object SporbarUtils {
-
     fun now(): LocalDateTime = osloNow().truncatedTo(ChronoUnit.MILLIS)
 }

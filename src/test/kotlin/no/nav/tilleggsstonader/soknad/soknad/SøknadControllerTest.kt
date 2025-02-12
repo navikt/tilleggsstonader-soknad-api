@@ -30,7 +30,6 @@ import org.springframework.web.client.postForEntity
 import java.time.LocalDate
 
 class SøknadControllerTest : IntegrationTest() {
-
     @Autowired
     lateinit var personService: PersonService
 
@@ -75,7 +74,9 @@ class SøknadControllerTest : IntegrationTest() {
         val request = HttpEntity<Any>(emptyMap<String, String>(), headers)
         assertThatThrownBy {
             restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
-        }.hasMessage("""401 : "{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/soknad/pass-av-barn"}"""")
+        }.hasMessage(
+            """401 : "{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/soknad/pass-av-barn"}"""",
+        )
     }
 
     @Test
@@ -88,10 +89,15 @@ class SøknadControllerTest : IntegrationTest() {
 
         assertThatThrownBy {
             restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
-        }.hasMessage("""400 : "{"type":"about:blank","title":"Bad Request","status":400,"detail":"ROUTING_GAMMEL_SØKNAD","instance":"/api/soknad/pass-av-barn"}"""")
+        }.hasMessage(
+            """400 : "{"type":"about:blank","title":"Bad Request","status":400,"detail":"ROUTING_GAMMEL_SØKNAD","instance":"/api/soknad/pass-av-barn"}"""",
+        )
     }
 
-    private fun verifiserLagretSøknad(stønadstype: Stønadstype, filnavn: String) {
+    private fun verifiserLagretSøknad(
+        stønadstype: Stønadstype,
+        filnavn: String,
+    ) {
         val dbSøknad = søknadRepository.findAll().single()
         val søknadFraDb = objectMapper.readValue<Map<String, Any>>(dbSøknad.søknadJson.json).toMutableMap()
         søknadFraDb["mottattTidspunkt"] = "2023-09-25T21:32:18.22631"
@@ -102,7 +108,8 @@ class SøknadControllerTest : IntegrationTest() {
             FileUtil.skrivJsonTilFil(filnavn, søknadFraDb)
             assertThat(søknadFraDb).isEqualTo(objectMapper.readValue<Map<String, Any>>(FileUtil.readFile(filnavn)))
         } catch (e: Throwable) {
-            LoggerFactory.getLogger("testlogger")
+            LoggerFactory
+                .getLogger("testlogger")
                 .error("Actual=${objectMapper.writeValueAsString(søknadFraDb)}")
             throw e
         }

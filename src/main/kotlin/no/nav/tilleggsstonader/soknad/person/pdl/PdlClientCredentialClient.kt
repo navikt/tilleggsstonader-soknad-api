@@ -25,27 +25,30 @@ class PdlClientCredentialClient(
     @Qualifier("azureClientCredential")
     restTemplate: RestTemplate,
 ) : AbstractRestClient(restTemplate) {
-
     fun hentNavn(ident: String): PdlSøkerNavn {
-        val pdlPersonRequest = PdlPersonRequest(
-            variables = PdlPersonRequestVariables(ident),
-            query = PdlUtil.søkerQuery,
-        )
+        val pdlPersonRequest =
+            PdlPersonRequest(
+                variables = PdlPersonRequestVariables(ident),
+                query = PdlUtil.søkerQuery,
+            )
         val pdlResponse = postForEntity<PdlResponse<PdlSøkerNavnData>>(graphqlUri, pdlPersonRequest, httpHeaders)
         return feilsjekkOgReturnerData(ident, pdlResponse) { it.person }
     }
 
     fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {
         if (personIdenter.isEmpty()) return emptyMap()
-        val pdlPersonRequest = PdlPersonBolkRequest(
-            variables = PdlPersonBolkRequestVariables(personIdenter),
-            query = PdlUtil.barnQuery,
-        )
+        val pdlPersonRequest =
+            PdlPersonBolkRequest(
+                variables = PdlPersonBolkRequestVariables(personIdenter),
+                query = PdlUtil.barnQuery,
+            )
         val pdlResponse = postForEntity<PdlBolkResponse<PdlBarn>>(graphqlUri, pdlPersonRequest, httpHeaders)
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
-    private val graphqlUri = UriComponentsBuilder.fromUri(pdlUrl)
-        .pathSegment("graphql")
-        .toUriString()
+    private val graphqlUri =
+        UriComponentsBuilder
+            .fromUri(pdlUrl)
+            .pathSegment("graphql")
+            .toUriString()
 }

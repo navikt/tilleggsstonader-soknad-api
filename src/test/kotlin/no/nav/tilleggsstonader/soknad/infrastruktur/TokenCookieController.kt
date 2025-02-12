@@ -32,21 +32,24 @@ class TokenCookieController(
         response: HttpServletResponse,
     ): Cookie? {
         val fnr = Fødselsnummer(subject ?: FnrGenerator.generer())
-        val token = mockOAuth2Server.issueToken(
-            issuerId,
-            MockLoginController::class.java.simpleName,
-            DefaultOAuth2TokenCallback(
-                issuerId = issuerId,
-                subject = fnr.verdi,
-                typeHeader = JOSEObjectType.JWT.type,
-                audience = listOf(audience),
-                claims = mapOf(
-                    "acr" to "Level4",
-                    "pid" to fnr.verdi,
-                ),
-                expiry = expiry?.toLong() ?: 3600,
-            ),
-        ).serialize()
+        val token =
+            mockOAuth2Server
+                .issueToken(
+                    issuerId,
+                    MockLoginController::class.java.simpleName,
+                    DefaultOAuth2TokenCallback(
+                        issuerId = issuerId,
+                        subject = fnr.verdi,
+                        typeHeader = JOSEObjectType.JWT.type,
+                        audience = listOf(audience),
+                        claims =
+                            mapOf(
+                                "acr" to "Level4",
+                                "pid" to fnr.verdi,
+                            ),
+                        expiry = expiry?.toLong() ?: 3600,
+                    ),
+                ).serialize()
         return createCookieAndAddToResponse(
             response,
             cookieName,

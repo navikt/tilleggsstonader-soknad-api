@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Profile
 @Configuration
 @Profile("mock-sak")
 class SaksbehandlingClientConfig {
-
     @Primary
     @Bean
     fun saksbehandlingClient(): SaksbehandlingClient {

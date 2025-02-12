@@ -12,27 +12,30 @@ import org.springframework.context.annotation.Configuration
 class TaskProsesseringConfig(
     @Value("\${prosessering.rolle}") private val rolle: String,
 ) {
-
     @Bean
-    fun prosesseringInfoProvider() = object : ProsesseringInfoProvider {
-        override fun hentBrukernavn(): String = try {
-            SpringTokenValidationContextHolder().getTokenValidationContext().getClaims("azuread")
-                .getStringClaim("preferred_username")
+    fun prosesseringInfoProvider() =
+        object : ProsesseringInfoProvider {
+            override fun hentBrukernavn(): String =
+                try {
+                    SpringTokenValidationContextHolder()
+                        .getTokenValidationContext()
+                        .getClaims("azuread")
+                        .getStringClaim("preferred_username")
+                } catch (e: Exception) {
+                    error("Mangler preferred_username på request")
+                }
+
+            override fun harTilgang(): Boolean = hentGrupperFraToken().contains(rolle)
+        }
+
+    fun hentGrupperFraToken(): Set<String> =
+        try {
+            @Suppress("UNCHECKED_CAST")
+            SpringTokenValidationContextHolder()
+                .getTokenValidationContext()
+                .getClaims("azuread")
+                .get("groups") as List<String>?
         } catch (e: Exception) {
-            error("Mangler preferred_username på request")
-        }
-
-        override fun harTilgang(): Boolean {
-            return hentGrupperFraToken().contains(rolle)
-        }
-    }
-
-    fun hentGrupperFraToken(): Set<String> = try {
-        @Suppress("UNCHECKED_CAST")
-        SpringTokenValidationContextHolder().getTokenValidationContext()
-            .getClaims("azuread")
-            .get("groups") as List<String>?
-    } catch (e: Exception) {
-        error("Mangler groups på request")
-    }?.toSet() ?: emptySet()
+            error("Mangler groups på request")
+        }?.toSet() ?: emptySet()
 }

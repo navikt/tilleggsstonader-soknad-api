@@ -18,15 +18,17 @@ import org.springframework.web.bind.annotation.RestController
 class SøknadRoutingController(
     private val saksbehandlingClient: SaksbehandlingClient,
 ) {
-
     @PostMapping
-    fun sjekkRoutingForPerson(@RequestBody request: RoutingRequest): RoutingResponse {
-        val skalRoutesTilNyLøsning = saksbehandlingClient.skalRoutesTilNyLøsning(
-            IdentStønadstype(
-                ident = EksternBrukerUtils.hentFnrFraToken(),
-                stønadstype = request.stønadstype,
-            ),
-        )
+    fun sjekkRoutingForPerson(
+        @RequestBody request: RoutingRequest,
+    ): RoutingResponse {
+        val skalRoutesTilNyLøsning =
+            saksbehandlingClient.skalRoutesTilNyLøsning(
+                IdentStønadstype(
+                    ident = EksternBrukerUtils.hentFnrFraToken(),
+                    stønadstype = request.stønadstype,
+                ),
+            )
         return RoutingResponse(skalBehandlesINyLøsning = skalRoutesTilNyLøsning)
     }
 }

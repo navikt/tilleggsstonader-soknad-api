@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class SøknadTreeWalkerTest {
-
     val søkerinformasjon = Søkerinformasjon("25518735813", "Fornavn Etternavn")
 
     @Nested
@@ -61,7 +60,10 @@ class SøknadTreeWalkerTest {
         )
     }
 
-    private fun assertExpected(filnavn: String, actual: String) {
+    private fun assertExpected(
+        filnavn: String,
+        actual: String,
+    ) {
         // Kan brukes ved endringer for å skrive ny output til fil og sen verifisere
         FileUtil.skrivTilFil(filnavn, actual)
         assertThat(actual).isEqualToIgnoringWhitespace(FileUtil.readFile(filnavn))

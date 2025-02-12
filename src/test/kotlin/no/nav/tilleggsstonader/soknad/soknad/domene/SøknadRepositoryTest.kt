@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.OptimisticLockingFailureException
 
 class SøknadRepositoryTest : IntegrationTest() {
-
     @Autowired
     lateinit var søknadRepository: SøknadRepository
 
@@ -38,11 +37,12 @@ class SøknadRepositoryTest : IntegrationTest() {
             .containsExactly(AntallPerType(Stønadstype.BARNETILSYN, 2))
     }
 
-    private fun lagreSøknad() = søknadRepository.insert(
-        Søknad(
-            type = Stønadstype.BARNETILSYN,
-            personIdent = "123",
-            søknadJson = JsonWrapper("{}"),
-        ),
-    )
+    private fun lagreSøknad() =
+        søknadRepository.insert(
+            Søknad(
+                type = Stønadstype.BARNETILSYN,
+                personIdent = "123",
+                søknadJson = JsonWrapper("{}"),
+            ),
+        )
 }

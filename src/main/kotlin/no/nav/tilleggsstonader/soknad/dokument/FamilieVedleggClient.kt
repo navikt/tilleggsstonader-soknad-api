@@ -16,23 +16,22 @@ class FamilieVedleggClient(
     @Value("\${clients.familie-dokument.uri}")
     private val dokumentApiURI: URI,
     @Qualifier("tokenExchange") restTemplate: RestTemplate,
-) :
-    AbstractRestClient(restTemplate) {
+) : AbstractRestClient(restTemplate) {
+    private val hentVedleggUri =
+        UriComponentsBuilder
+            .fromUri(dokumentApiURI)
+            .path(HENT)
+            .pathSegment("{id}", "pdf")
+            .encode()
+            .toUriString()
 
-    private val hentVedleggUri = UriComponentsBuilder.fromUri(dokumentApiURI)
-        .path(HENT)
-        .pathSegment("{id}", "pdf")
-        .encode().toUriString()
-
-    fun hentVedlegg(vedleggId: UUID): ByteArray {
-        return getForEntity(hentVedleggUri, HENT_HEADERS, mapOf("id" to vedleggId))
-    }
+    fun hentVedlegg(vedleggId: UUID): ByteArray = getForEntity(hentVedleggUri, HENT_HEADERS, mapOf("id" to vedleggId))
 
     companion object {
-
         private const val HENT = "api/mapper/tilleggsstonad"
-        private val HENT_HEADERS = HttpHeaders().apply {
-            accept = listOf(MediaType.APPLICATION_OCTET_STREAM)
-        }
+        private val HENT_HEADERS =
+            HttpHeaders().apply {
+                accept = listOf(MediaType.APPLICATION_OCTET_STREAM)
+            }
     }
 }

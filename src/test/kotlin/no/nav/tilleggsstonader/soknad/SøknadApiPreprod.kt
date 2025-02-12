@@ -9,13 +9,17 @@ fun main(args: Array<String>) {
         .profiles(
             "preprod",
             "mock-pdl",
-        )
-        .properties(properties)
+        ).properties(properties)
         .run(*args)
 }
 
 private fun hentPreprodEnv(): Map<String, String> {
-    val file = File(IntegrationTest::class.java.classLoader.getResource("hentEnvFraPreprod.sh")!!.file)
+    val file =
+        File(
+            IntegrationTest::class.java.classLoader
+                .getResource("hentEnvFraPreprod.sh")!!
+                .file,
+        )
 
     val process = ProcessBuilder(file.path).start()
 
@@ -23,7 +27,8 @@ private fun hentPreprodEnv(): Map<String, String> {
         error("Klarte ikke hente variabler fra Nais. Er du logget på Naisdevice og gcloud?")
     }
 
-    return process.inputStream.bufferedReader()
+    return process.inputStream
+        .bufferedReader()
         .use { it.readText() }
         .split("Envs:\n")[1]
         .split("\n")

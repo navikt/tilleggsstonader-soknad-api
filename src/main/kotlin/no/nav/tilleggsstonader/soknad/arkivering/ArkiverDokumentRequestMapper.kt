@@ -11,7 +11,6 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 
 object ArkiverDokumentRequestMapper {
-
     fun toDto(
         søknad: Søknad,
         vedlegg: List<Vedlegg>,
@@ -37,37 +36,43 @@ object ArkiverDokumentRequestMapper {
         )
     }
 
-    private fun typeHoveddokument(type: Stønadstype): Dokumenttype = when (type) {
-        Stønadstype.BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD
-        Stønadstype.LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD
-    }
+    private fun typeHoveddokument(type: Stønadstype): Dokumenttype =
+        when (type) {
+            Stønadstype.BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD
+            Stønadstype.LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD
+        }
 
-    private fun typeVedlegg(type: Stønadstype): Dokumenttype = when (type) {
-        Stønadstype.BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD_VEDLEGG
-        Stønadstype.LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD_VEDLEGG
-    }
+    private fun typeVedlegg(type: Stønadstype): Dokumenttype =
+        when (type) {
+            Stønadstype.BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD_VEDLEGG
+            Stønadstype.LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD_VEDLEGG
+        }
 
-    private fun mapVedlegg(vedlegg: List<Vedlegg>, stønadstype: Stønadstype): List<Dokument> {
+    private fun mapVedlegg(
+        vedlegg: List<Vedlegg>,
+        stønadstype: Stønadstype,
+    ): List<Dokument> {
         if (vedlegg.isEmpty()) return emptyList()
         val dokumenttypeVedlegg = typeVedlegg(stønadstype)
         return vedlegg.map { tilDokument(it, dokumenttypeVedlegg) }
     }
 
-    private fun tilDokument(vedlegg: Vedlegg, dokumenttypeVedlegg: Dokumenttype): Dokument {
-        return Dokument(
+    private fun tilDokument(
+        vedlegg: Vedlegg,
+        dokumenttypeVedlegg: Dokumenttype,
+    ): Dokument =
+        Dokument(
             dokument = vedlegg.innhold,
             filtype = Filtype.PDFA,
             tittel = vedlegg.type.tittel,
             filnavn = vedlegg.id.toString(),
             dokumenttype = dokumenttypeVedlegg,
         )
-    }
 }
 
-fun Dokumenttype?.dokumentTittel(): String {
-    return when (this) {
+fun Dokumenttype?.dokumentTittel(): String =
+    when (this) {
         Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om støtte til pass av barn"
         Dokumenttype.LÆREMIDLER_SØKNAD -> "Søknad om støtte til læremidler"
         else -> error("Mangler mapping av $this")
     }
-}

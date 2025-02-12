@@ -20,7 +20,6 @@ import org.springframework.web.client.exchange
 import java.time.LocalDate
 
 class PersonControllerTest : IntegrationTest() {
-
     @Autowired
     lateinit var pdlClientCredentialClient: PdlClientCredentialClient
 
@@ -43,7 +42,9 @@ class PersonControllerTest : IntegrationTest() {
 
         assertThatThrownBy {
             hentPerson()
-        }.hasMessage("""401 : "{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/person"}"""")
+        }.hasMessage(
+            """401 : "{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/person"}"""",
+        )
     }
 
     @Test

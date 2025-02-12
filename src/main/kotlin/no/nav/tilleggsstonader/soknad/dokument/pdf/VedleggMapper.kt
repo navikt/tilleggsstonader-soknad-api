@@ -24,20 +24,18 @@ object VedleggMapper {
     private fun navnBarn(
         barnId: String?,
         identTilNavn: Map<String, String>,
-    ): String? {
-        return barnId?.let {
+    ): String? =
+        barnId?.let {
             identTilNavn[it] ?: error("Finner ikke barn=$barnId")
         }
-    }
 
-    private fun mapVedlegg(dokumentasjon: List<DokumentasjonFelt>): List<Dokument> {
-        return dokumentasjon.map {
+    private fun mapVedlegg(dokumentasjon: List<DokumentasjonFelt>): List<Dokument> =
+        dokumentasjon.map {
             Dokument(
                 label = it.type.tittel,
                 labelAntall = "Antall: ${it.opplastedeVedlegg.count()}",
             )
         }
-    }
 
     private fun mapBarnIdentTilNavn(søknad: Søknadsskjema<*>): Map<String, String> {
         val skjema = søknad.skjema

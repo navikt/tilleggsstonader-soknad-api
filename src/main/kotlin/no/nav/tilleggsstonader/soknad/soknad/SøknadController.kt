@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.RestController
 class SøknadController(
     private val søknadService: SøknadService,
 ) {
-
     @PostMapping("pass-av-barn")
-    fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
+    fun sendInn(
+        @RequestBody søknad: SøknadBarnetilsynDto,
+    ): Kvittering {
         val mottattTidspunkt = osloNow()
         søknadService.lagreSøknad(
             ident = EksternBrukerUtils.hentFnrFraToken(),
@@ -31,7 +32,9 @@ class SøknadController(
     }
 
     @PostMapping("laremidler")
-    fun sendInnLæremidler(@RequestBody søknad: SøknadLæremidlerDto): Kvittering {
+    fun sendInnLæremidler(
+        @RequestBody søknad: SøknadLæremidlerDto,
+    ): Kvittering {
         val mottattTidspunkt = osloNow()
         søknadService.lagreLæremidlerSøknad(
             ident = EksternBrukerUtils.hentFnrFraToken(),
