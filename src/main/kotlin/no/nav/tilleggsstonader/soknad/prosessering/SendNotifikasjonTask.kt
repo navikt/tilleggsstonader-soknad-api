@@ -29,6 +29,7 @@ class SendNotifikasjonTask(
         when (stønadstype) {
             Stønadstype.BARNETILSYN -> "Vi har mottatt søknaden din om pass av barn."
             Stønadstype.LÆREMIDLER -> "Vi har mottatt søknaden din om læremidler."
+            Stønadstype.BOUTGIFTER -> error("Har ikke laget søknad for $stønadstype")
         }
 
     companion object {

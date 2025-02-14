@@ -49,6 +49,7 @@ class PdfService(
         return when (søknad.type) {
             Stønadstype.BARNETILSYN -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaBarnetilsyn>>(json)
             Stønadstype.LÆREMIDLER -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaLæremidler>>(json)
+            Stønadstype.BOUTGIFTER -> error("Har ikke laget søknad for ${søknad.type}")
         }
     }
 }
