@@ -5,6 +5,7 @@ import no.nav.tilleggsstonader.kontrakter.dokarkiv.AvsenderMottaker
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokument
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
+import no.nav.tilleggsstonader.kontrakter.dokarkiv.dokumenttyper
 import no.nav.tilleggsstonader.kontrakter.felles.BrukerIdType
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
@@ -36,17 +37,9 @@ object ArkiverDokumentRequestMapper {
         )
     }
 
-    private fun typeHoveddokument(type: Stønadstype): Dokumenttype =
-        when (type) {
-            Stønadstype.BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD
-            Stønadstype.LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD
-        }
+    private fun typeHoveddokument(type: Stønadstype): Dokumenttype = type.dokumenttyper.søknad ?: error("Har ikke laget søknad for $type")
 
-    private fun typeVedlegg(type: Stønadstype): Dokumenttype =
-        when (type) {
-            Stønadstype.BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD_VEDLEGG
-            Stønadstype.LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD_VEDLEGG
-        }
+    private fun typeVedlegg(type: Stønadstype): Dokumenttype = type.dokumenttyper.søknadVedlegg ?: error("Har ikke laget søknad for $type")
 
     private fun mapVedlegg(
         vedlegg: List<Vedlegg>,
