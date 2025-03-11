@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.Utgifter
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMapper
 import org.springframework.stereotype.Service
@@ -45,6 +46,14 @@ class BarnetilsynMapper {
             navn = TekstFelt(labelNavn(språkkode), barn.visningsnavn),
             ident = TekstFelt(labelFødselsnummer(språkkode), it.ident),
             type = it.type,
+            utgifter =
+                it.utgifter?.harUtgifterTilPass?.let { it1 ->
+                    Utgifter(
+                        harUtgifterTilPass = it1,
+                        fom = it.utgifter.fom,
+                        tom = it.utgifter.tom,
+                    )
+                },
             startetIFemte = it.startetIFemte,
             årsak = it.årsak,
         )
