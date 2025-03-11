@@ -245,7 +245,7 @@
   },{
     "label" : "Har utgifter?",
     "verdier" : [ {
-      "verdi" : "Ja",
+      "verdi" : "Nei",
       "alternativer" : null,
       "type" : "VERDI"
     } ],
@@ -311,7 +311,7 @@
   },{
     "label" : "Har utgifter?",
     "verdier" : [ {
-      "verdi" : "Ja",
+      "verdi" : "Nei",
       "alternativer" : null,
       "type" : "VERDI"
     } ],
