@@ -51,6 +51,7 @@ class SøknadBarnetilsynDtoTest {
             BarnMedBarnepass(
                 ident = "ident",
                 type = EnumFelt("", TypeBarnepass.BARNEHAGE_SFO_AKS, "", emptyList()),
+                utgifter = Utgifter(EnumFelt(label = "", verdi = JaNei.JA, svarTekst = "", alternativer = emptyList()), null, null),
                 startetIFemte = startetIFemteklasse?.let { EnumFelt("", startetIFemteklasse, "", emptyList()) },
                 årsak = årsak,
             )

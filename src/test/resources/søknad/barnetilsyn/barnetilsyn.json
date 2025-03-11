@@ -163,6 +163,18 @@
           "svarTekst" : "Svartekst",
           "alternativer" : [ "Alt1", "Alt2" ]
         },
+        "utgifter" : {
+          "fom" : {
+            "label" : "Fra",
+            "verdi" : "2025-09-09"},
+          "harUtgifterTilPass" : {
+            "alternativer" : [],
+            "label" : "Har utgifter?",
+            "svarTekst" : "Nei",
+            "verdi" : "NEI"},
+          "tom" : {
+            "label" : "Til",
+            "verdi" : "2025-10-09"}},
         "startetIFemte" : {
           "label" : "Har startet i 5. klasse?",
           "verdi" : "JA",
@@ -190,6 +202,18 @@
           "svarTekst" : "Svartekst",
           "alternativer" : [ ]
         },
+        "utgifter" : {
+          "fom" : {
+            "label" : "Fra",
+            "verdi" : "2025-09-09"},
+          "harUtgifterTilPass" : {
+            "alternativer" : [],
+            "label" : "Har utgifter?",
+            "svarTekst" : "Nei",
+            "verdi" : "NEI"},
+          "tom" : {
+            "label" : "Til",
+            "verdi" : "2025-10-09"}},
         "startetIFemte" : {
           "label" : "Har startet i 5. klasse?",
           "verdi" : "JA",

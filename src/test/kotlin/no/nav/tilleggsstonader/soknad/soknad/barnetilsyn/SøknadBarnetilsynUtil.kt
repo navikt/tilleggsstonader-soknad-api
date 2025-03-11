@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
+import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Dokument
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
@@ -11,6 +12,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AnnenAktivitetType
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
+import java.time.LocalDate
 import java.util.UUID
 
 object SøknadBarnetilsynUtil {
@@ -81,6 +83,12 @@ object SøknadBarnetilsynUtil {
     ) = BarnMedBarnepass(
         ident = ident,
         type = type,
+        utgifter =
+            Utgifter(
+                harUtgifterTilPass = EnumFelt("Har utgifter?", JaNei.NEI, "Nei", emptyList()),
+                fom = DatoFelt(label = "Fra", LocalDate.of(2025, 9, 9)),
+                tom = DatoFelt(label = "Til", LocalDate.of(2025, 10, 9)),
+            ),
         startetIFemte = EnumFelt("Har startet i 5. klasse?", JaNei.JA, "Ja", emptyList()),
         årsak = EnumFelt("Årsak?", ÅrsakBarnepass.MYE_BORTE_ELLER_UVANLIG_ARBEIDSTID, "Mye borte", emptyList()),
     )
