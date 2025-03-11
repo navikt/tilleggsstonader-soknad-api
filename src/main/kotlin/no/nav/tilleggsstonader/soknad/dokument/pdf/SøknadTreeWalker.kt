@@ -13,6 +13,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.Utgifter
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOpphold
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
@@ -74,11 +75,11 @@ object SøknadTreeWalker {
         when (entitet) {
             is SøknadsskjemaBarnetilsyn,
             is BarnMedBarnepass,
+            is Utgifter,
             is OppholdUtenforNorge,
             is SøknadsskjemaLæremidler,
             is HarRettTilUtstyrsstipend,
             -> finnFelter(entitet, språk)
-
             is HovedytelseAvsnitt,
             is AktivitetAvsnitt,
             is BarnAvsnitt,
