@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
+import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
@@ -26,6 +27,7 @@ data class Aktivitet(
 data class BarnMedBarnepass(
     val ident: String,
     val type: EnumFelt<TypeBarnepass>,
+    val utgifter: Utgifter?,
     val startetIFemte: EnumFelt<JaNei>?,
     val årsak: EnumFelt<ÅrsakBarnepass>?,
 ) {
@@ -37,5 +39,14 @@ data class BarnMedBarnepass(
         if (startetIFemte?.verdi != JaNei.JA && årsak != null) {
             throw SøknadValideringException("Kan ikke sende inn årsak når barnet ikke har begynt i 5. klasse")
         }
+        if (utgifter?.harUtgifterTilPass?.verdi == JaNei.NEI && (utgifter.fom == null || utgifter.tom == null)) {
+            throw SøknadValideringException("Tom og Fom må ha verdi ")
+        }
     }
 }
+
+data class Utgifter(
+    val harUtgifterTilPass: EnumFelt<JaNei>,
+    val fom: DatoFelt?,
+    val tom: DatoFelt?,
+)

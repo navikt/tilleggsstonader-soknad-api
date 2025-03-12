@@ -242,7 +242,31 @@
       "type" : "VERDI"
     } ],
     "type" : "AVSNITT"
+  },{
+    "label" : "Har utgifter?",
+    "verdier" : [ {
+      "verdi" : "Nei",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  },{
+    "label" : "Fra",
+    "verdier" : [ {
+      "verdi" : "09.09.2025",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
   }, {
+    "label" : "Til",
+    "verdier" : [ {
+      "verdi" : "09.10.2025",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  },{
     "label" : "Har startet i 5. klasse?",
     "verdier" : [ {
       "verdi" : "Ja",
@@ -284,7 +308,32 @@
       "type" : "VERDI"
     } ],
     "type" : "AVSNITT"
-  }, {
+  },{
+    "label" : "Har utgifter?",
+    "verdier" : [ {
+      "verdi" : "Nei",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  },
+    {
+      "label" : "Fra",
+      "verdier" : [ {
+        "verdi" : "09.09.2025",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Til",
+      "verdier" : [ {
+        "verdi" : "09.10.2025",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    },{
     "label" : "Har startet i 5. klasse?",
     "verdier" : [ {
       "verdi" : "Ja",

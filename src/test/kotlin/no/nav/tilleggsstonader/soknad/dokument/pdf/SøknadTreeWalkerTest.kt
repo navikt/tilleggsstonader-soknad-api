@@ -47,6 +47,7 @@ class SøknadTreeWalkerTest {
             BarnMedBarnepass(
                 ident = "ident",
                 type = EnumFelt("label", TypeBarnepass.BARNEHAGE_SFO_AKS, "svar", emptyList()),
+                utgifter = null,
                 startetIFemte = null,
                 årsak = null,
             )
