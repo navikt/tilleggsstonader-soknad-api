@@ -1,11 +1,11 @@
 package no.nav.tilleggsstonader.soknad.person.pdl
 
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
+import no.nav.tilleggsstonader.libs.utils.CollectionUtil.singleOrNullOrError
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.Adressebeskyttelse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBolkResponse
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlResponse
-import no.nav.tilleggsstonader.soknad.util.CollectionUtil.singleOrNullOrError
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
