@@ -47,11 +47,11 @@ class BarnetilsynMapper {
             ident = TekstFelt(labelFødselsnummer(språkkode), it.ident),
             type = it.type,
             utgifter =
-                it.utgifter?.harUtgifterTilPass?.let { it1 ->
+                it.utgifter?.let { utgifter ->
                     Utgifter(
-                        harUtgifterTilPass = it1,
-                        fom = it.utgifter.fom,
-                        tom = it.utgifter.tom,
+                        harUtgifterTilPass = utgifter.harUtgifterTilPass,
+                        fom = utgifter.fom,
+                        tom = utgifter.tom,
                     )
                 },
             startetIFemte = it.startetIFemte,
