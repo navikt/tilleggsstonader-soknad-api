@@ -4,6 +4,7 @@ import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.core.api.Unprotected
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.libs.test.assertions.catchThrowableOfType
+import no.nav.tilleggsstonader.libs.test.httpclient.ProblemDetailUtil.catchProblemDetailException
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchException
@@ -14,6 +15,9 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON
+import org.springframework.http.ProblemDetail
+import org.springframework.http.converter.HttpMessageConversionException
+import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -113,6 +117,24 @@ class TestControllerTest : IntegrationTest() {
         assertThat(response.responseHeaders?.contentType).isEqualTo(APPLICATION_PROBLEM_JSON)
     }
 
+    @Test
+    fun `skal feile hvis påkrevd booleanfelt er null`() {
+        val entity =
+            HttpEntity(
+                "{}",
+                HttpHeaders().apply {
+                    contentType = APPLICATION_JSON
+                    accept = listOf(APPLICATION_JSON)
+                },
+            )
+
+        val exception =
+            catchProblemDetailException {
+                restTemplate.postForEntity<TestObjectBoolean>(localhost("api/test/boolean"), entity)
+            }
+        assertThat(exception.detail.detail).contains("Missing required creator property 'verdi'")
+    }
+
     private fun assertInternalServerError(response: InternalServerError) {
         assertThat(response.statusCode).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
         assertThat(response.responseHeaders?.contentType).isEqualTo(APPLICATION_PROBLEM_JSON)
@@ -153,8 +175,26 @@ class TestController {
     }
 }
 
+@RestController
+@RequestMapping("/api/test")
+@Unprotected
+class TestBooleanController {
+    @ExceptionHandler(HttpMessageConversionException::class)
+    fun handleThrowable(throwable: HttpMessageConversionException): ProblemDetail =
+        ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, throwable.message)
+
+    @PostMapping("/boolean")
+    fun boolean(
+        @RequestBody testObject: TestObjectBoolean,
+    ): TestObjectBoolean = testObject
+}
+
 data class TestObject(
     val tekst: String,
     val dato: LocalDate,
     val tidspunkt: LocalDateTime,
+)
+
+data class TestObjectBoolean(
+    val verdi: Boolean,
 )
