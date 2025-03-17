@@ -39,14 +39,14 @@ data class BarnMedBarnepass(
         if (startetIFemte?.verdi != JaNei.JA && årsak != null) {
             throw SøknadValideringException("Kan ikke sende inn årsak når barnet ikke har begynt i 5. klasse")
         }
-        if (utgifter?.harUtgifterTilPass?.verdi == JaNei.NEI && (utgifter.fom == null || utgifter.tom == null)) {
+        if (utgifter?.harUtgifterTilPassHelePerioden?.verdi == JaNei.NEI && (utgifter.fom == null || utgifter.tom == null)) {
             throw SøknadValideringException("Tom og Fom må ha verdi ")
         }
     }
 }
 
 data class Utgifter(
-    val harUtgifterTilPass: EnumFelt<JaNei>,
+    val harUtgifterTilPassHelePerioden: EnumFelt<JaNei>,
     val fom: DatoFelt?,
     val tom: DatoFelt?,
 )

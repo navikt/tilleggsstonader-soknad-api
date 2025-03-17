@@ -85,7 +85,7 @@ object SøknadBarnetilsynUtil {
         type = type,
         utgifter =
             Utgifter(
-                harUtgifterTilPass = EnumFelt("Har utgifter?", JaNei.NEI, "Nei", emptyList()),
+                harUtgifterTilPassHelePerioden = EnumFelt("Har utgifter?", JaNei.NEI, "Nei", emptyList()),
                 fom = DatoFelt(label = "Fra", LocalDate.of(2025, 9, 9)),
                 tom = DatoFelt(label = "Til", LocalDate.of(2025, 10, 9)),
             ),

@@ -49,7 +49,7 @@ class BarnetilsynMapper {
             utgifter =
                 it.utgifter?.let { utgifter ->
                     Utgifter(
-                        harUtgifterTilPassHelePerioden = utgifter.harUtgifterTilPass,
+                        harUtgifterTilPassHelePerioden = utgifter.harUtgifterTilPassHelePerioden,
                         fom = utgifter.fom,
                         tom = utgifter.tom,
                     )
