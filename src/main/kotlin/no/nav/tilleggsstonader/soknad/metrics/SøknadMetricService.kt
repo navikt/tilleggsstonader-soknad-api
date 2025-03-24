@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
 @Service
-class MetricService(
+class SøknadMetricService(
     private val søknadRepository: SøknadRepository,
 ) {
     private val antallRoutingsGauge = MultiGauge.builder("soknader_antall").register(Metrics.globalRegistry)

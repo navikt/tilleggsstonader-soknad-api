@@ -74,8 +74,8 @@ class SøknadControllerTest : IntegrationTest() {
         val request = HttpEntity<Any>(emptyMap<String, String>(), headers)
         assertThatThrownBy {
             restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
-        }.hasMessage(
-            """401 : "{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/soknad/pass-av-barn"}"""",
+        }.hasMessageContaining(
+            """"{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/soknad/pass-av-barn"}"""",
         )
     }
 
@@ -89,8 +89,8 @@ class SøknadControllerTest : IntegrationTest() {
 
         assertThatThrownBy {
             restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
-        }.hasMessage(
-            """400 : "{"type":"about:blank","title":"Bad Request","status":400,"detail":"ROUTING_GAMMEL_SØKNAD","instance":"/api/soknad/pass-av-barn"}"""",
+        }.hasMessageContaining(
+            """"{"type":"about:blank","title":"Bad Request","status":400,"detail":"ROUTING_GAMMEL_SØKNAD","instance":"/api/soknad/pass-av-barn"}"""",
         )
     }
 

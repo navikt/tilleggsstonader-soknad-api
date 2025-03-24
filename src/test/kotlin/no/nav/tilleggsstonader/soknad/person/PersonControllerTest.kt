@@ -42,8 +42,8 @@ class PersonControllerTest : IntegrationTest() {
 
         assertThatThrownBy {
             hentPerson()
-        }.hasMessage(
-            """401 : "{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/person"}"""",
+        }.hasMessageContaining(
+            """"{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/person"}"""",
         )
     }
 
