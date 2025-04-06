@@ -1,7 +1,7 @@
 val javaVersion = JavaLanguageVersion.of(21)
 val tilleggsstønaderLibsVersion = "2025.03.28-12.05.78567a42f6ae"
-val tilleggsstønaderKontrakterVersion = "2025.03.24-08.34.c5f84c4f3794"
-val familieProsesseringVersion = "2.20250324083707_24007c5"
+val tilleggsstønaderKontrakterVersion = "2025.04.04-11.57.4d5d45684538"
+val familieProsesseringVersion = "2.20250331103528_ed988de"
 val tokenSupportVersion = "5.0.24"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.20.6"
@@ -61,7 +61,7 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql")
 
     // Logging
-    implementation("net.logstash.logback:logstash-logback-encoder:8.0")
+    implementation("net.logstash.logback:logstash-logback-encoder:8.1")
 
     implementation("io.micrometer:micrometer-registry-prometheus")
 
