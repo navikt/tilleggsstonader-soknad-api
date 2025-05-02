@@ -18,10 +18,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.datasource.DataSourceTransactionManager
 import org.springframework.transaction.PlatformTransactionManager
+import org.springframework.transaction.annotation.EnableTransactionManagement
+import org.springframework.transaction.annotation.RollbackOn
 import javax.sql.DataSource
 
 @Configuration
 @EnableJdbcRepositories("no.nav.tilleggsstonader.soknad", "no.nav.familie.prosessering")
+@EnableTransactionManagement(rollbackOn = RollbackOn.ALL_EXCEPTIONS)
 class DatabaseConfiguration : AbstractJdbcConfiguration() {
     @Bean
     fun operations(dataSource: DataSource): NamedParameterJdbcOperations = NamedParameterJdbcTemplate(dataSource)
