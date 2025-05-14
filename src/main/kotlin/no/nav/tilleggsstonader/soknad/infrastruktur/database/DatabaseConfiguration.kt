@@ -11,7 +11,6 @@ import org.springframework.core.convert.converter.Converter
 import org.springframework.core.env.Environment
 import org.springframework.data.convert.ReadingConverter
 import org.springframework.data.convert.WritingConverter
-import org.springframework.data.jdbc.core.convert.JdbcCustomConversions
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations
@@ -49,15 +48,12 @@ class DatabaseConfiguration : AbstractJdbcConfiguration() {
         }
     }
 
-    @Bean
-    override fun jdbcCustomConversions(): JdbcCustomConversions =
-        JdbcCustomConversions(
-            listOf(
-                PGobjectTilJsonWrapperConverter(),
-                JsonWrapperTilPGobjectConverter(),
-                StringTilPropertiesWrapperConverter(),
-                PropertiesWrapperTilStringConverter(),
-            ),
+    override fun userConverters(): List<*> =
+        listOf(
+            PGobjectTilJsonWrapperConverter(),
+            JsonWrapperTilPGobjectConverter(),
+            StringTilPropertiesWrapperConverter(),
+            PropertiesWrapperTilStringConverter(),
         )
 
     @ReadingConverter
