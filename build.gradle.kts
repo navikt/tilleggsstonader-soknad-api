@@ -1,7 +1,7 @@
 val javaVersion = JavaLanguageVersion.of(21)
 val tilleggsstønaderLibsVersion = "2025.04.28-12.53.f687c00288d5"
-val tilleggsstønaderKontrakterVersion = "2025.04.24-13.44.e5fcab84c3fe"
-val familieProsesseringVersion = "2.20250409144459_df36248"
+val tilleggsstønaderKontrakterVersion = "2025.04.29-14.53.429d5d590bc7"
+val familieProsesseringVersion = "2.20250505123518_aa76fed"
 val tokenSupportVersion = "5.0.25"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.21.0"
@@ -21,7 +21,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.spring") version "2.1.20"
 
-    id("org.cyclonedx.bom") version "2.2.0"
+    id("org.cyclonedx.bom") version "2.3.0"
 }
 
 repositories {
@@ -82,7 +82,7 @@ dependencies {
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
-    testImplementation("io.mockk:mockk:1.14.0")
+    testImplementation("io.mockk:mockk:1.14.2")
 
     testImplementation("org.testcontainers:postgresql:$testcontainerVersion")
 
