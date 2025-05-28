@@ -69,6 +69,8 @@ spec:
         - application: tilleggsstonader-sak
         - application: familie-dokument
           namespace: teamfamilie
+        - application: logging
+          namespace: nais-system
       external:
         - host: pdl-api.dev-fss-pub.nais.io
         - host: kodeverk-api.nav.no
