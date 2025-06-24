@@ -4,8 +4,8 @@ import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
 import no.nav.tilleggsstonader.kontrakter.aktivitet.Kilde
 import no.nav.tilleggsstonader.kontrakter.aktivitet.StatusAktivitet
 import no.nav.tilleggsstonader.kontrakter.aktivitet.TypeAktivitet
-import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import java.math.BigDecimal
+import java.time.LocalDate
 
 object AktivitetArenaDtoUtil {
     fun aktivitetArenaDto(
@@ -14,8 +14,8 @@ object AktivitetArenaDtoUtil {
         type: TypeAktivitet = TypeAktivitet.JOBBK,
     ) = AktivitetArenaDto(
         id = id,
-        fom = osloDateNow(),
-        tom = osloDateNow(),
+        fom = LocalDate.now(),
+        tom = LocalDate.now(),
         type = type.name,
         typeNavn = "Type navn",
         status = StatusAktivitet.AKTUELL,

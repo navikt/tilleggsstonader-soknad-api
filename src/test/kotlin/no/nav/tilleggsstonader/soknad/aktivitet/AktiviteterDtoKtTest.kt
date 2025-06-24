@@ -3,7 +3,6 @@ package no.nav.tilleggsstonader.soknad.aktivitet
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
 import no.nav.tilleggsstonader.kontrakter.aktivitet.Kilde
 import no.nav.tilleggsstonader.kontrakter.aktivitet.StatusAktivitet
-import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -18,8 +17,8 @@ class AktiviteterDtoKtTest {
             assertThat(dto().tilDto()).isEqualTo(
                 AktivitetDto(
                     id = "1",
-                    fom = osloDateNow(),
-                    tom = osloDateNow().plusDays(1),
+                    fom = LocalDate.now(),
+                    tom = LocalDate.now().plusDays(1),
                     typeNavn = "typeNavn",
                     erUtdanning = true,
                     erUtdanningPåVgsNivå = false,
@@ -85,8 +84,8 @@ class AktiviteterDtoKtTest {
 
     fun dto(
         id: String = "1",
-        fom: LocalDate? = osloDateNow(),
-        tom: LocalDate? = osloDateNow().plusDays(1),
+        fom: LocalDate? = LocalDate.now(),
+        tom: LocalDate? = LocalDate.now().plusDays(1),
         type: String = "type",
         typeNavn: String = "typeNavn",
         status: StatusAktivitet? = null,

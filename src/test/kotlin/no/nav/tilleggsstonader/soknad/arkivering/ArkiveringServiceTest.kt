@@ -6,7 +6,6 @@ import io.mockk.mockk
 import io.mockk.slot
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentResponse
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
-import no.nav.tilleggsstonader.libs.utils.osloNow
 import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
@@ -15,6 +14,7 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
 internal class ArkiveringServiceTest {
     private val integrasjonerClient = mockk<IntegrasjonerClient>()
@@ -33,7 +33,7 @@ internal class ArkiveringServiceTest {
             søknadJson = JsonWrapper(""),
             type = Stønadstype.BARNETILSYN,
             personIdent = "1",
-            opprettetTid = osloNow(),
+            opprettetTid = LocalDateTime.now(),
             søknadPdf = byteArrayOf(12),
         )
 

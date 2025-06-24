@@ -3,10 +3,10 @@ package no.nav.tilleggsstonader.soknad.aktivitet
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
-import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class AktivitetService(
@@ -19,8 +19,8 @@ class AktivitetService(
         ident: String,
         stønadstype: Stønadstype,
     ): List<AktivitetArenaDto> {
-        val fom = osloDateNow().minusMonths(stønadstype.grunnlagAntallMånederBakITiden.toLong())
-        val tom = osloDateNow().plusMonths(3)
+        val fom = LocalDate.now().minusMonths(stønadstype.grunnlagAntallMånederBakITiden.toLong())
+        val tom = LocalDate.now().plusMonths(3)
         return aktivitetClient
             .hentAktiviteter(ident, fom, tom)
             .filter(::skalVises)

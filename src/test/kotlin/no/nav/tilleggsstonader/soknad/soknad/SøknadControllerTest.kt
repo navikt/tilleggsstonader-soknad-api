@@ -5,7 +5,6 @@ import io.mockk.every
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
-import no.nav.tilleggsstonader.libs.utils.osloDateNow
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.PdlClientConfig.Companion.resetPdlClientMock
 import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlBarn
@@ -54,7 +53,7 @@ class SøknadControllerTest : IntegrationTest() {
     fun `skal kunne sende inn en komplett søknad for barnetilsyn`() {
         val request = HttpEntity(SøknadBarnetilsynUtil.søknad, headers)
         val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
-        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(osloDateNow())
+        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
         verifiserLagretSøknad(Stønadstype.BARNETILSYN, "søknad/barnetilsyn/barnetilsyn.json")
     }
@@ -63,7 +62,7 @@ class SøknadControllerTest : IntegrationTest() {
     fun `skal kunne sende inn en komplett søknad for læremidler`() {
         val request = HttpEntity(SøknadLæremidlerUtil.søknad, headers)
         val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/laremidler"), request)
-        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(osloDateNow())
+        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
         verifiserLagretSøknad(Stønadstype.LÆREMIDLER, "søknad/læremidler/læremidler.json")
     }
