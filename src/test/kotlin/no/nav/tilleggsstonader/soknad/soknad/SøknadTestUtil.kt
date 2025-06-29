@@ -43,6 +43,7 @@ object SøknadTestUtil {
             type = stønadstype,
             personIdent = søknadsskjema.ident,
             opprettetTid = LocalDateTime.now(),
+            søknadFrontendGitHash = "aabbccd",
         )
 
     fun mapBarn(søknad: SøknadBarnetilsynDto): Map<String, Barn> =

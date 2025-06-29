@@ -43,6 +43,7 @@ class SøknadRepositoryTest : IntegrationTest() {
                 type = Stønadstype.BARNETILSYN,
                 personIdent = "123",
                 søknadJson = JsonWrapper("{}"),
+                søknadFrontendGitHash = "aabbccd",
             ),
         )
 }

@@ -49,6 +49,7 @@ class SendNotifikasjonTaskTest {
             søknadJson = JsonWrapper(""),
             type = type,
             personIdent = FNR,
+            søknadFrontendGitHash = "aabbccd",
         )
 
     companion object {
