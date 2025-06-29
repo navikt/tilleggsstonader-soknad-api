@@ -41,6 +41,8 @@ data class Søknad(
     val journalpostId: String? = null,
     @Version
     val version: Int = 0,
+    @Column("soknad_frontend_git_hash")
+    val søknadFrontendGitHash: String?,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
