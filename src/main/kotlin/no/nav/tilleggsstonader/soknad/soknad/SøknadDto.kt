@@ -31,3 +31,7 @@ data class OppholdUtenforNorgeDto(
     val fom: DatoFelt,
     val tom: DatoFelt,
 )
+
+data class SøknadMetadataDto(
+    val søknadFrontendGitHash: String?,
+)
