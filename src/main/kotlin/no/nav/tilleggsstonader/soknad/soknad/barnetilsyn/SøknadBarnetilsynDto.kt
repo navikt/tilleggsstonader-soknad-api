@@ -9,6 +9,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AnnenAktivitetType
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.HovedytelseDto
+import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 
 data class SøknadBarnetilsynDto(
@@ -16,6 +17,7 @@ data class SøknadBarnetilsynDto(
     val aktivitet: Aktivitet,
     val barnMedBarnepass: List<BarnMedBarnepass>,
     val dokumentasjon: List<DokumentasjonFelt>,
+    val søknadMetadata: SøknadMetadataDto,
 )
 
 data class Aktivitet(

@@ -11,6 +11,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AnnenAktivitetType
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
+import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 import java.time.LocalDate
 import java.util.UUID
@@ -48,6 +49,7 @@ object SøknadBarnetilsynUtil {
                     ),
                 ),
             dokumentasjon = listOf(lagDokumentasjonFelt(), lagDokumentasjonFeltBarn()),
+            søknadMetadata = SøknadMetadataDto(søknadFrontendGitHash = "aabbccd"),
         )
 
     private fun lagDokumentasjonFelt() =

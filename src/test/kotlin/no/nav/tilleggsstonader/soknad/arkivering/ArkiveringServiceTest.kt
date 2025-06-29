@@ -35,6 +35,7 @@ internal class ArkiveringServiceTest {
             personIdent = "1",
             opprettetTid = LocalDateTime.now(),
             søknadPdf = byteArrayOf(12),
+            søknadFrontendGitHash = "aabbccd",
         )
 
     val oppdaterSøknadSlot = slot<Søknad>()

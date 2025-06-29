@@ -46,6 +46,7 @@ internal class ArkiverDokumentRequestMapperTest {
         personIdent = "123",
         type = type,
         søknadPdf = byteArrayOf(12),
+        søknadFrontendGitHash = "aabbccd",
     )
 
     private fun lagVedlegg() =
