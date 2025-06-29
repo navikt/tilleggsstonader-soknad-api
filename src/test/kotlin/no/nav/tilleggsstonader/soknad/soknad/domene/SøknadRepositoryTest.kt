@@ -37,6 +37,21 @@ class SøknadRepositoryTest : IntegrationTest() {
             .containsExactly(AntallPerType(Stønadstype.BARNETILSYN, 2))
     }
 
+    @Test
+    fun `skal kunne hente gammel søknad uten søknadFrontendGitHash`() {
+        val søknad =
+            søknadRepository.insert(
+                Søknad(
+                    type = Stønadstype.BARNETILSYN,
+                    personIdent = "123",
+                    søknadJson = JsonWrapper("{}"),
+                    søknadFrontendGitHash = null,
+                ),
+            )
+
+        assertThat(søknadRepository.findByIdOrThrow(søknad.id)).isEqualTo(søknad)
+    }
+
     private fun lagreSøknad() =
         søknadRepository.insert(
             Søknad(
