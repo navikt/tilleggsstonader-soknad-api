@@ -103,6 +103,7 @@ class SøknadControllerTest : IntegrationTest() {
 
         assertThat(dbSøknad.personIdent).isEqualTo(tokenSubject)
         assertThat(dbSøknad.type).isEqualTo(stønadstype)
+        assertThat(dbSøknad.søknadFrontendGitHash).isEqualTo("aabbccd")
         try {
             FileUtil.skrivJsonTilFil(filnavn, søknadFraDb)
             assertThat(søknadFraDb).isEqualTo(objectMapper.readValue<Map<String, Any>>(FileUtil.readFile(filnavn)))

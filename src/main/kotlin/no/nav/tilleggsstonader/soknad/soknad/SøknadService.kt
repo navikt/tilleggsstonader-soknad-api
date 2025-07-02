@@ -60,6 +60,7 @@ class SøknadService(
                 type = Stønadstype.BARNETILSYN,
                 søknadsskjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
                 vedlegg = vedlegg,
+                søknadFrontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
             )
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
         taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
@@ -80,6 +81,7 @@ class SøknadService(
                 type = Stønadstype.LÆREMIDLER,
                 søknadsskjema = læremidlerMapper.map(ident, mottattTidspunkt, søknad),
                 vedlegg = vedlegg,
+                søknadFrontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
             )
 
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
@@ -120,6 +122,7 @@ class SøknadService(
         type: Stønadstype,
         søknadsskjema: Søknadsskjema<T>,
         vedlegg: List<Vedleggholder>,
+        søknadFrontendGitHash: String?,
     ): Søknad {
         val søknadDb =
             søknadRepository.insert(
@@ -127,6 +130,7 @@ class SøknadService(
                     type = type,
                     personIdent = søknadsskjema.ident,
                     søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
+                    søknadFrontendGitHash = søknadFrontendGitHash,
                 ),
             )
         lagreVedlegg(søknadDb, vedlegg)

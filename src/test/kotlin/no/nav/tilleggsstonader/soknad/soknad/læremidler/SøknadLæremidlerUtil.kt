@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.AnnenUtdanningType
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
+import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 
 object SøknadLæremidlerUtil {
@@ -56,5 +57,9 @@ object SøknadLæremidlerUtil {
                         ),
                 ),
             dokumentasjon = listOf(),
+            søknadMetadata =
+                SøknadMetadataDto(
+                    søknadFrontendGitHash = "aabbccd",
+                ),
         )
 }

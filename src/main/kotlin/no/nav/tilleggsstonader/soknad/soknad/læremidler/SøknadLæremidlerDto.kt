@@ -7,11 +7,13 @@ import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.AnnenUtdanningType
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.soknad.soknad.HovedytelseDto
+import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 
 data class SøknadLæremidlerDto(
     val hovedytelse: HovedytelseDto,
     val utdanning: Utdanning,
     val dokumentasjon: List<DokumentasjonFelt>,
+    val søknadMetadata: SøknadMetadataDto,
 )
 
 data class Utdanning(
