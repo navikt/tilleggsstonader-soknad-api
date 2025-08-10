@@ -1,8 +1,8 @@
 val javaVersion = JavaLanguageVersion.of(21)
-val tilleggsstønaderLibsVersion = "2025.06.25-07.59.55db83b77624"
-val tilleggsstønaderKontrakterVersion = "2025.07.10-14.03.c6bf32f4d884"
-val familieProsesseringVersion = "2.20250710084329_76f7728"
-val tokenSupportVersion = "5.0.30"
+val tilleggsstønaderLibsVersion = "2025.08.08-09.11.14fe5e04d153"
+val tilleggsstønaderKontrakterVersion = "2025.08.04-12.40.fe9f706295de"
+val familieProsesseringVersion = "2.20250804113739_6d49ef6"
+val tokenSupportVersion = "5.0.34"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.21.3"
 
@@ -13,11 +13,11 @@ plugins {
     application
 
     kotlin("jvm") version "2.2.0"
-    id("com.diffplug.spotless") version "7.1.0"
+    id("com.diffplug.spotless") version "7.2.1"
     id("com.github.ben-manes.versions") version "0.52.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
 
-    id("org.springframework.boot") version "3.5.3"
+    id("org.springframework.boot") version "3.5.4"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.spring") version "2.2.0"
 
@@ -82,7 +82,7 @@ dependencies {
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
-    testImplementation("io.mockk:mockk:1.14.4")
+    testImplementation("io.mockk:mockk:1.14.5")
 
     testImplementation("org.testcontainers:postgresql:$testcontainerVersion")
 
