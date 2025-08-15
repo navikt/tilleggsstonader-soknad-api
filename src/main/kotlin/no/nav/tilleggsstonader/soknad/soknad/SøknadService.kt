@@ -52,7 +52,6 @@ class SøknadService(
     ): UUID {
         val barn = personService.hentSøker(Fødselsnummer(ident), medBarn = true).barn.associateBy { it.ident }
         verifiserHarGyldigeBarn(søknad, barn)
-        // todo verifiser valgte aktiviteter
 
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
         val opprettetSøknad =
@@ -74,7 +73,6 @@ class SøknadService(
         søknad: SøknadLæremidlerDto,
     ): UUID {
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
-        // todo verifiser valgte aktiviteter
 
         val opprettetSøknad =
             lagreSøknad(
