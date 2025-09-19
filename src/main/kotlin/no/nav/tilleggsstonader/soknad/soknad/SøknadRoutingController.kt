@@ -1,8 +1,6 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.soknad.sak.SaksbehandlingClient
 import org.springframework.validation.annotation.Validated
@@ -24,9 +22,9 @@ class SøknadRoutingController(
     ): RoutingResponse {
         val skalRoutesTilNyLøsning =
             saksbehandlingClient.skalRoutesTilNyLøsning(
-                IdentStønadstype(
+                RoutingRequest(
                     ident = EksternBrukerUtils.hentFnrFraToken(),
-                    stønadstype = request.stønadstype,
+                    søknadsType = request.søknadsType,
                 ),
             )
         return RoutingResponse(skalBehandlesINyLøsning = skalRoutesTilNyLøsning)
@@ -34,9 +32,17 @@ class SøknadRoutingController(
 }
 
 data class RoutingRequest(
-    val stønadstype: Stønadstype,
+    val ident: String,
+    val søknadsType: SøknadsType,
 )
 
 data class RoutingResponse(
     val skalBehandlesINyLøsning: Boolean,
 )
+
+enum class SøknadsType {
+    BARNETILSYN,
+    LÆREMIDLER,
+    BOUTGIFTER,
+    DAGLIG_REISE,
+}

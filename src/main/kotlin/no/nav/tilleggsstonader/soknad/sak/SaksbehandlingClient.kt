@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.sak
 import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
 import no.nav.tilleggsstonader.kontrakter.sak.journalføring.HåndterSøknadRequest
 import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
+import no.nav.tilleggsstonader.soknad.soknad.RoutingRequest
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -28,7 +29,7 @@ class SaksbehandlingClient(
         postForEntityNullable<Void>(uri, request)
     }
 
-    fun skalRoutesTilNyLøsning(request: IdentStønadstype): Boolean {
+    fun skalRoutesTilNyLøsning(request: RoutingRequest): Boolean {
         val uri =
             UriComponentsBuilder
                 .fromUri(sakUri.toUri())
