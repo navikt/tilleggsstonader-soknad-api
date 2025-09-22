@@ -119,5 +119,10 @@ tasks.bootJar {
 }
 
 tasks.cyclonedxBom {
-    setIncludeConfigs(listOf("runtimeClasspath", "compileClasspath"))
+    includeConfigs.set(listOf("runtimeClasspath", "compileClasspath"))
+}
+
+// håndter duplikate SBOM-filer
+tasks.processResources {
+    duplicatesStrategy = DuplicatesStrategy.WARN
 }
