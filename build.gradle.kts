@@ -21,7 +21,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.spring") version "2.2.20"
 
-    id("org.cyclonedx.bom") version "2.4.0"
+    id("org.cyclonedx.bom") version "2.4.1"
 }
 
 repositories {
@@ -120,9 +120,4 @@ tasks.bootJar {
 
 tasks.cyclonedxBom {
     includeConfigs.set(listOf("runtimeClasspath", "compileClasspath"))
-}
-
-// håndter duplikate SBOM-filer
-tasks.processResources {
-    duplicatesStrategy = DuplicatesStrategy.WARN
 }
