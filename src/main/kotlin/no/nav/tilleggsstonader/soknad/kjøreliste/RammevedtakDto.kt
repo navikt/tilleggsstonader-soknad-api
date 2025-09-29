@@ -67,7 +67,7 @@ val rammevedtakDtoMock =
             tom = LocalDate.of(2025, 2, 16),
             reisedagerPerUke = 3,
             aktivitetsadresse = "Drammensveien 1, 0356 Oslo",
-            aktivitetsnavn = "Tilltak",
+            aktivitetsnavn = "Tiltak",
             uker =
                 listOf(
                     RammevedtakUkeDto(
