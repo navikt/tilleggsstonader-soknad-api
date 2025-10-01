@@ -19,10 +19,6 @@ class ArkiverSøknadTask(
         arkiveringService.journalførSøknad(søknadId, task.callId)
     }
 
-    override fun onCompletion(task: Task) {
-        taskService.save(SendTilSaksbehandlingTask.opprettTask(task))
-    }
-
     companion object {
         const val TYPE = "ARKIVER_SØKNAD"
 
