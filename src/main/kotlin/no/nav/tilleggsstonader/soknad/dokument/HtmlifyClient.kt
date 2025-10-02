@@ -24,13 +24,14 @@ class HtmlifyClient(
         felter: List<HtmlFelt>,
         mottattTidspunkt: LocalDateTime,
         dokumentasjon: List<DokumentasjonAvsnitt>,
+        dokumentBrevkode: DokumentBrevkode,
     ): String =
         postForEntity<String>(
             UriComponentsBuilder.fromUri(uri).pathSegment("api", "soknad").toUriString(),
             mapOf(
                 "type" to stønadstype,
                 "tittel" to tittel,
-                "skjemanummer" to DokumentBrevkode.valueOf(stønadstype.name).verdi,
+                "skjemanummer" to dokumentBrevkode.verdi,
                 "mottattTidspunkt" to mottattTidspunkt,
                 "felter" to felter,
                 "dokumentasjon" to dokumentasjon,

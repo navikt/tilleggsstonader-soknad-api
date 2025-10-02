@@ -13,6 +13,8 @@ import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ÅrsakOppholdUtenforNorge
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
+import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteDto
+import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteMapper
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
@@ -25,9 +27,13 @@ import java.time.LocalDateTime
 object SøknadTestUtil {
     private val mottattTidspunkt = LocalDateTime.of(2023, 1, 1, 12, 13, 0)
 
+    fun lagSøknad(kjørelisteDto: KjørelisteDto): Søknad = lagSøknad(Stønadstype.DAGLIG_REISE_TSO, lagSøknadsskjema(kjørelisteDto))
+
     fun lagSøknad(søknadDto: SøknadBarnetilsynDto): Søknad = lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsskjema(søknadDto))
 
     fun lagSøknad(søknadDto: SøknadLæremidlerDto): Søknad = lagSøknad(Stønadstype.LÆREMIDLER, lagSøknadsskjema(søknadDto))
+
+    fun lagSøknadsskjema(kjørelisteDto: KjørelisteDto) = KjørelisteMapper.map("25518735813", mottattTidspunkt, kjørelisteDto)
 
     fun lagSøknadsskjema(søknadDto: SøknadBarnetilsynDto) =
         BarnetilsynMapper().map("25518735813", mottattTidspunkt, mapBarn(søknadDto), søknadDto)

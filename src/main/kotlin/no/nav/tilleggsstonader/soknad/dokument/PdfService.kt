@@ -3,6 +3,8 @@ package no.nav.tilleggsstonader.soknad.dokument
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.sak.DokumentBrevkode
+import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
@@ -34,10 +36,20 @@ class PdfService(
                 felter = felter,
                 mottattTidspunkt = søknadsskjema.mottattTidspunkt,
                 dokumentasjon = mapVedlegg(søknadsskjema),
+                dokumentBrevkode = dokumentBrevKode(søknadsskjema),
             )
         val pdf = dokumentClient.genererPdf(html)
         søknadService.oppdaterSøknad(søknad.copy(søknadPdf = pdf))
     }
+
+    // TODO - mappe dokumentbrevkode fra skjematype
+    private fun dokumentBrevKode(søknadsskjema: Søknadsskjema<*>): DokumentBrevkode =
+        when (søknadsskjema.skjema) {
+            is SøknadsskjemaBarnetilsyn -> DokumentBrevkode.BARNETILSYN
+            is SøknadsskjemaLæremidler -> DokumentBrevkode.LÆREMIDLER
+            is KjørelisteSkjema -> DokumentBrevkode.DAGLIG_REISE_KJØRELISTE
+            else -> error("Ingen dokumentbrevkode for skjema ${søknadsskjema.skjema::class.qualifiedName}")
+        }
 
     private fun hentSøkerinformasjon(søknad: Søknad): Søkerinformasjon {
         val navn = personService.hentNavnMedClientCredential(søknad.personIdent)
@@ -49,7 +61,8 @@ class PdfService(
         return when (søknad.type) {
             Stønadstype.BARNETILSYN -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaBarnetilsyn>>(json)
             Stønadstype.LÆREMIDLER -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaLæremidler>>(json)
-            Stønadstype.BOUTGIFTER, Stønadstype.DAGLIG_REISE_TSO, Stønadstype.DAGLIG_REISE_TSR ->
+            Stønadstype.DAGLIG_REISE_TSO, Stønadstype.DAGLIG_REISE_TSR -> objectMapper.readValue<Søknadsskjema<KjørelisteSkjema>>(json)
+            Stønadstype.BOUTGIFTER ->
                 error("Har ikke laget søknad for ${søknad.type}")
         }
     }

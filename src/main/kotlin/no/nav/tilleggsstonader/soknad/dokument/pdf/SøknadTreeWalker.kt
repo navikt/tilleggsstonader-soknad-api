@@ -5,11 +5,15 @@ import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
+import no.nav.tilleggsstonader.kontrakter.søknad.NumeriskFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.Reisedag
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.UkeMedReisedager
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
@@ -79,6 +83,8 @@ object SøknadTreeWalker {
             is OppholdUtenforNorge,
             is SøknadsskjemaLæremidler,
             is HarRettTilUtstyrsstipend,
+            is KjørelisteSkjema,
+            is Reisedag,
             -> finnFelter(entitet, språk)
             is HovedytelseAvsnitt,
             is AktivitetAvsnitt,
@@ -86,10 +92,13 @@ object SøknadTreeWalker {
             is UtdanningAvsnitt,
             is ArbeidOgOpphold,
             -> listOf(Avsnitt(label = tittelAvsnitt(entitet, språk), verdier = finnFelter(entitet, språk)))
+            is UkeMedReisedager,
+            -> listOf(Avsnitt(label = entitet.ukeLabel, verdier = mapListe(entitet.reisedager, språk)))
 
             is ListeMedTittel -> listOf(Avsnitt(entitet.tittel, mapListe(entitet.list, språk)))
             is List<*> -> mapListe(entitet, språk)
 
+            is NumeriskFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is TekstFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is SelectFelt<*> -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst)))))
             is DatoFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))

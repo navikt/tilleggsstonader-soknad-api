@@ -11,6 +11,8 @@ import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.dokument.FamilieVedleggClient
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
+import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteDto
+import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteMapper
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.prosessering.LagPdfTask
@@ -85,6 +87,33 @@ class SøknadService(
         taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
         taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
         return opprettetSøknad.id
+    }
+
+    @Transactional
+    fun lagreKjøreliste(
+        ident: String,
+        mottattTidspunkt: LocalDateTime,
+        kjøreliste: KjørelisteDto,
+    ): UUID {
+        val vedlegg = hentVedlegg(kjøreliste.dokumentasjon)
+        val stønadstype = finnStønadstypeForKjøreliste(kjøreliste)
+
+        val opprettetSøknad =
+            lagreSøknad(
+                type = stønadstype,
+                søknadsskjema = KjørelisteMapper.map(ident, mottattTidspunkt, kjøreliste),
+                vedlegg = vedlegg,
+                søknadFrontendGitHash = kjøreliste.søknadMetadata.søknadFrontendGitHash,
+            )
+
+        taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
+        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
+        return opprettetSøknad.id
+    }
+
+    private fun finnStønadstypeForKjøreliste(kjøreliste: KjørelisteDto): Stønadstype {
+        // TODO - hente stønadstype for rammevedtak
+        return Stønadstype.DAGLIG_REISE_TSO
     }
 
     private fun hentVedlegg(dokumentasjon: List<DokumentasjonFelt>): List<Vedleggholder> =

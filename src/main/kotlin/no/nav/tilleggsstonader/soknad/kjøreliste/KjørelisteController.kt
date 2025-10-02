@@ -2,6 +2,7 @@ package no.nav.tilleggsstonader.soknad.kjøreliste
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
+import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -16,7 +17,9 @@ import kotlin.random.Random
 @RequestMapping("api/kjorelister")
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
-class KjørelisteController {
+class KjørelisteController(
+    private val søknadService: SøknadService,
+) {
     @GetMapping("alle-rammevedtak")
     fun hentAlleRammevedtak(): List<RammevedtakDto> = rammevedtakDtoMock
 
@@ -25,12 +28,21 @@ class KjørelisteController {
         @PathVariable rammevedtakId: String,
     ): RammevedtakDto? = rammevedtakDtoMock.find { rammevedtak -> rammevedtak.id == rammevedtakId }
 
-    @PostMapping()
+    @PostMapping
     fun mottaKjørelister(
-        @RequestBody request: Kjøreliste,
+        @RequestBody kjørelisteDto: KjørelisteDto,
     ): KjørelisteResponse {
-        val mottattTidspunkt = LocalDateTime.now()
+        søknadService.lagreKjøreliste(
+            ident = EksternBrukerUtils.hentFnrFraToken(),
+            mottattTidspunkt = LocalDateTime.now(),
+            kjøreliste = kjørelisteDto,
+        )
+
+        // TODO - hente saksnummer fra rammevedtak
         val saksnummer = Random.nextInt(1000, 10000)
-        return KjørelisteResponse(mottattTidspunkt, saksnummer)
+        return KjørelisteResponse(
+            mottattTidspunkt = LocalDateTime.now(),
+            saksnummer = saksnummer,
+        )
     }
 }
