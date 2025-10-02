@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
+import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
@@ -36,6 +37,10 @@ object SpråkMapper {
             SøknadsskjemaLæremidler::class to
                 mapOf(
                     Språkkode.NB to "Søknad om støtte til læremidler",
+                ),
+            KjørelisteSkjema::class to
+                mapOf(
+                    Språkkode.NB to "Refusjon av utgifter til daglig reise med bruk av egen bil",
                 ),
         )
 
