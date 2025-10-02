@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.sak
 
+import no.nav.tilleggsstonader.kontrakter.felles.IdentSkjematype
 import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
 import no.nav.tilleggsstonader.kontrakter.sak.journalføring.HåndterSøknadRequest
 import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
@@ -33,6 +34,16 @@ class SaksbehandlingClient(
             UriComponentsBuilder
                 .fromUri(sakUri.toUri())
                 .pathSegment("routing-soknad")
+                .build()
+                .toUriString()
+        return postForEntity<SkalRoutesINyLøsning>(uri, request).skalBehandlesINyLøsning
+    }
+
+    fun skalRoutesTilNyLøsning(request: IdentSkjematype): Boolean {
+        val uri =
+            UriComponentsBuilder
+                .fromUri(sakUri.toUri())
+                .pathSegment("skjema-routing")
                 .build()
                 .toUriString()
         return postForEntity<SkalRoutesINyLøsning>(uri, request).skalBehandlesINyLøsning

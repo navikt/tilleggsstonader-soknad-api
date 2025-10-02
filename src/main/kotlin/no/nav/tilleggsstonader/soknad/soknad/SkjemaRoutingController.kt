@@ -1,8 +1,8 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.IdentSkjematype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.soknad.sak.SaksbehandlingClient
 import org.springframework.validation.annotation.Validated
@@ -12,35 +12,31 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("api/soknad-routing")
+@RequestMapping("api/skjema-routing")
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
-@Deprecated(
-    "Nyere versjon finnes, denne lever i parallell en liten tid pga expand and contract",
-    replaceWith = ReplaceWith("no.nav.tilleggsstonader.soknad.soknad.SkjemaRoutingController"),
-)
-class SøknadRoutingController(
+class SkjemaRoutingController(
     private val saksbehandlingClient: SaksbehandlingClient,
 ) {
     @PostMapping
-    fun sjekkRoutingForPerson(
-        @RequestBody request: RoutingRequest,
-    ): RoutingResponse {
+    fun skalBrukerRoutesTilNyLøsning(
+        @RequestBody request: SkjemaRoutingRequest,
+    ): SkjemaRoutingResponse {
         val skalRoutesTilNyLøsning =
             saksbehandlingClient.skalRoutesTilNyLøsning(
-                IdentStønadstype(
+                IdentSkjematype(
                     ident = EksternBrukerUtils.hentFnrFraToken(),
-                    stønadstype = request.stønadstype,
+                    skjematype = request.skjematype,
                 ),
             )
-        return RoutingResponse(skalBehandlesINyLøsning = skalRoutesTilNyLøsning)
+        return SkjemaRoutingResponse(skalRoutesTilNyLøsning)
     }
 }
 
-data class RoutingRequest(
-    val stønadstype: Stønadstype,
+data class SkjemaRoutingResponse(
+    val skalBehandlesINyLøsning: Boolean,
 )
 
-data class RoutingResponse(
-    val skalBehandlesINyLøsning: Boolean,
+data class SkjemaRoutingRequest(
+    val skjematype: Skjematype,
 )
