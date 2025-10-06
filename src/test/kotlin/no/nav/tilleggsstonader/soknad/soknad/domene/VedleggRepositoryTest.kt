@@ -35,10 +35,10 @@ class VedleggRepositoryTest : IntegrationTest() {
             val vedlegg2 = lagreVedlegg(søknad)
             val vedlegg3 = lagreVedlegg(søknad2)
 
-            assertThat(vedleggRepository.findBySøknadId(søknad.id).map { it.id })
+            assertThat(vedleggRepository.findBySkjemaId(søknad.id).map { it.id })
                 .containsExactlyInAnyOrder(vedlegg.id, vedlegg2.id)
 
-            assertThat(vedleggRepository.findBySøknadId(søknad2.id).map { it.id })
+            assertThat(vedleggRepository.findBySkjemaId(søknad2.id).map { it.id })
                 .containsExactlyInAnyOrder(vedlegg3.id)
         }
     }
@@ -47,7 +47,7 @@ class VedleggRepositoryTest : IntegrationTest() {
         vedleggRepository.insert(
             Vedlegg(
                 id = UUID.randomUUID(),
-                søknadId = skjema.id,
+                skjemaId = skjema.id,
                 type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
                 navn = "charlie.pdf",
                 innhold = byteArrayOf(13),

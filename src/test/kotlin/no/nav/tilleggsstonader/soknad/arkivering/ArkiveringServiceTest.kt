@@ -44,7 +44,7 @@ internal class ArkiveringServiceTest {
     fun setUp() {
         oppdaterSkjemaSlot.clear()
         every { skjemaService.hentSkjema(skjema.id) } returns skjema
-        every { vedleggRepository.findBySøknadId(skjema.id) } returns emptyList()
+        every { vedleggRepository.findBySkjemaId(skjema.id) } returns emptyList()
         justRun { skjemaService.oppdaterSkjema(capture(oppdaterSkjemaSlot)) }
     }
 

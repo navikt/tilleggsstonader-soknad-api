@@ -19,7 +19,7 @@ class ArkiveringService(
         callId: String,
     ) {
         val søknad = skjemaService.hentSkjema(søknadId)
-        val vedlegg = vedleggRepository.findBySøknadId(søknadId)
+        val vedlegg = vedleggRepository.findBySkjemaId(søknadId)
         val journalpostId: String = send(søknad, vedlegg)
 
         skjemaService.oppdaterSkjema(søknad.copy(journalpostId = journalpostId))

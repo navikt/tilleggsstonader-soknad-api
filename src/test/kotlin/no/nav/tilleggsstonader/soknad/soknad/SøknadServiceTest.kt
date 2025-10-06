@@ -95,7 +95,7 @@ class SøknadServiceTest {
             val lagretVedlegg = vedleggSlot.captured.single()
             assertThat(lagretVedlegg.id).isEqualTo(vedlegg.id)
             assertThat(lagretVedlegg.type).isEqualTo(Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE)
-            assertThat(lagretVedlegg.søknadId).isEqualTo(søknadId)
+            assertThat(lagretVedlegg.skjemaId).isEqualTo(søknadId)
             assertThat(lagretVedlegg.navn).isEqualTo(vedlegg.navn)
             assertThat(lagretVedlegg.innhold).isEqualTo(byteArrayOf(12))
         }

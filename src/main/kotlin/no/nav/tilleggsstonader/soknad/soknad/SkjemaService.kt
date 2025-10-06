@@ -172,7 +172,7 @@ class SkjemaService(
             vedlegg.map {
                 Vedlegg(
                     id = it.id,
-                    søknadId = skjemaDb.id,
+                    skjemaId = skjemaDb.id,
                     type = it.type,
                     navn = it.navn,
                     innhold = it.data,
