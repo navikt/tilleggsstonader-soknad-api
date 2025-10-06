@@ -20,14 +20,14 @@ object ArkiverDokumentRequestMapper {
         val dokumenttype = typeHoveddokument(skjema.type)
         val søknadsdokumentJson =
             Dokument(
-                skjema.søknadJson.json.toByteArray(),
+                skjema.skjemaJson.json.toByteArray(),
                 Filtype.JSON,
                 null,
                 dokumenttype.dokumentTittel(),
                 dokumenttype,
             )
         val søknadsdokumentPdf =
-            Dokument(skjema.søknadPdf!!, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
+            Dokument(skjema.skjemaPdf!!, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
         return ArkiverDokumentRequest(
             fnr = skjema.personIdent,
             forsøkFerdigstill = false,

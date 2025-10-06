@@ -15,7 +15,7 @@ import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
-import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
+import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
 import org.assertj.core.api.Assertions.assertThat
@@ -29,14 +29,14 @@ import java.util.UUID
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg as VedleggDomene
 
 class SøknadServiceTest {
-    private val søknadRepository = mockk<SøknadRepository>()
+    private val skjemaRepository = mockk<SkjemaRepository>()
     private val vedleggRepository = mockk<VedleggRepository>()
     private val personService = mockk<PersonService>()
     private val familieVedleggClient = mockk<FamilieVedleggClient>()
 
     private val service =
-        SøknadService(
-            søknadRepository = søknadRepository,
+        SkjemaService(
+            skjemaRepository = skjemaRepository,
             vedleggRepository = vedleggRepository,
             barnetilsynMapper = BarnetilsynMapper(),
             læremidlerMapper = LæremidlerMapper(),
@@ -53,7 +53,7 @@ class SøknadServiceTest {
 
     @BeforeEach
     fun setUp() {
-        every { søknadRepository.insert(any()) } answers { firstArg() }
+        every { skjemaRepository.insert(any()) } answers { firstArg() }
         every { person.barn } returns
             søknad.barnMedBarnepass.map {
                 Barn(
@@ -73,7 +73,7 @@ class SøknadServiceTest {
         every { person.barn } returns emptyList()
 
         assertThatThrownBy {
-            service.lagreSøknad(ident = personIdent, mottattTidspunkt = LocalDateTime.now(), søknad = søknad)
+            service.lagreSøknadTilsynBarn(ident = personIdent, mottattTidspunkt = LocalDateTime.now(), søknad = søknad)
         }.hasMessageContaining("Prøver å sende inn identer på barnen")
     }
 
@@ -86,7 +86,7 @@ class SøknadServiceTest {
 
             val dokumentasjon = lagDokumentasjonFelt(vedlegg)
             val søknadId =
-                service.lagreSøknad(
+                service.lagreSøknadTilsynBarn(
                     ident = personIdent,
                     mottattTidspunkt = LocalDateTime.now(),
                     søknad = søknad.copy(dokumentasjon = dokumentasjon),
@@ -107,7 +107,7 @@ class SøknadServiceTest {
 
             val dokumentasjon = lagDokumentasjonFelt(vedlegg)
             assertThatThrownBy {
-                service.lagreSøknad(
+                service.lagreSøknadTilsynBarn(
                     ident = personIdent,
                     mottattTidspunkt = LocalDateTime.now(),
                     søknad = søknad.copy(dokumentasjon = dokumentasjon),

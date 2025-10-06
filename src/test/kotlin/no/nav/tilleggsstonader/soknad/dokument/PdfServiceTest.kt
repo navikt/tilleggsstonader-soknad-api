@@ -6,7 +6,7 @@ import io.mockk.mockk
 import io.mockk.slot
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.soknad.person.PersonService
-import no.nav.tilleggsstonader.soknad.soknad.SøknadService
+import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknad
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
@@ -27,12 +27,12 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import java.net.URI
 
 class PdfServiceTest {
-    private val søknadService = mockk<SøknadService>()
+    private val skjemaService = mockk<SkjemaService>()
     private val familieDokumentClient = mockk<FamilieDokumentClient>()
     private val htmlifyClient = lagHtmlifyClient()
     private val personService = mockk<PersonService>()
 
-    private val pdfService = PdfService(søknadService, personService, htmlifyClient, familieDokumentClient)
+    private val pdfService = PdfService(skjemaService, personService, htmlifyClient, familieDokumentClient)
 
     val oppdaterSkjemaSlot = slot<Skjema>()
 
@@ -41,7 +41,7 @@ class PdfServiceTest {
 
     @BeforeEach
     fun setUp() {
-        justRun { søknadService.oppdaterSøknad(capture(oppdaterSkjemaSlot)) }
+        justRun { skjemaService.oppdaterSkjema(capture(oppdaterSkjemaSlot)) }
         every { personService.hentNavnMedClientCredential(any()) } returns "Fornavn etternavn"
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
     }
@@ -52,23 +52,23 @@ class PdfServiceTest {
         @Test
         fun `skal lage pdf fra barnetilsyn`() {
             val søknad = lagSøknad(SøknadBarnetilsynUtil.søknad)
-            every { søknadService.hentSøknad(søknad.id) } returns søknad
+            every { skjemaService.hentSkjema(søknad.id) } returns søknad
 
             pdfService.lagPdf(søknad.id)
 
             assertGenerertHtml("søknad/barnetilsyn/barnetilsyn.html")
-            assertThat(oppdaterSkjemaSlot.captured.søknadPdf).isEqualTo(pdfBytes)
+            assertThat(oppdaterSkjemaSlot.captured.skjemaPdf).isEqualTo(pdfBytes)
         }
 
         @Test
         fun `skal lage pdf fra læremidler`() {
             val søknad = lagSøknad(SøknadLæremidlerUtil.søknad)
-            every { søknadService.hentSøknad(søknad.id) } returns søknad
+            every { skjemaService.hentSkjema(søknad.id) } returns søknad
 
             pdfService.lagPdf(søknad.id)
 
             assertGenerertHtml("søknad/læremidler/læremidler.html")
-            assertThat(oppdaterSkjemaSlot.captured.søknadPdf).isEqualTo(pdfBytes)
+            assertThat(oppdaterSkjemaSlot.captured.skjemaPdf).isEqualTo(pdfBytes)
         }
     }
 

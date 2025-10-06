@@ -2,7 +2,7 @@ package no.nav.tilleggsstonader.soknad.kjøreliste
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
-import no.nav.tilleggsstonader.soknad.soknad.SøknadService
+import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -18,7 +18,7 @@ import kotlin.random.Random
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
 class KjørelisteController(
-    private val søknadService: SøknadService,
+    private val skjemaService: SkjemaService,
 ) {
     @GetMapping("alle-rammevedtak")
     fun hentAlleRammevedtak(): List<RammevedtakDto> = rammevedtakDtoMock
@@ -32,7 +32,7 @@ class KjørelisteController(
     fun mottaKjørelister(
         @RequestBody kjørelisteDto: KjørelisteDto,
     ): KjørelisteResponse {
-        søknadService.lagreKjøreliste(
+        skjemaService.lagreKjøreliste(
             ident = EksternBrukerUtils.hentFnrFraToken(),
             mottattTidspunkt = LocalDateTime.now(),
             kjøreliste = kjørelisteDto,

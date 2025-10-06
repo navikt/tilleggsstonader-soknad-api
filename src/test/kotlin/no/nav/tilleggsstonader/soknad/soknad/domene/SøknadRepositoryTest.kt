@@ -12,20 +12,20 @@ import org.springframework.dao.OptimisticLockingFailureException
 
 class SøknadRepositoryTest : IntegrationTest() {
     @Autowired
-    lateinit var søknadRepository: SøknadRepository
+    lateinit var skjemaRepository: SkjemaRepository
 
     @Test
     fun `skal kunne lagre og hente søknad`() {
         val søknad = lagreSøknad()
-        assertThat(søknadRepository.findByIdOrThrow(søknad.id)).isEqualTo(søknad)
+        assertThat(skjemaRepository.findByIdOrThrow(søknad.id)).isEqualTo(søknad)
     }
 
     @Test
     fun `skal ikke kunne lagre en søknad med samme versjon 2 ganger`() {
         val søknad = lagreSøknad()
-        søknadRepository.update(søknad)
+        skjemaRepository.update(søknad)
         assertThatThrownBy {
-            søknadRepository.update(søknad)
+            skjemaRepository.update(søknad)
         }.isInstanceOf(OptimisticLockingFailureException::class.java)
     }
 
@@ -33,32 +33,32 @@ class SøknadRepositoryTest : IntegrationTest() {
     fun `skal finne antall søknader per type`() {
         lagreSøknad()
         lagreSøknad()
-        assertThat(søknadRepository.finnAntallPerType())
+        assertThat(skjemaRepository.finnAntallPerType())
             .containsExactly(AntallPerType(Stønadstype.BARNETILSYN, 2))
     }
 
     @Test
     fun `skal kunne hente gammel søknad uten søknadFrontendGitHash`() {
         val skjema =
-            søknadRepository.insert(
+            skjemaRepository.insert(
                 Skjema(
                     type = Stønadstype.BARNETILSYN,
                     personIdent = "123",
-                    søknadJson = JsonWrapper("{}"),
-                    søknadFrontendGitHash = null,
+                    skjemaJson = JsonWrapper("{}"),
+                    frontendGitHash = null,
                 ),
             )
 
-        assertThat(søknadRepository.findByIdOrThrow(skjema.id)).isEqualTo(skjema)
+        assertThat(skjemaRepository.findByIdOrThrow(skjema.id)).isEqualTo(skjema)
     }
 
     private fun lagreSøknad() =
-        søknadRepository.insert(
+        skjemaRepository.insert(
             Skjema(
                 type = Stønadstype.BARNETILSYN,
                 personIdent = "123",
-                søknadJson = JsonWrapper("{}"),
-                søknadFrontendGitHash = "aabbccd",
+                skjemaJson = JsonWrapper("{}"),
+                frontendGitHash = "aabbccd",
             ),
         )
 }

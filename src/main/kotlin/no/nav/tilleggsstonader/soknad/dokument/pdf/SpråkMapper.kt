@@ -1,8 +1,8 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
+import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
@@ -14,7 +14,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
 import kotlin.reflect.KClass
 
 object SpråkMapper {
-    fun tittelSøknadsskjema(søknad: Søknadsskjema<*>): String {
+    fun tittelSøknadsskjema(søknad: InnsendtSkjema<*>): String {
         val kClass = søknad.skjema::class
         val språk = søknad.språk
         return tittelSøknadsskjemaMapper[kClass]?.get(språk)

@@ -13,7 +13,7 @@ import java.util.UUID
 
 class VedleggRepositoryTest : IntegrationTest() {
     @Autowired
-    lateinit var søknadRepository: SøknadRepository
+    lateinit var skjemaRepository: SkjemaRepository
 
     @Autowired
     lateinit var vedleggRepository: VedleggRepository
@@ -55,12 +55,12 @@ class VedleggRepositoryTest : IntegrationTest() {
         )
 
     private fun lagreSøknad() =
-        søknadRepository.insert(
+        skjemaRepository.insert(
             Skjema(
                 type = Stønadstype.BARNETILSYN,
                 personIdent = "123",
-                søknadJson = JsonWrapper("{}"),
-                søknadFrontendGitHash = "aabbccd",
+                skjemaJson = JsonWrapper("{}"),
+                frontendGitHash = "aabbccd",
             ),
         )
 }

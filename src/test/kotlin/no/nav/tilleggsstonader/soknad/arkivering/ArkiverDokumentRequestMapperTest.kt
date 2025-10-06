@@ -42,11 +42,11 @@ internal class ArkiverDokumentRequestMapperTest {
         søknad: Any,
         type: Stønadstype,
     ) = Skjema(
-        søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknad)),
+        skjemaJson = JsonWrapper(objectMapper.writeValueAsString(søknad)),
         personIdent = "123",
         type = type,
-        søknadPdf = byteArrayOf(12),
-        søknadFrontendGitHash = "aabbccd",
+        skjemaPdf = byteArrayOf(12),
+        frontendGitHash = "aabbccd",
     )
 
     private fun lagVedlegg() =

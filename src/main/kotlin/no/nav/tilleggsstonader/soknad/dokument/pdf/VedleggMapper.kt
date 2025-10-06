@@ -2,13 +2,13 @@ package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
+import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.soknad.dokument.Dokument
 import no.nav.tilleggsstonader.soknad.dokument.DokumentasjonAvsnitt
 
 object VedleggMapper {
-    fun mapVedlegg(søknad: Søknadsskjema<*>): List<DokumentasjonAvsnitt> {
+    fun mapVedlegg(søknad: InnsendtSkjema<*>): List<DokumentasjonAvsnitt> {
         require(søknad.språk == Språkkode.NB) {
             "Må legge inn mapping av språk ${søknad.språk} for vedlegg: tittel, har sendt inn tidligere "
         }
@@ -37,7 +37,7 @@ object VedleggMapper {
             )
         }
 
-    private fun mapBarnIdentTilNavn(søknad: Søknadsskjema<*>): Map<String, String> {
+    private fun mapBarnIdentTilNavn(søknad: InnsendtSkjema<*>): Map<String, String> {
         val skjema = søknad.skjema
         return if (skjema is SøknadsskjemaBarnetilsyn) {
             skjema.barn.barnMedBarnepass.associate { it.ident.verdi to it.navn.verdi }

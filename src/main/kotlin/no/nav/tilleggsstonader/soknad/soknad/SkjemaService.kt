@@ -4,8 +4,8 @@ import no.nav.familie.prosessering.internal.TaskService
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Skjemadata
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.dokument.FamilieVedleggClient
@@ -20,7 +20,7 @@ import no.nav.tilleggsstonader.soknad.prosessering.SendNotifikasjonTask
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
-import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
+import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
@@ -31,8 +31,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
-class SøknadService(
-    private val søknadRepository: SøknadRepository,
+class SkjemaService(
+    private val skjemaRepository: SkjemaRepository,
     private val vedleggRepository: VedleggRepository,
     private val barnetilsynMapper: BarnetilsynMapper,
     private val læremidlerMapper: LæremidlerMapper,
@@ -40,14 +40,14 @@ class SøknadService(
     private val personService: PersonService,
     private val familieVedleggClient: FamilieVedleggClient,
 ) {
-    fun hentSøknad(id: UUID): Skjema = søknadRepository.findByIdOrThrow(id)
+    fun hentSkjema(id: UUID): Skjema = skjemaRepository.findByIdOrThrow(id)
 
-    fun oppdaterSøknad(skjema: Skjema) {
-        søknadRepository.update(skjema)
+    fun oppdaterSkjema(skjema: Skjema) {
+        skjemaRepository.update(skjema)
     }
 
     @Transactional
-    fun lagreSøknad(
+    fun lagreSøknadTilsynBarn(
         ident: String,
         mottattTidspunkt: LocalDateTime,
         søknad: SøknadBarnetilsynDto,
@@ -56,16 +56,16 @@ class SøknadService(
         verifiserHarGyldigeBarn(søknad, barn)
 
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
-        val opprettetSøknad =
-            lagreSøknad(
+        val opprettetSkjema =
+            lagreSkjema(
                 type = Stønadstype.BARNETILSYN,
-                søknadsskjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
+                innsendtSkjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
                 vedlegg = vedlegg,
-                søknadFrontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
+                frontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
             )
-        taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
-        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
-        return opprettetSøknad.id
+        taskService.save(LagPdfTask.opprettTask(opprettetSkjema))
+        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSkjema))
+        return opprettetSkjema.id
     }
 
     @Transactional
@@ -76,17 +76,17 @@ class SøknadService(
     ): UUID {
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
 
-        val opprettetSøknad =
-            lagreSøknad(
+        val opprettetSkjema =
+            lagreSkjema(
                 type = Stønadstype.LÆREMIDLER,
-                søknadsskjema = læremidlerMapper.map(ident, mottattTidspunkt, søknad),
+                innsendtSkjema = læremidlerMapper.map(ident, mottattTidspunkt, søknad),
                 vedlegg = vedlegg,
-                søknadFrontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
+                frontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
             )
 
-        taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
-        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
-        return opprettetSøknad.id
+        taskService.save(LagPdfTask.opprettTask(opprettetSkjema))
+        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSkjema))
+        return opprettetSkjema.id
     }
 
     @Transactional
@@ -98,17 +98,17 @@ class SøknadService(
         val vedlegg = hentVedlegg(kjøreliste.dokumentasjon)
         val stønadstype = finnStønadstypeForKjøreliste(kjøreliste)
 
-        val opprettetSøknad =
-            lagreSøknad(
+        val opprettetSkjema =
+            lagreSkjema(
                 type = stønadstype,
-                søknadsskjema = KjørelisteMapper.map(ident, mottattTidspunkt, kjøreliste),
+                innsendtSkjema = KjørelisteMapper.map(ident, mottattTidspunkt, kjøreliste),
                 vedlegg = vedlegg,
-                søknadFrontendGitHash = kjøreliste.søknadMetadata.søknadFrontendGitHash,
+                frontendGitHash = kjøreliste.søknadMetadata.søknadFrontendGitHash,
             )
 
-        taskService.save(LagPdfTask.opprettTask(opprettetSøknad))
-        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSøknad))
-        return opprettetSøknad.id
+        taskService.save(LagPdfTask.opprettTask(opprettetSkjema))
+        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSkjema))
+        return opprettetSkjema.id
     }
 
     private fun finnStønadstypeForKjøreliste(kjøreliste: KjørelisteDto): Stønadstype {
@@ -145,19 +145,19 @@ class SøknadService(
         }
     }
 
-    private fun <T : Skjemadata> lagreSøknad(
+    private fun <T : Skjemadata> lagreSkjema(
         type: Stønadstype,
-        søknadsskjema: Søknadsskjema<T>,
+        innsendtSkjema: InnsendtSkjema<T>,
         vedlegg: List<Vedleggholder>,
-        søknadFrontendGitHash: String?,
+        frontendGitHash: String?,
     ): Skjema {
         val skjemaDb =
-            søknadRepository.insert(
+            skjemaRepository.insert(
                 Skjema(
                     type = type,
-                    personIdent = søknadsskjema.ident,
-                    søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
-                    søknadFrontendGitHash = søknadFrontendGitHash,
+                    personIdent = innsendtSkjema.ident,
+                    skjemaJson = JsonWrapper(objectMapper.writeValueAsString(innsendtSkjema)),
+                    frontendGitHash = frontendGitHash,
                 ),
             )
         lagreVedlegg(skjemaDb, vedlegg)

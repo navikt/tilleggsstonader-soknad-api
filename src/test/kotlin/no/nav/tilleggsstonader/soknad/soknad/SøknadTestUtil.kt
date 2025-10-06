@@ -6,9 +6,9 @@ import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ÅrsakOppholdUtenforNorge
@@ -42,14 +42,14 @@ object SøknadTestUtil {
 
     fun lagSøknad(
         stønadstype: Stønadstype,
-        søknadsskjema: Søknadsskjema<*>,
+        innsendtSkjema: InnsendtSkjema<*>,
     ): Skjema =
         Skjema(
-            søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
+            skjemaJson = JsonWrapper(objectMapper.writeValueAsString(innsendtSkjema)),
             type = stønadstype,
-            personIdent = søknadsskjema.ident,
+            personIdent = innsendtSkjema.ident,
             opprettetTid = LocalDateTime.now(),
-            søknadFrontendGitHash = "aabbccd",
+            frontendGitHash = "aabbccd",
         )
 
     fun mapBarn(søknad: SøknadBarnetilsynDto): Map<String, Barn> =
