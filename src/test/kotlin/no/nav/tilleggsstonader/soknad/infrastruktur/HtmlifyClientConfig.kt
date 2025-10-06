@@ -13,7 +13,7 @@ class HtmlifyClientConfig {
     @Bean
     fun htmlifyClient(): HtmlifyClient {
         val client = mockk<HtmlifyClient>()
-        every { client.generateHtml(any(), any(), any(), any(), any()) } returns "<h1>Hei</h1>"
+        every { client.generateHtml(any(), any(), any(), any(), any(), any()) } returns "<h1>Hei</h1>"
         return client
     }
 }

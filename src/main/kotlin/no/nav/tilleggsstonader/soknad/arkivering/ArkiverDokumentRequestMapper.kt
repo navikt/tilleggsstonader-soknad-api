@@ -8,6 +8,7 @@ import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.dokumenttyper
 import no.nav.tilleggsstonader.kontrakter.felles.BrukerIdType
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.gjelderDagligReise
 import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 
@@ -37,9 +38,20 @@ object ArkiverDokumentRequestMapper {
         )
     }
 
-    private fun typeHoveddokument(type: Stønadstype): Dokumenttype = type.dokumenttyper.søknad ?: error("Har ikke laget søknad for $type")
+    // TODO - introduser type skjema, som velger om kjøreliste eller søknad
+    private fun typeHoveddokument(type: Stønadstype): Dokumenttype =
+        if (type.gjelderDagligReise()) {
+            type.dokumenttyper.kjøreliste ?: error("Har ikke laget kjøreliste for $type")
+        } else {
+            type.dokumenttyper.søknad ?: error("Har ikke laget søknad for $type")
+        }
 
-    private fun typeVedlegg(type: Stønadstype): Dokumenttype = type.dokumenttyper.søknadVedlegg ?: error("Har ikke laget søknad for $type")
+    private fun typeVedlegg(type: Stønadstype): Dokumenttype =
+        if (type.gjelderDagligReise()) {
+            type.dokumenttyper.kjørelisteVedlegg ?: error("Har ikke laget kjøreliste for $type")
+        } else {
+            type.dokumenttyper.søknadVedlegg ?: error("Har ikke laget søknad for $type")
+        }
 
     private fun mapVedlegg(
         vedlegg: List<Vedlegg>,
@@ -67,5 +79,7 @@ fun Dokumenttype?.dokumentTittel(): String =
     when (this) {
         Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om støtte til pass av barn"
         Dokumenttype.LÆREMIDLER_SØKNAD -> "Søknad om støtte til læremidler"
+        Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE, Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE,
+        -> "Refusjon av utgifter til daglig reise med bruk av egen bil"
         else -> error("Mangler mapping av $this")
     }

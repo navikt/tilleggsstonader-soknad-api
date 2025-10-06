@@ -2,6 +2,8 @@ package no.nav.tilleggsstonader.soknad
 
 import no.nav.familie.prosessering.domene.Task
 import no.nav.familie.prosessering.domene.TaskLogg
+import no.nav.familie.prosessering.internal.TaskService
+import no.nav.familie.prosessering.internal.TaskWorker
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
@@ -13,6 +15,7 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.util.DbContainerInitializer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.extension.ExtendWith
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
@@ -74,6 +77,14 @@ abstract class IntegrationTest {
 
     @Autowired
     private lateinit var cacheManagers: List<CacheManager>
+
+    @Autowired
+    lateinit var taskService: TaskService
+
+    @Autowired
+    lateinit var taskWorker: TaskWorker
+
+    val logger = LoggerFactory.getLogger(javaClass)
 
     @AfterEach
     fun tearDown() {
