@@ -18,7 +18,7 @@ import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteMapper
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
 import java.time.LocalDate
@@ -27,11 +27,11 @@ import java.time.LocalDateTime
 object SøknadTestUtil {
     private val mottattTidspunkt = LocalDateTime.of(2023, 1, 1, 12, 13, 0)
 
-    fun lagSøknad(kjørelisteDto: KjørelisteDto): Søknad = lagSøknad(Stønadstype.DAGLIG_REISE_TSO, lagSøknadsskjema(kjørelisteDto))
+    fun lagSøknad(kjørelisteDto: KjørelisteDto): Skjema = lagSøknad(Stønadstype.DAGLIG_REISE_TSO, lagSøknadsskjema(kjørelisteDto))
 
-    fun lagSøknad(søknadDto: SøknadBarnetilsynDto): Søknad = lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsskjema(søknadDto))
+    fun lagSøknad(søknadDto: SøknadBarnetilsynDto): Skjema = lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsskjema(søknadDto))
 
-    fun lagSøknad(søknadDto: SøknadLæremidlerDto): Søknad = lagSøknad(Stønadstype.LÆREMIDLER, lagSøknadsskjema(søknadDto))
+    fun lagSøknad(søknadDto: SøknadLæremidlerDto): Skjema = lagSøknad(Stønadstype.LÆREMIDLER, lagSøknadsskjema(søknadDto))
 
     fun lagSøknadsskjema(kjørelisteDto: KjørelisteDto) = KjørelisteMapper.map("25518735813", mottattTidspunkt, kjørelisteDto)
 
@@ -43,8 +43,8 @@ object SøknadTestUtil {
     fun lagSøknad(
         stønadstype: Stønadstype,
         søknadsskjema: Søknadsskjema<*>,
-    ): Søknad =
-        Søknad(
+    ): Skjema =
+        Skjema(
             søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
             type = stønadstype,
             personIdent = søknadsskjema.ident,

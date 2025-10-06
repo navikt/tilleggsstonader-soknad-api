@@ -10,7 +10,7 @@ import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.soknad.infrastruktur.PdlClientConfig.Companion.resetPdlClientMock
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.util.DbContainerInitializer
 import org.junit.jupiter.api.AfterEach
@@ -99,7 +99,7 @@ abstract class IntegrationTest {
             TaskLogg::class,
             Task::class,
             Vedlegg::class,
-            Søknad::class,
+            Skjema::class,
         ).forEach { jdbcAggregateOperations.deleteAll(it.java) }
     }
 

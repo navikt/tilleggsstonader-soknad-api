@@ -4,7 +4,7 @@ import no.nav.familie.prosessering.internal.TaskService
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.Skjema
+import no.nav.tilleggsstonader.kontrakter.søknad.Skjemadata
 import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
@@ -19,7 +19,7 @@ import no.nav.tilleggsstonader.soknad.prosessering.LagPdfTask
 import no.nav.tilleggsstonader.soknad.prosessering.SendNotifikasjonTask
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
@@ -40,10 +40,10 @@ class SøknadService(
     private val personService: PersonService,
     private val familieVedleggClient: FamilieVedleggClient,
 ) {
-    fun hentSøknad(id: UUID): Søknad = søknadRepository.findByIdOrThrow(id)
+    fun hentSøknad(id: UUID): Skjema = søknadRepository.findByIdOrThrow(id)
 
-    fun oppdaterSøknad(søknad: Søknad) {
-        søknadRepository.update(søknad)
+    fun oppdaterSøknad(skjema: Skjema) {
+        søknadRepository.update(skjema)
     }
 
     @Transactional
@@ -145,34 +145,34 @@ class SøknadService(
         }
     }
 
-    private fun <T : Skjema> lagreSøknad(
+    private fun <T : Skjemadata> lagreSøknad(
         type: Stønadstype,
         søknadsskjema: Søknadsskjema<T>,
         vedlegg: List<Vedleggholder>,
         søknadFrontendGitHash: String?,
-    ): Søknad {
-        val søknadDb =
+    ): Skjema {
+        val skjemaDb =
             søknadRepository.insert(
-                Søknad(
+                Skjema(
                     type = type,
                     personIdent = søknadsskjema.ident,
                     søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknadsskjema)),
                     søknadFrontendGitHash = søknadFrontendGitHash,
                 ),
             )
-        lagreVedlegg(søknadDb, vedlegg)
-        return søknadDb
+        lagreVedlegg(skjemaDb, vedlegg)
+        return skjemaDb
     }
 
     private fun lagreVedlegg(
-        søknadDb: Søknad,
+        skjemaDb: Skjema,
         vedlegg: List<Vedleggholder>,
     ) {
         vedleggRepository.insertAll(
             vedlegg.map {
                 Vedlegg(
                     id = it.id,
-                    søknadId = søknadDb.id,
+                    søknadId = skjemaDb.id,
                     type = it.type,
                     navn = it.navn,
                     innhold = it.data,

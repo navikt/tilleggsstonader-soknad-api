@@ -9,7 +9,7 @@ import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknad
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil.listFiles
@@ -34,14 +34,14 @@ class PdfServiceTest {
 
     private val pdfService = PdfService(søknadService, personService, htmlifyClient, familieDokumentClient)
 
-    val oppdaterSøknadSlot = slot<Søknad>()
+    val oppdaterSkjemaSlot = slot<Skjema>()
 
     val htmlSlot = slot<String>()
     private val pdfBytes = "pdf".toByteArray()
 
     @BeforeEach
     fun setUp() {
-        justRun { søknadService.oppdaterSøknad(capture(oppdaterSøknadSlot)) }
+        justRun { søknadService.oppdaterSøknad(capture(oppdaterSkjemaSlot)) }
         every { personService.hentNavnMedClientCredential(any()) } returns "Fornavn etternavn"
         every { familieDokumentClient.genererPdf(capture(htmlSlot)) } returns pdfBytes
     }
@@ -57,7 +57,7 @@ class PdfServiceTest {
             pdfService.lagPdf(søknad.id)
 
             assertGenerertHtml("søknad/barnetilsyn/barnetilsyn.html")
-            assertThat(oppdaterSøknadSlot.captured.søknadPdf).isEqualTo(pdfBytes)
+            assertThat(oppdaterSkjemaSlot.captured.søknadPdf).isEqualTo(pdfBytes)
         }
 
         @Test
@@ -68,7 +68,7 @@ class PdfServiceTest {
             pdfService.lagPdf(søknad.id)
 
             assertGenerertHtml("søknad/læremidler/læremidler.html")
-            assertThat(oppdaterSøknadSlot.captured.søknadPdf).isEqualTo(pdfBytes)
+            assertThat(oppdaterSkjemaSlot.captured.søknadPdf).isEqualTo(pdfBytes)
         }
     }
 

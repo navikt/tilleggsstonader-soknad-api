@@ -14,7 +14,7 @@ import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
 import no.nav.tilleggsstonader.soknad.dokument.pdf.VedleggMapper.mapVedlegg
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -51,19 +51,19 @@ class PdfService(
             else -> error("Ingen dokumentbrevkode for skjema ${søknadsskjema.skjema::class.qualifiedName}")
         }
 
-    private fun hentSøkerinformasjon(søknad: Søknad): Søkerinformasjon {
-        val navn = personService.hentNavnMedClientCredential(søknad.personIdent)
-        return Søkerinformasjon(ident = søknad.personIdent, navn = navn)
+    private fun hentSøkerinformasjon(skjema: Skjema): Søkerinformasjon {
+        val navn = personService.hentNavnMedClientCredential(skjema.personIdent)
+        return Søkerinformasjon(ident = skjema.personIdent, navn = navn)
     }
 
-    private fun parseSøknadsskjema(søknad: Søknad): Søknadsskjema<*> {
-        val json = søknad.søknadJson.json
-        return when (søknad.type) {
+    private fun parseSøknadsskjema(skjema: Skjema): Søknadsskjema<*> {
+        val json = skjema.søknadJson.json
+        return when (skjema.type) {
             Stønadstype.BARNETILSYN -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaBarnetilsyn>>(json)
             Stønadstype.LÆREMIDLER -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaLæremidler>>(json)
             Stønadstype.DAGLIG_REISE_TSO, Stønadstype.DAGLIG_REISE_TSR -> objectMapper.readValue<Søknadsskjema<KjørelisteSkjema>>(json)
             Stønadstype.BOUTGIFTER ->
-                error("Har ikke laget søknad for ${søknad.type}")
+                error("Har ikke laget søknad for ${skjema.type}")
         }
     }
 }

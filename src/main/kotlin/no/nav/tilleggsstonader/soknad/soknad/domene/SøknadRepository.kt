@@ -16,8 +16,8 @@ import java.util.UUID
 
 @Repository
 interface SøknadRepository :
-    RepositoryInterface<Søknad, UUID>,
-    InsertUpdateRepository<Søknad> {
+    RepositoryInterface<Skjema, UUID>,
+    InsertUpdateRepository<Skjema> {
     @Query("SELECT type, count(*) as count FROM skjema GROUP BY type")
     fun finnAntallPerType(): List<AntallPerType>
 }
@@ -28,7 +28,7 @@ data class AntallPerType(
 )
 
 @Table("skjema")
-data class Søknad(
+data class Skjema(
     @Id
     val id: UUID = UUID.randomUUID(),
     val opprettetTid: LocalDateTime = SporbarUtils.now(),
@@ -48,7 +48,7 @@ data class Søknad(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Søknad
+        other as Skjema
 
         if (id != other.id) return false
         if (opprettetTid != other.opprettetTid) return false

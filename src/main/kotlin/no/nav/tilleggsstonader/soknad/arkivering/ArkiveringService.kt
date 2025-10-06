@@ -2,7 +2,7 @@ package no.nav.tilleggsstonader.soknad.arkivering
 
 import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import org.springframework.stereotype.Service
@@ -26,10 +26,10 @@ class ArkiveringService(
     }
 
     private fun send(
-        søknad: Søknad,
+        skjema: Skjema,
         vedlegg: List<Vedlegg>,
     ): String {
-        val arkiverDokumentRequest = ArkiverDokumentRequestMapper.toDto(søknad, vedlegg)
+        val arkiverDokumentRequest = ArkiverDokumentRequestMapper.toDto(skjema, vedlegg)
         val dokumentResponse = integrasjonerClient.arkiver(arkiverDokumentRequest)
         return dokumentResponse.journalpostId
     }

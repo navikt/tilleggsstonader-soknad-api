@@ -9,7 +9,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -28,8 +28,8 @@ internal class ArkiveringServiceTest {
             vedleggRepository,
         )
 
-    private val søknad =
-        Søknad(
+    private val skjema =
+        Skjema(
             søknadJson = JsonWrapper(""),
             type = Stønadstype.BARNETILSYN,
             personIdent = "1",
@@ -38,14 +38,14 @@ internal class ArkiveringServiceTest {
             søknadFrontendGitHash = "aabbccd",
         )
 
-    val oppdaterSøknadSlot = slot<Søknad>()
+    val oppdaterSkjemaSlot = slot<Skjema>()
 
     @BeforeEach
     fun setUp() {
-        oppdaterSøknadSlot.clear()
-        every { søknadService.hentSøknad(søknad.id) } returns søknad
-        every { vedleggRepository.findBySøknadId(søknad.id) } returns emptyList()
-        justRun { søknadService.oppdaterSøknad(capture(oppdaterSøknadSlot)) }
+        oppdaterSkjemaSlot.clear()
+        every { søknadService.hentSøknad(skjema.id) } returns skjema
+        every { vedleggRepository.findBySøknadId(skjema.id) } returns emptyList()
+        justRun { søknadService.oppdaterSøknad(capture(oppdaterSkjemaSlot)) }
     }
 
     @Test
@@ -53,7 +53,7 @@ internal class ArkiveringServiceTest {
         val journalpostId = "journalpostId_1"
         every { integrasjonerClient.arkiver(any()) } returns
             ArkiverDokumentResponse(journalpostId, false, emptyList())
-        arkiveringService.journalførSøknad(søknad.id, "callId")
-        assertThat(oppdaterSøknadSlot.captured.journalpostId).isEqualTo(journalpostId)
+        arkiveringService.journalførSøknad(skjema.id, "callId")
+        assertThat(oppdaterSkjemaSlot.captured.journalpostId).isEqualTo(journalpostId)
     }
 }

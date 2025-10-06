@@ -9,32 +9,32 @@ import no.nav.tilleggsstonader.kontrakter.dokarkiv.dokumenttyper
 import no.nav.tilleggsstonader.kontrakter.felles.BrukerIdType
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.felles.gjelderDagligReise
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 
 object ArkiverDokumentRequestMapper {
     fun toDto(
-        søknad: Søknad,
+        skjema: Skjema,
         vedlegg: List<Vedlegg>,
     ): ArkiverDokumentRequest {
-        val dokumenttype = typeHoveddokument(søknad.type)
+        val dokumenttype = typeHoveddokument(skjema.type)
         val søknadsdokumentJson =
             Dokument(
-                søknad.søknadJson.json.toByteArray(),
+                skjema.søknadJson.json.toByteArray(),
                 Filtype.JSON,
                 null,
                 dokumenttype.dokumentTittel(),
                 dokumenttype,
             )
         val søknadsdokumentPdf =
-            Dokument(søknad.søknadPdf!!, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
+            Dokument(skjema.søknadPdf!!, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
         return ArkiverDokumentRequest(
-            fnr = søknad.personIdent,
+            fnr = skjema.personIdent,
             forsøkFerdigstill = false,
             hoveddokumentvarianter = listOf(søknadsdokumentPdf, søknadsdokumentJson),
-            vedleggsdokumenter = mapVedlegg(vedlegg, søknad.type),
-            eksternReferanseId = søknad.id.toString(),
-            avsenderMottaker = AvsenderMottaker(id = søknad.personIdent, idType = BrukerIdType.FNR, navn = null),
+            vedleggsdokumenter = mapVedlegg(vedlegg, skjema.type),
+            eksternReferanseId = skjema.id.toString(),
+            avsenderMottaker = AvsenderMottaker(id = skjema.personIdent, idType = BrukerIdType.FNR, navn = null),
         )
     }
 

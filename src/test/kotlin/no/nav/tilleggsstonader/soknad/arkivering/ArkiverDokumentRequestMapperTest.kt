@@ -8,7 +8,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.arkivering.ArkiverDokumentRequestMapper.toDto
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -41,7 +41,7 @@ internal class ArkiverDokumentRequestMapperTest {
     private fun lagSøknad(
         søknad: Any,
         type: Stønadstype,
-    ) = Søknad(
+    ) = Skjema(
         søknadJson = JsonWrapper(objectMapper.writeValueAsString(søknad)),
         personIdent = "123",
         type = type,

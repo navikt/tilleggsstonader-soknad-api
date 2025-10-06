@@ -43,11 +43,11 @@ class VedleggRepositoryTest : IntegrationTest() {
         }
     }
 
-    private fun lagreVedlegg(søknad: Søknad) =
+    private fun lagreVedlegg(skjema: Skjema) =
         vedleggRepository.insert(
             Vedlegg(
                 id = UUID.randomUUID(),
-                søknadId = søknad.id,
+                søknadId = skjema.id,
                 type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
                 navn = "charlie.pdf",
                 innhold = byteArrayOf(13),
@@ -56,7 +56,7 @@ class VedleggRepositoryTest : IntegrationTest() {
 
     private fun lagreSøknad() =
         søknadRepository.insert(
-            Søknad(
+            Skjema(
                 type = Stønadstype.BARNETILSYN,
                 personIdent = "123",
                 søknadJson = JsonWrapper("{}"),

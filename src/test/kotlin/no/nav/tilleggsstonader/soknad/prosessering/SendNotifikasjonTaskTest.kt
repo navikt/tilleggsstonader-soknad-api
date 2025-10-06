@@ -6,7 +6,7 @@ import io.mockk.verify
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.soknad.SøknadService
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.varsel.DittNavKafkaProducer
 import org.junit.jupiter.api.Test
 import java.util.UUID
@@ -43,8 +43,8 @@ class SendNotifikasjonTaskTest {
         }
     }
 
-    private fun opprettSøknad(type: Stønadstype): Søknad =
-        Søknad(
+    private fun opprettSøknad(type: Stønadstype): Skjema =
+        Skjema(
             id = UUID.fromString(SØKNAD_ID),
             søknadJson = JsonWrapper(""),
             type = type,

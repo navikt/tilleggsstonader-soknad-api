@@ -39,9 +39,9 @@ class SøknadRepositoryTest : IntegrationTest() {
 
     @Test
     fun `skal kunne hente gammel søknad uten søknadFrontendGitHash`() {
-        val søknad =
+        val skjema =
             søknadRepository.insert(
-                Søknad(
+                Skjema(
                     type = Stønadstype.BARNETILSYN,
                     personIdent = "123",
                     søknadJson = JsonWrapper("{}"),
@@ -49,12 +49,12 @@ class SøknadRepositoryTest : IntegrationTest() {
                 ),
             )
 
-        assertThat(søknadRepository.findByIdOrThrow(søknad.id)).isEqualTo(søknad)
+        assertThat(søknadRepository.findByIdOrThrow(skjema.id)).isEqualTo(skjema)
     }
 
     private fun lagreSøknad() =
         søknadRepository.insert(
-            Søknad(
+            Skjema(
                 type = Stønadstype.BARNETILSYN,
                 personIdent = "123",
                 søknadJson = JsonWrapper("{}"),
