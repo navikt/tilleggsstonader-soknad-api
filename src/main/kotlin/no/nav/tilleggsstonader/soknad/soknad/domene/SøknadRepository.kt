@@ -18,7 +18,7 @@ import java.util.UUID
 interface SøknadRepository :
     RepositoryInterface<Søknad, UUID>,
     InsertUpdateRepository<Søknad> {
-    @Query("SELECT type, count(*) as count FROM soknad GROUP BY type")
+    @Query("SELECT type, count(*) as count FROM skjema GROUP BY type")
     fun finnAntallPerType(): List<AntallPerType>
 }
 
@@ -27,21 +27,21 @@ data class AntallPerType(
     val count: Long,
 )
 
-@Table("soknad")
+@Table("skjema")
 data class Søknad(
     @Id
     val id: UUID = UUID.randomUUID(),
     val opprettetTid: LocalDateTime = SporbarUtils.now(),
     val type: Stønadstype,
     val personIdent: String,
-    @Column("soknad_json")
+    @Column("skjema_json")
     val søknadJson: JsonWrapper,
-    @Column("soknad_pdf")
+    @Column("skjema_pdf")
     val søknadPdf: ByteArray? = null,
     val journalpostId: String? = null,
     @Version
     val version: Int = 0,
-    @Column("soknad_frontend_git_hash")
+    @Column("frontend_git_hash")
     val søknadFrontendGitHash: String?,
 ) {
     override fun equals(other: Any?): Boolean {
