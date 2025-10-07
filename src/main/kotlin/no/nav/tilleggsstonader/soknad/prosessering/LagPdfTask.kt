@@ -17,8 +17,8 @@ class LagPdfTask(
     private val taskService: TaskService,
 ) : AsyncTaskStep {
     override fun doTask(task: Task) {
-        val søknadId = UUID.fromString(task.payload)
-        pdfService.lagPdf(søknadId)
+        val skjemaId = UUID.fromString(task.payload)
+        pdfService.lagPdf(skjemaId)
     }
 
     override fun onCompletion(task: Task) {

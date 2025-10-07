@@ -14,15 +14,15 @@ class ArkiveringService(
     private val skjemaService: SkjemaService,
     private val vedleggRepository: VedleggRepository,
 ) {
-    fun journalførSøknad(
-        søknadId: UUID,
+    fun journalførSkjema(
+        skjemaId: UUID,
         callId: String,
     ) {
-        val søknad = skjemaService.hentSkjema(søknadId)
-        val vedlegg = vedleggRepository.findBySkjemaId(søknadId)
-        val journalpostId: String = send(søknad, vedlegg)
+        val skjema = skjemaService.hentSkjema(skjemaId)
+        val vedlegg = vedleggRepository.findBySkjemaId(skjemaId)
+        val journalpostId: String = send(skjema, vedlegg)
 
-        skjemaService.oppdaterSkjema(søknad.copy(journalpostId = journalpostId))
+        skjemaService.oppdaterSkjema(skjema.copy(journalpostId = journalpostId))
     }
 
     private fun send(

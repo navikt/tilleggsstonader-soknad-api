@@ -25,21 +25,21 @@ class PdfService(
     private val htmlifyClient: HtmlifyClient,
     private val dokumentClient: FamilieDokumentClient,
 ) {
-    fun lagPdf(søknadId: UUID) {
-        val søknad = skjemaService.hentSkjema(søknadId)
-        val søknadsskjema = parseSøknadsskjema(søknad)
-        val felter = mapSøknad(søknadsskjema, hentSøkerinformasjon(søknad))
+    fun lagPdf(skjemaId: UUID) {
+        val skjema = skjemaService.hentSkjema(skjemaId)
+        val innsendtSkjema = parseInnsendtSkjema(skjema)
+        val felter = mapSøknad(innsendtSkjema, hentSøkerinformasjon(skjema))
         val html =
             htmlifyClient.generateHtml(
-                stønadstype = søknad.type,
-                tittel = tittelSøknadsskjema(søknadsskjema),
+                stønadstype = skjema.type,
+                tittel = tittelSøknadsskjema(innsendtSkjema),
                 felter = felter,
-                mottattTidspunkt = søknadsskjema.mottattTidspunkt,
-                dokumentasjon = mapVedlegg(søknadsskjema),
-                dokumentBrevkode = dokumentBrevKode(søknadsskjema),
+                mottattTidspunkt = innsendtSkjema.mottattTidspunkt,
+                dokumentasjon = mapVedlegg(innsendtSkjema),
+                dokumentBrevkode = dokumentBrevKode(innsendtSkjema),
             )
         val pdf = dokumentClient.genererPdf(html)
-        skjemaService.oppdaterSkjema(søknad.copy(skjemaPdf = pdf))
+        skjemaService.oppdaterSkjema(skjema.copy(skjemaPdf = pdf))
     }
 
     // TODO - mappe dokumentbrevkode fra skjematype
@@ -56,14 +56,14 @@ class PdfService(
         return Søkerinformasjon(ident = skjema.personIdent, navn = navn)
     }
 
-    private fun parseSøknadsskjema(skjema: Skjema): InnsendtSkjema<*> {
+    private fun parseInnsendtSkjema(skjema: Skjema): InnsendtSkjema<*> {
         val json = skjema.skjemaJson.json
         return when (skjema.type) {
             Stønadstype.BARNETILSYN -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaBarnetilsyn>>(json)
             Stønadstype.LÆREMIDLER -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaLæremidler>>(json)
             Stønadstype.DAGLIG_REISE_TSO, Stønadstype.DAGLIG_REISE_TSR -> objectMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(json)
             Stønadstype.BOUTGIFTER ->
-                error("Har ikke laget søknad for ${skjema.type}")
+                error("Har ikke laget skjema for ${skjema.type}")
         }
     }
 }

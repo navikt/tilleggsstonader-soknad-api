@@ -53,7 +53,7 @@ internal class ArkiveringServiceTest {
         val journalpostId = "journalpostId_1"
         every { integrasjonerClient.arkiver(any()) } returns
             ArkiverDokumentResponse(journalpostId, false, emptyList())
-        arkiveringService.journalførSøknad(skjema.id, "callId")
+        arkiveringService.journalførSkjema(skjema.id, "callId")
         assertThat(oppdaterSkjemaSlot.captured.journalpostId).isEqualTo(journalpostId)
     }
 }
