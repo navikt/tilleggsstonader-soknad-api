@@ -8,6 +8,8 @@ import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
+import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
+import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClientConfig.Companion.resetIntegrasjonerClientMock
 import no.nav.tilleggsstonader.soknad.infrastruktur.PdlClientConfig.Companion.resetPdlClientMock
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
@@ -67,6 +69,9 @@ abstract class IntegrationTest {
     lateinit var taskWorker: TaskWorker
 
     @Autowired
+    lateinit var integrasjonerClient: IntegrasjonerClient
+
+    @Autowired
     lateinit var webTestClient: WebTestClient
 
     val logger = LoggerFactory.getLogger(javaClass)
@@ -89,6 +94,7 @@ abstract class IntegrationTest {
 
     private fun clearClientMocks() {
         resetPdlClientMock(pdlClient)
+        resetIntegrasjonerClientMock(integrasjonerClient)
     }
 
     private fun clearCaches() {
