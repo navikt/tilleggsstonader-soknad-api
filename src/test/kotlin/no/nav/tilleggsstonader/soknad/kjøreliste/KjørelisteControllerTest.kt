@@ -36,17 +36,17 @@ class KjørelisteControllerTest : IntegrationTest() {
 
         kjørTasksKlareForProsesseringTilIngenTasksIgjen()
 
-        val søknad =
+        val kjørelisteSkjema =
             with(skjemaRepository.findAll()) {
                 assertThat(this).hasSize(1)
                 this.single()
             }
 
         val matcher: (req: ArkiverDokumentRequest) -> Boolean = { req ->
-            req.eksternReferanseId == søknad.id.toString()
+            req.eksternReferanseId == kjørelisteSkjema.id.toString()
         }
 
-        // Verifiserer at søknad har blitt arkivert
+        // Verifiserer at kjøreliste-skjema har blitt arkivert
         verify { integrasjonerClient.arkiver(match(matcher)) }
     }
 }

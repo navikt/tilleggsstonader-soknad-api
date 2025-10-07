@@ -19,7 +19,7 @@ class SøknadTreeWalkerTest {
     inner class Barnetilsyn {
         @Test
         fun `skal mappe barnetilsyn`() {
-            val søknadsskjema = lagSøknadsskjema(SøknadBarnetilsynUtil.søknad)
+            val søknadsskjema = lagSøknadsskjema(SøknadBarnetilsynUtil.søknadBarnetilsyn)
             val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
             assertExpected(
                 "søknad/barnetilsyn/barnetilsyn_verdiliste.json",
@@ -32,7 +32,7 @@ class SøknadTreeWalkerTest {
     inner class Læremidler {
         @Test
         fun `skal mappe læremidler`() {
-            val søknadsskjema = lagSøknadsskjema(SøknadLæremidlerUtil.søknad)
+            val søknadsskjema = lagSøknadsskjema(SøknadLæremidlerUtil.søknadLæremidler)
             val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
             assertExpected(
                 "søknad/læremidler/læremidler_verdiliste.json",
@@ -52,7 +52,7 @@ class SøknadTreeWalkerTest {
                 årsak = null,
             )
         val søknad =
-            SøknadBarnetilsynUtil.søknad.copy(barnMedBarnepass = listOf(barnMedBarnepass), dokumentasjon = emptyList())
+            SøknadBarnetilsynUtil.søknadBarnetilsyn.copy(barnMedBarnepass = listOf(barnMedBarnepass), dokumentasjon = emptyList())
         val søknadsskjema = lagSøknadsskjema(søknad)
         val result = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
         assertExpected(

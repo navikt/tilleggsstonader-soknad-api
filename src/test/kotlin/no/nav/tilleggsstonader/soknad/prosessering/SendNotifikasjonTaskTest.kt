@@ -18,34 +18,34 @@ class SendNotifikasjonTaskTest {
 
     @Test
     fun `Task blir kjørt for å sende notifikasjon om mottatt søknad om tilsyn barn`() {
-        val søknad = opprettSøknad(Stønadstype.BARNETILSYN)
-        every { skjemaService.hentSkjema(UUID.fromString(SØKNAD_ID)) } returns søknad
-        sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknad))
+        val søknadBarnetilsynSkjema = opprettSkjema(Stønadstype.BARNETILSYN)
+        every { skjemaService.hentSkjema(UUID.fromString(SKJEMA_ID)) } returns søknadBarnetilsynSkjema
+        sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknadBarnetilsynSkjema))
         verifiserForventetKallMed("Vi har mottatt søknaden din om pass av barn.")
     }
 
     @Test
     fun `Task blir kjørt for å sende notifikasjon om mottatt søknad om læremidler`() {
-        val søknad = opprettSøknad(Stønadstype.LÆREMIDLER)
-        every { skjemaService.hentSkjema(UUID.fromString(SØKNAD_ID)) } returns søknad
-        sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknad))
+        val søknadLæremidlerSkjema = opprettSkjema(Stønadstype.LÆREMIDLER)
+        every { skjemaService.hentSkjema(UUID.fromString(SKJEMA_ID)) } returns søknadLæremidlerSkjema
+        sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknadLæremidlerSkjema))
         verifiserForventetKallMed("Vi har mottatt søknaden din om læremidler.")
     }
 
     private fun verifiserForventetKallMed(forventetTekst: String) {
         verify(exactly = 1) {
-            skjemaService.hentSkjema(UUID.fromString(SØKNAD_ID))
+            skjemaService.hentSkjema(UUID.fromString(SKJEMA_ID))
             dittNavKafkaProducer.sendToKafka(
                 FNR,
                 forventetTekst,
-                SØKNAD_ID,
+                SKJEMA_ID,
             )
         }
     }
 
-    private fun opprettSøknad(type: Stønadstype): Skjema =
+    private fun opprettSkjema(type: Stønadstype): Skjema =
         Skjema(
-            id = UUID.fromString(SØKNAD_ID),
+            id = UUID.fromString(SKJEMA_ID),
             skjemaJson = JsonWrapper(""),
             type = type,
             personIdent = FNR,
@@ -54,6 +54,6 @@ class SendNotifikasjonTaskTest {
 
     companion object {
         private const val FNR = "12345678901"
-        private const val SØKNAD_ID = "e8703be6-eb47-476a-ae52-096df47430d6"
+        private const val SKJEMA_ID = "e8703be6-eb47-476a-ae52-096df47430d6"
     }
 }

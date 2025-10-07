@@ -51,10 +51,10 @@ class PdfServiceTest {
     inner class GenereringAvPdf {
         @Test
         fun `skal lage pdf fra barnetilsyn`() {
-            val søknad = lagSøknad(SøknadBarnetilsynUtil.søknad)
-            every { skjemaService.hentSkjema(søknad.id) } returns søknad
+            val søknadBarnetilsyn = lagSøknad(SøknadBarnetilsynUtil.søknadBarnetilsyn)
+            every { skjemaService.hentSkjema(søknadBarnetilsyn.id) } returns søknadBarnetilsyn
 
-            pdfService.lagPdf(søknad.id)
+            pdfService.lagPdf(søknadBarnetilsyn.id)
 
             assertGenerertHtml("søknad/barnetilsyn/barnetilsyn.html")
             assertThat(oppdaterSkjemaSlot.captured.skjemaPdf).isEqualTo(pdfBytes)
@@ -62,10 +62,10 @@ class PdfServiceTest {
 
         @Test
         fun `skal lage pdf fra læremidler`() {
-            val søknad = lagSøknad(SøknadLæremidlerUtil.søknad)
-            every { skjemaService.hentSkjema(søknad.id) } returns søknad
+            val søknadLæremidler = lagSøknad(SøknadLæremidlerUtil.søknadLæremidler)
+            every { skjemaService.hentSkjema(søknadLæremidler.id) } returns søknadLæremidler
 
-            pdfService.lagPdf(søknad.id)
+            pdfService.lagPdf(søknadLæremidler.id)
 
             assertGenerertHtml("søknad/læremidler/læremidler.html")
             assertThat(oppdaterSkjemaSlot.captured.skjemaPdf).isEqualTo(pdfBytes)

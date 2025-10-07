@@ -18,11 +18,11 @@ internal class ArkiverDokumentRequestMapperTest {
     @Test
     internal fun `barnetilsyn toDto - sjekk alle felt`() {
         val vedlegg = lagVedlegg()
-        val søknad = lagSøknad(SøknadBarnetilsynUtil.søknad, Stønadstype.BARNETILSYN)
+        val skjema = lagSkjema(SøknadBarnetilsynUtil.søknadBarnetilsyn, Stønadstype.BARNETILSYN)
 
-        val dto = toDto(søknad, listOf(vedlegg))
+        val dto = toDto(skjema, listOf(vedlegg))
 
-        assertThat(dto.fnr).isEqualTo(søknad.personIdent)
+        assertThat(dto.fnr).isEqualTo(skjema.personIdent)
         assertThat(dto.forsøkFerdigstill).isFalse
         assertThat(dto.hoveddokumentvarianter).hasSize(2)
 
@@ -38,11 +38,11 @@ internal class ArkiverDokumentRequestMapperTest {
         assertThat(dto.vedleggsdokumenter.first().filnavn).isEqualTo(vedlegg.id.toString())
     }
 
-    private fun lagSøknad(
-        søknad: Any,
+    private fun lagSkjema(
+        skjema: Any,
         type: Stønadstype,
     ) = Skjema(
-        skjemaJson = JsonWrapper(objectMapper.writeValueAsString(søknad)),
+        skjemaJson = JsonWrapper(objectMapper.writeValueAsString(skjema)),
         personIdent = "123",
         type = type,
         skjemaPdf = byteArrayOf(12),

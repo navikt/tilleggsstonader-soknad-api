@@ -20,25 +20,25 @@ class VedleggRepositoryTest : IntegrationTest() {
 
     @Test
     fun `skal kunne lagre og hente vedlegg`() {
-        val søknad = lagreSøknad()
-        val vedlegg = lagreVedlegg(søknad)
+        val skjema = lagreSkjema()
+        val vedlegg = lagreVedlegg(skjema)
         assertThat(vedleggRepository.findByIdOrThrow(vedlegg.id)).isEqualTo(vedlegg)
     }
 
     @Nested
-    inner class FindBySøknadId {
+    inner class FindBySkjemaId {
         @Test
-        fun `skal finne vedlegg til søknad`() {
-            val søknad = lagreSøknad()
-            val søknad2 = lagreSøknad()
-            val vedlegg = lagreVedlegg(søknad)
-            val vedlegg2 = lagreVedlegg(søknad)
-            val vedlegg3 = lagreVedlegg(søknad2)
+        fun `skal finne vedlegg til skjema`() {
+            val skjema = lagreSkjema()
+            val skjema2 = lagreSkjema()
+            val vedlegg = lagreVedlegg(skjema)
+            val vedlegg2 = lagreVedlegg(skjema)
+            val vedlegg3 = lagreVedlegg(skjema2)
 
-            assertThat(vedleggRepository.findBySkjemaId(søknad.id).map { it.id })
+            assertThat(vedleggRepository.findBySkjemaId(skjema.id).map { it.id })
                 .containsExactlyInAnyOrder(vedlegg.id, vedlegg2.id)
 
-            assertThat(vedleggRepository.findBySkjemaId(søknad2.id).map { it.id })
+            assertThat(vedleggRepository.findBySkjemaId(skjema2.id).map { it.id })
                 .containsExactlyInAnyOrder(vedlegg3.id)
         }
     }
@@ -54,7 +54,7 @@ class VedleggRepositoryTest : IntegrationTest() {
             ),
         )
 
-    private fun lagreSøknad() =
+    private fun lagreSkjema() =
         skjemaRepository.insert(
             Skjema(
                 type = Stønadstype.BARNETILSYN,

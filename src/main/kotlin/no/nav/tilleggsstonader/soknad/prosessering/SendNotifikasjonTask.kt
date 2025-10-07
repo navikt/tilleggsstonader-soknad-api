@@ -18,11 +18,11 @@ class SendNotifikasjonTask(
     private val skjemaService: SkjemaService,
 ) : AsyncTaskStep {
     override fun doTask(task: Task) {
-        val søknad = skjemaService.hentSkjema(UUID.fromString(task.payload))
-        val message = lagNotifikasjonsMelding(søknad.type)
-        val eventId = søknad.id.toString()
+        val skjema = skjemaService.hentSkjema(UUID.fromString(task.payload))
+        val message = lagNotifikasjonsMelding(skjema.type)
+        val eventId = skjema.id.toString()
 
-        notifikasjonsService.sendToKafka(søknad.personIdent, message, eventId)
+        notifikasjonsService.sendToKafka(skjema.personIdent, message, eventId)
     }
 
     private fun lagNotifikasjonsMelding(stønadstype: Stønadstype): String =

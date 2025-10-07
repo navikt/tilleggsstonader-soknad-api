@@ -10,7 +10,7 @@ import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 
 object SøknadLæremidlerUtil {
-    val søknad =
+    val søknadLæremidler =
         SøknadLæremidlerDto(
             hovedytelse = SøknadTestUtil.hovedytelseDto(),
             utdanning =

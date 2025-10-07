@@ -8,7 +8,6 @@ import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.PdlClientConfig.Companion.resetPdlClientMock
 import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlBarn
-import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
@@ -30,9 +29,6 @@ import java.time.LocalDate
 
 class SøknadControllerTest : IntegrationTest() {
     @Autowired
-    lateinit var personService: PersonService
-
-    @Autowired
     lateinit var skjemaRepository: SkjemaRepository
 
     @Autowired
@@ -51,7 +47,7 @@ class SøknadControllerTest : IntegrationTest() {
 
     @Test
     fun `skal kunne sende inn en komplett søknad for barnetilsyn`() {
-        val request = HttpEntity(SøknadBarnetilsynUtil.søknad, headers)
+        val request = HttpEntity(SøknadBarnetilsynUtil.søknadBarnetilsyn, headers)
         val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
         assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
@@ -60,7 +56,7 @@ class SøknadControllerTest : IntegrationTest() {
 
     @Test
     fun `skal kunne sende inn en komplett søknad for læremidler`() {
-        val request = HttpEntity(SøknadLæremidlerUtil.søknad, headers)
+        val request = HttpEntity(SøknadLæremidlerUtil.søknadLæremidler, headers)
         val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/laremidler"), request)
         assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
@@ -80,7 +76,7 @@ class SøknadControllerTest : IntegrationTest() {
 
     @Test
     fun `skal feile hvis man prøver å sende inn søknad hvis barn har høyere gradering enn søker`() {
-        val request = HttpEntity(SøknadBarnetilsynUtil.søknad, headers)
+        val request = HttpEntity(SøknadBarnetilsynUtil.søknadBarnetilsyn, headers)
 
         val identBarn = FnrGenerator.generer(LocalDate.now().minusYears(3))
         val barn = lagPdlBarn(identBarn, adressebeskyttelse = AdressebeskyttelseGradering.FORTROLIG)

@@ -18,7 +18,7 @@ object ArkiverDokumentRequestMapper {
         vedlegg: List<Vedlegg>,
     ): ArkiverDokumentRequest {
         val dokumenttype = typeHoveddokument(skjema.type)
-        val søknadsdokumentJson =
+        val skjemadokumentJson =
             Dokument(
                 skjema.skjemaJson.json.toByteArray(),
                 Filtype.JSON,
@@ -26,12 +26,12 @@ object ArkiverDokumentRequestMapper {
                 dokumenttype.dokumentTittel(),
                 dokumenttype,
             )
-        val søknadsdokumentPdf =
+        val skjemadokumentPdf =
             Dokument(skjema.skjemaPdf!!, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
         return ArkiverDokumentRequest(
             fnr = skjema.personIdent,
             forsøkFerdigstill = false,
-            hoveddokumentvarianter = listOf(søknadsdokumentPdf, søknadsdokumentJson),
+            hoveddokumentvarianter = listOf(skjemadokumentPdf, skjemadokumentJson),
             vedleggsdokumenter = mapVedlegg(vedlegg, skjema.type),
             eksternReferanseId = skjema.id.toString(),
             avsenderMottaker = AvsenderMottaker(id = skjema.personIdent, idType = BrukerIdType.FNR, navn = null),

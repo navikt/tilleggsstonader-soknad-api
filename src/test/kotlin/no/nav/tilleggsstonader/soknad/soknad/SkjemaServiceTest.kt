@@ -28,7 +28,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg as VedleggDomene
 
-class SøknadServiceTest {
+class SkjemaServiceTest {
     private val skjemaRepository = mockk<SkjemaRepository>()
     private val vedleggRepository = mockk<VedleggRepository>()
     private val personService = mockk<PersonService>()
@@ -46,7 +46,7 @@ class SøknadServiceTest {
         )
 
     val personIdent = FnrGenerator.generer()
-    val søknad = SøknadBarnetilsynUtil.søknad
+    val søknadBarnetilsyn = SøknadBarnetilsynUtil.søknadBarnetilsyn
     val person = mockk<PersonMedBarnDto>()
 
     val vedleggSlot = slot<List<VedleggDomene>>()
@@ -55,7 +55,7 @@ class SøknadServiceTest {
     fun setUp() {
         every { skjemaRepository.insert(any()) } answers { firstArg() }
         every { person.barn } returns
-            søknad.barnMedBarnepass.map {
+            søknadBarnetilsyn.barnMedBarnepass.map {
                 Barn(
                     ident = it.ident,
                     fornavn = "fornavn",
@@ -73,7 +73,7 @@ class SøknadServiceTest {
         every { person.barn } returns emptyList()
 
         assertThatThrownBy {
-            service.lagreSøknadTilsynBarn(ident = personIdent, mottattTidspunkt = LocalDateTime.now(), søknad = søknad)
+            service.lagreSøknadTilsynBarn(ident = personIdent, mottattTidspunkt = LocalDateTime.now(), søknad = søknadBarnetilsyn)
         }.hasMessageContaining("Prøver å sende inn identer på barnen")
     }
 
@@ -85,17 +85,17 @@ class SøknadServiceTest {
             val vedlegg = Dokument(UUID.randomUUID(), UUID.randomUUID().toString())
 
             val dokumentasjon = lagDokumentasjonFelt(vedlegg)
-            val søknadId =
+            val skjemaId =
                 service.lagreSøknadTilsynBarn(
                     ident = personIdent,
                     mottattTidspunkt = LocalDateTime.now(),
-                    søknad = søknad.copy(dokumentasjon = dokumentasjon),
+                    søknad = søknadBarnetilsyn.copy(dokumentasjon = dokumentasjon),
                 )
 
             val lagretVedlegg = vedleggSlot.captured.single()
             assertThat(lagretVedlegg.id).isEqualTo(vedlegg.id)
             assertThat(lagretVedlegg.type).isEqualTo(Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE)
-            assertThat(lagretVedlegg.skjemaId).isEqualTo(søknadId)
+            assertThat(lagretVedlegg.skjemaId).isEqualTo(skjemaId)
             assertThat(lagretVedlegg.navn).isEqualTo(vedlegg.navn)
             assertThat(lagretVedlegg.innhold).isEqualTo(byteArrayOf(12))
         }
@@ -110,7 +110,7 @@ class SøknadServiceTest {
                 service.lagreSøknadTilsynBarn(
                     ident = personIdent,
                     mottattTidspunkt = LocalDateTime.now(),
-                    søknad = søknad.copy(dokumentasjon = dokumentasjon),
+                    søknad = søknadBarnetilsyn.copy(dokumentasjon = dokumentasjon),
                 )
             }.hasMessageContaining("Feilet henting av vedlegg=${vedlegg.id}")
         }

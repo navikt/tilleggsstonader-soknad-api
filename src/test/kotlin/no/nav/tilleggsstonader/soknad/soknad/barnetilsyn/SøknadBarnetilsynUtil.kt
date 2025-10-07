@@ -17,7 +17,7 @@ import java.time.LocalDate
 import java.util.UUID
 
 object SøknadBarnetilsynUtil {
-    val søknad =
+    val søknadBarnetilsyn =
         SøknadBarnetilsynDto(
             hovedytelse = SøknadTestUtil.hovedytelseDto(),
             aktivitet =
