@@ -4,6 +4,7 @@ import io.mockk.verify
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentRequest
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
+import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnKjøreliste
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.tasks.kjørTasksKlareForProsesseringTilIngenTasksIgjen
 import no.nav.tilleggsstonader.soknad.soknad.Kvittering
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
@@ -23,16 +24,12 @@ class KjørelisteControllerTest : IntegrationTest() {
     @Autowired
     lateinit var integrasjonerClient: IntegrasjonerClient
 
-    @BeforeEach
-    fun setUp() {
-        headers.setBearerAuth(søkerBearerToken(tokenSubject))
-    }
-
     @Test
     fun `skal kunne sende inn en komplett kjøreliste`() {
-        val request = HttpEntity(KjørelisteTestdata.kjørelisteDto(), headers)
-        val response = restTemplate.postForEntity<Kvittering>(localhost("api/kjorelister"), request)
-        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
+        val kjøreliste = KjørelisteTestdata.kjørelisteDto()
+        val response = sendInnKjøreliste(kjøreliste)
+
+        assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
         kjørTasksKlareForProsesseringTilIngenTasksIgjen()
 

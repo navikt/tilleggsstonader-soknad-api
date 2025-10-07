@@ -17,28 +17,17 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.server.LocalServerPort
-import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.cache.CacheManager
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.data.jdbc.core.JdbcAggregateOperations
-import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.web.client.RestTemplate
+import org.springframework.test.web.reactive.server.WebTestClient
 import java.util.UUID
 
 val tokenSubject = "12345678911"
-
-// Slett denne når RestTemplateConfiguration er tatt i bruk?
-@Configuration
-class DefaultRestTemplateConfiguration {
-    @Bean
-    fun restTemplate(restTemplateBuilder: RestTemplateBuilder) = restTemplateBuilder.build()
-}
 
 @ExtendWith(SpringExtension::class)
 @ContextConfiguration(initializers = [DbContainerInitializer::class])
@@ -56,15 +45,8 @@ class DefaultRestTemplateConfiguration {
     "mock-kafka",
 )
 @EnableMockOAuth2Server
+@AutoConfigureWebTestClient
 abstract class IntegrationTest {
-    @Suppress("SpringJavaInjectionPointsAutowiringInspection")
-    @Autowired
-    protected lateinit var restTemplate: RestTemplate
-    protected val headers = HttpHeaders()
-
-    @LocalServerPort
-    private var port: Int? = 0
-
     @Suppress("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private lateinit var mockOAuth2Server: MockOAuth2Server
@@ -84,11 +66,13 @@ abstract class IntegrationTest {
     @Autowired
     lateinit var taskWorker: TaskWorker
 
+    @Autowired
+    lateinit var webTestClient: WebTestClient
+
     val logger = LoggerFactory.getLogger(javaClass)
 
     @AfterEach
     fun tearDown() {
-        headers.clear()
         clearClientMocks()
         resetDatabase()
         clearCaches()
@@ -115,9 +99,12 @@ abstract class IntegrationTest {
         }
     }
 
-    protected fun localhost(path: String): String = "$LOCALHOST$port/$path"
-
     protected fun søkerBearerToken(personident: String = FnrGenerator.generer()): String = mockOAuth2Server.token(subject = personident)
+
+    fun WebTestClient.RequestHeadersSpec<*>.medSøkerBearerToken(personident: String = FnrGenerator.generer()) =
+        this.headers {
+            it.setBearerAuth(søkerBearerToken(personident))
+        }
 
     private fun MockOAuth2Server.token(
         subject: String,
@@ -142,8 +129,4 @@ abstract class IntegrationTest {
                     expiry = 3600,
                 ),
             ).serialize()
-
-    companion object {
-        private const val LOCALHOST = "http://localhost:"
-    }
 }

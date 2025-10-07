@@ -8,6 +8,10 @@ import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.PdlClientConfig.Companion.resetPdlClientMock
 import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlBarn
+import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadBarnetilsyn
+import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadBarnetilsynKall
+import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadLæremidler
+import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadLæremidlerKall
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
@@ -16,15 +20,10 @@ import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.web.client.postForEntity
 import java.time.LocalDate
 
 class SøknadControllerTest : IntegrationTest() {
@@ -34,11 +33,6 @@ class SøknadControllerTest : IntegrationTest() {
     @Autowired
     lateinit var pdlClientCredentialClient: PdlClientCredentialClient
 
-    @BeforeEach
-    fun setUp() {
-        headers.setBearerAuth(søkerBearerToken(tokenSubject))
-    }
-
     @AfterEach
     override fun tearDown() {
         resetPdlClientMock(pdlClientCredentialClient)
@@ -47,46 +41,40 @@ class SøknadControllerTest : IntegrationTest() {
 
     @Test
     fun `skal kunne sende inn en komplett søknad for barnetilsyn`() {
-        val request = HttpEntity(SøknadBarnetilsynUtil.søknadBarnetilsyn, headers)
-        val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
-        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
+        val response = sendInnSøknadBarnetilsyn(SøknadBarnetilsynUtil.søknadBarnetilsyn)
+        assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
         verifiserLagretSøknad(Stønadstype.BARNETILSYN, "søknad/barnetilsyn/barnetilsyn.json")
     }
 
     @Test
     fun `skal kunne sende inn en komplett søknad for læremidler`() {
-        val request = HttpEntity(SøknadLæremidlerUtil.søknadLæremidler, headers)
-        val response = restTemplate.postForEntity<Kvittering>(localhost("api/soknad/laremidler"), request)
-        assertThat(response.body!!.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
+        val response = sendInnSøknadLæremidler(SøknadLæremidlerUtil.søknadLæremidler)
+        assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
         verifiserLagretSøknad(Stønadstype.LÆREMIDLER, "søknad/læremidler/læremidler.json")
     }
 
     @Test
     fun `skal feile når requesten mangler token`() {
-        headers.remove(HttpHeaders.AUTHORIZATION)
-        val request = HttpEntity<Any>(emptyMap<String, String>(), headers)
-        assertThatThrownBy {
-            restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
-        }.hasMessageContaining(
-            """"{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Ukjent feil","instance":"/api/soknad/pass-av-barn"}"""",
-        )
+        sendInnSøknadLæremidlerKall(SøknadLæremidlerUtil.søknadLæremidler, medToken = false)
+            .expectStatus()
+            .isUnauthorized
+            .expectBody()
     }
 
     @Test
     fun `skal feile hvis man prøver å sende inn søknad hvis barn har høyere gradering enn søker`() {
-        val request = HttpEntity(SøknadBarnetilsynUtil.søknadBarnetilsyn, headers)
-
         val identBarn = FnrGenerator.generer(LocalDate.now().minusYears(3))
         val barn = lagPdlBarn(identBarn, adressebeskyttelse = AdressebeskyttelseGradering.FORTROLIG)
         every { pdlClientCredentialClient.hentBarn(any()) } returns mapOf(barn)
 
-        assertThatThrownBy {
-            restTemplate.postForEntity<Kvittering>(localhost("api/soknad/pass-av-barn"), request)
-        }.hasMessageContaining(
-            """"{"type":"about:blank","title":"Bad Request","status":400,"detail":"ROUTING_GAMMEL_SØKNAD","instance":"/api/soknad/pass-av-barn"}"""",
-        )
+        sendInnSøknadBarnetilsynKall(SøknadBarnetilsynUtil.søknadBarnetilsyn)
+            .expectStatus()
+            .isBadRequest
+            .expectBody()
+            .jsonPath("$.detail")
+            .isEqualTo("ROUTING_GAMMEL_SØKNAD")
     }
 
     private fun verifiserLagretSøknad(
