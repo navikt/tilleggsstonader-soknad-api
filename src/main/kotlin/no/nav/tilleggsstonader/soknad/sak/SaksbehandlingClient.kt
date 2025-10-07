@@ -18,16 +18,6 @@ class SaksbehandlingClient(
 ) : AbstractRestClient(restTemplate) {
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern").build()
 
-    fun skalRoutesTilNyLøsning(request: IdentStønadstype): Boolean {
-        val uri =
-            UriComponentsBuilder
-                .fromUri(sakUri.toUri())
-                .pathSegment("routing-soknad")
-                .build()
-                .toUriString()
-        return postForEntity<SkalRoutesINyLøsning>(uri, request).skalBehandlesINyLøsning
-    }
-
     fun skalRoutesTilNyLøsning(request: IdentSkjematype): Boolean {
         val uri =
             UriComponentsBuilder
