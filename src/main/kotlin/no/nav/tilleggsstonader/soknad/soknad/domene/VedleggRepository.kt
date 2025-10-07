@@ -14,14 +14,14 @@ import java.util.UUID
 interface VedleggRepository :
     RepositoryInterface<Vedlegg, UUID>,
     InsertUpdateRepository<Vedlegg> {
-    fun findBySøknadId(søknadId: UUID): List<Vedlegg>
+    fun findBySkjemaId(skjemaId: UUID): List<Vedlegg>
 }
 
 class Vedlegg(
     @Id
     val id: UUID,
-    @Column("soknad_id")
-    val søknadId: UUID,
+    @Column("skjema_id")
+    val skjemaId: UUID,
     val type: Vedleggstype,
     val navn: String,
     val innhold: ByteArray,
@@ -37,7 +37,7 @@ class Vedlegg(
         other as Vedlegg
 
         if (id != other.id) return false
-        if (søknadId != other.søknadId) return false
+        if (skjemaId != other.skjemaId) return false
         if (type != other.type) return false
         if (navn != other.navn) return false
         if (!innhold.contentEquals(other.innhold)) return false
@@ -46,7 +46,7 @@ class Vedlegg(
 
     override fun hashCode(): Int {
         var result = id.hashCode()
-        result = 31 * result + søknadId.hashCode()
+        result = 31 * result + skjemaId.hashCode()
         result = 31 * result + type.hashCode()
         result = 31 * result + navn.hashCode()
         result = 31 * result + innhold.contentHashCode()

@@ -15,8 +15,8 @@ class ArkiverSøknadTask(
     private val taskService: TaskService,
 ) : AsyncTaskStep {
     override fun doTask(task: Task) {
-        val søknadId = UUID.fromString(task.payload)
-        arkiveringService.journalførSøknad(søknadId, task.callId)
+        val skjemaId = UUID.fromString(task.payload)
+        arkiveringService.journalførSkjema(skjemaId, task.callId)
     }
 
     companion object {

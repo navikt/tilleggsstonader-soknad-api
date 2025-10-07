@@ -1,7 +1,7 @@
 package no.nav.tilleggsstonader.soknad.soknad.læremidler
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
+import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
@@ -15,9 +15,9 @@ class LæremidlerMapper {
         ident: String,
         mottattTidspunkt: LocalDateTime,
         dto: SøknadLæremidlerDto,
-    ): Søknadsskjema<SøknadsskjemaLæremidler> {
+    ): InnsendtSkjema<SøknadsskjemaLæremidler> {
         val språkkode = Språkkode.NB
-        return Søknadsskjema(
+        return InnsendtSkjema(
             ident = ident,
             mottattTidspunkt = mottattTidspunkt,
             språk = språkkode,

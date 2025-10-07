@@ -6,7 +6,7 @@ import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.tasks.kjørTasksKlareForProsesseringTilIngenTasksIgjen
 import no.nav.tilleggsstonader.soknad.soknad.Kvittering
-import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
+import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -18,7 +18,7 @@ import java.time.LocalDate
 
 class KjørelisteControllerTest : IntegrationTest() {
     @Autowired
-    lateinit var søknadRepository: SøknadRepository
+    lateinit var skjemaRepository: SkjemaRepository
 
     @Autowired
     lateinit var integrasjonerClient: IntegrasjonerClient
@@ -37,7 +37,7 @@ class KjørelisteControllerTest : IntegrationTest() {
         kjørTasksKlareForProsesseringTilIngenTasksIgjen()
 
         val søknad =
-            with(søknadRepository.findAll()) {
+            with(skjemaRepository.findAll()) {
                 assertThat(this).hasSize(1)
                 this.single()
             }

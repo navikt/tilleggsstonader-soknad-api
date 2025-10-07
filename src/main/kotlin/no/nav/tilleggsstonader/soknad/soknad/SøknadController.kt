@@ -16,14 +16,14 @@ import java.time.LocalDateTime
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
 class SøknadController(
-    private val søknadService: SøknadService,
+    private val skjemaService: SkjemaService,
 ) {
     @PostMapping("pass-av-barn")
     fun sendInn(
         @RequestBody søknad: SøknadBarnetilsynDto,
     ): Kvittering {
         val mottattTidspunkt = LocalDateTime.now()
-        søknadService.lagreSøknad(
+        skjemaService.lagreSøknadTilsynBarn(
             ident = EksternBrukerUtils.hentFnrFraToken(),
             mottattTidspunkt = mottattTidspunkt,
             søknad = søknad,
@@ -36,7 +36,7 @@ class SøknadController(
         @RequestBody søknad: SøknadLæremidlerDto,
     ): Kvittering {
         val mottattTidspunkt = LocalDateTime.now()
-        søknadService.lagreLæremidlerSøknad(
+        skjemaService.lagreLæremidlerSøknad(
             ident = EksternBrukerUtils.hentFnrFraToken(),
             mottattTidspunkt = mottattTidspunkt,
             søknad = søknad,

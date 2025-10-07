@@ -1,9 +1,9 @@
 package no.nav.tilleggsstonader.soknad.kjøreliste
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
+import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Reisedag
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.UkeMedReisedager
 import java.time.LocalDateTime
 
@@ -12,9 +12,9 @@ object KjørelisteMapper {
         ident: String,
         mottattTidspunkt: LocalDateTime,
         dto: KjørelisteDto,
-    ): Søknadsskjema<KjørelisteSkjema> {
+    ): InnsendtSkjema<KjørelisteSkjema> {
         val språkkode = Språkkode.NB
-        return Søknadsskjema(
+        return InnsendtSkjema(
             ident = ident,
             mottattTidspunkt = mottattTidspunkt,
             språk = språkkode,

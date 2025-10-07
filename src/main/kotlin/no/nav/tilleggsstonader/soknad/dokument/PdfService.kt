@@ -4,8 +4,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.sak.DokumentBrevkode
+import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
@@ -13,57 +13,57 @@ import no.nav.tilleggsstonader.soknad.dokument.pdf.Søkerinformasjon
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
 import no.nav.tilleggsstonader.soknad.dokument.pdf.VedleggMapper.mapVedlegg
 import no.nav.tilleggsstonader.soknad.person.PersonService
-import no.nav.tilleggsstonader.soknad.soknad.SøknadService
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import org.springframework.stereotype.Service
 import java.util.UUID
 
 @Service
 class PdfService(
-    private val søknadService: SøknadService,
+    private val skjemaService: SkjemaService,
     private val personService: PersonService,
     private val htmlifyClient: HtmlifyClient,
     private val dokumentClient: FamilieDokumentClient,
 ) {
-    fun lagPdf(søknadId: UUID) {
-        val søknad = søknadService.hentSøknad(søknadId)
-        val søknadsskjema = parseSøknadsskjema(søknad)
-        val felter = mapSøknad(søknadsskjema, hentSøkerinformasjon(søknad))
+    fun lagPdf(skjemaId: UUID) {
+        val skjema = skjemaService.hentSkjema(skjemaId)
+        val innsendtSkjema = parseInnsendtSkjema(skjema)
+        val felter = mapSøknad(innsendtSkjema, hentSøkerinformasjon(skjema))
         val html =
             htmlifyClient.generateHtml(
-                stønadstype = søknad.type,
-                tittel = tittelSøknadsskjema(søknadsskjema),
+                stønadstype = skjema.type,
+                tittel = tittelSøknadsskjema(innsendtSkjema),
                 felter = felter,
-                mottattTidspunkt = søknadsskjema.mottattTidspunkt,
-                dokumentasjon = mapVedlegg(søknadsskjema),
-                dokumentBrevkode = dokumentBrevKode(søknadsskjema),
+                mottattTidspunkt = innsendtSkjema.mottattTidspunkt,
+                dokumentasjon = mapVedlegg(innsendtSkjema),
+                dokumentBrevkode = dokumentBrevKode(innsendtSkjema),
             )
         val pdf = dokumentClient.genererPdf(html)
-        søknadService.oppdaterSøknad(søknad.copy(søknadPdf = pdf))
+        skjemaService.oppdaterSkjema(skjema.copy(skjemaPdf = pdf))
     }
 
     // TODO - mappe dokumentbrevkode fra skjematype
-    private fun dokumentBrevKode(søknadsskjema: Søknadsskjema<*>): DokumentBrevkode =
-        when (søknadsskjema.skjema) {
+    private fun dokumentBrevKode(innsendtSkjema: InnsendtSkjema<*>): DokumentBrevkode =
+        when (innsendtSkjema.skjema) {
             is SøknadsskjemaBarnetilsyn -> DokumentBrevkode.BARNETILSYN
             is SøknadsskjemaLæremidler -> DokumentBrevkode.LÆREMIDLER
             is KjørelisteSkjema -> DokumentBrevkode.DAGLIG_REISE_KJØRELISTE
-            else -> error("Ingen dokumentbrevkode for skjema ${søknadsskjema.skjema::class.qualifiedName}")
+            else -> error("Ingen dokumentbrevkode for skjema ${innsendtSkjema.skjema::class.qualifiedName}")
         }
 
-    private fun hentSøkerinformasjon(søknad: Søknad): Søkerinformasjon {
-        val navn = personService.hentNavnMedClientCredential(søknad.personIdent)
-        return Søkerinformasjon(ident = søknad.personIdent, navn = navn)
+    private fun hentSøkerinformasjon(skjema: Skjema): Søkerinformasjon {
+        val navn = personService.hentNavnMedClientCredential(skjema.personIdent)
+        return Søkerinformasjon(ident = skjema.personIdent, navn = navn)
     }
 
-    private fun parseSøknadsskjema(søknad: Søknad): Søknadsskjema<*> {
-        val json = søknad.søknadJson.json
-        return when (søknad.type) {
-            Stønadstype.BARNETILSYN -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaBarnetilsyn>>(json)
-            Stønadstype.LÆREMIDLER -> objectMapper.readValue<Søknadsskjema<SøknadsskjemaLæremidler>>(json)
-            Stønadstype.DAGLIG_REISE_TSO, Stønadstype.DAGLIG_REISE_TSR -> objectMapper.readValue<Søknadsskjema<KjørelisteSkjema>>(json)
+    private fun parseInnsendtSkjema(skjema: Skjema): InnsendtSkjema<*> {
+        val json = skjema.skjemaJson.json
+        return when (skjema.type) {
+            Stønadstype.BARNETILSYN -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaBarnetilsyn>>(json)
+            Stønadstype.LÆREMIDLER -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaLæremidler>>(json)
+            Stønadstype.DAGLIG_REISE_TSO, Stønadstype.DAGLIG_REISE_TSR -> objectMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(json)
             Stønadstype.BOUTGIFTER ->
-                error("Har ikke laget søknad for ${søknad.type}")
+                error("Har ikke laget skjema for ${skjema.type}")
         }
     }
 }

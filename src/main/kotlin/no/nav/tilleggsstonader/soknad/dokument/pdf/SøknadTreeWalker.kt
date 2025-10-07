@@ -5,11 +5,11 @@ import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.NumeriskFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Reisedag
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
@@ -65,7 +65,7 @@ data object HorisontalLinje : HtmlFelt(HtmlFeltType.LINJE)
 
 object SøknadTreeWalker {
     fun mapSøknad(
-        søknad: Søknadsskjema<*>,
+        søknad: InnsendtSkjema<*>,
         søkerinformasjon: Søkerinformasjon,
     ): List<HtmlFelt> = listOf(søkerinformasjon.tilAvsnitt(søknad.språk)) + mapFelter(søknad.skjema, søknad.språk)
 

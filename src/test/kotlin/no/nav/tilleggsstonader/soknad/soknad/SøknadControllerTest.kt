@@ -12,7 +12,7 @@ import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
-import no.nav.tilleggsstonader.soknad.soknad.domene.SøknadRepository
+import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import no.nav.tilleggsstonader.soknad.util.FileUtil
@@ -33,7 +33,7 @@ class SøknadControllerTest : IntegrationTest() {
     lateinit var personService: PersonService
 
     @Autowired
-    lateinit var søknadRepository: SøknadRepository
+    lateinit var skjemaRepository: SkjemaRepository
 
     @Autowired
     lateinit var pdlClientCredentialClient: PdlClientCredentialClient
@@ -97,13 +97,13 @@ class SøknadControllerTest : IntegrationTest() {
         stønadstype: Stønadstype,
         filnavn: String,
     ) {
-        val dbSøknad = søknadRepository.findAll().single()
-        val søknadFraDb = objectMapper.readValue<Map<String, Any>>(dbSøknad.søknadJson.json).toMutableMap()
+        val dbSøknad = skjemaRepository.findAll().single()
+        val søknadFraDb = objectMapper.readValue<Map<String, Any>>(dbSøknad.skjemaJson.json).toMutableMap()
         søknadFraDb["mottattTidspunkt"] = "2023-09-25T21:32:18.22631"
 
         assertThat(dbSøknad.personIdent).isEqualTo(tokenSubject)
         assertThat(dbSøknad.type).isEqualTo(stønadstype)
-        assertThat(dbSøknad.søknadFrontendGitHash).isEqualTo("aabbccd")
+        assertThat(dbSøknad.frontendGitHash).isEqualTo("aabbccd")
         try {
             FileUtil.skrivJsonTilFil(filnavn, søknadFraDb)
             assertThat(søknadFraDb).isEqualTo(objectMapper.readValue<Map<String, Any>>(FileUtil.readFile(filnavn)))

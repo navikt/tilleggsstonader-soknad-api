@@ -1,7 +1,7 @@
 package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
-import no.nav.tilleggsstonader.kontrakter.søknad.Søknadsskjema
+import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
@@ -20,9 +20,9 @@ class BarnetilsynMapper {
         mottattTidspunkt: LocalDateTime,
         pdlBarn: Map<String, Barn>,
         dto: SøknadBarnetilsynDto,
-    ): Søknadsskjema<SøknadsskjemaBarnetilsyn> {
+    ): InnsendtSkjema<SøknadsskjemaBarnetilsyn> {
         val språkkode = Språkkode.NB
-        return Søknadsskjema(
+        return InnsendtSkjema(
             ident = ident,
             mottattTidspunkt = mottattTidspunkt,
             språk = språkkode,

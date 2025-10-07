@@ -4,8 +4,8 @@ import no.nav.familie.prosessering.AsyncTaskStep
 import no.nav.familie.prosessering.TaskStepBeskrivelse
 import no.nav.familie.prosessering.domene.Task
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
-import no.nav.tilleggsstonader.soknad.soknad.SøknadService
-import no.nav.tilleggsstonader.soknad.soknad.domene.Søknad
+import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
+import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.varsel.DittNavKafkaProducer
 import org.springframework.stereotype.Service
 import java.util.Properties
@@ -15,10 +15,10 @@ import java.util.UUID
 @TaskStepBeskrivelse(taskStepType = SendNotifikasjonTask.TYPE, beskrivelse = "Send notifikasjon mottatt søknad")
 class SendNotifikasjonTask(
     private val notifikasjonsService: DittNavKafkaProducer,
-    private val søknadService: SøknadService,
+    private val skjemaService: SkjemaService,
 ) : AsyncTaskStep {
     override fun doTask(task: Task) {
-        val søknad = søknadService.hentSøknad(UUID.fromString(task.payload))
+        val søknad = skjemaService.hentSkjema(UUID.fromString(task.payload))
         val message = lagNotifikasjonsMelding(søknad.type)
         val eventId = søknad.id.toString()
 
@@ -36,13 +36,13 @@ class SendNotifikasjonTask(
     companion object {
         const val TYPE = "SEND_NOTIFIKASJON"
 
-        fun opprettTask(søknad: Søknad): Task {
+        fun opprettTask(skjema: Skjema): Task {
             val properties =
                 Properties().apply {
-                    setProperty("søkersFødselsnummer", søknad.personIdent)
-                    setProperty("type", søknad.type.name)
+                    setProperty("søkersFødselsnummer", skjema.personIdent)
+                    setProperty("type", skjema.type.name)
                 }
-            return Task(TYPE, søknad.id.toString(), properties)
+            return Task(TYPE, skjema.id.toString(), properties)
         }
     }
 }
