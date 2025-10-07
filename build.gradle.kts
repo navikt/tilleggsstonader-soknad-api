@@ -81,6 +81,8 @@ dependencies {
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    // Kun for å kunne bruke WebTestClient. Kan fjernes og erstattes av RestTestClient i spring-boot 4
+    testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
     testImplementation("io.mockk:mockk:1.14.5")
 
