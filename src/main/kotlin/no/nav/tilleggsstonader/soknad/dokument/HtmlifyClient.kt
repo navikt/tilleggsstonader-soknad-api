@@ -18,7 +18,7 @@ class HtmlifyClient(
     private val uri: URI,
     @Qualifier("utenAuth") restTemplate: RestTemplate,
 ) : AbstractRestClient(restTemplate) {
-    fun generateHtml(
+    fun genererSøknadHtml(
         stønadstype: Stønadstype,
         tittel: String,
         felter: List<HtmlFelt>,

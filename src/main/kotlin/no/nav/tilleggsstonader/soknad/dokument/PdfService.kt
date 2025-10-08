@@ -31,7 +31,7 @@ class PdfService(
         val innsendtSkjema = parseInnsendtSkjema(skjema)
         val felter = mapSøknad(innsendtSkjema, hentSøkerinformasjon(skjema))
         val html =
-            htmlifyClient.generateHtml(
+            htmlifyClient.genererSøknadHtml(
                 // TODO - stønadstype kan nok fjernes. Må kalle riktig endepunkt om er kjøreliste eller søknad
                 stønadstype = skjema.type.tilStønadstyper().first(),
                 tittel = tittelSøknadsskjema(innsendtSkjema),
