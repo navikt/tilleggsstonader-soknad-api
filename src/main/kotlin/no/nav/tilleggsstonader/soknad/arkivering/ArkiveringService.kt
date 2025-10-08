@@ -1,5 +1,7 @@
 package no.nav.tilleggsstonader.soknad.arkivering
 
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
+import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
@@ -29,8 +31,21 @@ class ArkiveringService(
         skjema: Skjema,
         vedlegg: List<Vedlegg>,
     ): String {
-        val arkiverDokumentRequest = ArkiverDokumentRequestMapper.toDto(skjema, vedlegg)
+        val arkiverDokumentRequest = ArkiverDokumentRequestMapper.toDto(skjema, finnTilhørendeStønadstypeForSkjema(skjema), vedlegg)
         val dokumentResponse = integrasjonerClient.arkiver(arkiverDokumentRequest)
         return dokumentResponse.journalpostId
+    }
+
+    private fun finnTilhørendeStønadstypeForSkjema(skjema: Skjema): Stønadstype =
+        when (skjema.type) {
+            Skjematype.SØKNAD_BARNETILSYN -> Stønadstype.BARNETILSYN
+            Skjematype.SØKNAD_LÆREMIDLER -> Stønadstype.LÆREMIDLER
+            Skjematype.DAGLIG_REISE_KJØRELISTE -> hentStønadstypeFraTilhørendeRammevedtak(skjema)
+            else -> error("Håndterer ikke skjema ${skjema.type}")
+        }
+
+    private fun hentStønadstypeFraTilhørendeRammevedtak(skjema: Skjema): Stønadstype {
+        // TODO - implementer
+        return Stønadstype.DAGLIG_REISE_TSO
     }
 }

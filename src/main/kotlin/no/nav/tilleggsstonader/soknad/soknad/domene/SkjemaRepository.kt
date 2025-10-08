@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.soknad.domene
 
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.SporbarUtils
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.InsertUpdateRepository
@@ -23,7 +23,7 @@ interface SkjemaRepository :
 }
 
 data class AntallPerType(
-    val type: Stønadstype,
+    val type: Skjematype,
     val count: Long,
 )
 
@@ -32,7 +32,7 @@ data class Skjema(
     @Id
     val id: UUID = UUID.randomUUID(),
     val opprettetTid: LocalDateTime = SporbarUtils.now(),
-    val type: Stønadstype,
+    val type: Skjematype,
     val personIdent: String,
     @Column("skjema_json")
     val skjemaJson: JsonWrapper,

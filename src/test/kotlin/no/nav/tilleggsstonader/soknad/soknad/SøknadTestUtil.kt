@@ -2,7 +2,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.tilleggsstonader.kontrakter.felles.Hovedytelse
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
@@ -27,11 +27,11 @@ import java.time.LocalDateTime
 object SøknadTestUtil {
     private val mottattTidspunkt = LocalDateTime.of(2023, 1, 1, 12, 13, 0)
 
-    fun lagSøknad(kjørelisteDto: KjørelisteDto): Skjema = lagSøknad(Stønadstype.DAGLIG_REISE_TSO, lagSøknadsskjema(kjørelisteDto))
+    fun lagSøknad(kjørelisteDto: KjørelisteDto): Skjema = lagSøknad(Skjematype.DAGLIG_REISE_KJØRELISTE, lagSøknadsskjema(kjørelisteDto))
 
-    fun lagSøknad(søknadDto: SøknadBarnetilsynDto): Skjema = lagSøknad(Stønadstype.BARNETILSYN, lagSøknadsskjema(søknadDto))
+    fun lagSøknad(søknadDto: SøknadBarnetilsynDto): Skjema = lagSøknad(Skjematype.SØKNAD_BARNETILSYN, lagSøknadsskjema(søknadDto))
 
-    fun lagSøknad(søknadDto: SøknadLæremidlerDto): Skjema = lagSøknad(Stønadstype.LÆREMIDLER, lagSøknadsskjema(søknadDto))
+    fun lagSøknad(søknadDto: SøknadLæremidlerDto): Skjema = lagSøknad(Skjematype.SØKNAD_LÆREMIDLER, lagSøknadsskjema(søknadDto))
 
     fun lagSøknadsskjema(kjørelisteDto: KjørelisteDto) = KjørelisteMapper.map("25518735813", mottattTidspunkt, kjørelisteDto)
 
@@ -41,12 +41,12 @@ object SøknadTestUtil {
     fun lagSøknadsskjema(søknadDto: SøknadLæremidlerDto) = LæremidlerMapper().map("25518735813", mottattTidspunkt, søknadDto)
 
     fun lagSøknad(
-        stønadstype: Stønadstype,
+        skjematype: Skjematype,
         innsendtSkjema: InnsendtSkjema<*>,
     ): Skjema =
         Skjema(
             skjemaJson = JsonWrapper(objectMapper.writeValueAsString(innsendtSkjema)),
-            type = stønadstype,
+            type = skjematype,
             personIdent = innsendtSkjema.ident,
             opprettetTid = LocalDateTime.now(),
             frontendGitHash = "aabbccd",

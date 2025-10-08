@@ -2,7 +2,8 @@ package no.nav.tilleggsstonader.soknad.dokument
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
+import no.nav.tilleggsstonader.kontrakter.felles.tilStønadstyper
 import no.nav.tilleggsstonader.kontrakter.sak.DokumentBrevkode
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
@@ -31,7 +32,8 @@ class PdfService(
         val felter = mapSøknad(innsendtSkjema, hentSøkerinformasjon(skjema))
         val html =
             htmlifyClient.generateHtml(
-                stønadstype = skjema.type,
+                // TODO - stønadstype kan nok fjernes. Må kalle riktig endepunkt om er kjøreliste eller søknad
+                stønadstype = skjema.type.tilStønadstyper().first(),
                 tittel = tittelSøknadsskjema(innsendtSkjema),
                 felter = felter,
                 mottattTidspunkt = innsendtSkjema.mottattTidspunkt,
@@ -42,7 +44,6 @@ class PdfService(
         skjemaService.oppdaterSkjema(skjema.copy(skjemaPdf = pdf))
     }
 
-    // TODO - mappe dokumentbrevkode fra skjematype
     private fun dokumentBrevKode(innsendtSkjema: InnsendtSkjema<*>): DokumentBrevkode =
         when (innsendtSkjema.skjema) {
             is SøknadsskjemaBarnetilsyn -> DokumentBrevkode.BARNETILSYN
@@ -59,11 +60,11 @@ class PdfService(
     private fun parseInnsendtSkjema(skjema: Skjema): InnsendtSkjema<*> {
         val json = skjema.skjemaJson.json
         return when (skjema.type) {
-            Stønadstype.BARNETILSYN -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaBarnetilsyn>>(json)
-            Stønadstype.LÆREMIDLER -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaLæremidler>>(json)
-            Stønadstype.DAGLIG_REISE_TSO, Stønadstype.DAGLIG_REISE_TSR -> objectMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(json)
-            Stønadstype.BOUTGIFTER ->
-                error("Har ikke laget skjema for ${skjema.type}")
+            Skjematype.SØKNAD_BARNETILSYN -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaBarnetilsyn>>(json)
+            Skjematype.SØKNAD_LÆREMIDLER -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaLæremidler>>(json)
+            Skjematype.DAGLIG_REISE_KJØRELISTE -> objectMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(json)
+            Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
+                error("Håndterer ikke skjema ${skjema.type}")
         }
     }
 }

@@ -4,7 +4,7 @@ import io.mockk.verify
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentRequest
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnKjøreliste
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadBarnetilsyn
@@ -35,7 +35,7 @@ class InnsendSkjemaTest : IntegrationTest() {
 
         assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
-        validerSkjemaHarBlittSendtInnOgProsessert(Stønadstype.DAGLIG_REISE_TSO, Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE)
+        validerSkjemaHarBlittSendtInnOgProsessert(Skjematype.DAGLIG_REISE_KJØRELISTE, Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE)
     }
 
     @Test
@@ -45,7 +45,7 @@ class InnsendSkjemaTest : IntegrationTest() {
 
         assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
-        validerSkjemaHarBlittSendtInnOgProsessert(Stønadstype.LÆREMIDLER, Dokumenttype.LÆREMIDLER_SØKNAD)
+        validerSkjemaHarBlittSendtInnOgProsessert(Skjematype.SØKNAD_LÆREMIDLER, Dokumenttype.LÆREMIDLER_SØKNAD)
     }
 
     @Test
@@ -55,11 +55,11 @@ class InnsendSkjemaTest : IntegrationTest() {
 
         assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
-        validerSkjemaHarBlittSendtInnOgProsessert(Stønadstype.BARNETILSYN, Dokumenttype.BARNETILSYN_SØKNAD)
+        validerSkjemaHarBlittSendtInnOgProsessert(Skjematype.SØKNAD_BARNETILSYN, Dokumenttype.BARNETILSYN_SØKNAD)
     }
 
     private fun validerSkjemaHarBlittSendtInnOgProsessert(
-        stønadstype: Stønadstype,
+        skjematype: Skjematype,
         dokumenttype: Dokumenttype,
     ) {
         kjørTasksKlareForProsesseringTilIngenTasksIgjen()
@@ -71,7 +71,7 @@ class InnsendSkjemaTest : IntegrationTest() {
                 this.single()
             }
 
-        assertThat(skjema.type).isEqualTo(stønadstype)
+        assertThat(skjema.type).isEqualTo(skjematype)
 
         // Verifiserer at det har blitt opprettet journalpost av skjema
         val slot = io.mockk.slot<ArkiverDokumentRequest>()

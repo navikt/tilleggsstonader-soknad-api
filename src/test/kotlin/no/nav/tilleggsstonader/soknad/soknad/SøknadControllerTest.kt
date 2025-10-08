@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.mockk.every
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.PdlClientConfig.Companion.resetPdlClientMock
@@ -44,7 +44,7 @@ class SøknadControllerTest : IntegrationTest() {
         val response = sendInnSøknadBarnetilsyn(SøknadBarnetilsynUtil.søknadBarnetilsyn)
         assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
-        verifiserLagretSøknad(Stønadstype.BARNETILSYN, "søknad/barnetilsyn/barnetilsyn.json")
+        verifiserLagretSøknad(Skjematype.SØKNAD_BARNETILSYN, "søknad/barnetilsyn/barnetilsyn.json")
     }
 
     @Test
@@ -52,7 +52,7 @@ class SøknadControllerTest : IntegrationTest() {
         val response = sendInnSøknadLæremidler(SøknadLæremidlerUtil.søknadLæremidler)
         assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
-        verifiserLagretSøknad(Stønadstype.LÆREMIDLER, "søknad/læremidler/læremidler.json")
+        verifiserLagretSøknad(Skjematype.SØKNAD_LÆREMIDLER, "søknad/læremidler/læremidler.json")
     }
 
     @Test
@@ -78,7 +78,7 @@ class SøknadControllerTest : IntegrationTest() {
     }
 
     private fun verifiserLagretSøknad(
-        stønadstype: Stønadstype,
+        skjematype: Skjematype,
         filnavn: String,
     ) {
         val dbSøknad = skjemaRepository.findAll().single()
@@ -86,7 +86,7 @@ class SøknadControllerTest : IntegrationTest() {
         søknadFraDb["mottattTidspunkt"] = "2023-09-25T21:32:18.22631"
 
         assertThat(dbSøknad.personIdent).isEqualTo(tokenSubject)
-        assertThat(dbSøknad.type).isEqualTo(stønadstype)
+        assertThat(dbSøknad.type).isEqualTo(skjematype)
         assertThat(dbSøknad.frontendGitHash).isEqualTo("aabbccd")
         try {
             FileUtil.skrivJsonTilFil(filnavn, søknadFraDb)

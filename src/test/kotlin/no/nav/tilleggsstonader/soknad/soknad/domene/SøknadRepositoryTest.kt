@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.soknad.domene
 
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
@@ -34,7 +34,7 @@ class SøknadRepositoryTest : IntegrationTest() {
         lagreSøknad()
         lagreSøknad()
         assertThat(skjemaRepository.finnAntallPerType())
-            .containsExactly(AntallPerType(Stønadstype.BARNETILSYN, 2))
+            .containsExactly(AntallPerType(Skjematype.SØKNAD_BARNETILSYN, 2))
     }
 
     @Test
@@ -42,7 +42,7 @@ class SøknadRepositoryTest : IntegrationTest() {
         val skjema =
             skjemaRepository.insert(
                 Skjema(
-                    type = Stønadstype.BARNETILSYN,
+                    type = Skjematype.SØKNAD_BARNETILSYN,
                     personIdent = "123",
                     skjemaJson = JsonWrapper("{}"),
                     frontendGitHash = null,
@@ -55,7 +55,7 @@ class SøknadRepositoryTest : IntegrationTest() {
     private fun lagreSøknad() =
         skjemaRepository.insert(
             Skjema(
-                type = Stønadstype.BARNETILSYN,
+                type = Skjematype.SØKNAD_BARNETILSYN,
                 personIdent = "123",
                 skjemaJson = JsonWrapper("{}"),
                 frontendGitHash = "aabbccd",

@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.arkivering
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.arkivering.ArkiverDokumentRequestMapper.toDto
@@ -18,9 +19,9 @@ internal class ArkiverDokumentRequestMapperTest {
     @Test
     internal fun `barnetilsyn toDto - sjekk alle felt`() {
         val vedlegg = lagVedlegg()
-        val skjema = lagSkjema(SøknadBarnetilsynUtil.søknadBarnetilsyn, Stønadstype.BARNETILSYN)
+        val skjema = lagSkjema(SøknadBarnetilsynUtil.søknadBarnetilsyn, Skjematype.SØKNAD_BARNETILSYN)
 
-        val dto = toDto(skjema, listOf(vedlegg))
+        val dto = toDto(skjema, Stønadstype.BARNETILSYN, listOf(vedlegg))
 
         assertThat(dto.fnr).isEqualTo(skjema.personIdent)
         assertThat(dto.forsøkFerdigstill).isFalse
@@ -40,7 +41,7 @@ internal class ArkiverDokumentRequestMapperTest {
 
     private fun lagSkjema(
         skjema: Any,
-        type: Stønadstype,
+        type: Skjematype,
     ) = Skjema(
         skjemaJson = JsonWrapper(objectMapper.writeValueAsString(skjema)),
         personIdent = "123",
