@@ -13,10 +13,12 @@ data class KjørelisteDto(
 
 data class UkeMedReisedagerDto(
     val ukeLabel: String,
+    val spørsmål: String,
     val reisedager: List<ReisedagDto>,
 )
 
 data class ReisedagDto(
     val dato: DatoFelt,
+    val harKjørt: Boolean,
     val parkeringsutgift: NumeriskFelt? = null,
 )

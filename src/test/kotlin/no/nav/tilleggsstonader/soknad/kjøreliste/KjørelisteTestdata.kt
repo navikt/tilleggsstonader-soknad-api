@@ -19,11 +19,12 @@ object KjørelisteTestdata {
                 listOf(
                     UkeMedReisedagerDto(
                         ukeLabel = "Uke 1 (1. juni - 7. juni)",
+                        spørsmål = "Hvilke dager kjørte du?",
                         reisedager =
                             listOf(
-                                ReisedagDto(datofelt(1 juni 2025), parkeringsutgift = parkeringsutgift(130)),
-                                ReisedagDto(datofelt(2 juni 2025), parkeringsutgift = parkeringsutgift(40)),
-                                ReisedagDto(datofelt(5 juni 2025), parkeringsutgift = parkeringsutgift(90)),
+                                ReisedagDto(datofelt(1 juni 2025), true, parkeringsutgift = parkeringsutgift(130)),
+                                ReisedagDto(datofelt(2 juni 2025), true, parkeringsutgift = parkeringsutgift(40)),
+                                ReisedagDto(datofelt(5 juni 2025), true, parkeringsutgift = parkeringsutgift(90)),
                             ),
                     ),
                 ),
