@@ -14,6 +14,7 @@ class HtmlifyClientConfig {
     fun htmlifyClient(): HtmlifyClient {
         val client = mockk<HtmlifyClient>()
         every { client.genererSøknadHtml(any(), any(), any(), any(), any(), any()) } returns "<h1>Hei</h1>"
+        every { client.genererKjørelisteHtml(any()) } returns "<h1>Hei kjøreliste</h1>"
         return client
     }
 }

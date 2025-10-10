@@ -29,20 +29,80 @@ class PdfService(
     fun lagPdf(skjemaId: UUID) {
         val skjema = skjemaService.hentSkjema(skjemaId)
         val innsendtSkjema = parseInnsendtSkjema(skjema)
-        val felter = mapSøknad(innsendtSkjema, hentSøkerinformasjon(skjema))
+
         val html =
-            htmlifyClient.genererSøknadHtml(
-                // TODO - stønadstype kan nok fjernes. Må kalle riktig endepunkt om er kjøreliste eller søknad
-                stønadstype = skjema.type.tilStønadstyper().first(),
-                tittel = tittelSøknadsskjema(innsendtSkjema),
-                felter = felter,
-                mottattTidspunkt = innsendtSkjema.mottattTidspunkt,
-                dokumentasjon = mapVedlegg(innsendtSkjema),
-                dokumentBrevkode = dokumentBrevKode(innsendtSkjema),
-            )
+            when (innsendtSkjema.skjema) {
+                is SøknadsskjemaBarnetilsyn, is SøknadsskjemaLæremidler -> genererSøknadHtml(skjema, innsendtSkjema)
+                is KjørelisteSkjema ->
+                    genererKjørelisteHtml(
+                        skjema,
+                        innsendtSkjema,
+                        innsendtSkjema.skjema as KjørelisteSkjema,
+                    )
+                else -> error("Støtter ikke pdf-generering for skjema av type ${skjema.type}")
+            }
+
         val pdf = dokumentClient.genererPdf(html)
         skjemaService.oppdaterSkjema(skjema.copy(skjemaPdf = pdf))
     }
+
+    private fun genererSøknadHtml(
+        skjema: Skjema,
+        innsendtSkjema: InnsendtSkjema<*>,
+    ): String {
+        val felter = mapSøknad(innsendtSkjema, hentSøkerinformasjon(skjema))
+        return htmlifyClient.genererSøknadHtml(
+            // TODO - stønadstype kan nok fjernes
+            stønadstype = skjema.type.tilStønadstyper().first(),
+            tittel = tittelSøknadsskjema(innsendtSkjema),
+            felter = felter,
+            mottattTidspunkt = innsendtSkjema.mottattTidspunkt,
+            dokumentasjon = mapVedlegg(innsendtSkjema),
+            dokumentBrevkode = dokumentBrevKode(innsendtSkjema),
+        )
+    }
+
+    private fun genererKjørelisteHtml(
+        skjema: Skjema,
+        innsendtSkjema: InnsendtSkjema<*>,
+        kjørelisteSkjema: KjørelisteSkjema,
+    ) = htmlifyClient.genererKjørelisteHtml(
+        lagKjørelisteHtmlRequest(skjema, innsendtSkjema, kjørelisteSkjema),
+    )
+
+    private fun lagKjørelisteHtmlRequest(
+        skjema: Skjema,
+        innsendtSkjema: InnsendtSkjema<*>,
+        kjørelisteSkjema: KjørelisteSkjema,
+    ): KjørelisteHtmlRequest =
+        KjørelisteHtmlRequest(
+            tittel = tittelSøknadsskjema(innsendtSkjema),
+            skjemanummer = dokumentBrevKode(innsendtSkjema).verdi,
+            mottattTidspunkt = innsendtSkjema.mottattTidspunkt,
+            uker =
+                kjørelisteSkjema.reisedagerPerUkeAvsnitt.map { uke ->
+                    KjørelisteUkeHtmlRequest(
+                        ukeTekst = uke.ukeLabel,
+                        spørsmål = uke.spørsmål,
+                        dager =
+                            uke.reisedager.map { dag ->
+                                KjørelisteDagHtmlRequest(
+                                    datoTekst = dag.dato.label,
+                                    harKjørt = dag.harKjørt,
+                                    parkeringsutgift =
+                                        dag.parkeringsutgift?.let { parkeringsutgift ->
+                                            KjørelisteParkeringsutgiftHtmlRequest(
+                                                tekst = parkeringsutgift.label,
+                                                beløp = parkeringsutgift.verdi,
+                                            )
+                                        },
+                                )
+                            },
+                    )
+                },
+            dokumentasjon = mapVedlegg(innsendtSkjema),
+            søker = hentSøkerinformasjon(skjema),
+        )
 
     private fun dokumentBrevKode(innsendtSkjema: InnsendtSkjema<*>): DokumentBrevkode =
         when (innsendtSkjema.skjema) {

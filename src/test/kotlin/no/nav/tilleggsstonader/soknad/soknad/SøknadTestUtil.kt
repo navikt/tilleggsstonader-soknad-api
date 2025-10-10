@@ -27,20 +27,21 @@ import java.time.LocalDateTime
 object SøknadTestUtil {
     private val mottattTidspunkt = LocalDateTime.of(2023, 1, 1, 12, 13, 0)
 
-    fun lagSøknad(kjørelisteDto: KjørelisteDto): Skjema = lagSøknad(Skjematype.DAGLIG_REISE_KJØRELISTE, lagSøknadsskjema(kjørelisteDto))
+    fun lagKjøreliste(kjørelisteDto: KjørelisteDto): Skjema =
+        lagSkjema(Skjematype.DAGLIG_REISE_KJØRELISTE, lagInnsendtSkjema(kjørelisteDto))
 
-    fun lagSøknad(søknadDto: SøknadBarnetilsynDto): Skjema = lagSøknad(Skjematype.SØKNAD_BARNETILSYN, lagSøknadsskjema(søknadDto))
+    fun lagSøknad(søknadDto: SøknadBarnetilsynDto): Skjema = lagSkjema(Skjematype.SØKNAD_BARNETILSYN, lagInnsendtSkjema(søknadDto))
 
-    fun lagSøknad(søknadDto: SøknadLæremidlerDto): Skjema = lagSøknad(Skjematype.SØKNAD_LÆREMIDLER, lagSøknadsskjema(søknadDto))
+    fun lagSøknad(søknadDto: SøknadLæremidlerDto): Skjema = lagSkjema(Skjematype.SØKNAD_LÆREMIDLER, lagInnsendtSkjema(søknadDto))
 
-    fun lagSøknadsskjema(kjørelisteDto: KjørelisteDto) = KjørelisteMapper.map("25518735813", mottattTidspunkt, kjørelisteDto)
+    fun lagInnsendtSkjema(kjørelisteDto: KjørelisteDto) = KjørelisteMapper.map("25518735813", mottattTidspunkt, kjørelisteDto)
 
-    fun lagSøknadsskjema(søknadDto: SøknadBarnetilsynDto) =
+    fun lagInnsendtSkjema(søknadDto: SøknadBarnetilsynDto) =
         BarnetilsynMapper().map("25518735813", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
 
-    fun lagSøknadsskjema(søknadDto: SøknadLæremidlerDto) = LæremidlerMapper().map("25518735813", mottattTidspunkt, søknadDto)
+    fun lagInnsendtSkjema(søknadDto: SøknadLæremidlerDto) = LæremidlerMapper().map("25518735813", mottattTidspunkt, søknadDto)
 
-    fun lagSøknad(
+    fun lagSkjema(
         skjematype: Skjematype,
         innsendtSkjema: InnsendtSkjema<*>,
     ): Skjema =
