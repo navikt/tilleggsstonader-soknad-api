@@ -7,12 +7,18 @@ import no.nav.tilleggsstonader.kontrakter.søknad.NumeriskFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.libs.utils.dato.juni
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.TextStyle
+import java.time.temporal.WeekFields
 import java.util.Locale
 import java.util.UUID
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 object KjørelisteTestdata {
+    private val localeNb = Locale.of("nb")
+
     fun kjørelisteDto() =
         KjørelisteDto(
             reisedagerPerUkeAvsnitt =
@@ -32,22 +38,70 @@ object KjørelisteTestdata {
             søknadMetadata = SøknadMetadataDto(søknadFrontendGitHash = "aabbccd"),
         )
 
+    fun kjørelisteDtoMedReisedagerIPeriode(
+        fom: LocalDate,
+        tom: LocalDate,
+    ): KjørelisteDto =
+        KjørelisteDto(
+            reisedagerPerUkeAvsnitt = lagUkeliste(fom, tom),
+            dokumentasjon = listOf(lagDokumentasjonFelt()),
+            søknadMetadata = SøknadMetadataDto(søknadFrontendGitHash = "aabbccd"),
+        )
+
+    private data class DagMedUkenummer(
+        val dato: LocalDate,
+        val ukeNummer: Int,
+    )
+
+    fun lagUkeliste(
+        fom: LocalDate,
+        tom: LocalDate,
+    ): List<UkeMedReisedagerDto> {
+        val dagerMedUkenummer =
+            generateSequence(fom) { it.plusDays(1) }
+                .takeWhile { it <= tom }
+                .map { DagMedUkenummer(it, it.get(WeekFields.of(DayOfWeek.MONDAY, 1).weekOfYear())) }
+                .toList()
+
+        return dagerMedUkenummer
+            .groupBy { it.ukeNummer }
+            .mapValues { it.value }
+            .map { ukeMedDager ->
+                UkeMedReisedagerDto(
+                    ukeLabel = "Uke ${ukeMedDager.key} (${datoTilTekstUtenÅr(
+                        ukeMedDager.value.first().dato,
+                    )} - ${datoTilTekstUtenÅr(ukeMedDager.value.last().dato)})",
+                    spørsmål = "Hvilke dager kjørte du?",
+                    reisedager =
+                        ukeMedDager.value.map { dag ->
+                            ReisedagDto(
+                                dato = datofelt(dag.dato),
+                                harKjørt = dag.dato.dayOfWeek in listOf(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
+                                parkeringsutgift = Random.nextInt(1..100).takeIf { it > 50 }?.let { parkeringsutgift(it) },
+                            )
+                        },
+                )
+            }
+    }
+
     fun parkeringsutgift(kr: Int = 50) = NumeriskFelt("Parkeringsutgift (kr)", kr)
 
     fun datofelt(dato: LocalDate) =
         DatoFelt(
-            label =
-                """
-                ${dato.dayOfWeek.getDisplayName(
-                    TextStyle.FULL,
-                    Locale.of("nb"),
-                ).replaceFirstChar { it.uppercase() }} ${dato.dayOfMonth}. ${dato.month.getDisplayName(
-                    TextStyle.FULL,
-                    Locale.of("nb"),
-                )} ${dato.year}
-                """.trimIndent(),
+            label = "${datoTilTekstUtenÅr(dato)} ${dato.year}",
             verdi = dato,
         )
+
+    fun datoTilTekstUtenÅr(dato: LocalDate) =
+        """
+            ${dato.dayOfWeek.getDisplayName(
+            TextStyle.FULL,
+            localeNb,
+        ).replaceFirstChar { it.uppercase() }} ${dato.dayOfMonth}. ${dato.month.getDisplayName(
+            TextStyle.FULL,
+            localeNb,
+        )}
+        """.trimIndent()
 }
 
 private fun lagDokumentasjonFelt() =

@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.dokument.pdf
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
-import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknadsskjema
+import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagInnsendtSkjema
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
@@ -19,7 +19,7 @@ class SøknadTreeWalkerTest {
     inner class Barnetilsyn {
         @Test
         fun `skal mappe barnetilsyn`() {
-            val søknadsskjema = lagSøknadsskjema(SøknadBarnetilsynUtil.søknadBarnetilsyn)
+            val søknadsskjema = lagInnsendtSkjema(SøknadBarnetilsynUtil.søknadBarnetilsyn)
             val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
             assertExpected(
                 "søknad/barnetilsyn/barnetilsyn_verdiliste.json",
@@ -32,7 +32,7 @@ class SøknadTreeWalkerTest {
     inner class Læremidler {
         @Test
         fun `skal mappe læremidler`() {
-            val søknadsskjema = lagSøknadsskjema(SøknadLæremidlerUtil.søknadLæremidler)
+            val søknadsskjema = lagInnsendtSkjema(SøknadLæremidlerUtil.søknadLæremidler)
             val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
             assertExpected(
                 "søknad/læremidler/læremidler_verdiliste.json",
@@ -53,7 +53,7 @@ class SøknadTreeWalkerTest {
             )
         val søknad =
             SøknadBarnetilsynUtil.søknadBarnetilsyn.copy(barnMedBarnepass = listOf(barnMedBarnepass), dokumentasjon = emptyList())
-        val søknadsskjema = lagSøknadsskjema(søknad)
+        val søknadsskjema = lagInnsendtSkjema(søknad)
         val result = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
         assertExpected(
             "søknad/barnetilsyn/barnetilsyn_verdiliste_nullverdier.json",
