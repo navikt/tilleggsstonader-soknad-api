@@ -5,19 +5,19 @@ import no.nav.tilleggsstonader.kontrakter.dokarkiv.AvsenderMottaker
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokument
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
-import no.nav.tilleggsstonader.kontrakter.dokarkiv.dokumenttyper
 import no.nav.tilleggsstonader.kontrakter.felles.BrukerIdType
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
-import no.nav.tilleggsstonader.kontrakter.felles.gjelderDagligReise
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 
 object ArkiverDokumentRequestMapper {
     fun toDto(
         skjema: Skjema,
+        tilhørendeStønadstype: Stønadstype,
         vedlegg: List<Vedlegg>,
     ): ArkiverDokumentRequest {
-        val dokumenttype = typeHoveddokument(skjema.type)
+        val dokumenttype = typeHoveddokument(skjema.type, tilhørendeStønadstype)
         val skjemadokumentJson =
             Dokument(
                 skjema.skjemaJson.json.toByteArray(),
@@ -32,33 +32,53 @@ object ArkiverDokumentRequestMapper {
             fnr = skjema.personIdent,
             forsøkFerdigstill = false,
             hoveddokumentvarianter = listOf(skjemadokumentPdf, skjemadokumentJson),
-            vedleggsdokumenter = mapVedlegg(vedlegg, skjema.type),
+            vedleggsdokumenter = mapVedlegg(vedlegg, skjema.type, tilhørendeStønadstype),
             eksternReferanseId = skjema.id.toString(),
             avsenderMottaker = AvsenderMottaker(id = skjema.personIdent, idType = BrukerIdType.FNR, navn = null),
         )
     }
 
-    // TODO - introduser type skjema, som velger om kjøreliste eller søknad
-    private fun typeHoveddokument(type: Stønadstype): Dokumenttype =
-        if (type.gjelderDagligReise()) {
-            type.dokumenttyper.kjøreliste ?: error("Har ikke laget kjøreliste for $type")
-        } else {
-            type.dokumenttyper.søknad ?: error("Har ikke laget søknad for $type")
+    private fun typeHoveddokument(
+        type: Skjematype,
+        tilhørendeStønadstype: Stønadstype,
+    ): Dokumenttype =
+        when (type) {
+            Skjematype.SØKNAD_BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD
+            Skjematype.SØKNAD_LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD
+            Skjematype.DAGLIG_REISE_KJØRELISTE ->
+                if (tilhørendeStønadstype == Stønadstype.DAGLIG_REISE_TSO) {
+                    Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE
+                } else {
+                    Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE
+                }
+            Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
+                error("Håndterer ikke skjema $type")
         }
 
-    private fun typeVedlegg(type: Stønadstype): Dokumenttype =
-        if (type.gjelderDagligReise()) {
-            type.dokumenttyper.kjørelisteVedlegg ?: error("Har ikke laget kjøreliste for $type")
-        } else {
-            type.dokumenttyper.søknadVedlegg ?: error("Har ikke laget søknad for $type")
+    private fun typeVedlegg(
+        type: Skjematype,
+        tilhørendeStønadstype: Stønadstype,
+    ): Dokumenttype =
+        when (type) {
+            Skjematype.SØKNAD_BARNETILSYN -> Dokumenttype.BARNETILSYN_SØKNAD_VEDLEGG
+            Skjematype.SØKNAD_LÆREMIDLER -> Dokumenttype.LÆREMIDLER_SØKNAD_VEDLEGG
+            Skjematype.DAGLIG_REISE_KJØRELISTE ->
+                if (tilhørendeStønadstype == Stønadstype.DAGLIG_REISE_TSO) {
+                    Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE_VEDLEGG
+                } else {
+                    Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE_VEDLEGG
+                }
+            Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
+                error("Håndterer ikke skjema $type")
         }
 
     private fun mapVedlegg(
         vedlegg: List<Vedlegg>,
-        stønadstype: Stønadstype,
+        skjematype: Skjematype,
+        tilhørendeStønadstype: Stønadstype,
     ): List<Dokument> {
         if (vedlegg.isEmpty()) return emptyList()
-        val dokumenttypeVedlegg = typeVedlegg(stønadstype)
+        val dokumenttypeVedlegg = typeVedlegg(skjematype, tilhørendeStønadstype)
         return vedlegg.map { tilDokument(it, dokumenttypeVedlegg) }
     }
 

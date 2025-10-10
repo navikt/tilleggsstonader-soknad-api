@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.prosessering
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
@@ -18,7 +18,7 @@ class SendNotifikasjonTaskTest {
 
     @Test
     fun `Task blir kjørt for å sende notifikasjon om mottatt søknad om tilsyn barn`() {
-        val søknadBarnetilsynSkjema = opprettSkjema(Stønadstype.BARNETILSYN)
+        val søknadBarnetilsynSkjema = opprettSkjema(Skjematype.SØKNAD_BARNETILSYN)
         every { skjemaService.hentSkjema(UUID.fromString(SKJEMA_ID)) } returns søknadBarnetilsynSkjema
         sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknadBarnetilsynSkjema))
         verifiserForventetKallMed("Vi har mottatt søknaden din om pass av barn.")
@@ -26,7 +26,7 @@ class SendNotifikasjonTaskTest {
 
     @Test
     fun `Task blir kjørt for å sende notifikasjon om mottatt søknad om læremidler`() {
-        val søknadLæremidlerSkjema = opprettSkjema(Stønadstype.LÆREMIDLER)
+        val søknadLæremidlerSkjema = opprettSkjema(Skjematype.SØKNAD_LÆREMIDLER)
         every { skjemaService.hentSkjema(UUID.fromString(SKJEMA_ID)) } returns søknadLæremidlerSkjema
         sendNotifikasjonTask.doTask(SendNotifikasjonTask.opprettTask(søknadLæremidlerSkjema))
         verifiserForventetKallMed("Vi har mottatt søknaden din om læremidler.")
@@ -43,7 +43,7 @@ class SendNotifikasjonTaskTest {
         }
     }
 
-    private fun opprettSkjema(type: Stønadstype): Skjema =
+    private fun opprettSkjema(type: Skjematype): Skjema =
         Skjema(
             id = UUID.fromString(SKJEMA_ID),
             skjemaJson = JsonWrapper(""),

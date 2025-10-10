@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.prosessering
 import no.nav.familie.prosessering.AsyncTaskStep
 import no.nav.familie.prosessering.TaskStepBeskrivelse
 import no.nav.familie.prosessering.domene.Task
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.varsel.DittNavKafkaProducer
@@ -25,12 +25,12 @@ class SendNotifikasjonTask(
         notifikasjonsService.sendToKafka(skjema.personIdent, message, eventId)
     }
 
-    private fun lagNotifikasjonsMelding(stønadstype: Stønadstype): String =
-        when (stønadstype) {
-            Stønadstype.BARNETILSYN -> "Vi har mottatt søknaden din om pass av barn."
-            Stønadstype.LÆREMIDLER -> "Vi har mottatt søknaden din om læremidler."
-            Stønadstype.DAGLIG_REISE_TSO, Stønadstype.DAGLIG_REISE_TSR -> "Vi har mottatt din kjøreliste"
-            Stønadstype.BOUTGIFTER -> error("Har ikke laget søknad for $stønadstype")
+    private fun lagNotifikasjonsMelding(skjematype: Skjematype): String =
+        when (skjematype) {
+            Skjematype.SØKNAD_BARNETILSYN -> "Vi har mottatt søknaden din om pass av barn."
+            Skjematype.SØKNAD_LÆREMIDLER -> "Vi har mottatt søknaden din om læremidler."
+            Skjematype.DAGLIG_REISE_KJØRELISTE -> "Vi har mottatt din kjøreliste"
+            Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE -> error("Håndterer ikke skjema $skjematype")
         }
 
     companion object {

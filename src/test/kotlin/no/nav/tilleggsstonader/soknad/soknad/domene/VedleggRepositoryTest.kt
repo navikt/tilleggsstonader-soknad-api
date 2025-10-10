@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.soknad.domene
 
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
@@ -57,7 +57,7 @@ class VedleggRepositoryTest : IntegrationTest() {
     private fun lagreSkjema() =
         skjemaRepository.insert(
             Skjema(
-                type = Stønadstype.BARNETILSYN,
+                type = Skjematype.SØKNAD_BARNETILSYN,
                 personIdent = "123",
                 skjemaJson = JsonWrapper("{}"),
                 frontendGitHash = "aabbccd",

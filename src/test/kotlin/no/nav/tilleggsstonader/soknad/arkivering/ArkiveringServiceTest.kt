@@ -5,7 +5,7 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.slot
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentResponse
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
@@ -31,7 +31,7 @@ internal class ArkiveringServiceTest {
     private val skjema =
         Skjema(
             skjemaJson = JsonWrapper(""),
-            type = Stønadstype.BARNETILSYN,
+            type = Skjematype.SØKNAD_BARNETILSYN,
             personIdent = "1",
             opprettetTid = LocalDateTime.now(),
             skjemaPdf = byteArrayOf(12),

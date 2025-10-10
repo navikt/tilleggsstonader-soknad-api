@@ -2,7 +2,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.familie.prosessering.internal.TaskService
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Skjemadata
@@ -58,7 +58,7 @@ class SkjemaService(
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
         val opprettetSkjema =
             lagreSkjema(
-                type = Stønadstype.BARNETILSYN,
+                type = Skjematype.SØKNAD_BARNETILSYN,
                 innsendtSkjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
                 vedlegg = vedlegg,
                 frontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
@@ -78,7 +78,7 @@ class SkjemaService(
 
         val opprettetSkjema =
             lagreSkjema(
-                type = Stønadstype.LÆREMIDLER,
+                type = Skjematype.SØKNAD_LÆREMIDLER,
                 innsendtSkjema = læremidlerMapper.map(ident, mottattTidspunkt, søknad),
                 vedlegg = vedlegg,
                 frontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
@@ -96,11 +96,10 @@ class SkjemaService(
         kjøreliste: KjørelisteDto,
     ): UUID {
         val vedlegg = hentVedlegg(kjøreliste.dokumentasjon)
-        val stønadstype = finnStønadstypeForKjøreliste(kjøreliste)
 
         val opprettetSkjema =
             lagreSkjema(
-                type = stønadstype,
+                type = Skjematype.DAGLIG_REISE_KJØRELISTE,
                 innsendtSkjema = KjørelisteMapper.map(ident, mottattTidspunkt, kjøreliste),
                 vedlegg = vedlegg,
                 frontendGitHash = kjøreliste.søknadMetadata.søknadFrontendGitHash,
@@ -109,11 +108,6 @@ class SkjemaService(
         taskService.save(LagPdfTask.opprettTask(opprettetSkjema))
         taskService.save(SendNotifikasjonTask.opprettTask(opprettetSkjema))
         return opprettetSkjema.id
-    }
-
-    private fun finnStønadstypeForKjøreliste(kjøreliste: KjørelisteDto): Stønadstype {
-        // TODO - hente stønadstype for rammevedtak
-        return Stønadstype.DAGLIG_REISE_TSO
     }
 
     private fun hentVedlegg(dokumentasjon: List<DokumentasjonFelt>): List<Vedleggholder> =
@@ -146,7 +140,7 @@ class SkjemaService(
     }
 
     private fun <T : Skjemadata> lagreSkjema(
-        type: Stønadstype,
+        type: Skjematype,
         innsendtSkjema: InnsendtSkjema<T>,
         vedlegg: List<Vedleggholder>,
         frontendGitHash: String?,
