@@ -44,7 +44,7 @@ spotless {
 
 configurations.all {
     resolutionStrategy {
-        // failOnNonReproducibleResolution()
+        failOnNonReproducibleResolution()
     }
 }
 
