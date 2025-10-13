@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad.domene
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
+import no.nav.tilleggsstonader.soknad.infrastruktur.database.ByteArrayWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
 import org.assertj.core.api.Assertions.assertThat
@@ -50,7 +51,7 @@ class VedleggRepositoryTest : IntegrationTest() {
                 skjemaId = skjema.id,
                 type = Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
                 navn = "charlie.pdf",
-                innhold = byteArrayOf(13),
+                innhold = ByteArrayWrapper(byteArrayOf(13)),
             ),
         )
 

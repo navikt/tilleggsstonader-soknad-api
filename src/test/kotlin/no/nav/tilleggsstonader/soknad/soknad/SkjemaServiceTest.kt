@@ -97,7 +97,7 @@ class SkjemaServiceTest {
             assertThat(lagretVedlegg.type).isEqualTo(Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE)
             assertThat(lagretVedlegg.skjemaId).isEqualTo(skjemaId)
             assertThat(lagretVedlegg.navn).isEqualTo(vedlegg.navn)
-            assertThat(lagretVedlegg.innhold).isEqualTo(byteArrayOf(12))
+            assertThat(lagretVedlegg.innhold.data).isEqualTo(byteArrayOf(12))
         }
 
         @Test
