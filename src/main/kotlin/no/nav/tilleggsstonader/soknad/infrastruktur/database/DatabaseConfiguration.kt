@@ -54,6 +54,8 @@ class DatabaseConfiguration : AbstractJdbcConfiguration() {
             JsonWrapperTilPGobjectConverter(),
             StringTilPropertiesWrapperConverter(),
             PropertiesWrapperTilStringConverter(),
+            ByteArrayWrapperReadingConverter,
+            ByteArrayWrapperWritingConverter,
         )
 
     @ReadingConverter
@@ -68,5 +70,15 @@ class DatabaseConfiguration : AbstractJdbcConfiguration() {
                 type = "json"
                 value = jsonWrapper.json
             }
+    }
+
+    @WritingConverter
+    object ByteArrayWrapperWritingConverter : Converter<ByteArrayWrapper, ByteArray> {
+        override fun convert(source: ByteArrayWrapper): ByteArray = source.data
+    }
+
+    @ReadingConverter
+    object ByteArrayWrapperReadingConverter : Converter<ByteArray, ByteArrayWrapper> {
+        override fun convert(source: ByteArray): ByteArrayWrapper = ByteArrayWrapper(source)
     }
 }

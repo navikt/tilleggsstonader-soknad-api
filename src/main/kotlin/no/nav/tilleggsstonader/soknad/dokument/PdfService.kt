@@ -13,6 +13,7 @@ import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadssk
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Søkerinformasjon
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
 import no.nav.tilleggsstonader.soknad.dokument.pdf.VedleggMapper.mapVedlegg
+import no.nav.tilleggsstonader.soknad.infrastruktur.database.ByteArrayWrapper
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
@@ -41,7 +42,7 @@ class PdfService(
                 dokumentBrevkode = dokumentBrevKode(innsendtSkjema),
             )
         val pdf = dokumentClient.genererPdf(html)
-        skjemaService.oppdaterSkjema(skjema.copy(skjemaPdf = pdf))
+        skjemaService.oppdaterSkjema(skjema.copy(skjemaPdf = ByteArrayWrapper(pdf)))
     }
 
     private fun dokumentBrevKode(innsendtSkjema: InnsendtSkjema<*>): DokumentBrevkode =

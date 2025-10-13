@@ -9,6 +9,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.Skjemadata
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.dokument.FamilieVedleggClient
+import no.nav.tilleggsstonader.soknad.infrastruktur.database.ByteArrayWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.repository.findByIdOrThrow
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteDto
@@ -169,7 +170,7 @@ class SkjemaService(
                     skjemaId = skjemaDb.id,
                     type = it.type,
                     navn = it.navn,
-                    innhold = it.data,
+                    innhold = ByteArrayWrapper(it.data),
                 )
             },
         )

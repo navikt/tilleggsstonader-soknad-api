@@ -7,6 +7,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.arkivering.ArkiverDokumentRequestMapper.toDto
+import no.nav.tilleggsstonader.soknad.infrastruktur.database.ByteArrayWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
@@ -46,10 +47,16 @@ internal class ArkiverDokumentRequestMapperTest {
         skjemaJson = JsonWrapper(objectMapper.writeValueAsString(skjema)),
         personIdent = "123",
         type = type,
-        skjemaPdf = byteArrayOf(12),
+        skjemaPdf = ByteArrayWrapper(byteArrayOf(12)),
         frontendGitHash = "aabbccd",
     )
 
     private fun lagVedlegg() =
-        Vedlegg(UUID.randomUUID(), UUID.randomUUID(), Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE, "navn", byteArrayOf(12))
+        Vedlegg(
+            UUID.randomUUID(),
+            UUID.randomUUID(),
+            Vedleggstype.UTGIFTER_PASS_SFO_AKS_BARNEHAGE,
+            "navn",
+            ByteArrayWrapper(byteArrayOf(12)),
+        )
 }

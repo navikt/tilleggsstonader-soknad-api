@@ -7,6 +7,7 @@ import io.mockk.slot
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentResponse
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
+import no.nav.tilleggsstonader.soknad.infrastruktur.database.ByteArrayWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
@@ -34,7 +35,7 @@ internal class ArkiveringServiceTest {
             type = Skjematype.SØKNAD_BARNETILSYN,
             personIdent = "1",
             opprettetTid = LocalDateTime.now(),
-            skjemaPdf = byteArrayOf(12),
+            skjemaPdf = ByteArrayWrapper(byteArrayOf(12)),
             frontendGitHash = "aabbccd",
         )
 

@@ -27,7 +27,7 @@ object ArkiverDokumentRequestMapper {
                 dokumenttype,
             )
         val skjemadokumentPdf =
-            Dokument(skjema.skjemaPdf!!, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
+            Dokument(skjema.skjemaPdf!!.data, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
         return ArkiverDokumentRequest(
             fnr = skjema.personIdent,
             forsøkFerdigstill = false,
@@ -87,7 +87,7 @@ object ArkiverDokumentRequestMapper {
         dokumenttypeVedlegg: Dokumenttype,
     ): Dokument =
         Dokument(
-            dokument = vedlegg.innhold,
+            dokument = vedlegg.innhold.data,
             filtype = Filtype.PDFA,
             tittel = vedlegg.type.tittel,
             filnavn = vedlegg.id.toString(),
