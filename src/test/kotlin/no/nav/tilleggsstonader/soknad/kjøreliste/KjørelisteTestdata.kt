@@ -77,7 +77,7 @@ object KjørelisteTestdata {
                             ReisedagDto(
                                 dato = datofelt(dag.dato),
                                 harKjørt = dag.dato.dayOfWeek in listOf(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
-                                parkeringsutgift = Random.nextInt(1..100).takeIf { it > 50 }?.let { parkeringsutgift(it) },
+                                parkeringsutgift = if (dag.dato.dayOfWeek == DayOfWeek.MONDAY) parkeringsutgift(50) else null,
                             )
                         },
                 )
