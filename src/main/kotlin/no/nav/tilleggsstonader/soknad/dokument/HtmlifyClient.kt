@@ -66,18 +66,18 @@ data class KjørelisteHtmlRequest(
 )
 
 data class KjørelisteUkeHtmlRequest(
-    val ukeTekst: String,
+    val ukeLabel: String,
     val spørsmål: String,
     val dager: List<KjørelisteDagHtmlRequest>,
 )
 
 data class KjørelisteDagHtmlRequest(
-    val datoTekst: String,
+    val datoLabel: String,
     val harKjørt: Boolean,
     val parkeringsutgift: KjørelisteParkeringsutgiftHtmlRequest?,
 )
 
 data class KjørelisteParkeringsutgiftHtmlRequest(
-    val tekst: String,
+    val label: String,
     val beløp: Number,
 )
