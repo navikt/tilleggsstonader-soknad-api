@@ -30,5 +30,6 @@ object KjørelisteMapper {
 private fun UkeMedReisedagerDto.mapTilSkjema(): UkeMedReisedager =
     UkeMedReisedager(
         ukeLabel = ukeLabel,
-        reisedager = reisedager.map { Reisedag(it.dato, it.parkeringsutgift) },
+        spørsmål = spørsmål,
+        reisedager = reisedager.map { Reisedag(it.dato, it.harKjørt, it.parkeringsutgift) },
     )

@@ -5,8 +5,11 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.slot
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.libs.utils.dato.oktober
+import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteTestdata
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
+import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagKjøreliste
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknad
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
@@ -25,6 +28,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import java.net.URI
+import java.time.LocalDate
 
 class PdfServiceTest {
     private val skjemaService = mockk<SkjemaService>()
@@ -68,6 +72,19 @@ class PdfServiceTest {
             pdfService.lagPdf(søknadLæremidler.id)
 
             assertGenerertHtml("søknad/læremidler/læremidler.html")
+            assertThat(oppdaterSkjemaSlot.captured.skjemaPdf).isEqualTo(pdfBytes)
+        }
+
+        @Test
+        fun `skal lage pdf fra kjøreliste`() {
+            val fom = 13 oktober 2025
+            val kjøreliste =
+                lagKjøreliste(KjørelisteTestdata.kjørelisteDtoMedReisedagerIPeriode(fom, fom.plusMonths(5)))
+            every { skjemaService.hentSkjema(kjøreliste.id) } returns kjøreliste
+
+            pdfService.lagPdf(kjøreliste.id)
+
+            assertGenerertHtml("søknad/kjøreliste/kjøreliste.html")
             assertThat(oppdaterSkjemaSlot.captured.skjemaPdf).isEqualTo(pdfBytes)
         }
     }
