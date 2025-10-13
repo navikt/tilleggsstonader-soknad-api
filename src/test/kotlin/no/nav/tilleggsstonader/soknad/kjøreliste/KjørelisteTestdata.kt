@@ -60,7 +60,7 @@ object KjørelisteTestdata {
         val dagerMedUkenummer =
             generateSequence(fom) { it.plusDays(1) }
                 .takeWhile { it <= tom }
-                .map { DagMedUkenummer(it, it.get(WeekFields.of(DayOfWeek.MONDAY, 1).weekOfYear())) }
+                .map { DagMedUkenummer(it, it.get(WeekFields.of(DayOfWeek.MONDAY, 1).weekOfWeekBasedYear())) }
                 .toList()
 
         return dagerMedUkenummer
