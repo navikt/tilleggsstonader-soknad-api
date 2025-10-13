@@ -5,6 +5,7 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.slot
 import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.libs.utils.dato.oktober
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteTestdata
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
@@ -76,8 +77,9 @@ class PdfServiceTest {
 
         @Test
         fun `skal lage pdf fra kjøreliste`() {
+            val fom = 13 oktober 2025
             val kjøreliste =
-                lagKjøreliste(KjørelisteTestdata.kjørelisteDtoMedReisedagerIPeriode(LocalDate.now(), LocalDate.now().plusMonths(5)))
+                lagKjøreliste(KjørelisteTestdata.kjørelisteDtoMedReisedagerIPeriode(fom, fom.plusMonths(5)))
             every { skjemaService.hentSkjema(kjøreliste.id) } returns kjøreliste
 
             pdfService.lagPdf(kjøreliste.id)
