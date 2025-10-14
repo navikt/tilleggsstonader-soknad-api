@@ -2,7 +2,7 @@ package no.nav.tilleggsstonader.soknad.kjøreliste
 
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.NumeriskFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 
 data class KjørelisteDto(
@@ -20,5 +20,5 @@ data class UkeMedReisedagerDto(
 data class ReisedagDto(
     val dato: DatoFelt,
     val harKjørt: Boolean,
-    val parkeringsutgift: NumeriskFelt? = null,
+    val parkeringsutgift: VerdiFelt<Number?>,
 )
