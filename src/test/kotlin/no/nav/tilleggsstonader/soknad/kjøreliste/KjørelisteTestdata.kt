@@ -3,8 +3,8 @@ package no.nav.tilleggsstonader.soknad.kjøreliste
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Dokument
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.NumeriskFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
+import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.libs.utils.dato.juni
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import java.time.DayOfWeek
@@ -13,8 +13,6 @@ import java.time.format.TextStyle
 import java.time.temporal.WeekFields
 import java.util.Locale
 import java.util.UUID
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 object KjørelisteTestdata {
     private val localeNb = Locale.of("nb")
@@ -77,14 +75,14 @@ object KjørelisteTestdata {
                             ReisedagDto(
                                 dato = datofelt(dag.dato),
                                 harKjørt = dag.dato.dayOfWeek in listOf(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
-                                parkeringsutgift = if (dag.dato.dayOfWeek == DayOfWeek.MONDAY) parkeringsutgift(50) else null,
+                                parkeringsutgift = if (dag.dato.dayOfWeek == DayOfWeek.MONDAY) parkeringsutgift(50) else parkeringsutgift(),
                             )
                         },
                 )
             }
     }
 
-    fun parkeringsutgift(kr: Int = 50) = NumeriskFelt("Parkeringsutgift (kr)", kr)
+    fun parkeringsutgift(kr: Number? = 50) = VerdiFelt<Number?>(label = "Parkeringsutgift (kr)", verdi = kr)
 
     fun datofelt(dato: LocalDate) =
         DatoFelt(

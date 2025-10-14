@@ -79,5 +79,5 @@ data class KjørelisteDagHtmlRequest(
 
 data class KjørelisteParkeringsutgiftHtmlRequest(
     val label: String,
-    val beløp: Number,
+    val beløp: Number?,
 )
