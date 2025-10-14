@@ -1,7 +1,7 @@
 val javaVersion = JavaLanguageVersion.of(21)
-val tilleggsstønaderLibsVersion = "2025.09.11-09.26.d3123ecc47ce"
+val tilleggsstønaderLibsVersion = "2025.10.14-11.02.0ba3aa7f0dc3"
 val tilleggsstønaderKontrakterVersion = "2025.10.14-14.59.61a408ead4fc"
-val familieProsesseringVersion = "2.20250908124930_1c1ba6c"
+val familieProsesseringVersion = "2.20250922094930_4bb329c"
 val tokenSupportVersion = "5.0.37"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.21.3"
@@ -13,8 +13,8 @@ plugins {
     application
 
     kotlin("jvm") version "2.2.20"
-    id("com.diffplug.spotless") version "7.2.1"
-    id("com.github.ben-manes.versions") version "0.52.0"
+    id("com.diffplug.spotless") version "8.0.0"
+    id("com.github.ben-manes.versions") version "0.53.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
 
     id("org.springframework.boot") version "3.5.6"
@@ -82,7 +82,7 @@ dependencies {
     // Kun for å kunne bruke WebTestClient. Kan fjernes og erstattes av RestTestClient i spring-boot 4
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
-    testImplementation("io.mockk:mockk:1.14.5")
+    testImplementation("io.mockk:mockk:1.14.6")
 
     testImplementation("org.testcontainers:postgresql:$testcontainerVersion")
 
