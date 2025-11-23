@@ -1,8 +1,8 @@
 val javaVersion = JavaLanguageVersion.of(21)
-val tilleggsstønaderLibsVersion = "2025.09.11-09.26.d3123ecc47ce"
-val tilleggsstønaderKontrakterVersion = "2025.10.14-14.59.61a408ead4fc"
-val familieProsesseringVersion = "2.20250908124930_1c1ba6c"
-val tokenSupportVersion = "5.0.37"
+val tilleggsstønaderLibsVersion = "2025.10.14-11.02.0ba3aa7f0dc3"
+val tilleggsstønaderKontrakterVersion = "2025.11.20-16.01.4a0045ebcd19"
+val familieProsesseringVersion = "2.20251117095517_cc54714"
+val tokenSupportVersion = "6.0.0"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.21.3"
 
@@ -12,14 +12,14 @@ version = "1.0.0"
 plugins {
     application
 
-    kotlin("jvm") version "2.2.20"
-    id("com.diffplug.spotless") version "7.2.1"
-    id("com.github.ben-manes.versions") version "0.52.0"
+    kotlin("jvm") version "2.2.21"
+    id("com.diffplug.spotless") version "8.1.0"
+    id("com.github.ben-manes.versions") version "0.53.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
 
-    id("org.springframework.boot") version "3.5.6"
+    id("org.springframework.boot") version "4.0.0"
     id("io.spring.dependency-management") version "1.1.7"
-    kotlin("plugin.spring") version "2.2.20"
+    kotlin("plugin.spring") version "2.2.21"
 }
 
 repositories {
@@ -59,7 +59,7 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql")
 
     // Logging
-    implementation("net.logstash.logback:logstash-logback-encoder:8.1")
+    implementation("net.logstash.logback:logstash-logback-encoder:9.0")
 
     implementation("io.micrometer:micrometer-registry-prometheus")
 
@@ -82,7 +82,7 @@ dependencies {
     // Kun for å kunne bruke WebTestClient. Kan fjernes og erstattes av RestTestClient i spring-boot 4
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
-    testImplementation("io.mockk:mockk:1.14.5")
+    testImplementation("io.mockk:mockk:1.14.6")
 
     testImplementation("org.testcontainers:postgresql:$testcontainerVersion")
 
