@@ -11,11 +11,9 @@ import kotlin.random.Random
 @Service
 class KjørelisteService(
     private val skjemaService: SkjemaService,
-    private val dagligReisePrivatBilClient: DagligReisePrivatBilClient
+    private val dagligReisePrivatBilClient: DagligReisePrivatBilClient,
 ) {
-
-    fun hentAlleRammevedtak(ident: IdentStønadstype): List<RammevedtakDto> =
-        dagligReisePrivatBilClient.hentRammevedtak(ident)
+    fun hentAlleRammevedtak(ident: IdentStønadstype): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtak(ident)
 
     fun mottaKjøreliste(kjørelisteDto: KjørelisteDto): KjørelisteResponse {
         skjemaService.lagreKjøreliste(

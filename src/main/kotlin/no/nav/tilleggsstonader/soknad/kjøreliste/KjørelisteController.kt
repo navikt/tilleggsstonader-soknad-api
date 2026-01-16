@@ -19,16 +19,16 @@ class KjørelisteController(
     private val kjørelisteService: KjørelisteService,
 ) {
     @GetMapping("/alle-rammevedtak")
-    fun hentAlleRammevedtak(): List<RammevedtakDto> = kjørelisteService.hentAlleRammevedtak(
-        IdentStønadstype(
-            ident = EksternBrukerUtils.hentFnrFraToken(),
-            stønadstype = Stønadstype.DAGLIG_REISE_TSO,
-        ),
-    )
+    fun hentAlleRammevedtak(): List<RammevedtakDto> =
+        kjørelisteService.hentAlleRammevedtak(
+            IdentStønadstype(
+                ident = EksternBrukerUtils.hentFnrFraToken(),
+                stønadstype = Stønadstype.DAGLIG_REISE_TSO,
+            ),
+        )
 
     @PostMapping
     fun mottaKjørelister(
         @RequestBody kjørelisteDto: KjørelisteDto,
     ): KjørelisteResponse = kjørelisteService.mottaKjøreliste(kjørelisteDto)
-
 }
