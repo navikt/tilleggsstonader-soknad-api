@@ -3,36 +3,23 @@ package no.nav.tilleggsstonader.soknad.infrastruktur
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.core.api.Unprotected
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
-import no.nav.tilleggsstonader.libs.test.assertions.catchThrowableOfType
-import no.nav.tilleggsstonader.libs.test.httpclient.ProblemDetailUtil.catchProblemDetailException
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.catchException
 import org.junit.jupiter.api.Test
-import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON
-import org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON
 import org.springframework.http.ProblemDetail
 import org.springframework.http.converter.HttpMessageConversionException
-import org.springframework.test.web.reactive.server.expectBody
+import org.springframework.test.web.servlet.client.expectBody
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.client.HttpClientErrorException
-import org.springframework.web.client.HttpServerErrorException.InternalServerError
-import org.springframework.web.client.exchange
-import org.springframework.web.client.getForEntity
-import org.springframework.web.client.postForEntity
 import java.time.LocalDate
 import java.time.LocalDateTime
-import kotlin.collections.addAll
-import kotlin.text.get
 
 class TestControllerTest : IntegrationTest() {
     val json = """{"tekst":"abc","dato":"2023-01-01","tidspunkt":"2023-01-01T12:00:03"}"""
@@ -41,7 +28,7 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal kunne hente json fra endepunkt`() {
-        webTestClient
+        restTestClient
             .get()
             .uri("/api/test")
             .medSøkerBearerToken()
@@ -61,10 +48,10 @@ class TestControllerTest : IntegrationTest() {
                 tidspunkt = LocalDateTime.of(2023, 1, 1, 12, 0, 3),
             )
 
-        webTestClient
+        restTestClient
             .post()
             .uri("/api/test")
-            .bodyValue(json)
+            .body(json)
             .medSøkerBearerToken()
             .exchange()
             .expectStatus()
@@ -87,11 +74,11 @@ class TestControllerTest : IntegrationTest() {
                 accept = listOf(APPLICATION_JSON)
             }
 
-        webTestClient
+        restTestClient
             .post()
             .uri("/api/test")
             .headers { it.addAll(jsonHeaders) }
-            .bodyValue(json)
+            .body(json)
             .medSøkerBearerToken()
             .exchange()
             .expectStatus()
@@ -102,7 +89,7 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal håndtere ukjent feil`() {
-        webTestClient
+        restTestClient
             .get()
             .uri("/api/test/error")
             .medSøkerBearerToken()
@@ -113,7 +100,7 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal håndtere ukjent feil med forventet responstype`() {
-        webTestClient
+        restTestClient
             .get()
             .uri("/api/test/error")
             .medSøkerBearerToken()
@@ -124,7 +111,7 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal håndtere kall mot endepunkt som ikke eksisterer`() {
-        webTestClient
+        restTestClient
             .get()
             .uri("/api/eksistererIkke")
             .medSøkerBearerToken()
@@ -135,7 +122,7 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal håndtere kall mot protected endepunkt uten token`() {
-        webTestClient
+        restTestClient
             .get()
             .uri("/api/test/protected-feil")
             .exchange()
@@ -145,10 +132,10 @@ class TestControllerTest : IntegrationTest() {
 
     @Test
     fun `skal feile hvis påkrevd booleanfelt er null`() {
-        webTestClient
+        restTestClient
             .post()
             .uri("/api/test/boolean")
-            .bodyValue(mapOf<Any, Any>())
+            .body(mapOf<Any, Any>())
             .medSøkerBearerToken()
             .exchange()
             .expectStatus()

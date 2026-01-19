@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.util
 
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.jsonMapper
 import java.io.File
 
 object FileUtil {
@@ -26,7 +26,7 @@ object FileUtil {
         navn: String,
         data: Any,
     ) {
-        skrivTilFil(navn, objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data))
+        skrivTilFil(navn, jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data))
     }
 
     @Suppress("unused")

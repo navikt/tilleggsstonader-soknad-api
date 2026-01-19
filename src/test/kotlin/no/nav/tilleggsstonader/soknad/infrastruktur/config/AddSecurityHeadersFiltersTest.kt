@@ -4,18 +4,15 @@ import no.nav.security.token.support.core.api.Unprotected
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.http.HttpStatus
-import org.springframework.test.web.reactive.server.expectBody
+import org.springframework.test.web.servlet.client.expectBody
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.client.getForEntity
-import kotlin.text.get
 
 class AddSecurityHeadersFiltersTest : IntegrationTest() {
     @Test
     internal fun `verifiser ping svarer med pong, mimetype sniffing deaktivert og cache-control`() {
-        webTestClient
+        restTestClient
             .get()
             .uri("/api/ping")
             .exchange()

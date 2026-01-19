@@ -5,13 +5,13 @@ import no.nav.tilleggsstonader.soknad.soknad.Kvittering
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
 import no.nav.tilleggsstonader.soknad.tokenSubject
-import org.springframework.test.web.reactive.server.expectBody
+import org.springframework.test.web.servlet.client.expectBody
 
 fun IntegrationTest.sendInnSøknadBarnetilsynKall(søknadBarnetilsynDto: SøknadBarnetilsynDto) =
-    webTestClient
+    restTestClient
         .post()
         .uri("/api/soknad/pass-av-barn")
-        .bodyValue(søknadBarnetilsynDto)
+        .body(søknadBarnetilsynDto)
         .medSøkerBearerToken(tokenSubject)
         .exchange()
 
@@ -26,10 +26,10 @@ fun IntegrationTest.sendInnSøknadBarnetilsyn(søknadBarnetilsynDto: SøknadBarn
 fun IntegrationTest.sendInnSøknadLæremidlerKall(
     søknadLæremidlerDto: SøknadLæremidlerDto,
     medToken: Boolean = true,
-) = webTestClient
+) = restTestClient
     .post()
     .uri("/api/soknad/laremidler")
-    .bodyValue(søknadLæremidlerDto)
+    .body(søknadLæremidlerDto)
     .let {
         if (medToken) it.medSøkerBearerToken(tokenSubject) else it
     }.exchange()

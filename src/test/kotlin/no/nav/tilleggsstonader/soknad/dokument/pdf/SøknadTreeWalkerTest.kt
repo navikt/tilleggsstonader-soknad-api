@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.jsonMapper
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagInnsendtSkjema
@@ -23,7 +23,7 @@ class SøknadTreeWalkerTest {
             val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
             assertExpected(
                 "søknad/barnetilsyn/barnetilsyn_verdiliste.json",
-                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(htmlFelter),
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(htmlFelter),
             )
         }
     }
@@ -36,7 +36,7 @@ class SøknadTreeWalkerTest {
             val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
             assertExpected(
                 "søknad/læremidler/læremidler_verdiliste.json",
-                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(htmlFelter),
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(htmlFelter),
             )
         }
     }
@@ -57,7 +57,7 @@ class SøknadTreeWalkerTest {
         val result = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
         assertExpected(
             "søknad/barnetilsyn/barnetilsyn_verdiliste_nullverdier.json",
-            objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result),
+            jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result),
         )
     }
 

@@ -1,7 +1,7 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.familie.prosessering.internal.TaskService
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.jsonMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
@@ -151,7 +151,7 @@ class SkjemaService(
                 Skjema(
                     type = type,
                     personIdent = innsendtSkjema.ident,
-                    skjemaJson = JsonWrapper(objectMapper.writeValueAsString(innsendtSkjema)),
+                    skjemaJson = JsonWrapper(jsonMapper.writeValueAsString(innsendtSkjema)),
                     frontendGitHash = frontendGitHash,
                 ),
             )

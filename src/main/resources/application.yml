@@ -8,9 +8,6 @@ server:
     context-path: /
 
 spring:
-  jackson:
-    deserialization:
-      FAIL_ON_NULL_FOR_PRIMITIVES: true
   servlet:
     multipart:
       max-file-size: 100MB

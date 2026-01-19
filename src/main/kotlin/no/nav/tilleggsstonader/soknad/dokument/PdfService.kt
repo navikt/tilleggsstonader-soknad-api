@@ -1,7 +1,6 @@
 package no.nav.tilleggsstonader.soknad.dokument
 
-import com.fasterxml.jackson.module.kotlin.readValue
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.jsonMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.felles.tilStønadstyper
 import no.nav.tilleggsstonader.kontrakter.sak.DokumentBrevkode
@@ -18,6 +17,7 @@ import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import org.springframework.stereotype.Service
+import tools.jackson.module.kotlin.readValue
 import java.util.UUID
 
 @Service
@@ -121,9 +121,9 @@ class PdfService(
     private fun parseInnsendtSkjema(skjema: Skjema): InnsendtSkjema<*> {
         val json = skjema.skjemaJson.json
         return when (skjema.type) {
-            Skjematype.SØKNAD_BARNETILSYN -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaBarnetilsyn>>(json)
-            Skjematype.SØKNAD_LÆREMIDLER -> objectMapper.readValue<InnsendtSkjema<SøknadsskjemaLæremidler>>(json)
-            Skjematype.DAGLIG_REISE_KJØRELISTE -> objectMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(json)
+            Skjematype.SØKNAD_BARNETILSYN -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaBarnetilsyn>>(json)
+            Skjematype.SØKNAD_LÆREMIDLER -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaLæremidler>>(json)
+            Skjematype.DAGLIG_REISE_KJØRELISTE -> jsonMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(json)
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema ${skjema.type}")
         }
