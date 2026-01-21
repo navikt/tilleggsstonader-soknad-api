@@ -5,14 +5,29 @@ import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.web.client.RestTemplateBuilder
-import org.springframework.web.client.RestTemplate
 import java.net.URI
 
 class RammevedtakClientTest {
+    private lateinit var client: DagligReisePrivatBilClient
+    private lateinit var wireMockServer: WireMockServer
+
+    @BeforeEach
+    fun setUp() {
+        wireMockServer = WireMockServer(WireMockConfiguration.wireMockConfig().dynamicPort())
+        wireMockServer.start()
+        val restOperations = RestTemplateBuilder().build()
+        client = DagligReisePrivatBilClient(URI.create(wireMockServer.baseUrl()), restOperations)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        wireMockServer.stop()
+    }
+
     @Test
     fun `Skal kalle på riktig endepunkt når hentRammevedtak blir kjørt`() {
         wireMockServer.stubFor(
@@ -33,25 +48,5 @@ class RammevedtakClientTest {
             1,
             WireMock.postRequestedFor(WireMock.urlEqualTo("/api/ekstern/privat-bil/rammevedtak")),
         )
-    }
-
-    companion object {
-        private val restOperations: RestTemplate = RestTemplateBuilder().build()
-        lateinit var client: DagligReisePrivatBilClient
-        lateinit var wireMockServer: WireMockServer
-
-        @BeforeAll
-        @JvmStatic
-        fun initClass() {
-            wireMockServer = WireMockServer(WireMockConfiguration.wireMockConfig().dynamicPort())
-            wireMockServer.start()
-            client = DagligReisePrivatBilClient(URI.create(wireMockServer.baseUrl()), restOperations)
-        }
-
-        @AfterAll
-        @JvmStatic
-        fun afterAll() {
-            wireMockServer.stop()
-        }
     }
 }
