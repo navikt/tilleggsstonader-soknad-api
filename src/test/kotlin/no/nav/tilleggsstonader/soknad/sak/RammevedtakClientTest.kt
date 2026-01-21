@@ -3,8 +3,7 @@ package no.nav.tilleggsstonader.soknad.sak
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
-import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -42,7 +41,7 @@ class RammevedtakClientTest {
                 ),
         )
 
-        client.hentRammevedtak(IdentStønadstype("ident", Stønadstype.DAGLIG_REISE_TSO))
+        client.hentRammevedtak(IdentRequest("ident"))
 
         wireMockServer.verify(
             1,

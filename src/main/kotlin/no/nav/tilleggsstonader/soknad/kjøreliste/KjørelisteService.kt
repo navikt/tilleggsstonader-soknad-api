@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.kjøreliste
 
-import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
@@ -13,7 +13,7 @@ class KjørelisteService(
     private val skjemaService: SkjemaService,
     private val dagligReisePrivatBilClient: DagligReisePrivatBilClient,
 ) {
-    fun hentAlleRammevedtak(ident: IdentStønadstype): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtak(ident)
+    fun hentAlleRammevedtak(ident: IdentRequest): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtak(ident)
 
     fun mottaKjøreliste(kjørelisteDto: KjørelisteDto): KjørelisteResponse {
         skjemaService.lagreKjøreliste(

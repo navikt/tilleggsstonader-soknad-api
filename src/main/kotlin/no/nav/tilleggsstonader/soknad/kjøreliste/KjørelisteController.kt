@@ -1,8 +1,7 @@
 package no.nav.tilleggsstonader.soknad.kjøreliste
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,9 +20,8 @@ class KjørelisteController(
     @GetMapping("/alle-rammevedtak")
     fun hentAlleRammevedtak(): List<RammevedtakDto> =
         kjørelisteService.hentAlleRammevedtak(
-            IdentStønadstype(
+            IdentRequest(
                 ident = EksternBrukerUtils.hentFnrFraToken(),
-                stønadstype = Stønadstype.DAGLIG_REISE_TSO,
             ),
         )
 

@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.sak
 
-import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
 import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
 import no.nav.tilleggsstonader.soknad.kjøreliste.RammevedtakDto
 import org.springframework.beans.factory.annotation.Qualifier
@@ -18,7 +18,7 @@ class DagligReisePrivatBilClient(
 ) : AbstractRestClient(restTemplate) {
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern", "privat-bil").build()
 
-    fun hentRammevedtak(request: IdentStønadstype): List<RammevedtakDto> {
+    fun hentRammevedtak(request: IdentRequest): List<RammevedtakDto> {
         val uri =
             UriComponentsBuilder
                 .fromUri(sakUri.toUri())
