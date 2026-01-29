@@ -1,8 +1,10 @@
 package no.nav.tilleggsstonader.soknad.arkivering
 
+import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.infrastruktur.IntegrasjonerClient
+import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteService
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
@@ -15,6 +17,7 @@ class ArkiveringService(
     private val integrasjonerClient: IntegrasjonerClient,
     private val skjemaService: SkjemaService,
     private val vedleggRepository: VedleggRepository,
+    private val kjørelisteService: KjørelisteService,
 ) {
     fun journalførSkjema(
         skjemaId: UUID,
@@ -46,6 +49,15 @@ class ArkiveringService(
 
     private fun hentStønadstypeFraTilhørendeRammevedtak(skjema: Skjema): Stønadstype {
         // TODO - implementer
+        // Stønadstype ligger ikke på rammevedtak pt
+        val rammevedtak =
+            kjørelisteService.hentRammevedtak(
+                ident =
+                    IdentRequest(
+                        skjema.personIdent,
+                    ),
+                rammevedtakId = "0",
+            )
         return Stønadstype.DAGLIG_REISE_TSO
     }
 }

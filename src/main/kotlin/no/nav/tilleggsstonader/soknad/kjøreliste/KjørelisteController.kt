@@ -5,9 +5,11 @@ import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -23,6 +25,18 @@ class KjørelisteController(
             IdentRequest(
                 ident = EksternBrukerUtils.hentFnrFraToken(),
             ),
+        )
+
+    @GetMapping("/rammevedtak/{rammevedtakId}")
+    fun hentRammevedtak(
+        @PathVariable("rammevedtakId") rammevedtakId: String,
+    ): RammevedtakDto =
+        kjørelisteService.hentRammevedtak(
+            ident =
+                IdentRequest(
+                    ident = EksternBrukerUtils.hentFnrFraToken(),
+                ),
+            rammevedtakId = rammevedtakId,
         )
 
     @PostMapping
