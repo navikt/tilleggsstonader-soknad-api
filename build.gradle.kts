@@ -75,7 +75,7 @@ dependencies {
     implementation("no.nav.tilleggsstonader.kontrakter:kontrakter-felles:$tilleggsstønaderKontrakterVersion")
 
     // Kafka
-    implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.springframework.boot:spring-boot-starter-kafka")
     implementation("no.nav.tms.varsel:kotlin-builder:2.1.1")
 
     // Test
