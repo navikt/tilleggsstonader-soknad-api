@@ -2,7 +2,7 @@ package no.nav.tilleggsstonader.soknad.arkivering
 
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.JsonMapperProvider.jsonMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
@@ -44,7 +44,7 @@ internal class ArkiverDokumentRequestMapperTest {
         skjema: Any,
         type: Skjematype,
     ) = Skjema(
-        skjemaJson = JsonWrapper(objectMapper.writeValueAsString(skjema)),
+        skjemaJson = JsonWrapper(jsonMapper.writeValueAsString(skjema)),
         personIdent = "123",
         type = type,
         skjemaPdf = ByteArrayWrapper(byteArrayOf(12)),

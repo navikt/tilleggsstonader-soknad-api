@@ -2,10 +2,10 @@ package no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall
 
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
-import org.springframework.test.web.reactive.server.expectBody
+import org.springframework.test.web.servlet.client.expectBody
 
 fun IntegrationTest.hentPersonKall(personident: String?) =
-    webTestClient
+    restTestClient
         .get()
         .uri("/api/person")
         .let { if (personident != null) it.medSøkerBearerToken(personident) else it }
@@ -20,7 +20,7 @@ fun IntegrationTest.hentPerson(personident: String?) =
         .responseBody!!
 
 fun IntegrationTest.hentPersonMedBarn(personident: String?) =
-    webTestClient
+    restTestClient
         .get()
         .uri("/api/person/med-barn")
         .let { if (personident != null) it.medSøkerBearerToken(personident) else it }

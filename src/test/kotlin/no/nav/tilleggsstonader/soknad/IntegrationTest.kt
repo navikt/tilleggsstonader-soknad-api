@@ -19,14 +19,14 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cache.CacheManager
 import org.springframework.data.jdbc.core.JdbcAggregateOperations
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.servlet.client.RestTestClient
 import java.util.UUID
 
 val tokenSubject = "12345678911"
@@ -47,7 +47,7 @@ val tokenSubject = "12345678911"
     "mock-kafka",
 )
 @EnableMockOAuth2Server
-@AutoConfigureWebTestClient
+@AutoConfigureRestTestClient
 abstract class IntegrationTest {
     @Suppress("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
@@ -72,7 +72,7 @@ abstract class IntegrationTest {
     lateinit var integrasjonerClient: IntegrasjonerClient
 
     @Autowired
-    lateinit var webTestClient: WebTestClient
+    lateinit var restTestClient: RestTestClient
 
     val logger = LoggerFactory.getLogger(javaClass)
 
@@ -107,7 +107,7 @@ abstract class IntegrationTest {
 
     protected fun søkerBearerToken(personident: String = FnrGenerator.generer()): String = mockOAuth2Server.token(subject = personident)
 
-    fun WebTestClient.RequestHeadersSpec<*>.medSøkerBearerToken(personident: String = FnrGenerator.generer()) =
+    fun RestTestClient.RequestHeadersSpec<*>.medSøkerBearerToken(personident: String = FnrGenerator.generer()) =
         this.headers {
             it.setBearerAuth(søkerBearerToken(personident))
         }

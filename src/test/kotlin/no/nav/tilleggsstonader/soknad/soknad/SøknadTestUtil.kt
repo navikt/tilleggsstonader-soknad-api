@@ -1,7 +1,7 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.tilleggsstonader.kontrakter.felles.Hovedytelse
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.JsonMapperProvider.jsonMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
@@ -46,7 +46,7 @@ object SøknadTestUtil {
         innsendtSkjema: InnsendtSkjema<*>,
     ): Skjema =
         Skjema(
-            skjemaJson = JsonWrapper(objectMapper.writeValueAsString(innsendtSkjema)),
+            skjemaJson = JsonWrapper(jsonMapper.writeValueAsString(innsendtSkjema)),
             type = skjematype,
             personIdent = innsendtSkjema.ident,
             opprettetTid = LocalDateTime.now(),

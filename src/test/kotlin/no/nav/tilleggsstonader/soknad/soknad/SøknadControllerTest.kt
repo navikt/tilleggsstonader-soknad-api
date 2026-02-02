@@ -1,8 +1,7 @@
 package no.nav.tilleggsstonader.soknad.soknad
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.mockk.every
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.JsonMapperProvider.jsonMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.libs.test.fnr.FnrGenerator
 import no.nav.tilleggsstonader.soknad.IntegrationTest
@@ -24,6 +23,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import tools.jackson.module.kotlin.readValue
 import java.time.LocalDate
 
 class SøknadControllerTest : IntegrationTest() {
@@ -82,7 +82,7 @@ class SøknadControllerTest : IntegrationTest() {
         filnavn: String,
     ) {
         val dbSøknad = skjemaRepository.findAll().single()
-        val søknadFraDb = objectMapper.readValue<Map<String, Any>>(dbSøknad.skjemaJson.json).toMutableMap()
+        val søknadFraDb = jsonMapper.readValue<Map<String, Any>>(dbSøknad.skjemaJson.json).toMutableMap()
         søknadFraDb["mottattTidspunkt"] = "2023-09-25T21:32:18.22631"
 
         assertThat(dbSøknad.personIdent).isEqualTo(tokenSubject)
@@ -90,11 +90,11 @@ class SøknadControllerTest : IntegrationTest() {
         assertThat(dbSøknad.frontendGitHash).isEqualTo("aabbccd")
         try {
             FileUtil.skrivJsonTilFil(filnavn, søknadFraDb)
-            assertThat(søknadFraDb).isEqualTo(objectMapper.readValue<Map<String, Any>>(FileUtil.readFile(filnavn)))
+            assertThat(søknadFraDb).isEqualTo(jsonMapper.readValue<Map<String, Any>>(FileUtil.readFile(filnavn)))
         } catch (e: Throwable) {
             LoggerFactory
                 .getLogger("testlogger")
-                .error("Actual=${objectMapper.writeValueAsString(søknadFraDb)}")
+                .error("Actual=${jsonMapper.writeValueAsString(søknadFraDb)}")
             throw e
         }
     }

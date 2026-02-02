@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.slot
-import no.nav.tilleggsstonader.kontrakter.felles.ObjectMapperProvider.objectMapper
+import no.nav.tilleggsstonader.kontrakter.felles.JsonMapperProvider.jsonMapper
 import no.nav.tilleggsstonader.libs.utils.dato.oktober
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteTestdata
 import no.nav.tilleggsstonader.soknad.person.PersonService
@@ -21,14 +21,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.postForEntity
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.postForEntity
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
 import java.net.URI
-import java.time.LocalDate
 
 class PdfServiceTest {
     private val skjemaService = mockk<SkjemaService>()
@@ -119,8 +118,8 @@ class PdfServiceTest {
 
     private fun lagHtmlifyClient(): HtmlifyClient {
         val restTemplate = TestRestTemplate().restTemplate
-        restTemplate.messageConverters.removeIf { it is MappingJackson2HttpMessageConverter }
-        restTemplate.messageConverters.add(MappingJackson2HttpMessageConverter(objectMapper))
+        restTemplate.messageConverters.removeIf { it is JacksonJsonHttpMessageConverter }
+        restTemplate.messageConverters.add(JacksonJsonHttpMessageConverter(jsonMapper))
         val url = "https://tilleggsstonader-htmlify.intern.dev.nav.no"
         // val url = "http://localhost:8001"
         return HtmlifyClient(URI.create(url), restTemplate)

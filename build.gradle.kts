@@ -1,8 +1,8 @@
 val javaVersion = JavaLanguageVersion.of(21)
-val tilleggsstønaderLibsVersion = "2025.09.11-09.26.d3123ecc47ce"
-val tilleggsstønaderKontrakterVersion = "2025.10.14-14.59.61a408ead4fc"
-val familieProsesseringVersion = "2.20250908124930_1c1ba6c"
-val tokenSupportVersion = "5.0.37"
+val tilleggsstønaderLibsVersion = "2026.02.02-12.36.8345e89eeee3"
+val tilleggsstønaderKontrakterVersion = "2026.02.02-12.31.36d4a490969b"
+val familieProsesseringVersion = "2.20260120121808_b5446a9"
+val tokenSupportVersion = "6.0.1"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.21.3"
 
@@ -12,14 +12,14 @@ version = "1.0.0"
 plugins {
     application
 
-    kotlin("jvm") version "2.2.20"
+    kotlin("jvm") version "2.2.21"
     id("com.diffplug.spotless") version "7.2.1"
     id("com.github.ben-manes.versions") version "0.52.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
 
-    id("org.springframework.boot") version "3.5.6"
+    id("org.springframework.boot") version "4.0.1"
     id("io.spring.dependency-management") version "1.1.7"
-    kotlin("plugin.spring") version "2.2.20"
+    kotlin("plugin.spring") version "2.2.21"
 }
 
 repositories {
@@ -51,10 +51,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("tools.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-flyway")
     implementation("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-database-postgresql")
 
@@ -74,13 +75,13 @@ dependencies {
     implementation("no.nav.tilleggsstonader.kontrakter:kontrakter-felles:$tilleggsstønaderKontrakterVersion")
 
     // Kafka
-    implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.springframework.boot:spring-boot-starter-kafka")
     implementation("no.nav.tms.varsel:kotlin-builder:2.1.1")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     // Kun for å kunne bruke WebTestClient. Kan fjernes og erstattes av RestTestClient i spring-boot 4
-    testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.boot:spring-boot-resttestclient")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
     testImplementation("io.mockk:mockk:1.14.5")
 
