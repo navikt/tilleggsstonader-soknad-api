@@ -26,7 +26,6 @@ import org.springframework.data.jdbc.core.JdbcAggregateOperations
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.servlet.client.RestTestClient
 import java.util.UUID
 
