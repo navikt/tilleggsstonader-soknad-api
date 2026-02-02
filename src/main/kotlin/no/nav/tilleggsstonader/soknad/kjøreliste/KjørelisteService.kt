@@ -15,6 +15,14 @@ class KjørelisteService(
 ) {
     fun hentAlleRammevedtak(ident: IdentRequest): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtak(ident)
 
+    fun hentRammevedtak(
+        ident: IdentRequest,
+        rammevedtakId: String,
+    ): RammevedtakDto {
+        val alleRammevedtak = dagligReisePrivatBilClient.hentRammevedtak(ident)
+        return alleRammevedtak.first { it.id == rammevedtakId }
+    }
+
     fun mottaKjøreliste(kjørelisteDto: KjørelisteDto): KjørelisteResponse {
         skjemaService.lagreKjøreliste(
             ident = EksternBrukerUtils.hentFnrFraToken(),
