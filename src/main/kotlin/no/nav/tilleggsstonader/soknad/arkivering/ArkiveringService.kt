@@ -46,6 +46,7 @@ class ArkiveringService(
 
     private fun hentStønadstypeFraTilhørendeRammevedtak(skjema: Skjema): Stønadstype {
         // TODO - implementer
+        // Stønadstype ligger ikke på rammevedtak pt
         return Stønadstype.DAGLIG_REISE_TSO
     }
 }
