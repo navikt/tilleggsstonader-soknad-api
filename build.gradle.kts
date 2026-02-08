@@ -2,7 +2,7 @@ val javaVersion = JavaLanguageVersion.of(21)
 val tilleggsstønaderLibsVersion = "2026.02.02-12.36.8345e89eeee3"
 val tilleggsstønaderKontrakterVersion = "2026.02.02-12.31.36d4a490969b"
 val familieProsesseringVersion = "2.20260120121808_b5446a9"
-val tokenSupportVersion = "6.0.1"
+val tokenSupportVersion = "6.0.2"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.21.4"
 
@@ -13,7 +13,7 @@ plugins {
     application
 
     kotlin("jvm") version "2.2.21"
-    id("com.diffplug.spotless") version "7.2.1"
+    id("com.diffplug.spotless") version "8.2.1"
     id("com.github.ben-manes.versions") version "0.53.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
 
