@@ -2,7 +2,7 @@ package no.nav.tilleggsstonader.soknad.dokument
 
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.kontrakter.sak.DokumentBrevkode
-import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
+import no.nav.tilleggsstonader.libs.http.client.postForEntity
 import no.nav.tilleggsstonader.soknad.dokument.pdf.HtmlFelt
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Søkerinformasjon
 import org.springframework.beans.factory.annotation.Qualifier
@@ -17,8 +17,8 @@ import java.time.LocalDateTime
 class HtmlifyClient(
     @Value("\${clients.htmlify.uri}")
     private val uri: URI,
-    @Qualifier("utenAuth") restTemplate: RestTemplate,
-) : AbstractRestClient(restTemplate) {
+    @Qualifier("utenAuth") private val restTemplate: RestTemplate,
+) {
     fun genererSøknadHtml(
         stønadstype: Stønadstype,
         tittel: String,
@@ -27,7 +27,7 @@ class HtmlifyClient(
         dokumentasjon: List<DokumentasjonAvsnitt>,
         dokumentBrevkode: DokumentBrevkode,
     ): String =
-        postForEntity<String>(
+        restTemplate.postForEntity<String>(
             UriComponentsBuilder.fromUri(uri).pathSegment("api", "soknad").toUriString(),
             mapOf(
                 "type" to stønadstype,
@@ -40,7 +40,7 @@ class HtmlifyClient(
         )
 
     fun genererKjørelisteHtml(kjørelisteHtmlRequest: KjørelisteHtmlRequest): String =
-        postForEntity<String>(
+        restTemplate.postForEntity<String>(
             UriComponentsBuilder.fromUri(uri).pathSegment("api", "kjoreliste").toUriString(),
             kjørelisteHtmlRequest,
         )

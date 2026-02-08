@@ -2,7 +2,7 @@ package no.nav.tilleggsstonader.soknad.aktivitet
 
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
 import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
-import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
+import no.nav.tilleggsstonader.libs.http.client.postForEntity
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -15,8 +15,8 @@ import java.time.LocalDate
 class AktivitetClient(
     @Value("\${clients.integrasjoner.uri}") private val uri: URI,
     @Qualifier("azureClientCredential")
-    restTemplate: RestTemplate,
-) : AbstractRestClient(restTemplate) {
+    private val restTemplate: RestTemplate,
+) {
     fun hentAktiviteter(
         ident: String,
         fom: LocalDate,
@@ -36,6 +36,6 @@ class AktivitetClient(
                 .encode()
                 .toUriString()
 
-        return postForEntity<List<AktivitetArenaDto>>(aktivitetUri, IdentRequest(ident), null, uriVariables)
+        return restTemplate.postForEntity<List<AktivitetArenaDto>>(aktivitetUri, IdentRequest(ident), null, uriVariables)
     }
 }

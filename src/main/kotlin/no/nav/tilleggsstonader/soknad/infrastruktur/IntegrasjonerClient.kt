@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.infrastruktur
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentRequest
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentResponse
 import no.nav.tilleggsstonader.kontrakter.felles.JsonMapperProvider.jsonMapper
-import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
+import no.nav.tilleggsstonader.libs.http.client.postForEntity
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -19,15 +19,15 @@ import java.net.URI
 class IntegrasjonerClient(
     @Value("\${clients.integrasjoner.uri}") private val uri: URI,
     @Qualifier("azureClientCredential")
-    restTemplate: RestTemplate,
-) : AbstractRestClient(restTemplate) {
+    private val restTemplate: RestTemplate,
+) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     private val sendInnUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "arkiv").toUriString()
 
     fun arkiver(request: ArkiverDokumentRequest): ArkiverDokumentResponse {
         try {
-            return postForEntity<ArkiverDokumentResponse>(sendInnUri, request)
+            return restTemplate.postForEntity<ArkiverDokumentResponse>(sendInnUri, request)
         } catch (e: HttpClientErrorException.Conflict) {
             if (e.responseBodyAsString.contains("journalpostId")) {
                 try {

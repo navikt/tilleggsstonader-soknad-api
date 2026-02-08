@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.dokument
 
-import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
+import no.nav.tilleggsstonader.libs.http.client.getForEntity
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
@@ -15,8 +15,8 @@ import java.util.UUID
 class FamilieVedleggClient(
     @Value("\${clients.familie-dokument.uri}")
     private val dokumentApiURI: URI,
-    @Qualifier("tokenExchange") restTemplate: RestTemplate,
-) : AbstractRestClient(restTemplate) {
+    @Qualifier("tokenExchange") private val restTemplate: RestTemplate,
+) {
     private val hentVedleggUri =
         UriComponentsBuilder
             .fromUri(dokumentApiURI)
@@ -25,7 +25,7 @@ class FamilieVedleggClient(
             .encode()
             .toUriString()
 
-    fun hentVedlegg(vedleggId: UUID): ByteArray = getForEntity(hentVedleggUri, HENT_HEADERS, mapOf("id" to vedleggId))
+    fun hentVedlegg(vedleggId: UUID): ByteArray = restTemplate.getForEntity(hentVedleggUri, HENT_HEADERS, mapOf("id" to vedleggId))
 
     companion object {
         private const val HENT = "api/mapper/tilleggsstonad"

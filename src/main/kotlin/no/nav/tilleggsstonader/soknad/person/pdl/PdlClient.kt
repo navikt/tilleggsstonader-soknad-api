@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.person.pdl
 
-import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
+import no.nav.tilleggsstonader.libs.http.client.postForEntity
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlUtil.httpHeaders
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlPersonRequest
@@ -20,15 +20,15 @@ class PdlClient(
     @Value("\${clients.pdl.uri}")
     private val pdlUrl: URI,
     @Qualifier("tokenExchange")
-    restTemplate: RestTemplate,
-) : AbstractRestClient(restTemplate) {
+    private val restTemplate: RestTemplate,
+) {
     fun hentSøker(fødselsnummer: Fødselsnummer): PdlSøker {
         val pdlPersonRequest =
             PdlPersonRequest(
                 variables = PdlPersonRequestVariables(fødselsnummer.verdi),
                 query = PdlUtil.søkerQuery,
             )
-        val pdlResponse = postForEntity<PdlResponse<PdlSøkerData>>(graphqlUri, pdlPersonRequest, httpHeaders)
+        val pdlResponse = restTemplate.postForEntity<PdlResponse<PdlSøkerData>>(graphqlUri, pdlPersonRequest, httpHeaders)
         return feilsjekkOgReturnerData(fødselsnummer.verdi, pdlResponse) { it.person }
     }
 

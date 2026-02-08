@@ -1,7 +1,7 @@
 package no.nav.tilleggsstonader.soknad.kodeverk
 
 import no.nav.tilleggsstonader.kontrakter.kodeverk.KodeverkDto
-import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
+import no.nav.tilleggsstonader.libs.http.client.getForEntity
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -13,9 +13,9 @@ import java.net.URI
 class KodeverkClient(
     @Value("\${clients.kodeverk.uri}")
     private val uri: URI,
-    @Qualifier("azureClientCredential") restTemplate: RestTemplate,
-) : AbstractRestClient(restTemplate) {
-    fun hentPostnummer(): KodeverkDto = getForEntity(kodeverkUri, null, mapOf("kodeverksnavn" to "Postnummer"))
+    @Qualifier("azureClientCredential") private val restTemplate: RestTemplate,
+) {
+    fun hentPostnummer(): KodeverkDto = restTemplate.getForEntity(kodeverkUri, null, mapOf("kodeverksnavn" to "Postnummer"))
 
     private val kodeverkUri =
         UriComponentsBuilder

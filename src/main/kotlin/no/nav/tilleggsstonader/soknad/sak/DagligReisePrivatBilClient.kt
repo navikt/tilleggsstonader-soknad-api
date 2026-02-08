@@ -1,7 +1,7 @@
 package no.nav.tilleggsstonader.soknad.sak
 
 import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
-import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
+import no.nav.tilleggsstonader.libs.http.client.postForEntity
 import no.nav.tilleggsstonader.soknad.kjøreliste.RammevedtakDto
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
@@ -14,8 +14,8 @@ import java.net.URI
 class DagligReisePrivatBilClient(
     @Value("\${clients.sak.uri}") private val uri: URI,
     @Qualifier("azureClientCredential")
-    restTemplate: RestTemplate,
-) : AbstractRestClient(restTemplate) {
+    private val restTemplate: RestTemplate,
+) {
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern", "privat-bil").build()
 
     fun hentRammevedtak(request: IdentRequest): List<RammevedtakDto> {
@@ -25,6 +25,6 @@ class DagligReisePrivatBilClient(
                 .pathSegment("rammevedtak")
                 .build()
                 .toUriString()
-        return postForEntity<List<RammevedtakDto>>(uri, request)
+        return restTemplate.postForEntity<List<RammevedtakDto>>(uri, request)
     }
 }

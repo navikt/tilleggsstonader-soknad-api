@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.person.pdl
 
-import no.nav.tilleggsstonader.libs.http.client.AbstractRestClient
+import no.nav.tilleggsstonader.libs.http.client.postForEntity
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlUtil.httpHeaders
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBarn
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.PdlBolkResponse
@@ -23,15 +23,15 @@ class PdlClientCredentialClient(
     @Value("\${clients.pdl.uri}")
     private val pdlUrl: URI,
     @Qualifier("azureClientCredential")
-    restTemplate: RestTemplate,
-) : AbstractRestClient(restTemplate) {
+    private val restTemplate: RestTemplate,
+) {
     fun hentNavn(ident: String): PdlSøkerNavn {
         val pdlPersonRequest =
             PdlPersonRequest(
                 variables = PdlPersonRequestVariables(ident),
                 query = PdlUtil.søkerQuery,
             )
-        val pdlResponse = postForEntity<PdlResponse<PdlSøkerNavnData>>(graphqlUri, pdlPersonRequest, httpHeaders)
+        val pdlResponse = restTemplate.postForEntity<PdlResponse<PdlSøkerNavnData>>(graphqlUri, pdlPersonRequest, httpHeaders)
         return feilsjekkOgReturnerData(ident, pdlResponse) { it.person }
     }
 
@@ -42,7 +42,7 @@ class PdlClientCredentialClient(
                 variables = PdlPersonBolkRequestVariables(personIdenter),
                 query = PdlUtil.barnQuery,
             )
-        val pdlResponse = postForEntity<PdlBolkResponse<PdlBarn>>(graphqlUri, pdlPersonRequest, httpHeaders)
+        val pdlResponse = restTemplate.postForEntity<PdlBolkResponse<PdlBarn>>(graphqlUri, pdlPersonRequest, httpHeaders)
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
