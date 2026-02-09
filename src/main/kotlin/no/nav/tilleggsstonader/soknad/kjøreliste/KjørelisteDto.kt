@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 
 data class KjørelisteDto(
+    val reiseId: String,
     val reisedagerPerUkeAvsnitt: List<UkeMedReisedagerDto>,
     val dokumentasjon: List<DokumentasjonFelt>,
     val søknadMetadata: SøknadMetadataDto,

@@ -17,10 +17,10 @@ class KjørelisteService(
 
     fun hentRammevedtak(
         ident: IdentRequest,
-        rammevedtakId: String,
+        reiseId: String,
     ): RammevedtakDto {
         val alleRammevedtak = dagligReisePrivatBilClient.hentRammevedtak(ident)
-        return alleRammevedtak.first { it.id == rammevedtakId }
+        return alleRammevedtak.first { it.reiseId == reiseId }
     }
 
     fun mottaKjøreliste(kjørelisteDto: KjørelisteDto): KjørelisteResponse {

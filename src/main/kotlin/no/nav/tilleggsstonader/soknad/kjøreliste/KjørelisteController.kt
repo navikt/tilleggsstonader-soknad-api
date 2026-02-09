@@ -27,16 +27,16 @@ class KjørelisteController(
             ),
         )
 
-    @GetMapping("/rammevedtak/{rammevedtakId}")
+    @GetMapping("/rammevedtak/{reiseId}")
     fun hentRammevedtak(
-        @PathVariable("rammevedtakId") rammevedtakId: String,
+        @PathVariable("reiseId") reiseId: String,
     ): RammevedtakDto =
         kjørelisteService.hentRammevedtak(
             ident =
                 IdentRequest(
                     ident = EksternBrukerUtils.hentFnrFraToken(),
                 ),
-            rammevedtakId = rammevedtakId,
+            reiseId = reiseId,
         )
 
     @PostMapping

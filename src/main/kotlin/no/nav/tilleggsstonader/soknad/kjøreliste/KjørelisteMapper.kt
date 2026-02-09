@@ -20,6 +20,7 @@ object KjørelisteMapper {
             språk = språkkode,
             skjema =
                 KjørelisteSkjema(
+                    reiseId = dto.reiseId,
                     reisedagerPerUkeAvsnitt = dto.reisedagerPerUkeAvsnitt.map { it.mapTilSkjema() },
                     dokumentasjon = dto.dokumentasjon,
                 ),

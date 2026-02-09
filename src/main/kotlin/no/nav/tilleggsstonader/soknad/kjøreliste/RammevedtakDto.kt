@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.kjøreliste
 import java.time.LocalDate
 
 data class RammevedtakDto(
-    val id: String,
+    val reiseId: String,
     val fom: LocalDate,
     val tom: LocalDate,
     val reisedagerPerUke: Int,
@@ -21,7 +21,7 @@ data class RammevedtakUkeDto(
 val rammevedtakDtoMock =
     listOf(
         RammevedtakDto(
-            id = "1",
+            reiseId = "1",
             fom = LocalDate.of(2025, 1, 1),
             tom = LocalDate.of(2025, 2, 6),
             reisedagerPerUke = 3,
@@ -62,7 +62,7 @@ val rammevedtakDtoMock =
                 ),
         ),
         RammevedtakDto(
-            id = "2",
+            reiseId = "2",
             fom = LocalDate.of(2025, 2, 10),
             tom = LocalDate.of(2025, 2, 16),
             reisedagerPerUke = 3,

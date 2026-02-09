@@ -19,6 +19,7 @@ object KjørelisteTestdata {
 
     fun kjørelisteDto() =
         KjørelisteDto(
+            reiseId = UUID.randomUUID().toString(),
             reisedagerPerUkeAvsnitt =
                 listOf(
                     UkeMedReisedagerDto(
@@ -41,6 +42,7 @@ object KjørelisteTestdata {
         tom: LocalDate,
     ): KjørelisteDto =
         KjørelisteDto(
+            reiseId = UUID.randomUUID().toString(),
             reisedagerPerUkeAvsnitt = lagUkeliste(fom, tom),
             dokumentasjon = listOf(lagDokumentasjonFelt()),
             søknadMetadata = SøknadMetadataDto(søknadFrontendGitHash = "aabbccd"),
