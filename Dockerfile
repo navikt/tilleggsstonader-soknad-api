@@ -1,4 +1,4 @@
-FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-21@sha256:c0d5195f881c9d1464a9581935670d391066c5cbba2d166ae3059c4c20bb623c
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-21@sha256:df71ba4455470d76ad72427fbc8f0416f584cb610fcce7dae86ba10c9173b32c
 
 ENV APPLICATION_NAME=tilleggsstonader-soknad-api
 
