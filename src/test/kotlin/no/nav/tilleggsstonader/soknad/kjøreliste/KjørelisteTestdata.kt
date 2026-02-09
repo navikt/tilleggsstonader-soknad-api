@@ -6,11 +6,11 @@ import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.libs.utils.dato.juni
+import no.nav.tilleggsstonader.libs.utils.dato.ukenummer
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.TextStyle
-import java.time.temporal.WeekFields
 import java.util.Locale
 import java.util.UUID
 
@@ -60,7 +60,7 @@ object KjørelisteTestdata {
         val dagerMedUkenummer =
             generateSequence(fom) { it.plusDays(1) }
                 .takeWhile { it <= tom }
-                .map { DagMedUkenummer(it, it.get(WeekFields.of(DayOfWeek.MONDAY, 1).weekOfWeekBasedYear())) }
+                .map { DagMedUkenummer(it, it.ukenummer()) }
                 .toList()
 
         return dagerMedUkenummer
