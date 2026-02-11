@@ -3,7 +3,6 @@ package no.nav.tilleggsstonader.soknad.sak
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
-import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,7 +30,7 @@ class RammevedtakClientTest {
     fun `Skal kalle på riktig endepunkt når hentRammevedtak blir kjørt`() {
         wireMockServer.stubFor(
             WireMock
-                .post("/api/ekstern/privat-bil/rammevedtak")
+                .get("/api/ekstern/privat-bil/rammevedtak")
                 .willReturn(
                     WireMock
                         .aResponse()
@@ -41,11 +40,11 @@ class RammevedtakClientTest {
                 ),
         )
 
-        client.hentRammevedtak(IdentRequest("ident"))
+        client.hentRammevedtakForInnloggetBruker()
 
         wireMockServer.verify(
             1,
-            WireMock.postRequestedFor(WireMock.urlEqualTo("/api/ekstern/privat-bil/rammevedtak")),
+            WireMock.getRequestedFor(WireMock.urlEqualTo("/api/ekstern/privat-bil/rammevedtak")),
         )
     }
 }

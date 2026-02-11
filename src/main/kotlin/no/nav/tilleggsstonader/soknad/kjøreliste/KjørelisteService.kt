@@ -1,6 +1,5 @@
 package no.nav.tilleggsstonader.soknad.kjøreliste
 
-import no.nav.tilleggsstonader.kontrakter.felles.IdentRequest
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
@@ -13,13 +12,10 @@ class KjørelisteService(
     private val skjemaService: SkjemaService,
     private val dagligReisePrivatBilClient: DagligReisePrivatBilClient,
 ) {
-    fun hentAlleRammevedtak(ident: IdentRequest): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtak(ident)
+    fun hentAlleRammevedtakForInnloggetBruker(): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
 
-    fun hentRammevedtak(
-        ident: IdentRequest,
-        reiseId: String,
-    ): RammevedtakDto {
-        val alleRammevedtak = dagligReisePrivatBilClient.hentRammevedtak(ident)
+    fun hentRammevedtakForInnloggetBruker(reiseId: String): RammevedtakDto {
+        val alleRammevedtak = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
         return alleRammevedtak.first { it.reiseId == reiseId }
     }
 
