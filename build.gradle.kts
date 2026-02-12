@@ -1,5 +1,5 @@
 val javaVersion = JavaLanguageVersion.of(21)
-val tilleggsstønaderLibsVersion = "2026.02.09-21.06.48e85801f27a"
+val tilleggsstønaderLibsVersion = "2026.02.12-09.04.692694d5c5d5"
 val tilleggsstønaderKontrakterVersion = "2026.02.09-09.29.75e18e2b8973"
 val familieProsesseringVersion = "2.20260120121808_b5446a9"
 val tokenSupportVersion = "6.0.2"
