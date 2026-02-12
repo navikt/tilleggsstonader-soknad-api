@@ -12,7 +12,7 @@ import java.net.URI
 @Service
 class DagligReisePrivatBilClient(
     @Value("\${clients.sak.uri}") private val uri: URI,
-    @Qualifier("tokenExchange") private val restClient: RestClient,
+    @Qualifier("restClientTokenExchange") private val restClient: RestClient,
 ) {
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern", "privat-bil").build()
 
