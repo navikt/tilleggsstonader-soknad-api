@@ -42,6 +42,8 @@ no.nav.security.jwt:
         client-id: ${AZURE_APP_CLIENT_ID}
         client-secret: ${AZURE_APP_CLIENT_SECRET}
         client-auth-method: client_secret_basic
+    sak-token-exchange:
+      token-endpoint-url: http://metadata
 
 clients.sak.uri: http://localhost:8101
 clients.sak.scope: api://dev-gcp.tilleggsstonader.tilleggsstonader-sak-lokal/.default
