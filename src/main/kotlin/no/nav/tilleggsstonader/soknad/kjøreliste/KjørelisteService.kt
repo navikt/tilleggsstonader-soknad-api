@@ -15,9 +15,9 @@ class KjørelisteService(
     fun hentAlleRammevedtakForInnloggetBruker(): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
 
     fun hentRammevedtakForInnloggetBruker(reiseId: String): RammevedtakDto {
-        val alleRammevedtak = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
-        return alleRammevedtak.first { it.reiseId == reiseId }
-    }
+        val rammevedtak = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
+            .first(){it.reiseId == reiseId}
+        return rammevedtak.copy(uker = rammevedtak.uker.filter { uke -> uke.kanSendeInnKjøreliste })}
 
     fun mottaKjøreliste(kjørelisteDto: KjørelisteDto): KjørelisteResponse {
         skjemaService.lagreKjøreliste(
