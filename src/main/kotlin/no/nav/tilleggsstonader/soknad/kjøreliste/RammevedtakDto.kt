@@ -17,7 +17,7 @@ data class RammevedtakUkeDto(
     val tom: LocalDate,
     val ukeNummer: Int,
     val innsendtDato: LocalDate?,
-    val kanSendeInnKjøreliste: Boolean
+    val kanSendeInnKjøreliste: Boolean,
 )
 
 val rammevedtakDtoMock =
