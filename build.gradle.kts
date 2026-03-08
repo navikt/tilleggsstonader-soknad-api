@@ -76,7 +76,7 @@ dependencies {
 
     // Kafka
     implementation("org.springframework.boot:spring-boot-starter-kafka")
-    implementation("no.nav.tms.varsel:kotlin-builder:2.1.1")
+    implementation("no.nav.tms.varsel:kotlin-builder:2.2.0")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
