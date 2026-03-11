@@ -1,6 +1,6 @@
 package no.nav.tilleggsstonader.soknad.sak
 
-import no.nav.tilleggsstonader.soknad.kjøreliste.RammevedtakDto
+import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service

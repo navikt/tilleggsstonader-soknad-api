@@ -3,8 +3,8 @@ package no.nav.tilleggsstonader.soknad.infrastruktur
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.tilleggsstonader.soknad.kjøreliste.RammevedtakDto
-import no.nav.tilleggsstonader.soknad.kjøreliste.RammevedtakUkeDto
+import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
+import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakUkeDto
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

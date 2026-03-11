@@ -1,5 +1,6 @@
 package no.nav.tilleggsstonader.soknad.kjøreliste
 
+import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
