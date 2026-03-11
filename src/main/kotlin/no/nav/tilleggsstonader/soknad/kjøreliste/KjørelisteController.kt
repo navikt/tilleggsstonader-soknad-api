@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.kjøreliste
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
