@@ -27,6 +27,7 @@ fun main(args: Array<String>) {
             "mock-dokument",
             "mock-integrasjoner",
             "mock-kafka",
+            "mock-rammevedtak",
         ).properties(mapOf("mock-oauth2-server.port" to mockOauth2ServerPort))
         .run(*args)
 }
