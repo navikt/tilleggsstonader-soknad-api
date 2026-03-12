@@ -36,7 +36,7 @@ apply(plugin = "com.diffplug.spotless")
 
 spotless {
     kotlin {
-        ktlint("1.7.1")
+        ktlint("1.8.0")
     }
 }
 
