@@ -2,13 +2,11 @@ package no.nav.tilleggsstonader.soknad.infrastruktur
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentResponse
 import no.nav.tilleggsstonader.soknad.dokument.FamilieDokumentClient
 import no.nav.tilleggsstonader.soknad.util.FileUtil.readBytes
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
-import java.util.UUID
 
 @Configuration
 @Profile("mock-dokument")
