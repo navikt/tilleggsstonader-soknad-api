@@ -41,7 +41,7 @@ class DagligReisePrivatBilClientConfig {
                                     fom = LocalDate.of(2025, 1, 1),
                                     tom = LocalDate.of(2025, 1, 5),
                                     ukeNummer = 1,
-                                    innsendtDato = LocalDate.of(2025, 1, 3),
+                                    innsendtDato = LocalDate.of(2025, 1, 7),
                                     kanSendeInnKjøreliste = true,
                                 ),
                                 RammevedtakUkeDto(
