@@ -13,7 +13,7 @@ plugins {
     application
 
     kotlin("jvm") version "2.2.21"
-    id("com.diffplug.spotless") version "8.2.1"
+    id("com.diffplug.spotless") version "8.3.0"
     id("com.github.ben-manes.versions") version "0.53.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
 
@@ -76,7 +76,7 @@ dependencies {
 
     // Kafka
     implementation("org.springframework.boot:spring-boot-starter-kafka")
-    implementation("no.nav.tms.varsel:kotlin-builder:2.1.1")
+    implementation("no.nav.tms.varsel:kotlin-builder:2.2.0")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
