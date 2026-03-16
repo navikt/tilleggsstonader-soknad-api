@@ -26,6 +26,11 @@ class KjørelisteController(
         @PathVariable reiseId: String,
     ): RammevedtakDto = kjørelisteService.hentRammevedtakForInnloggetBruker(reiseId)
 
+    @GetMapping("/{reiseId}")
+    fun hentKjørelister(
+        @PathVariable reiseId: String,
+    ): KjørelisteDto? = kjørelisteService.hentKjørelisterForReise(reiseId)
+
     @PostMapping
     fun mottaKjørelister(
         @RequestBody kjørelisteDto: KjørelisteDto,

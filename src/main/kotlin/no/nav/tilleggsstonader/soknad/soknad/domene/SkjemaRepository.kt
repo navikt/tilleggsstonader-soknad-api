@@ -21,6 +21,11 @@ interface SkjemaRepository :
     InsertUpdateRepository<Skjema> {
     @Query("SELECT type, count(*) as count FROM skjema GROUP BY type")
     fun finnAntallPerType(): List<AntallPerType>
+
+    fun findByPersonIdentAndType(
+        personIdent: String,
+        type: Skjematype,
+    ): List<Skjema>
 }
 
 data class AntallPerType(

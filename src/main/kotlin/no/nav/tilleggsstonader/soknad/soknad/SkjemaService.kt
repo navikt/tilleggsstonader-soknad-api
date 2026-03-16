@@ -43,6 +43,11 @@ class SkjemaService(
 ) {
     fun hentSkjema(id: UUID): Skjema = skjemaRepository.findByIdOrThrow(id)
 
+    fun hentSkjemaerForBruker(
+        personIdent: String,
+        type: Skjematype,
+    ): List<Skjema> = skjemaRepository.findByPersonIdentAndType(personIdent, type)
+
     fun oppdaterSkjema(skjema: Skjema) {
         skjemaRepository.update(skjema)
     }
