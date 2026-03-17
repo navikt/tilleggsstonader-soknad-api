@@ -8,6 +8,8 @@ import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
+import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
+import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import org.springframework.stereotype.Service
 import tools.jackson.module.kotlin.readValue
 import java.time.LocalDateTime
@@ -17,6 +19,7 @@ import kotlin.random.Random
 class KjørelisteService(
     private val skjemaService: SkjemaService,
     private val dagligReisePrivatBilClient: DagligReisePrivatBilClient,
+    private val skjemaRepository: SkjemaRepository,
 ) {
     fun hentAlleRammevedtakForInnloggetBruker(): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
 
@@ -55,6 +58,8 @@ class KjørelisteService(
         )
 
     fun mottaKjøreliste(kjørelisteDto: KjørelisteDto): KjørelisteResponse {
+        validerKjøreliste(kjørelisteDto)
+
         skjemaService.lagreKjøreliste(
             ident = EksternBrukerUtils.hentFnrFraToken(),
             mottattTidspunkt = LocalDateTime.now(),
@@ -68,4 +73,37 @@ class KjørelisteService(
             saksnummer = saksnummer,
         )
     }
+
+    fun validerKjøreliste(kjørelisteDto: KjørelisteDto) {
+        val ident = EksternBrukerUtils.hentFnrFraToken()
+        val tidligereInnsendeUkeIntervaller = hentTidligereInnsendeUkeIntervaller(ident, kjørelisteDto.reiseId)
+
+        kjørelisteDto.reisedagerPerUkeAvsnitt.forEach { uke ->
+            if (Uke(
+                    uke.reisedager
+                        .first()
+                        .dato.verdi,
+                ) in tidligereInnsendeUkeIntervaller
+            ) {
+                throw SøknadValideringException("${uke.ukeLabel} er allerede sendt inn. Kan ikke sende inn på nytt")
+            }
+        }
+    }
+
+    private fun hentTidligereInnsendeUkeIntervaller(
+        ident: String,
+        reiseId: String,
+    ): Set<Uke> =
+        skjemaRepository
+            .findByPersonIdentAndType(ident, Skjematype.DAGLIG_REISE_KJØRELISTE)
+            .map { jsonMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(it.skjemaJson.json) }
+            .filter { it.skjema.reiseId == reiseId }
+            .flatMap { it.skjema.reisedagerPerUkeAvsnitt }
+            .map {
+                Uke(
+                    it.reisedager
+                        .first()
+                        .dato.verdi,
+                )
+            }.toSet()
 }
