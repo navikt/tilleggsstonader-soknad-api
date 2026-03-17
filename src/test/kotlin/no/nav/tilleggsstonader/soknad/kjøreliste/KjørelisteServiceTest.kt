@@ -5,8 +5,8 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import no.nav.tilleggsstonader.kontrakter.felles.JsonMapperProvider.jsonMapper
-import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
+import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Dokument
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
@@ -34,10 +34,11 @@ class KjørelisteServiceTest {
     private val skjemaService = mockk<SkjemaService>()
     private val dagligReisePrivatBilClient = mockk<DagligReisePrivatBilClient>()
 
-    private val service = KjørelisteService(
-        skjemaService = skjemaService,
-        dagligReisePrivatBilClient = dagligReisePrivatBilClient,
-    )
+    private val service =
+        KjørelisteService(
+            skjemaService = skjemaService,
+            dagligReisePrivatBilClient = dagligReisePrivatBilClient,
+        )
 
     private val personIdent = "12345678901"
 
@@ -114,10 +115,11 @@ class KjørelisteServiceTest {
                     personIdent = personIdent,
                     type = Skjematype.DAGLIG_REISE_KJØRELISTE,
                 )
-            } returns listOf(
-                lagSkjema(reiseId = reiseId, uker = listOf(uke1, uke2)),
-                lagSkjema(reiseId = reiseId, uker = listOf(uke3)),
-            )
+            } returns
+                listOf(
+                    lagSkjema(reiseId = reiseId, uker = listOf(uke1, uke2)),
+                    lagSkjema(reiseId = reiseId, uker = listOf(uke3)),
+                )
 
             val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
 
@@ -138,10 +140,11 @@ class KjørelisteServiceTest {
                     personIdent = personIdent,
                     type = Skjematype.DAGLIG_REISE_KJØRELISTE,
                 )
-            } returns listOf(
-                lagSkjema(reiseId = reiseId, dokumentasjon = listOf(dok1)),
-                lagSkjema(reiseId = reiseId, dokumentasjon = listOf(dok2)),
-            )
+            } returns
+                listOf(
+                    lagSkjema(reiseId = reiseId, dokumentasjon = listOf(dok1)),
+                    lagSkjema(reiseId = reiseId, dokumentasjon = listOf(dok2)),
+                )
 
             val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
 
@@ -162,10 +165,11 @@ class KjørelisteServiceTest {
                     personIdent = personIdent,
                     type = Skjematype.DAGLIG_REISE_KJØRELISTE,
                 )
-            } returns listOf(
-                lagSkjema(reiseId = reiseId, uker = listOf(ukeForRiktigReise)),
-                lagSkjema(reiseId = "annen-reise", uker = listOf(ukeForAnnenReise)),
-            )
+            } returns
+                listOf(
+                    lagSkjema(reiseId = reiseId, uker = listOf(ukeForRiktigReise)),
+                    lagSkjema(reiseId = "annen-reise", uker = listOf(ukeForAnnenReise)),
+                )
 
             val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
 
@@ -183,10 +187,11 @@ class KjørelisteServiceTest {
                     personIdent = personIdent,
                     type = Skjematype.DAGLIG_REISE_KJØRELISTE,
                 )
-            } returns listOf(
-                lagSkjema(reiseId = reiseId, frontendGitHash = "abc123"),
-                lagSkjema(reiseId = reiseId, frontendGitHash = "def456"),
-            )
+            } returns
+                listOf(
+                    lagSkjema(reiseId = reiseId, frontendGitHash = "abc123"),
+                    lagSkjema(reiseId = reiseId, frontendGitHash = "def456"),
+                )
 
             val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
 
@@ -201,17 +206,19 @@ class KjørelisteServiceTest {
         dokumentasjon: List<DokumentasjonFelt> = emptyList(),
         frontendGitHash: String? = null,
     ): Skjema {
-        val kjørelisteSkjema = KjørelisteSkjema(
-            reiseId = reiseId,
-            reisedagerPerUkeAvsnitt = uker,
-            dokumentasjon = dokumentasjon,
-        )
-        val innsendtSkjema = InnsendtSkjema(
-            ident = personIdent,
-            mottattTidspunkt = LocalDateTime.now(),
-            språk = Språkkode.NB,
-            skjema = kjørelisteSkjema,
-        )
+        val kjørelisteSkjema =
+            KjørelisteSkjema(
+                reiseId = reiseId,
+                reisedagerPerUkeAvsnitt = uker,
+                dokumentasjon = dokumentasjon,
+            )
+        val innsendtSkjema =
+            InnsendtSkjema(
+                ident = personIdent,
+                mottattTidspunkt = LocalDateTime.now(),
+                språk = Språkkode.NB,
+                skjema = kjørelisteSkjema,
+            )
         return Skjema(
             id = UUID.randomUUID(),
             type = Skjematype.DAGLIG_REISE_KJØRELISTE,
@@ -225,21 +232,23 @@ class KjørelisteServiceTest {
         UkeMedReisedager(
             ukeLabel = label,
             spørsmål = "Hvilke dager kjørte du?",
-            reisedager = listOf(
-                Reisedag(
-                    dato = DatoFelt(label = "Mandag 1. juni 2025", verdi = LocalDate.of(2025, 6, 1)),
-                    harKjørt = true,
-                    parkeringsutgift = VerdiFelt(label = "Parkeringsutgift (kr)", verdi = 50),
+            reisedager =
+                listOf(
+                    Reisedag(
+                        dato = DatoFelt(label = "Mandag 1. juni 2025", verdi = LocalDate.of(2025, 6, 1)),
+                        harKjørt = true,
+                        parkeringsutgift = VerdiFelt(label = "Parkeringsutgift (kr)", verdi = 50),
+                    ),
                 ),
-            ),
         )
 
     private fun lagDokumentasjonFelt(label: String): DokumentasjonFelt =
         DokumentasjonFelt(
             type = Vedleggstype.PARKERINGSUTGIFT,
             label = label,
-            opplastedeVedlegg = listOf(
-                Dokument(id = UUID.randomUUID(), navn = "vedlegg.pdf"),
-            ),
+            opplastedeVedlegg =
+                listOf(
+                    Dokument(id = UUID.randomUUID(), navn = "vedlegg.pdf"),
+                ),
         )
 }
