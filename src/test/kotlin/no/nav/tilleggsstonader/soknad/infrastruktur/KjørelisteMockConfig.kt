@@ -12,6 +12,7 @@ import no.nav.tilleggsstonader.soknad.kjøreliste.UkeMedReisedagerDto
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
+import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -26,9 +27,10 @@ class KjørelisteMockConfig {
     fun kjørelisteService(): KjørelisteService {
         val skjemaService = mockk<SkjemaService>(relaxed = true)
         val dagligReisePrivatBilClient = mockk<DagligReisePrivatBilClient>()
+        val skjemaRepository = mockk<SkjemaRepository>(relaxed = true)
         DagligReisePrivatBilClientConfig.resetMock(dagligReisePrivatBilClient)
 
-        val service = spyk(KjørelisteService(skjemaService, dagligReisePrivatBilClient))
+        val service = spyk(KjørelisteService(skjemaService, dagligReisePrivatBilClient, skjemaRepository))
         every { service.hentKjørelisterForReise("1") } returns kjørelisteDtoForReise1()
         every { service.hentKjørelisterForReise("2") } returns null
         return service
