@@ -24,10 +24,7 @@ class KjørelisteService(
     fun hentAlleRammevedtakForInnloggetBruker(): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
 
     fun hentRammevedtakForInnloggetBruker(reiseId: String): RammevedtakDto {
-        val rammevedtak =
-            dagligReisePrivatBilClient
-                .hentRammevedtakForInnloggetBruker()
-                .first { it.reiseId == reiseId }
+        val rammevedtak = hentRammevedtak(reiseId)
         return rammevedtak.copy(uker = rammevedtak.uker.filter { uke -> uke.kanSendeInnKjøreliste })
     }
 
@@ -78,14 +75,21 @@ class KjørelisteService(
         val ident = EksternBrukerUtils.hentFnrFraToken()
         val tidligereInnsendeUkeIntervaller = hentTidligereInnsendeUkeIntervaller(ident, kjørelisteDto.reiseId)
 
-        kjørelisteDto.reisedagerPerUkeAvsnitt.forEach { uke ->
-            if (Uke(
-                    uke.reisedager
-                        .first()
-                        .dato.verdi,
-                ) in tidligereInnsendeUkeIntervaller
-            ) {
-                throw SøknadValideringException("${uke.ukeLabel} er allerede sendt inn. Kan ikke sende inn på nytt")
+        val rammevedtak = hentRammevedtak(kjørelisteDto.reiseId)
+        val rammevedtakUkerByUke = rammevedtak.uker.associateBy { Uke(it.fom) }
+
+        kjørelisteDto.reisedagerPerUkeAvsnitt.forEach { ukeMedReisedager ->
+            val uke = ukeMedReisedager.tilUke()
+
+            if (uke in tidligereInnsendeUkeIntervaller) {
+                throw SøknadValideringException("${ukeMedReisedager.ukeLabel} er allerede sendt inn. Kan ikke sende inn på nytt")
+            }
+
+            val rammevedtakUke = rammevedtakUkerByUke[uke]
+            if (rammevedtakUke != null && !rammevedtakUke.kanSendeInnKjøreliste) {
+                throw SøknadValideringException(
+                    "Kunne ikke sende inn kjøreliste. ${ukeMedReisedager.ukeLabel} er ikke klar for innsending.",
+                )
             }
         }
     }
@@ -99,11 +103,11 @@ class KjørelisteService(
             .map { jsonMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(it.skjemaJson.json) }
             .filter { it.skjema.reiseId == reiseId }
             .flatMap { it.skjema.reisedagerPerUkeAvsnitt }
-            .map {
-                Uke(
-                    it.reisedager
-                        .first()
-                        .dato.verdi,
-                )
-            }.toSet()
+            .map { it.tilUke() }
+            .toSet()
+
+    private fun hentRammevedtak(reiseId: String): RammevedtakDto =
+        dagligReisePrivatBilClient
+            .hentRammevedtakForInnloggetBruker()
+            .single { it.reiseId == reiseId }
 }

@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.infrastruktur.config
 import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import no.nav.tilleggsstonader.soknad.infrastruktur.exception.GradertBrukerException
+import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 import org.springframework.core.NestedExceptionUtils
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -49,6 +50,12 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         }
 
         return ProblemDetail.forStatusAndDetail(responseStatus, "Ukjent feil")
+    }
+
+    @ExceptionHandler(SøknadValideringException::class)
+    fun handleThrowable(throwable: SøknadValideringException): ProblemDetail {
+        secureLogger.warn("Valideringsfeil: ${throwable.message}")
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, throwable.message)
     }
 
     @ExceptionHandler(GradertBrukerException::class)

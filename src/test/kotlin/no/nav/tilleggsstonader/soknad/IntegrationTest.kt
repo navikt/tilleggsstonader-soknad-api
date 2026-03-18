@@ -45,6 +45,7 @@ val tokenSubject = "12345678911"
     "mock-dokument",
     "mock-integrasjoner",
     "mock-kafka",
+    "mock-rammevedtak",
 )
 @EnableMockOAuth2Server
 @AutoConfigureRestTestClient
