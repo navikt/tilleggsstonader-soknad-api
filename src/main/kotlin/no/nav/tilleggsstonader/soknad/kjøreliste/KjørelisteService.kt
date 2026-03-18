@@ -86,6 +86,9 @@ class KjørelisteService(
             }
 
             val rammevedtakUke = rammevedtakUkerByUke[uke]
+            if (rammevedtakUke != null && rammevedtakUke.innsendtDato != null) {
+                throw SøknadValideringException("${ukeMedReisedager.ukeLabel} er allerede sendt inn. Kan ikke sende inn på nytt")
+            }
             if (rammevedtakUke != null && !rammevedtakUke.kanSendeInnKjøreliste) {
                 throw SøknadValideringException(
                     "Kunne ikke sende inn kjøreliste. ${ukeMedReisedager.ukeLabel} er ikke klar for innsending.",

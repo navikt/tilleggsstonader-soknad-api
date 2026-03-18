@@ -472,6 +472,66 @@ class KjørelisteServiceTest {
                 .hasMessage("Kunne ikke sende inn kjøreliste. Uke 24 (9. juni - 15. juni) er ikke klar for innsending.")
         }
 
+        @Test
+        fun `skal kaste feil når uke har innsendtDato i rammevedtaket`() {
+            val reiseId = "reise-1"
+            val ukeLabel = "Uke 23 (2. juni - 8. juni)"
+            every {
+                skjemaRepository.findByPersonIdentAndType(
+                    personIdent,
+                    Skjematype.DAGLIG_REISE_KJØRELISTE,
+                )
+            } returns emptyList()
+            mockRammevedtak(
+                reiseId,
+                lagRammevedtakUke(
+                    LocalDate.of(2025, 6, 2),
+                    kanSendeInn = true,
+                    innsendtDato = LocalDate.of(2025, 6, 5),
+                ),
+            )
+
+            val dto =
+                lagKjørelisteDto(
+                    reiseId = reiseId,
+                    uker = listOf(lagUkeMedReisedagerDto(ukeLabel, LocalDate.of(2025, 6, 2), LocalDate.of(2025, 6, 3))),
+                )
+
+            assertThatThrownBy { service.validerKjøreliste(dto) }
+                .isInstanceOf(SøknadValideringException::class.java)
+                .hasMessage("$ukeLabel er allerede sendt inn. Kan ikke sende inn på nytt")
+        }
+
+        @Test
+        fun `skal ikke kaste feil når uke ikke har innsendtDato i rammevedtaket`() {
+            val reiseId = "reise-1"
+            every {
+                skjemaRepository.findByPersonIdentAndType(
+                    personIdent,
+                    Skjematype.DAGLIG_REISE_KJØRELISTE,
+                )
+            } returns emptyList()
+            mockRammevedtak(
+                reiseId,
+                lagRammevedtakUke(LocalDate.of(2025, 6, 2), kanSendeInn = true, innsendtDato = null),
+            )
+
+            val dto =
+                lagKjørelisteDto(
+                    reiseId = reiseId,
+                    uker =
+                        listOf(
+                            lagUkeMedReisedagerDto(
+                                "Uke 23 (2. juni - 8. juni)",
+                                LocalDate.of(2025, 6, 2),
+                                LocalDate.of(2025, 6, 3),
+                            ),
+                        ),
+                )
+
+            assertDoesNotThrow { service.validerKjøreliste(dto) }
+        }
+
         private fun lagKjørelisteDto(
             reiseId: String,
             uker: List<UkeMedReisedagerDto>,
@@ -533,13 +593,14 @@ class KjørelisteServiceTest {
             fom: LocalDate,
             kanSendeInn: Boolean,
             ukeNummer: Int = 1,
+            innsendtDato: LocalDate? = null,
         ): RammevedtakUkeDto {
             val uke = Uke(fom)
             return RammevedtakUkeDto(
                 fom = uke.mandag,
                 tom = uke.søndag,
                 ukeNummer = ukeNummer,
-                innsendtDato = null,
+                innsendtDato = innsendtDato,
                 kanSendeInnKjøreliste = kanSendeInn,
             )
         }
