@@ -5,6 +5,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Reisedag
 import no.nav.tilleggsstonader.kontrakter.søknad.UkeMedReisedager
+import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import java.time.LocalDateTime
 
 object KjørelisteMapper {
@@ -32,5 +33,34 @@ private fun UkeMedReisedagerDto.mapTilSkjema(): UkeMedReisedager =
     UkeMedReisedager(
         ukeLabel = ukeLabel,
         spørsmål = spørsmål,
-        reisedager = reisedager.map { Reisedag(it.dato, it.harKjørt, it.parkeringsutgift) },
+        reisedager =
+            reisedager.map {
+                Reisedag(
+                    dato = it.dato,
+                    harKjørt = it.harKjørt,
+                    parkeringsutgift = it.parkeringsutgift,
+                )
+            },
+    )
+
+fun KjørelisteSkjema.tilDto(): KjørelisteDto =
+    KjørelisteDto(
+        reiseId = reiseId,
+        reisedagerPerUkeAvsnitt = reisedagerPerUkeAvsnitt.map { it.tilDto() },
+        dokumentasjon = dokumentasjon,
+        søknadMetadata = SøknadMetadataDto(søknadFrontendGitHash = null),
+    )
+
+private fun UkeMedReisedager.tilDto(): UkeMedReisedagerDto =
+    UkeMedReisedagerDto(
+        ukeLabel = ukeLabel,
+        spørsmål = spørsmål,
+        reisedager =
+            reisedager.map {
+                ReisedagDto(
+                    dato = it.dato,
+                    harKjørt = it.harKjørt,
+                    parkeringsutgift = it.parkeringsutgift,
+                )
+            },
     )
