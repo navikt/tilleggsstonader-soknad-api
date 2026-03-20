@@ -5,7 +5,6 @@ import no.nav.tilleggsstonader.kontrakter.søknad.Dokument
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
-import no.nav.tilleggsstonader.libs.utils.dato.juni
 import no.nav.tilleggsstonader.libs.utils.dato.ukenummer
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import java.time.DayOfWeek
@@ -19,17 +18,17 @@ object KjørelisteTestdata {
 
     fun kjørelisteDto() =
         KjørelisteDto(
-            reiseId = UUID.randomUUID().toString(),
+            reiseId = "1",
             reisedagerPerUkeAvsnitt =
                 listOf(
                     UkeMedReisedagerDto(
-                        ukeLabel = "Uke 1 (1. juni - 7. juni)",
+                        ukeLabel = "Uke 2 (6. januar - 12. januar)",
                         spørsmål = "Hvilke dager kjørte du?",
                         reisedager =
                             listOf(
-                                ReisedagDto(datofelt(1 juni 2025), true, parkeringsutgift = parkeringsutgift(130)),
-                                ReisedagDto(datofelt(2 juni 2025), true, parkeringsutgift = parkeringsutgift(40)),
-                                ReisedagDto(datofelt(5 juni 2025), true, parkeringsutgift = parkeringsutgift(90)),
+                                ReisedagDto(datofelt(LocalDate.of(2025, 1, 6)), true, parkeringsutgift = parkeringsutgift(130)),
+                                ReisedagDto(datofelt(LocalDate.of(2025, 1, 7)), true, parkeringsutgift = parkeringsutgift(40)),
+                                ReisedagDto(datofelt(LocalDate.of(2025, 1, 10)), true, parkeringsutgift = parkeringsutgift(90)),
                             ),
                     ),
                 ),
