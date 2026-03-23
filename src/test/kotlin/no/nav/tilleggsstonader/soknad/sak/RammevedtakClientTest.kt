@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.sak
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -46,5 +47,22 @@ class RammevedtakClientTest {
             1,
             WireMock.getRequestedFor(WireMock.urlEqualTo("/api/ekstern/privat-bil/rammevedtak")),
         )
+    }
+
+    @Test
+    fun `Skal returnere tom liste ved HTTP-feil fra ekstern tjeneste`() {
+        wireMockServer.stubFor(
+            WireMock
+                .get("/api/ekstern/privat-bil/rammevedtak")
+                .willReturn(
+                    WireMock
+                        .aResponse()
+                        .withStatus(500),
+                ),
+        )
+
+        val result = client.hentRammevedtakForInnloggetBruker()
+
+        assertThat(result).isEmpty()
     }
 }
