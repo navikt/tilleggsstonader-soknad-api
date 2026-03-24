@@ -23,10 +23,7 @@ class KjørelisteService(
 ) {
     fun hentAlleRammevedtakForInnloggetBruker(): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
 
-    fun hentRammevedtakForInnloggetBruker(reiseId: String): RammevedtakDto {
-        val rammevedtak = hentRammevedtak(reiseId)
-        return rammevedtak.copy(uker = rammevedtak.uker.filter { uke -> uke.kanSendeInnKjøreliste })
-    }
+    fun hentRammevedtakForInnloggetBruker(reiseId: String): RammevedtakDto = hentRammevedtak(reiseId)
 
     fun hentKjørelisterForReise(reiseId: String): KjørelisteDto? {
         val ident = EksternBrukerUtils.hentFnrFraToken()
