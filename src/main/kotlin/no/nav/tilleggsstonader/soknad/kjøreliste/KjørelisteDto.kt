@@ -14,6 +14,7 @@ data class KjørelisteDto(
 
 data class UkeMedReisedagerDto(
     val ukeLabel: String,
+    val reisedagerLabel: String,
     val spørsmål: String,
     val reisedager: List<ReisedagDto>,
 )

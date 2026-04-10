@@ -84,6 +84,7 @@ class PdfService(
                 kjørelisteSkjema.reisedagerPerUkeAvsnitt.map { uke ->
                     KjørelisteUkeHtmlRequest(
                         ukeLabel = uke.ukeLabel,
+                        reisedagerLabel = uke.reisedagerLabel,
                         spørsmål = uke.spørsmål,
                         dager =
                             uke.reisedager.map { dag ->
@@ -91,7 +92,7 @@ class PdfService(
                                     datoLabel = dag.dato.label,
                                     harKjørt = dag.harKjørt,
                                     parkeringsutgift =
-                                        dag.parkeringsutgift?.let { parkeringsutgift ->
+                                        dag.parkeringsutgift.let { parkeringsutgift ->
                                             KjørelisteParkeringsutgiftHtmlRequest(
                                                 label = parkeringsutgift.label,
                                                 beløp = parkeringsutgift.verdi,
