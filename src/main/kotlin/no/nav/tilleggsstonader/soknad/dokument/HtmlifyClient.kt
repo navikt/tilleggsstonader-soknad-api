@@ -67,6 +67,7 @@ data class KjørelisteHtmlRequest(
 
 data class KjørelisteUkeHtmlRequest(
     val ukeLabel: String,
+    val reisedagerLabel: String,
     val spørsmål: String,
     val dager: List<KjørelisteDagHtmlRequest>,
 )

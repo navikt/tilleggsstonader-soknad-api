@@ -71,7 +71,7 @@ class PdfServiceTest {
             pdfService.lagPdf(søknadLæremidler.id)
 
             assertGenerertHtml("søknad/læremidler/læremidler.html")
-            assertThat(oppdaterSkjemaSlot.captured.skjemaPdf).isEqualTo(pdfBytes)
+            assertThat(oppdaterSkjemaSlot.captured.skjemaPdf?.data).isEqualTo(pdfBytes)
         }
 
         @Test
@@ -84,7 +84,7 @@ class PdfServiceTest {
             pdfService.lagPdf(kjøreliste.id)
 
             assertGenerertHtml("søknad/kjøreliste/kjøreliste.html")
-            assertThat(oppdaterSkjemaSlot.captured.skjemaPdf).isEqualTo(pdfBytes)
+            assertThat(oppdaterSkjemaSlot.captured.skjemaPdf?.data).isEqualTo(pdfBytes)
         }
     }
 

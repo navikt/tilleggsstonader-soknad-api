@@ -22,7 +22,8 @@ object KjørelisteTestdata {
             reisedagerPerUkeAvsnitt =
                 listOf(
                     UkeMedReisedagerDto(
-                        ukeLabel = "Uke 2 (6. januar - 12. januar)",
+                        ukeLabel = "Uke 2",
+                        reisedagerLabel = "Ukentlige reisedager: 3",
                         spørsmål = "Hvilke dager kjørte du?",
                         reisedager =
                             listOf(
@@ -67,9 +68,8 @@ object KjørelisteTestdata {
             .mapValues { it.value }
             .map { ukeMedDager ->
                 UkeMedReisedagerDto(
-                    ukeLabel = "Uke ${ukeMedDager.key} (${datoTilTekstUtenÅr(
-                        ukeMedDager.value.first().dato,
-                    )} - ${datoTilTekstUtenÅr(ukeMedDager.value.last().dato)})",
+                    ukeLabel = "Uke ${ukeMedDager.key}",
+                    reisedagerLabel = "Ukentlige reisedager: 3",
                     spørsmål = "Hvilke dager kjørte du?",
                     reisedager =
                         ukeMedDager.value.map { dag ->
