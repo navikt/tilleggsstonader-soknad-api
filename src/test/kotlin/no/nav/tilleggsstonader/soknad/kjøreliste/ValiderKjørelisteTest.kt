@@ -64,7 +64,7 @@ class ValiderKjørelisteTest {
     @Test
     fun `skal ikke kaste feil når det ikke finnes tidligere innsendte kjørelister`() {
         mockIngenTidligereInnsendinger()
-        mockRammevedtak(lagRammevedtakUke(LocalDate.of(2025, 6, 2), kanSendeInn = true))
+        mockRammevedtak(lagRammevedtakUke(LocalDate.of(2025, 6, 2), reisedagerPerUke = 3, kanSendeInn = true))
 
         val dto = lagKjørelisteDto(lagUke("Uke 23", LocalDate.of(2025, 6, 2)))
 
@@ -74,7 +74,7 @@ class ValiderKjørelisteTest {
     @Test
     fun `skal kaste feil når uke allerede er sendt inn`() {
         mockTidligereInnsendt(lagUke("Uke 23", LocalDate.of(2025, 6, 2)))
-        mockRammevedtak(lagRammevedtakUke(LocalDate.of(2025, 6, 2), kanSendeInn = true))
+        mockRammevedtak(lagRammevedtakUke(LocalDate.of(2025, 6, 2), reisedagerPerUke = 3, kanSendeInn = true))
 
         val dto = lagKjørelisteDto(lagUke("Uke 23", LocalDate.of(2025, 6, 2)))
 
@@ -86,7 +86,7 @@ class ValiderKjørelisteTest {
     @Test
     fun `skal kaste feil når andre dager i samme uke sendes inn`() {
         mockTidligereInnsendt(lagUke("Uke 23", LocalDate.of(2025, 6, 2)))
-        mockRammevedtak(lagRammevedtakUke(LocalDate.of(2025, 6, 2), kanSendeInn = true))
+        mockRammevedtak(lagRammevedtakUke(LocalDate.of(2025, 6, 2), reisedagerPerUke = 3, kanSendeInn = true))
 
         val dto = lagKjørelisteDto(lagUke("Uke 23", LocalDate.of(2025, 6, 5)))
 
@@ -105,7 +105,7 @@ class ValiderKjørelisteTest {
         every { skjemaRepository.findByPersonIdentAndType(personIdent, Skjematype.DAGLIG_REISE_KJØRELISTE) } returns
             listOf(tidligereKjøreliste)
         mockRammevedtak(
-            lagRammevedtakUke(LocalDate.of(2025, 6, 2), kanSendeInn = true),
+            lagRammevedtakUke(LocalDate.of(2025, 6, 2), reisedagerPerUke = 3, kanSendeInn = true),
             reiseId = "reise-2",
         )
 
@@ -117,7 +117,7 @@ class ValiderKjørelisteTest {
     @Test
     fun `skal kaste feil når uke ikke er klar for innsending`() {
         mockIngenTidligereInnsendinger()
-        mockRammevedtak(lagRammevedtakUke(LocalDate.of(2025, 6, 2), kanSendeInn = false))
+        mockRammevedtak(lagRammevedtakUke(LocalDate.of(2025, 6, 2), reisedagerPerUke = 3, kanSendeInn = false))
 
         val dto = lagKjørelisteDto(lagUke("Uke 23", LocalDate.of(2025, 6, 2)))
 
@@ -130,7 +130,7 @@ class ValiderKjørelisteTest {
     fun `skal kaste feil når uke har innsendtDato i rammevedtaket`() {
         mockIngenTidligereInnsendinger()
         mockRammevedtak(
-            lagRammevedtakUke(LocalDate.of(2025, 6, 2), kanSendeInn = true, innsendtDato = LocalDate.of(2025, 6, 5)),
+            lagRammevedtakUke(LocalDate.of(2025, 6, 2), reisedagerPerUke = 3, kanSendeInn = true, innsendtDato = LocalDate.of(2025, 6, 5)),
         )
 
         val dto = lagKjørelisteDto(lagUke("Uke 23", LocalDate.of(2025, 6, 2)))
@@ -155,6 +155,7 @@ class ValiderKjørelisteTest {
         vararg datoer: LocalDate,
     ) = UkeMedReisedagerDto(
         ukeLabel = ukeLabel,
+        reisedagerLabel = "Ukentlige reisedager: 3",
         spørsmål = "Hvilke dager kjørte du?",
         reisedager = datoer.map { ReisedagDto(datofelt(it), harKjørt = true, parkeringsutgift = parkeringsutgift(50)) },
     )
@@ -198,7 +199,6 @@ class ValiderKjørelisteTest {
                 reiseId = reiseId,
                 fom = LocalDate.of(2025, 6, 1),
                 tom = LocalDate.of(2025, 7, 1),
-                reisedagerPerUke = 3,
                 aktivitetsadresse = "Testveien 1",
                 aktivitetsnavn = "Arbeidstrening",
                 uker = uker.toList(),
@@ -209,6 +209,7 @@ class ValiderKjørelisteTest {
     private fun lagRammevedtakUke(
         fom: LocalDate,
         kanSendeInn: Boolean,
+        reisedagerPerUke: Int,
         innsendtDato: LocalDate? = null,
     ): RammevedtakUkeDto {
         val uke = Uke(fom)
@@ -216,6 +217,7 @@ class ValiderKjørelisteTest {
             fom = uke.mandag,
             tom = uke.søndag,
             ukeNummer = 1,
+            reisedagerPerUke = reisedagerPerUke,
             innsendtDato = innsendtDato,
             kanSendeInnKjøreliste = kanSendeInn,
         )

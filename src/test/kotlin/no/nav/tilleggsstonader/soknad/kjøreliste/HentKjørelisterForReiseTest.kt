@@ -137,6 +137,7 @@ class HentKjørelisterForReiseTest {
     private fun lagUkeMedReisedager(label: String): UkeMedReisedager =
         UkeMedReisedager(
             ukeLabel = label,
+            reisedagerLabel = "Ukentlige reisedager: 3",
             spørsmål = "Hvilke dager kjørte du?",
             reisedager =
                 listOf(

@@ -32,6 +32,7 @@ object KjørelisteMapper {
 private fun UkeMedReisedagerDto.mapTilSkjema(): UkeMedReisedager =
     UkeMedReisedager(
         ukeLabel = ukeLabel,
+        reisedagerLabel = reisedagerLabel,
         spørsmål = spørsmål,
         reisedager =
             reisedager.map {
@@ -54,6 +55,7 @@ fun KjørelisteSkjema.tilDto(): KjørelisteDto =
 private fun UkeMedReisedager.tilDto(): UkeMedReisedagerDto =
     UkeMedReisedagerDto(
         ukeLabel = ukeLabel,
+        reisedagerLabel = reisedagerLabel,
         spørsmål = spørsmål,
         reisedager =
             reisedager.map {

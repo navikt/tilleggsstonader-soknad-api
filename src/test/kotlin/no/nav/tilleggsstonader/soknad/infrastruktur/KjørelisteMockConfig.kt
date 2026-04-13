@@ -47,7 +47,8 @@ class KjørelisteMockConfig {
                 reisedagerPerUkeAvsnitt =
                     listOf(
                         UkeMedReisedagerDto(
-                            ukeLabel = "Uke 1 (1. januar - 5. januar)",
+                            ukeLabel = "Uke 1",
+                            reisedagerLabel = "Ukentlige reisedager: 3",
                             spørsmål = "Hvilke dager kjørte du?",
                             reisedager =
                                 listOf(
