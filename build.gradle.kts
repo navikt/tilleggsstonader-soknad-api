@@ -1,4 +1,5 @@
 val javaVersion = JavaLanguageVersion.of(21)
+val tomcatVersion = "11.0.21"
 val tilleggsstønaderLibsVersion = "2026.02.12-15.24.c553aa73162e"
 val tilleggsstønaderKontrakterVersion = "2026.04.10-15.53.9da59ac03512"
 val familieProsesseringVersion = "2.20260331095424_89d92d2"
@@ -39,6 +40,9 @@ spotless {
         ktlint("1.8.0")
     }
 }
+
+// Spring 4.0.5 kommer tomcat v11.0.20, som er utsatt for bla. CWE-532
+ext["tomcat.version"] = tomcatVersion
 
 configurations.all {
     resolutionStrategy {
