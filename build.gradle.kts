@@ -3,7 +3,7 @@ val tomcatVersion = "11.0.21"
 val tilleggsstønaderLibsVersion = "2026.02.12-15.24.c553aa73162e"
 val tilleggsstønaderKontrakterVersion = "2026.04.16-07.39.94d0ae403cac-dev"
 val familieProsesseringVersion = "2.20260331095424_89d92d2"
-val tokenSupportVersion = "6.0.4"
+val tokenSupportVersion = "6.0.5"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.21.4"
 
@@ -95,8 +95,8 @@ dependencies {
     testImplementation("no.nav.tilleggsstonader-libs:test-util:$tilleggsstønaderLibsVersion")
 
     // Transitiv avhengighet fra mock-oauth2-server -> bcpix. Disse under er definert som dynamisk versjon, noe bygget vårt ikke vil ha noe av
-    testImplementation("org.bouncycastle:bcutil-jdk18on:1.83")
-    testImplementation("org.bouncycastle:bcprov-jdk18on:1.83")
+    testImplementation("org.bouncycastle:bcutil-jdk18on:1.84")
+    testImplementation("org.bouncycastle:bcprov-jdk18on:1.84")
 }
 
 kotlin {
