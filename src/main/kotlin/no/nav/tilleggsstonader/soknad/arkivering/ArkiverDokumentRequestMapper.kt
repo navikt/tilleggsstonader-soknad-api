@@ -53,6 +53,7 @@ object ArkiverDokumentRequestMapper {
                 }
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema $type")
+            Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_TSO_SØKNAD
         }
 
     private fun typeVedlegg(
@@ -70,6 +71,7 @@ object ArkiverDokumentRequestMapper {
                 }
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema $type")
+            Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_TSO_SØKNAD_VEDLEGG
         }
 
     private fun mapVedlegg(
