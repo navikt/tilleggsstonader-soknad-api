@@ -3,7 +3,7 @@ val tomcatVersion = "11.0.21"
 val tilleggsstønaderLibsVersion = "2026.02.12-15.24.c553aa73162e"
 val tilleggsstønaderKontrakterVersion = "2026.04.10-15.53.9da59ac03512"
 val familieProsesseringVersion = "2.20260331095424_89d92d2"
-val tokenSupportVersion = "6.0.4"
+val tokenSupportVersion = "6.0.5"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.21.4"
 
