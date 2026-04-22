@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
+import no.nav.tilleggsstonader.soknad.soknad.SkjemaRoutingAksjon
 
 @Service
 class SaksbehandlingClient(
@@ -18,14 +19,14 @@ class SaksbehandlingClient(
 ) {
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern").build()
 
-    fun skalRoutesTilNyLøsning(request: IdentSkjematype): Boolean {
+    fun skalRoutesTilNyLøsning(request: IdentSkjematype): SkjemaRoutingAksjon {
         val uri =
             UriComponentsBuilder
                 .fromUri(sakUri.toUri())
                 .pathSegment("skjema-routing")
                 .build()
                 .toUriString()
-        return restTemplate.postForEntity<SkalRoutesINyLøsning>(uri, request).skalBehandlesINyLøsning
+        return restTemplate.postForEntity<SkalRoutesINyLøsning>(uri, request).aksjon
     }
 
     fun harBehandlingUnderArbeid(request: IdentStønadstype): Boolean {
@@ -40,5 +41,5 @@ class SaksbehandlingClient(
 }
 
 private data class SkalRoutesINyLøsning(
-    val skalBehandlesINyLøsning: Boolean,
+    val aksjon: SkjemaRoutingAksjon,
 )

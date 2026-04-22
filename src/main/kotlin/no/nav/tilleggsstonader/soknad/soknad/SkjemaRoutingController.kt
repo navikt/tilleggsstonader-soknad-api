@@ -22,20 +22,27 @@ class SkjemaRoutingController(
     fun skalBrukerRoutesTilNyLøsning(
         @RequestBody request: SkjemaRoutingRequest,
     ): SkjemaRoutingResponse {
-        val skalRoutesTilNyLøsning =
+        val skjemaRoutingAksjon =
             saksbehandlingClient.skalRoutesTilNyLøsning(
                 IdentSkjematype(
                     ident = EksternBrukerUtils.hentFnrFraToken(),
                     skjematype = request.skjematype,
                 ),
             )
-        return SkjemaRoutingResponse(skalRoutesTilNyLøsning)
+        return SkjemaRoutingResponse(skjemaRoutingAksjon)
     }
 }
 
+enum class SkjemaRoutingAksjon {
+    NY_LØSNING,
+    GAMMEL_LØSNING,
+    AVSJEKK,
+}
+
 data class SkjemaRoutingResponse(
-    val skalBehandlesINyLøsning: Boolean,
+    val aksjon: SkjemaRoutingAksjon,
 )
+
 
 data class SkjemaRoutingRequest(
     val skjematype: Skjematype,
