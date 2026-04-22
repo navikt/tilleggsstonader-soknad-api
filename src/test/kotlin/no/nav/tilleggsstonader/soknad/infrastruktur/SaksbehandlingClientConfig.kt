@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.infrastruktur
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.SkjemaRoutingAksjon
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.SkjemaRoutingResponse
 import no.nav.tilleggsstonader.soknad.sak.SaksbehandlingClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -14,7 +15,7 @@ class SaksbehandlingClientConfig {
     @Bean
     fun saksbehandlingClient(): SaksbehandlingClient {
         val client = mockk<SaksbehandlingClient>()
-        every { client.finnSkjemaRoutingAksjon(any()) } returns SkjemaRoutingAksjon.NY_LØSNING
+        every { client.finnSkjemaRoutingAksjon(any()) } returns SkjemaRoutingResponse(SkjemaRoutingAksjon.NY_LØSNING)
         every { client.harBehandlingUnderArbeid(any()) } returns false
         return client
     }

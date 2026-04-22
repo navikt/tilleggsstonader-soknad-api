@@ -2,7 +2,7 @@ package no.nav.tilleggsstonader.soknad.sak
 
 import no.nav.tilleggsstonader.kontrakter.felles.IdentSkjematype
 import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
-import no.nav.tilleggsstonader.kontrakter.søknad.felles.SkjemaRoutingAksjon
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.SkjemaRoutingResponse
 import no.nav.tilleggsstonader.libs.http.client.postForEntity
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
@@ -19,14 +19,14 @@ class SaksbehandlingClient(
 ) {
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern").build()
 
-    fun finnSkjemaRoutingAksjon(request: IdentSkjematype): SkjemaRoutingAksjon {
+    fun finnSkjemaRoutingAksjon(request: IdentSkjematype): SkjemaRoutingResponse {
         val uri =
             UriComponentsBuilder
                 .fromUri(sakUri.toUri())
                 .pathSegment("skjema-routing")
                 .build()
                 .toUriString()
-        return restTemplate.postForEntity<SkalRoutesINyLøsning>(uri, request).aksjon
+        return restTemplate.postForEntity<SkjemaRoutingResponse>(uri, request)
     }
 
     fun harBehandlingUnderArbeid(request: IdentStønadstype): Boolean {
@@ -39,7 +39,3 @@ class SaksbehandlingClient(
         return restTemplate.postForEntity<Boolean>(uri, request)
     }
 }
-
-private data class SkalRoutesINyLøsning(
-    val aksjon: SkjemaRoutingAksjon,
-)

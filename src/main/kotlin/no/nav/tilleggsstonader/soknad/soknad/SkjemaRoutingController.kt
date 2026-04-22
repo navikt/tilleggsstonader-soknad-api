@@ -20,18 +20,15 @@ class SkjemaRoutingController(
     private val saksbehandlingClient: SaksbehandlingClient,
 ) {
     @PostMapping
-    fun skalBrukerRoutesTilNyLøsning(
+    fun finnSkjemaRoutingAksjon(
         @RequestBody request: SkjemaRoutingRequest,
-    ): SkjemaRoutingResponse {
-        val skjemaRoutingAksjon =
-            saksbehandlingClient.finnSkjemaRoutingAksjon(
-                IdentSkjematype(
-                    ident = EksternBrukerUtils.hentFnrFraToken(),
-                    skjematype = request.skjematype,
-                ),
-            )
-        return SkjemaRoutingResponse(skjemaRoutingAksjon)
-    }
+    ): SkjemaRoutingResponse =
+        saksbehandlingClient.finnSkjemaRoutingAksjon(
+            IdentSkjematype(
+                ident = EksternBrukerUtils.hentFnrFraToken(),
+                skjematype = request.skjematype,
+            ),
+        )
 }
 
 data class SkjemaRoutingRequest(
