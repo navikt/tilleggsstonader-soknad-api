@@ -127,6 +127,7 @@ class PdfService(
             Skjematype.DAGLIG_REISE_KJØRELISTE -> jsonMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(json)
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema ${skjema.type}")
+            Skjematype.SØKNAD_REISE_TIL_SAMLING -> TODO("Parser vi skjema her?")
         }
     }
 }
