@@ -2,6 +2,7 @@ package no.nav.tilleggsstonader.soknad.sak
 
 import no.nav.tilleggsstonader.kontrakter.felles.IdentSkjematype
 import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.SkjemaRoutingAksjon
 import no.nav.tilleggsstonader.libs.http.client.postForEntity
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
-import no.nav.tilleggsstonader.soknad.soknad.SkjemaRoutingAksjon
 
 @Service
 class SaksbehandlingClient(

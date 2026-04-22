@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.tilleggsstonader.kontrakter.felles.IdentSkjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.SkjemaRoutingResponse
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.soknad.sak.SaksbehandlingClient
 import org.springframework.validation.annotation.Validated
@@ -32,17 +33,6 @@ class SkjemaRoutingController(
         return SkjemaRoutingResponse(skjemaRoutingAksjon)
     }
 }
-
-enum class SkjemaRoutingAksjon {
-    NY_LØSNING,
-    GAMMEL_LØSNING,
-    AVSJEKK,
-}
-
-data class SkjemaRoutingResponse(
-    val aksjon: SkjemaRoutingAksjon,
-)
-
 
 data class SkjemaRoutingRequest(
     val skjematype: Skjematype,
