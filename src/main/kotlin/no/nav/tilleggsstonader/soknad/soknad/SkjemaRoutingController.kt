@@ -24,7 +24,7 @@ class SkjemaRoutingController(
         @RequestBody request: SkjemaRoutingRequest,
     ): SkjemaRoutingResponse {
         val skjemaRoutingAksjon =
-            saksbehandlingClient.skalRoutesTilNyLøsning(
+            saksbehandlingClient.finnSkjemaRoutingAksjon(
                 IdentSkjematype(
                     ident = EksternBrukerUtils.hentFnrFraToken(),
                     skjematype = request.skjematype,

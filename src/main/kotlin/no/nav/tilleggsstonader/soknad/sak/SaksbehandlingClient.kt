@@ -19,7 +19,7 @@ class SaksbehandlingClient(
 ) {
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern").build()
 
-    fun skalRoutesTilNyLøsning(request: IdentSkjematype): SkjemaRoutingAksjon {
+    fun finnSkjemaRoutingAksjon(request: IdentSkjematype): SkjemaRoutingAksjon {
         val uri =
             UriComponentsBuilder
                 .fromUri(sakUri.toUri())
