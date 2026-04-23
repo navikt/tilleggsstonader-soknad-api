@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.tilleggsstonader.kontrakter.felles.IdentSkjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.SkjemaRoutingResponse
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.soknad.sak.SaksbehandlingClient
 import org.springframework.validation.annotation.Validated
@@ -21,7 +22,7 @@ class SkjemaRoutingController(
     @PostMapping
     fun skalBrukerRoutesTilNyLøsning(
         @RequestBody request: SkjemaRoutingRequest,
-    ): SkjemaRoutingResponse {
+    ): SkjemaRoutingResponseV1 {
         val skalRoutesTilNyLøsning =
             saksbehandlingClient.skalRoutesTilNyLøsning(
                 IdentSkjematype(
@@ -29,11 +30,22 @@ class SkjemaRoutingController(
                     skjematype = request.skjematype,
                 ),
             )
-        return SkjemaRoutingResponse(skalRoutesTilNyLøsning)
+        return SkjemaRoutingResponseV1(skalRoutesTilNyLøsning)
     }
+
+    @PostMapping("v2")
+    fun finnSkjemaRoutingAksjon(
+        @RequestBody request: SkjemaRoutingRequest,
+    ): SkjemaRoutingResponse =
+        saksbehandlingClient.finnSkjemaRoutingAksjon(
+            IdentSkjematype(
+                ident = EksternBrukerUtils.hentFnrFraToken(),
+                skjematype = request.skjematype,
+            ),
+        )
 }
 
-data class SkjemaRoutingResponse(
+data class SkjemaRoutingResponseV1(
     val skalBehandlesINyLøsning: Boolean,
 )
 
