@@ -19,11 +19,21 @@ class SaksbehandlingClient(
 ) {
     private val sakUri = UriComponentsBuilder.fromUri(uri).pathSegment("api", "ekstern").build()
 
-    fun finnSkjemaRoutingAksjon(request: IdentSkjematype): SkjemaRoutingResponse {
+    fun skalRoutesTilNyLøsning(request: IdentSkjematype): Boolean {
         val uri =
             UriComponentsBuilder
                 .fromUri(sakUri.toUri())
                 .pathSegment("skjema-routing")
+                .build()
+                .toUriString()
+        return restTemplate.postForEntity<SkalRoutesINyLøsning>(uri, request).skalBehandlesINyLøsning
+    }
+
+    fun finnSkjemaRoutingAksjon(request: IdentSkjematype): SkjemaRoutingResponse {
+        val uri =
+            UriComponentsBuilder
+                .fromUri(sakUri.toUri())
+                .pathSegment("skjema-routing", "v2")
                 .build()
                 .toUriString()
         return restTemplate.postForEntity<SkjemaRoutingResponse>(uri, request)
@@ -39,3 +49,7 @@ class SaksbehandlingClient(
         return restTemplate.postForEntity<Boolean>(uri, request)
     }
 }
+
+private data class SkalRoutesINyLøsning(
+    val skalBehandlesINyLøsning: Boolean,
+)
