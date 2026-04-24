@@ -23,7 +23,7 @@ class SaksbehandlingClient(
         val uri =
             UriComponentsBuilder
                 .fromUri(sakUri.toUri())
-                .pathSegment("skjema-routing", "v2")
+                .pathSegment("skjema-routing")
                 .build()
                 .toUriString()
         return restTemplate.postForEntity<SkjemaRoutingResponse>(uri, request)
