@@ -69,6 +69,7 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
 
     implementation("no.nav.familie:prosessering-core:$familieProsesseringVersion")
+    implementation("no.nav.familie:prosessering-web-nav-token-support:$familieProsesseringVersion")
 
     // Tillegggsstønader libs
     implementation("no.nav.tilleggsstonader-libs:util:$tilleggsstønaderLibsVersion")
