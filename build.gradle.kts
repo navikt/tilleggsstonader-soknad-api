@@ -1,5 +1,5 @@
 val javaVersion = JavaLanguageVersion.of(21)
-val tomcatVersion = "11.0.21"
+val tomcatVersion = "11.0.22"
 val tilleggsstønaderLibsVersion = "2026.02.12-15.24.c553aa73162e"
 val tilleggsstønaderKontrakterVersion = "2026.04.22-13.43.18b320880481"
 val familieProsesseringVersion = "2.20260420122910_8bfca04"
