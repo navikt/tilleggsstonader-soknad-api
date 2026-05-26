@@ -43,4 +43,17 @@ class SøknadController(
         )
         return Kvittering(mottattTidspunkt = mottattTidspunkt)
     }
+
+    @PostMapping("reise-til-samling")
+    fun sendInnReiseTilSamling(
+        // @RequestBody søknad: SøknadReiseTilSamlingDto,
+    ): Kvittering {
+        val mottattTidspunkt = LocalDateTime.now()
+//        skjemaService.lagreSøknadReiseTilSamling(
+//            ident = EksternBrukerUtils.hentFnrFraToken(),
+//            mottattTidspunkt = mottattTidspunkt,
+//            søknad = søknad,
+//        )
+        return Kvittering(mottattTidspunkt = mottattTidspunkt)
+    }
 }
