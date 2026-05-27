@@ -130,7 +130,12 @@ class ValiderKjørelisteTest {
     fun `skal kaste feil når uke har innsendtDato i rammevedtaket`() {
         mockIngenTidligereInnsendinger()
         mockRammevedtak(
-            lagRammevedtakUke(LocalDate.of(2025, 6, 2), reisedagerPerUke = 3, kanSendeInn = true, innsendtDato = LocalDate.of(2025, 6, 5)),
+            lagRammevedtakUke(
+                LocalDate.of(2025, 6, 2),
+                reisedagerPerUke = 3,
+                kanSendeInn = true,
+                innsendtDato = LocalDate.of(2025, 6, 5),
+            ),
         )
 
         val dto = lagKjørelisteDto(lagUke("Uke 23", LocalDate.of(2025, 6, 2)))
@@ -161,7 +166,12 @@ class ValiderKjørelisteTest {
     )
 
     private fun mockIngenTidligereInnsendinger() {
-        every { skjemaRepository.findByPersonIdentAndType(personIdent, Skjematype.DAGLIG_REISE_KJØRELISTE) } returns emptyList()
+        every {
+            skjemaRepository.findByPersonIdentAndType(
+                personIdent,
+                Skjematype.DAGLIG_REISE_KJØRELISTE,
+            )
+        } returns emptyList()
     }
 
     private fun mockTidligereInnsendt(vararg uker: UkeMedReisedagerDto) {
@@ -202,6 +212,7 @@ class ValiderKjørelisteTest {
                 aktivitetsadresse = "Testveien 1",
                 aktivitetsnavn = "Arbeidstrening",
                 uker = uker.toList(),
+                helligdager = emptyList(),
             )
         every { dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker() } returns listOf(rammevedtak)
     }

@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.infrastruktur
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
+import no.nav.tilleggsstonader.kontrakter.søknad.HelligdagDto
 import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
 import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakUkeDto
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
@@ -85,24 +86,48 @@ class DagligReisePrivatBilClientConfig {
                                     kanSendeInnKjøreliste = false,
                                 ),
                             ),
+                        helligdager = emptyList(),
                     ),
                     RammevedtakDto(
                         reiseId = "2",
-                        fom = LocalDate.of(2025, 2, 10),
-                        tom = LocalDate.of(2025, 2, 16),
+                        fom = LocalDate.of(2025, 5, 1),
+                        tom =
+                            LocalDate.of(
+                                2025,
+                                5,
+                                31,
+                            ),
                         aktivitetsadresse = "Drammensveien 1, 0356 Oslo",
                         aktivitetsnavn = "Tiltak",
                         uker =
                             listOf(
                                 RammevedtakUkeDto(
-                                    fom = LocalDate.of(2025, 2, 10),
-                                    tom = LocalDate.of(2025, 2, 16),
-                                    ukeNummer = 7,
+                                    fom = LocalDate.of(2025, 5, 1),
+                                    tom = LocalDate.of(2025, 5, 4),
+                                    ukeNummer = 18,
                                     reisedagerPerUke = 3,
                                     innsendtDato = null,
-                                    kanSendeInnKjøreliste = false,
+                                    kanSendeInnKjøreliste = true,
+                                ),
+                                RammevedtakUkeDto(
+                                    fom = LocalDate.of(2025, 5, 12),
+                                    tom = LocalDate.of(2025, 5, 18),
+                                    ukeNummer = 20,
+                                    reisedagerPerUke = 3,
+                                    innsendtDato = null,
+                                    kanSendeInnKjøreliste = true,
                                 ),
                             ),
+                        listOf(
+                            HelligdagDto(
+                                dato = LocalDate.of(2025, 5, 1),
+                                navn = "Arbeidernes dag",
+                            ),
+                            HelligdagDto(
+                                dato = LocalDate.of(2025, 5, 17),
+                                navn = "Grunnlovsdagen",
+                            ),
+                        ),
                     ),
                 )
         }
