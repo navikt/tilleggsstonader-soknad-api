@@ -14,7 +14,7 @@ import java.net.URI
 class FamilieDokumentClient(
     @Value("\${clients.familie-dokument.uri}")
     private val dokumentApiURI: URI,
-    @Qualifier("azureClientCredential") private val restTemplate: RestTemplate,
+    @Qualifier("utenAuth") private val restTemplate: RestTemplate,
 ) {
     private val htmlTilPdfUri =
         UriComponentsBuilder.fromUri(dokumentApiURI).pathSegment("api", "html-til-pdf").toUriString()
