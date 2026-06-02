@@ -1,8 +1,8 @@
 {
   "collection": "kotlin-backend",
-  "version": "2026.05.30-092315-0d88c99",
+  "version": "2026.06.02-095814-6d4adbb",
   "scope": "repo",
-  "source_sha": "0d88c99",
+  "source_sha": "6d4adbb",
   "installed_at": "2026-05-12T07:49:47Z",
   "files": [
     {
@@ -27,7 +27,7 @@
     },
     {
       "path": ".github/agents/nav-pilot.agent.md",
-      "hash": "d04fd3fc8eef124b"
+      "hash": "8fe80cd04579ad96"
     },
     {
       "path": ".github/skills/api-design/",
