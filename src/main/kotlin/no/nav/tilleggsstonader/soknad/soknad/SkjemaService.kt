@@ -3,7 +3,6 @@ package no.nav.tilleggsstonader.soknad.soknad
 import no.nav.familie.prosessering.internal.TaskService
 import no.nav.tilleggsstonader.kontrakter.felles.JsonMapperProvider.jsonMapper
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
-import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Skjemadata
@@ -27,6 +26,7 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
+import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.ReiseTilSamlingMapper
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -39,6 +39,7 @@ class SkjemaService(
     private val vedleggRepository: VedleggRepository,
     private val barnetilsynMapper: BarnetilsynMapper,
     private val læremidlerMapper: LæremidlerMapper,
+    private val reiseTilSamlingMapper: ReiseTilSamlingMapper,
     private val taskService: TaskService,
     private val personService: PersonService,
     private val familieVedleggClient: FamilieVedleggClient,
@@ -106,11 +107,9 @@ class SkjemaService(
         val vedlegg = hentVedlegg(søknad.dokumentasjon)
 
         val opprettetSkjema =
-            lagreSkjemaDto(
+            lagreSkjema(
                 type = Skjematype.SØKNAD_REISE_TIL_SAMLING,
-                ident = ident,
-                mottattTidspunkt = mottattTidspunkt,
-                skjema = søknad,
+                innsendtSkjema = reiseTilSamlingMapper.map(ident, mottattTidspunkt, søknad),
                 vedlegg = vedlegg,
                 frontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
             )
@@ -188,36 +187,6 @@ class SkjemaService(
         lagreVedlegg(skjemaDb, vedlegg)
         return skjemaDb
     }
-
-    // TODO: Denne er nødvendig så lenge vi ikke har noen SøknadsskjemaReiseTilSamling som implementerer Skjemadata i kontrakter.
-    private fun lagreSkjemaDto(
-        type: Skjematype,
-        ident: String,
-        mottattTidspunkt: LocalDateTime,
-        skjema: Any,
-        vedlegg: List<Vedleggholder>,
-        frontendGitHash: String?,
-    ): Skjema {
-        val wrapper = RawSkjemaWrapper(ident = ident, mottattTidspunkt = mottattTidspunkt, skjema = skjema)
-        val skjemaDb =
-            skjemaRepository.insert(
-                Skjema(
-                    type = type,
-                    personIdent = ident,
-                    skjemaJson = JsonWrapper(jsonMapper.writeValueAsString(wrapper)),
-                    frontendGitHash = frontendGitHash,
-                ),
-            )
-        lagreVedlegg(skjemaDb, vedlegg)
-        return skjemaDb
-    }
-
-    private data class RawSkjemaWrapper(
-        val ident: String,
-        val mottattTidspunkt: LocalDateTime,
-        val språk: Språkkode = Språkkode.NB,
-        val skjema: Any,
-    )
 
     private fun lagreVedlegg(
         skjemaDb: Skjema,

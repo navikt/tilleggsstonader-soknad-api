@@ -18,6 +18,7 @@ import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
+import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.ReiseTilSamlingMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
@@ -40,6 +41,7 @@ class SkjemaServiceTest {
             vedleggRepository = vedleggRepository,
             barnetilsynMapper = BarnetilsynMapper(),
             læremidlerMapper = LæremidlerMapper(),
+            reiseTilSamlingMapper = ReiseTilSamlingMapper(),
             taskService = mockk<TaskService>(relaxed = true),
             personService = personService,
             familieVedleggClient = familieVedleggClient,
