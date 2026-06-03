@@ -1,0 +1,249 @@
+{
+  "ident": "12345678911",
+  "mottattTidspunkt": "2023-09-25T21:32:18.22631",
+  "språk": "NB",
+  "skjema": {
+    "hovedytelse": {
+      "ytelse": {
+        "label": "Hovedytelse?",
+        "verdier": [
+          {
+            "verdi": "AAP",
+            "label": "AAP"
+          },
+          {
+            "verdi": "OVERGANGSSTØNAD",
+            "label": "Overgangsstønad"
+          }
+        ],
+        "alternativer": [
+          "Alt1",
+          "Alt2"
+        ]
+      },
+      "arbeidOgOpphold": {
+        "jobberIAnnetLand": {
+          "label": "Jobber du i et annet land enn Norge?",
+          "verdi": "JA",
+          "svarTekst": "Ja",
+          "alternativer": []
+        },
+        "jobbAnnetLand": {
+          "label": "Hvilket land jobber du i?",
+          "verdi": "SWE",
+          "svarTekst": "Sverige"
+        },
+        "harPengestøtteAnnetLand": {
+          "label": "Mottar du pengestøtte fra et annet land enn Norge?",
+          "verdier": [
+            {
+              "verdi": "SYKEPENGER",
+              "label": "Sykepenger"
+            }
+          ],
+          "alternativer": [
+            "Sykepenger",
+            "Annet"
+          ]
+        },
+        "pengestøtteAnnetLand": {
+          "label": "Hvilket land mottar du pengestøtte fra?",
+          "verdi": "SWE",
+          "svarTekst": "Sverige"
+        },
+        "harOppholdUtenforNorgeSiste12mnd": {
+          "label": "Jobber du i et annet land enn Norge?",
+          "verdi": "JA",
+          "svarTekst": "Ja",
+          "alternativer": []
+        },
+        "oppholdUtenforNorgeSiste12mnd": [
+          {
+            "land": {
+              "label": "Hvilket land har du oppholdt deg i?",
+              "verdi": "SWE",
+              "svarTekst": "Sverige"
+            },
+            "årsak": {
+              "label": "Hva gjorde du i dette landet?",
+              "verdier": [
+                {
+                  "verdi": "JOBB",
+                  "label": "Jobb"
+                }
+              ],
+              "alternativer": [
+                "Jobb",
+                "Studier"
+              ]
+            },
+            "fom": {
+              "label": "Fom",
+              "verdi": "2024-01-01"
+            },
+            "tom": {
+              "label": "Fom",
+              "verdi": "2024-01-01"
+            }
+          },
+          {
+            "land": {
+              "label": "Hvilket land har du oppholdt deg i?",
+              "verdi": "SWE",
+              "svarTekst": "Sverige"
+            },
+            "årsak": {
+              "label": "Hva gjorde du i dette landet?",
+              "verdier": [
+                {
+                  "verdi": "JOBB",
+                  "label": "Jobb"
+                }
+              ],
+              "alternativer": [
+                "Jobb",
+                "Studier"
+              ]
+            },
+            "fom": {
+              "label": "Fom",
+              "verdi": "2024-01-01"
+            },
+            "tom": {
+              "label": "Fom",
+              "verdi": "2024-01-01"
+            }
+          }
+        ],
+        "harOppholdUtenforNorgeNeste12mnd": {
+          "label": "Jobber du i et annet land enn Norge?",
+          "verdi": "JA",
+          "svarTekst": "Ja",
+          "alternativer": []
+        },
+        "oppholdUtenforNorgeNeste12mnd": [
+          {
+            "land": {
+              "label": "Hvilket land har du oppholdt deg i?",
+              "verdi": "SWE",
+              "svarTekst": "Sverige"
+            },
+            "årsak": {
+              "label": "Hva gjorde du i dette landet?",
+              "verdier": [
+                {
+                  "verdi": "JOBB",
+                  "label": "Jobb"
+                }
+              ],
+              "alternativer": [
+                "Jobb",
+                "Studier"
+              ]
+            },
+            "fom": {
+              "label": "Fom",
+              "verdi": "2024-01-01"
+            },
+            "tom": {
+              "label": "Fom",
+              "verdi": "2024-01-01"
+            }
+          }
+        ]
+      }
+    },
+    "aktivitet": {
+      "aktiviteter": {
+        "label": "Hvilken aktivitet deltar du i?",
+        "verdier": [
+          {
+            "verdi": "1",
+            "label": "Arbeidsavklaring: 1. jan 2024 - 31. des 2024"
+          }
+        ],
+        "alternativer": [
+          "Alt1",
+          "Alt2"
+        ]
+      },
+      "annenAktivitet": {
+        "label": "Hva slags aktivitet deltar du i?",
+        "verdi": "TILTAK",
+        "svarTekst": "Tiltak",
+        "alternativer": []
+      },
+      "lønnetAktivitet": {
+        "label": "Er aktiviteten lønnet?",
+        "verdi": "NEI",
+        "svarTekst": "Nei",
+        "alternativer": []
+      }
+    },
+    "samlinger": [
+      {
+        "fom": {
+          "label": "Startdato",
+          "verdi": "2024-03-01"
+        },
+        "tom": {
+          "label": "Sluttdato",
+          "verdi": "2024-03-03"
+        }
+      },
+      {
+        "fom": {
+          "label": "Startdato",
+          "verdi": "2024-04-15"
+        },
+        "tom": {
+          "label": "Sluttdato",
+          "verdi": "2024-04-17"
+        }
+      }
+    ],
+    "reiseavstand": {
+      "antallKilometerEnVei": {
+        "label": "Antall kilometer én vei",
+        "verdi": "42"
+      },
+      "aktivitetsadresse": {
+        "land": {
+          "label": "Land",
+          "verdi": "NOR",
+          "svarTekst": "Norge"
+        },
+        "gateadresse": {
+          "label": "Gateadresse",
+          "verdi": "Storgata 1"
+        },
+        "postnummer": {
+          "label": "Postnummer",
+          "verdi": "0155"
+        },
+        "poststed": {
+          "label": "Poststed",
+          "verdi": "Oslo"
+        }
+      }
+    },
+    "reisemåte": {
+      "kanBenytteDrosje": null,
+      "kanBenytteEgenBil": null,
+      "kanReiseKollektivt": {
+        "label": "Kan du reise kollektivt?",
+        "verdi": "JA",
+        "svarTekst": "Ja",
+        "alternativer": []
+      },
+      "totalutgifterKollektivt": {
+        "label": "Totale kollektivutgifter",
+        "verdi": "450"
+      }
+    },
+    "dokumentasjon": [],
+    "søknadMetadata": {
+      "søknadFrontendGitHash": "aabbccd"
+    }
+  }
+}

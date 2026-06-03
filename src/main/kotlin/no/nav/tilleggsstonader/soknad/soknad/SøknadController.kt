@@ -4,6 +4,7 @@ import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
+import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -46,14 +47,14 @@ class SøknadController(
 
     @PostMapping("reise-til-samling")
     fun sendInnReiseTilSamling(
-        // @RequestBody søknad: SøknadReiseTilSamlingDto,
+        @RequestBody søknad: SøknadReiseTilSamlingDto,
     ): Kvittering {
         val mottattTidspunkt = LocalDateTime.now()
-//        skjemaService.lagreSøknadReiseTilSamling(
-//            ident = EksternBrukerUtils.hentFnrFraToken(),
-//            mottattTidspunkt = mottattTidspunkt,
-//            søknad = søknad,
-//        )
+        skjemaService.lagreSøknadReiseTilSamling(
+            ident = EksternBrukerUtils.hentFnrFraToken(),
+            mottattTidspunkt = mottattTidspunkt,
+            søknad = søknad,
+        )
         return Kvittering(mottattTidspunkt = mottattTidspunkt)
     }
 }
