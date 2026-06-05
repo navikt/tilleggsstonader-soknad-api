@@ -8,6 +8,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Søkerinformasjon
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SøknadTreeWalker.mapSøknad
@@ -33,13 +34,19 @@ class PdfService(
 
         val html =
             when (innsendtSkjema.skjema) {
-                is SøknadsskjemaBarnetilsyn, is SøknadsskjemaLæremidler -> genererSøknadHtml(skjema, innsendtSkjema)
+                is SøknadsskjemaBarnetilsyn, is SøknadsskjemaLæremidler, is SøknadsskjemaReiseTilSamling ->
+                    genererSøknadHtml(
+                        skjema,
+                        innsendtSkjema,
+                    )
+
                 is KjørelisteSkjema ->
                     genererKjørelisteHtml(
                         skjema,
                         innsendtSkjema,
                         innsendtSkjema.skjema as KjørelisteSkjema,
                     )
+
                 else -> error("Støtter ikke pdf-generering for skjema av type ${skjema.type}")
             }
 
@@ -125,7 +132,7 @@ class PdfService(
             Skjematype.SØKNAD_BARNETILSYN -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaBarnetilsyn>>(json)
             Skjematype.SØKNAD_LÆREMIDLER -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaLæremidler>>(json)
             Skjematype.DAGLIG_REISE_KJØRELISTE -> jsonMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(json)
-            Skjematype.SØKNAD_REISE_TIL_SAMLING -> TODO("Parser vi skjema her?")
+            Skjematype.SØKNAD_REISE_TIL_SAMLING -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaReiseTilSamling>>(json)
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema ${skjema.type}")
         }

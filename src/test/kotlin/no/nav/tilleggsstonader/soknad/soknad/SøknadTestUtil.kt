@@ -21,6 +21,8 @@ import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
+import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.ReiseTilSamlingMapper
+import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -34,12 +36,17 @@ object SøknadTestUtil {
 
     fun lagSøknad(søknadDto: SøknadLæremidlerDto): Skjema = lagSkjema(Skjematype.SØKNAD_LÆREMIDLER, lagInnsendtSkjema(søknadDto))
 
+    fun lagSøknad(søknadDto: SøknadReiseTilSamlingDto): Skjema =
+        lagSkjema(Skjematype.SØKNAD_REISE_TIL_SAMLING, lagInnsendtSkjema(søknadDto))
+
     fun lagInnsendtSkjema(kjørelisteDto: KjørelisteDto) = KjørelisteMapper.map("25518735813", mottattTidspunkt, kjørelisteDto)
 
     fun lagInnsendtSkjema(søknadDto: SøknadBarnetilsynDto) =
         BarnetilsynMapper().map("25518735813", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
 
     fun lagInnsendtSkjema(søknadDto: SøknadLæremidlerDto) = LæremidlerMapper().map("25518735813", mottattTidspunkt, søknadDto)
+
+    fun lagInnsendtSkjema(søknadDto: SøknadReiseTilSamlingDto) = ReiseTilSamlingMapper().map("25518735813", mottattTidspunkt, søknadDto)
 
     fun lagSkjema(
         skjematype: Skjematype,
