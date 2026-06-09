@@ -58,7 +58,7 @@ class ValiderKjørelisteTest {
 
         assertThatThrownBy { service.validerKjøreliste(dto) }
             .isInstanceOf(SøknadValideringException::class.java)
-            .hasMessage("Ingen data i innsendingen, huk av for uker du har kjørt eller last opp nye dokumenter")
+            .hasMessage("Ingen data i innsendingen, huk av for uker du har kjørt")
     }
 
     @Test
@@ -67,7 +67,7 @@ class ValiderKjørelisteTest {
 
         assertThatThrownBy { service.validerKjøreliste(dto) }
             .isInstanceOf(SøknadValideringException::class.java)
-            .hasMessage("Ingen data i innsendingen, huk av for uker du har kjørt eller last opp nye dokumenter")
+            .hasMessage("Ingen data i innsendingen, huk av for uker du har kjørt")
     }
 
     @Test

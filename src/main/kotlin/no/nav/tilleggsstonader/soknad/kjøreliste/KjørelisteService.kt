@@ -72,7 +72,7 @@ class KjørelisteService(
         val harIngenUker = kjørelisteDto.reisedagerPerUkeAvsnitt.isEmpty()
         if (harIngenUker) {
             throw SøknadValideringException(
-                "Ingen data i innsendingen, huk av for uker du har kjørt eller last opp nye dokumenter",
+                "Ingen data i innsendingen, huk av for uker du har kjørt",
             )
         }
 
