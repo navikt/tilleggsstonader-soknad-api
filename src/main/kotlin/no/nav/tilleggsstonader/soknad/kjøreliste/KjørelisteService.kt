@@ -70,8 +70,7 @@ class KjørelisteService(
 
     fun validerKjøreliste(kjørelisteDto: KjørelisteDto) {
         val harIngenUker = kjørelisteDto.reisedagerPerUkeAvsnitt.isEmpty()
-        val harIngenVedlegg = kjørelisteDto.dokumentasjon.flatMap { it.opplastedeVedlegg }.isEmpty()
-        if (harIngenUker && harIngenVedlegg) {
+        if (harIngenUker) {
             throw SøknadValideringException(
                 "Ingen data i innsendingen, huk av for uker du har kjørt eller last opp nye dokumenter",
             )

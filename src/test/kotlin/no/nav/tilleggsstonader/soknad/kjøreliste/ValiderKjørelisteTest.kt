@@ -62,6 +62,15 @@ class ValiderKjørelisteTest {
     }
 
     @Test
+    fun `skal kaste feil når kjøreliste sendes inn uten uker men med vedlegg`() {
+        val dto = lagKjørelisteDto().copy(dokumentasjon = listOf(lagDokumentasjonFelt()))
+
+        assertThatThrownBy { service.validerKjøreliste(dto) }
+            .isInstanceOf(SøknadValideringException::class.java)
+            .hasMessage("Ingen data i innsendingen, huk av for uker du har kjørt eller last opp nye dokumenter")
+    }
+
+    @Test
     fun `skal ikke kaste feil når det ikke finnes tidligere innsendte kjørelister`() {
         mockIngenTidligereInnsendinger()
         mockRammevedtak(lagRammevedtakUke(LocalDate.of(2025, 6, 2), reisedagerPerUke = 3, kanSendeInn = true))
