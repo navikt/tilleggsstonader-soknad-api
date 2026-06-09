@@ -103,7 +103,7 @@ object KjørelisteTestdata {
         """.trimIndent()
 }
 
-private fun lagDokumentasjonFelt() =
+fun lagDokumentasjonFelt() =
     DokumentasjonFelt(
         type = Vedleggstype.PARKERINGSUTGIFT,
         label = "Vedlegglabel",
