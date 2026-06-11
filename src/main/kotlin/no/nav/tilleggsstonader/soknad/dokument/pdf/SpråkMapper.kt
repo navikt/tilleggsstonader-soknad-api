@@ -40,7 +40,7 @@ object SpråkMapper {
                 ),
             KjørelisteSkjema::class to
                 mapOf(
-                    Språkkode.NB to "Refusjon av utgifter til daglig reise med bruk av egen bil",
+                    Språkkode.NB to "Refusjon av utgifter til daglig reise med bruk av bil",
                 ),
         )
 
