@@ -102,6 +102,6 @@ fun Dokumenttype?.dokumentTittel(): String =
         Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om støtte til pass av barn"
         Dokumenttype.LÆREMIDLER_SØKNAD -> "Søknad om støtte til læremidler"
         Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE, Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE,
-        -> "Refusjon av utgifter til daglig reise med bruk av egen bil"
+        -> "Refusjon av utgifter til daglig reise med bruk av bil"
         else -> error("Mangler mapping av $this")
     }
