@@ -7,6 +7,7 @@ import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagInnsendtSkjema
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
+import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
@@ -36,6 +37,19 @@ class SøknadTreeWalkerTest {
             val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
             assertExpected(
                 "søknad/læremidler/læremidler_verdiliste.json",
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(htmlFelter),
+            )
+        }
+    }
+
+    @Nested
+    inner class ReiseTilSamling {
+        @Test
+        fun `skal mappe reise til samling`() {
+            val søknadsskjema = lagInnsendtSkjema(SøknadReiseTilSamlingUtil.søknadReiseTilSamling)
+            val htmlFelter = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
+            assertExpected(
+                "søknad/reise-til-samling/reise-til-samling_verdiliste.json",
                 jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(htmlFelter),
             )
         }
