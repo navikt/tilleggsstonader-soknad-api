@@ -24,7 +24,6 @@ import no.nav.tilleggsstonader.kontrakter.søknad.felles.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetAvsnitt as ReiseTilSamlingAktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetsadresseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReiseavstandAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReisemåteAvsnitt
@@ -41,6 +40,7 @@ import kotlin.reflect.KProperty1
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetAvsnitt as ReiseTilSamlingAktivitetAvsnitt
 
 /**
  * [SøknadTreeWalker] itererer over en søknad og genererer en struktur som brukes for å genere Html
