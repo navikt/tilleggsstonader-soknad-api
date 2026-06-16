@@ -41,7 +41,8 @@ class ArkiveringService(
             Skjematype.SØKNAD_BARNETILSYN -> Stønadstype.BARNETILSYN
             Skjematype.SØKNAD_LÆREMIDLER -> Stønadstype.LÆREMIDLER
             Skjematype.DAGLIG_REISE_KJØRELISTE -> hentStønadstypeFraTilhørendeRammevedtak(skjema)
-            else -> error("Håndterer ikke skjema ${skjema.type}")
+            Skjematype.SØKNAD_REISE_TIL_SAMLING -> Stønadstype.REISE_TIL_SAMLING_TSO // TODO: Må håndtere TSR også
+            Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE -> error("Skjema håndteres av Fyll ut/Send inn")
         }
 
     private fun hentStønadstypeFraTilhørendeRammevedtak(skjema: Skjema): Stønadstype {
