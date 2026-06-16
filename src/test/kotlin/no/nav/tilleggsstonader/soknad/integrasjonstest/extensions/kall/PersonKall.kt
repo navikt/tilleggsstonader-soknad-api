@@ -13,12 +13,12 @@ fun IntegrationTest.harBehandlingKall(
 ) = restTestClient
     .get()
     .uri { builder ->
-        builder.path("/api/person/har-behandling")
+        builder
+            .path("/api/person/har-behandling")
             .apply { stønadstype?.let { queryParam("stonadstype", it.name) } }
             .apply { skjematype?.let { queryParam("skjematype", it.name) } }
             .build()
-    }
-    .medSøkerBearerToken(personident)
+    }.medSøkerBearerToken(personident)
     .exchange()
 
 fun IntegrationTest.harBehandling(
