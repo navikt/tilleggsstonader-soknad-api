@@ -3,7 +3,10 @@ package no.nav.tilleggsstonader.soknad.aktivitet
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
 import no.nav.tilleggsstonader.kontrakter.aktivitet.Kilde
 import no.nav.tilleggsstonader.kontrakter.aktivitet.StatusAktivitet
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
+import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -59,6 +62,41 @@ class AktiviteterDtoKtTest {
             assertThat(listOf(dto(status = StatusAktivitet.FEILREGISTRERT)).gjeldende()).isEmpty()
             assertThat(listOf(dto(status = StatusAktivitet.PLANLAGT)).gjeldende()).isEmpty()
             assertThat(listOf(dto(status = StatusAktivitet.VENTELISTE)).gjeldende()).isEmpty()
+        }
+    }
+
+    @Nested
+    inner class TilSkjematype {
+        @Test
+        fun `skal bruke skjematype når den er satt`() {
+            val request = AktivitetRequest(stønadstype = null, skjematype = Skjematype.SØKNAD_BARNETILSYN)
+            assertThat(request.tilSkjematype()).isEqualTo(Skjematype.SØKNAD_BARNETILSYN)
+        }
+
+        @Test
+        fun `skal mappe stønadstype til skjematype når skjematype ikke er satt`() {
+            assertThat(AktivitetRequest(stønadstype = Stønadstype.BARNETILSYN, skjematype = null).tilSkjematype())
+                .isEqualTo(Skjematype.SØKNAD_BARNETILSYN)
+            assertThat(AktivitetRequest(stønadstype = Stønadstype.LÆREMIDLER, skjematype = null).tilSkjematype())
+                .isEqualTo(Skjematype.SØKNAD_LÆREMIDLER)
+            assertThat(AktivitetRequest(stønadstype = Stønadstype.BOUTGIFTER, skjematype = null).tilSkjematype())
+                .isEqualTo(Skjematype.SØKNAD_BOUTGIFTER)
+            assertThat(AktivitetRequest(stønadstype = Stønadstype.DAGLIG_REISE_TSO, skjematype = null).tilSkjematype())
+                .isEqualTo(Skjematype.SØKNAD_DAGLIG_REISE)
+        }
+
+        @Test
+        fun `skal kaste feil når verken stønadstype eller skjematype er satt`() {
+            val request = AktivitetRequest(stønadstype = null, skjematype = null)
+            assertThatThrownBy { request.tilSkjematype() }
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageContaining("Enten stønadstype eller skjematype må være satt")
+        }
+
+        @Test
+        fun `skal foretrekke skjematype fremfor stønadstype når begge er satt`() {
+            val request = AktivitetRequest(stønadstype = Stønadstype.BARNETILSYN, skjematype = Skjematype.SØKNAD_LÆREMIDLER)
+            assertThat(request.tilSkjematype()).isEqualTo(Skjematype.SØKNAD_LÆREMIDLER)
         }
     }
 

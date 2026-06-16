@@ -1,7 +1,7 @@
 package no.nav.tilleggsstonader.soknad.aktivitet
 
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
@@ -17,9 +17,9 @@ class AktivitetService(
     @Cacheable("aktivitet", cacheManager = "aktivitetCache")
     fun hentAktiviteter(
         ident: String,
-        stønadstype: Stønadstype,
+        skjematype: Skjematype,
     ): List<AktivitetArenaDto> {
-        val fom = LocalDate.now().minusMonths(stønadstype.grunnlagAntallMånederBakITiden.toLong())
+        val fom = LocalDate.now().minusMonths(skjematype.hentAktivitetAntallMånederTilbakeITid())
         val tom = LocalDate.now().plusMonths(3)
         return aktivitetClient
             .hentAktiviteter(ident, fom, tom)
