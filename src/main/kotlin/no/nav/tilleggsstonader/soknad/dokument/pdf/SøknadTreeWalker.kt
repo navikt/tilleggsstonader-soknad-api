@@ -11,8 +11,10 @@ import no.nav.tilleggsstonader.kontrakter.søknad.Reisedag
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.UkeMedReisedager
+import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
@@ -22,17 +24,23 @@ import no.nav.tilleggsstonader.kontrakter.søknad.felles.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetsadresseAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReiseavstandAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReisemåteAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Samling
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAlternativer
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAvsnitt
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeNeste12mnd
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeSiste12mnd
+import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSamlinger
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetAvsnitt as ReiseTilSamlingAktivitetAvsnitt
 
 /**
  * [SøknadTreeWalker] itererer over en søknad og genererer en struktur som brukes for å genere Html
@@ -84,6 +92,9 @@ object SøknadTreeWalker {
             is HarRettTilUtstyrsstipend,
             is KjørelisteSkjema,
             is Reisedag,
+            is SøknadsskjemaReiseTilSamling,
+            is Samling,
+            is AktivitetsadresseAvsnitt,
             -> finnFelter(entitet, språk)
 
             is HovedytelseAvsnitt,
@@ -91,6 +102,9 @@ object SøknadTreeWalker {
             is BarnAvsnitt,
             is UtdanningAvsnitt,
             is ArbeidOgOpphold,
+            is ReiseTilSamlingAktivitetAvsnitt,
+            is ReiseavstandAvsnitt,
+            is ReisemåteAvsnitt,
             -> listOf(Avsnitt(label = tittelAvsnitt(entitet, språk), verdier = finnFelter(entitet, språk)))
 
             is UkeMedReisedager,
@@ -102,6 +116,7 @@ object SøknadTreeWalker {
             is TekstFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is SelectFelt<*> -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.svarTekst)))))
             is DatoFelt -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
+            is VerdiFelt<*> -> listOf(Avsnitt(entitet.label, listOf(Verdi(mapVerdi(entitet.verdi)))))
             is EnumFelt<*> -> listOf(mapEnumFelt(entitet, språk))
 
             is EnumFlereValgFelt<*> -> listOf(mapEnumFlereValgFelt(entitet, språk))
@@ -180,6 +195,9 @@ object SøknadTreeWalker {
             },
             SpecialHåndtering(ArbeidOgOpphold::class, ArbeidOgOpphold::oppholdUtenforNorgeNeste12mnd) { verdi, språk ->
                 ListeMedTittel(tittelOppholdUtenforNorgeNeste12mnd(språk), verdi)
+            },
+            SpecialHåndtering(SøknadsskjemaReiseTilSamling::class, SøknadsskjemaReiseTilSamling::samlinger) { verdi, språk ->
+                ListeMedTittel(tittelSamlinger(språk), verdi)
             },
         ).associateBy { Pair(it.kClass, it.kProperty1) }
 

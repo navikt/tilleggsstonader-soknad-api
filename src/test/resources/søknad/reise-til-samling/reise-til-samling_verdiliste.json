@@ -1,0 +1,321 @@
+[ {
+  "label" : "Søker",
+  "verdier" : [ {
+    "label" : "Fødselsnummer",
+    "verdier" : [ {
+      "verdi" : "25518735813",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Navn",
+    "verdier" : [ {
+      "verdi" : "Fornavn Etternavn",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
+}, {
+  "label" : "Hovedytelse",
+  "verdier" : [ {
+    "label" : "Hovedytelse?",
+    "verdier" : [ {
+      "verdi" : "AAP, Overgangsstønad",
+      "alternativer" : "Alternativer: Alt1, Alt2",
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Arbeid og opphold",
+    "verdier" : [ {
+      "label" : "Jobber du i et annet land enn Norge?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Hvilket land jobber du i?",
+      "verdier" : [ {
+        "verdi" : "Sverige",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Mottar du pengestøtte fra et annet land enn Norge?",
+      "verdier" : [ {
+        "verdi" : "Sykepenger",
+        "alternativer" : "Alternativer: Sykepenger, Annet",
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Hvilket land mottar du pengestøtte fra?",
+      "verdier" : [ {
+        "verdi" : "Sverige",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Jobber du i et annet land enn Norge?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Opphold utenfor Norge siste 12 mnd",
+      "verdier" : [ {
+        "label" : "Hvilket land har du oppholdt deg i?",
+        "verdier" : [ {
+          "verdi" : "Sverige",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Hva gjorde du i dette landet?",
+        "verdier" : [ {
+          "verdi" : "Jobb",
+          "alternativer" : "Alternativer: Jobb, Studier",
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "type" : "LINJE"
+      }, {
+        "label" : "Hvilket land har du oppholdt deg i?",
+        "verdier" : [ {
+          "verdi" : "Sverige",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Hva gjorde du i dette landet?",
+        "verdier" : [ {
+          "verdi" : "Jobb",
+          "alternativer" : "Alternativer: Jobb, Studier",
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Jobber du i et annet land enn Norge?",
+      "verdier" : [ {
+        "verdi" : "Ja",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Opphold utenfor Norge neste 12 mnd",
+      "verdier" : [ {
+        "label" : "Hvilket land har du oppholdt deg i?",
+        "verdier" : [ {
+          "verdi" : "Sverige",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Hva gjorde du i dette landet?",
+        "verdier" : [ {
+          "verdi" : "Jobb",
+          "alternativer" : "Alternativer: Jobb, Studier",
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      }, {
+        "label" : "Fom",
+        "verdier" : [ {
+          "verdi" : "01.01.2024",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      } ],
+      "type" : "AVSNITT"
+    } ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
+}, {
+  "label" : "Aktivitet",
+  "verdier" : [ {
+    "label" : "Hvilken aktivitet deltar du i?",
+    "verdier" : [ {
+      "verdi" : "Arbeidsavklaring: 1. jan 2024 - 31. des 2024",
+      "alternativer" : "Alternativer: Alt1, Alt2",
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Hva slags aktivitet deltar du i?",
+    "verdier" : [ {
+      "verdi" : "Tiltak",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Er aktiviteten lønnet?",
+    "verdier" : [ {
+      "verdi" : "Nei",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
+}, {
+  "label" : "Samlinger",
+  "verdier" : [ {
+    "label" : "Startdato",
+    "verdier" : [ {
+      "verdi" : "01.03.2024",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Sluttdato",
+    "verdier" : [ {
+      "verdi" : "03.03.2024",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "type" : "LINJE"
+  }, {
+    "label" : "Startdato",
+    "verdier" : [ {
+      "verdi" : "15.04.2024",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Sluttdato",
+    "verdier" : [ {
+      "verdi" : "17.04.2024",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
+}, {
+  "label" : "Reiseavstand",
+  "verdier" : [ {
+    "label" : "Antall kilometer én vei",
+    "verdier" : [ {
+      "verdi" : "42",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Land",
+    "verdier" : [ {
+      "verdi" : "Norge",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Gateadresse",
+    "verdier" : [ {
+      "verdi" : "Storgata 1",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Postnummer",
+    "verdier" : [ {
+      "verdi" : "0155",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Poststed",
+    "verdier" : [ {
+      "verdi" : "Oslo",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
+}, {
+  "label" : "Reisemåte",
+  "verdier" : [ {
+    "label" : "Kan du reise kollektivt?",
+    "verdier" : [ {
+      "verdi" : "Ja",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Totale kollektivutgifter",
+    "verdier" : [ {
+      "verdi" : "450",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  } ],
+  "type" : "AVSNITT"
+} ]
