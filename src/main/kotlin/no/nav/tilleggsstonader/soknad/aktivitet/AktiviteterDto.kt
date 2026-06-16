@@ -2,7 +2,9 @@ package no.nav.tilleggsstonader.soknad.aktivitet
 
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
 import no.nav.tilleggsstonader.kontrakter.aktivitet.TypeAktivitet
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.tilSkjematype
 import java.time.LocalDate
 import kotlin.Boolean
 
@@ -61,5 +63,24 @@ fun List<AktivitetArenaDto>.gjeldende() =
         .filter { it.status == null || it.status?.rettTilÅSøke == true }
 
 data class AktivitetRequest(
-    val stønadstype: Stønadstype,
+    val stønadstype: Stønadstype?,
+    val skjematype: Skjematype?,
 )
+
+// TODO midlertidig mapping mens vi bytter fra stønadstype til skjematype i request.
+fun AktivitetRequest.tilSkjematype(): Skjematype =
+    when {
+        skjematype != null -> skjematype
+        stønadstype != null -> stønadstype.tilSkjematype()
+        else -> throw IllegalArgumentException("Enten stønadstype eller skjematype må være satt")
+    }
+
+fun Skjematype.hentAktivitetAntallMånederTilbakeITid(): Long =
+    when (this) {
+        Skjematype.SØKNAD_BARNETILSYN -> 3
+        Skjematype.SØKNAD_BOUTGIFTER -> 6
+        Skjematype.SØKNAD_LÆREMIDLER -> 6
+        Skjematype.SØKNAD_DAGLIG_REISE -> 3
+        Skjematype.SØKNAD_REISE_TIL_SAMLING -> 3
+        Skjematype.DAGLIG_REISE_KJØRELISTE -> error("Skjematype ${this.name} skal ikke brukes for å hente aktiviteter")
+    }

@@ -25,7 +25,7 @@ class AktivitetController(
     ): AktiviteterDto {
         val ident = EksternBrukerUtils.hentFnrFraToken()
         return try {
-            val aktiviteter = aktivitetService.hentAktiviteter(ident, request.stønadstype)
+            val aktiviteter = aktivitetService.hentAktiviteter(ident, request.tilSkjematype())
             AktiviteterDto(
                 aktiviteter = aktiviteter.gjeldende().mapNotNull { it.tilDto() }.sortedByDescending { it.fom },
                 harAktiviteter = aktiviteter.isNotEmpty(),
