@@ -1,7 +1,6 @@
 package no.nav.tilleggsstonader.soknad.sak
 
 import no.nav.tilleggsstonader.kontrakter.felles.IdentSkjematype
-import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.SkjemaRoutingResponse
 import no.nav.tilleggsstonader.libs.http.client.postForEntity
 import org.springframework.beans.factory.annotation.Qualifier
@@ -29,7 +28,7 @@ class SaksbehandlingClient(
         return restTemplate.postForEntity<SkjemaRoutingResponse>(uri, request)
     }
 
-    fun harBehandlingUnderArbeid(request: IdentStønadstype): Boolean {
+    fun harBehandlingUnderArbeid(request: IdentSkjematype): Boolean {
         val uri =
             UriComponentsBuilder
                 .fromUri(sakUri.toUri())

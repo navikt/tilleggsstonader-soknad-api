@@ -1,9 +1,8 @@
 package no.nav.tilleggsstonader.soknad.person
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.IdentSkjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
-import no.nav.tilleggsstonader.kontrakter.felles.tilStønadstyper
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
 import no.nav.tilleggsstonader.libs.utils.fnr.Fødselsnummer
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
@@ -34,10 +33,7 @@ class PersonController(
     ): Boolean {
         val fødselsnummer = EksternBrukerUtils.hentFnrFraToken()
         return saksbehandlingClient.harBehandlingUnderArbeid(
-            IdentStønadstype(
-                fødselsnummer,
-                skjematype.tilStønadstyper().first(), // // TODO: Tilpass sak så den kan kalle har-behandling med skjematype i stedet
-            ),
+            IdentSkjematype(fødselsnummer, skjematype),
         )
     }
 }

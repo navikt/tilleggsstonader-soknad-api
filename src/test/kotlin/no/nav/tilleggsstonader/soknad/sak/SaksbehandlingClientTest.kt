@@ -3,8 +3,8 @@ package no.nav.tilleggsstonader.soknad.sak
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
-import no.nav.tilleggsstonader.kontrakter.felles.IdentStønadstype
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
+import no.nav.tilleggsstonader.kontrakter.felles.IdentSkjematype
+import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -27,7 +27,7 @@ class SaksbehandlingClientTest {
                 ),
         )
 
-        client.harBehandlingUnderArbeid(IdentStønadstype("ident", Stønadstype.BARNETILSYN))
+        client.harBehandlingUnderArbeid(IdentSkjematype("ident", Skjematype.SØKNAD_BARNETILSYN))
 
         wireMockServer.verify(
             1,
