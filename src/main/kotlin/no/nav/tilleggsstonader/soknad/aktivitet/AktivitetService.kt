@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.aktivitet
 import no.nav.tilleggsstonader.kontrakter.aktivitet.AktivitetArenaDto
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
-import org.slf4j.LoggerFactory
+import no.nav.tilleggsstonader.libs.log.logger
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -12,14 +12,12 @@ import java.time.LocalDate
 class AktivitetService(
     private val aktivitetClient: AktivitetClient,
 ) {
-    private val logger = LoggerFactory.getLogger(javaClass)
-
     @Cacheable("aktivitet", cacheManager = "aktivitetCache")
     fun hentAktiviteter(
         ident: String,
         skjematype: Skjematype,
     ): List<AktivitetArenaDto> {
-        val fom = LocalDate.now().minusMonths(skjematype.hentAktivitetAntallMånederTilbakeITid())
+        val fom = LocalDate.now().minusMonths(antallMånederAktivitetSkalHentesFor(skjematype))
         val tom = LocalDate.now().plusMonths(3)
         return aktivitetClient
             .hentAktiviteter(ident, fom, tom)
@@ -28,8 +26,8 @@ class AktivitetService(
 
     /**
      * Filtrer vekk de av andre gruppetyper som ikke er interessante å vise i hverken saksbehandling eller søknad
-     * Tar med alle som er markert som [erStønadsberettiget]
-     * Eks filtrerer denne bort [INDOP] som er av gruppetype [SAK]
+     * Tar med alle som er markert som "erStønadsberettiget"
+     * Eks filtrerer denne bort "INDOP" som er av gruppetype "SAK"
      */
     private fun skalVises(it: AktivitetArenaDto) =
         try {
@@ -40,3 +38,13 @@ class AktivitetService(
             false
         }
 }
+
+fun antallMånederAktivitetSkalHentesFor(forSkjema: Skjematype): Long =
+    when (forSkjema) {
+        Skjematype.SØKNAD_BARNETILSYN -> 3
+        Skjematype.SØKNAD_BOUTGIFTER -> 6
+        Skjematype.SØKNAD_LÆREMIDLER -> 6
+        Skjematype.SØKNAD_DAGLIG_REISE -> 3
+        Skjematype.SØKNAD_REISE_TIL_SAMLING -> 3
+        Skjematype.DAGLIG_REISE_KJØRELISTE -> error("Skjematype $forSkjema skal ikke brukes for å hente aktiviteter")
+    }
