@@ -37,14 +37,14 @@ class AktivitetService(
             secureLogger.error("TypeAktivitet=${it.type} mangler mapping. Vennligst oppdater TypeAktivitet med ny type.")
             false
         }
-}
 
-fun antallMånederAktivitetSkalHentesFor(forSkjema: Skjematype): Long =
-    when (forSkjema) {
-        Skjematype.SØKNAD_BARNETILSYN -> 3
-        Skjematype.SØKNAD_BOUTGIFTER -> 6
-        Skjematype.SØKNAD_LÆREMIDLER -> 6
-        Skjematype.SØKNAD_DAGLIG_REISE -> 3
-        Skjematype.SØKNAD_REISE_TIL_SAMLING -> 3
-        Skjematype.DAGLIG_REISE_KJØRELISTE -> error("Skjematype $forSkjema skal ikke brukes for å hente aktiviteter")
-    }
+    private fun antallMånederAktivitetSkalHentesFor(forSkjema: Skjematype): Long =
+        when (forSkjema) {
+            Skjematype.SØKNAD_BARNETILSYN -> 3
+            Skjematype.SØKNAD_BOUTGIFTER -> 6
+            Skjematype.SØKNAD_LÆREMIDLER -> 6
+            Skjematype.SØKNAD_DAGLIG_REISE -> 3
+            Skjematype.SØKNAD_REISE_TIL_SAMLING -> 3
+            Skjematype.DAGLIG_REISE_KJØRELISTE -> error("Skjematype $forSkjema skal ikke brukes for å hente aktiviteter")
+        }
+}
