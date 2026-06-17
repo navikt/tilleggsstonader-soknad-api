@@ -1,31 +1,27 @@
 package no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall
 
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
-import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
 import org.springframework.test.web.servlet.client.expectBody
 
 fun IntegrationTest.harBehandlingKall(
     personident: String,
-    stønadstype: Stønadstype? = null,
-    skjematype: Skjematype? = null,
+    skjematype: Skjematype,
 ) = restTestClient
     .get()
     .uri { builder ->
         builder
             .path("/api/person/har-behandling")
-            .apply { stønadstype?.let { queryParam("stonadstype", it.name) } }
-            .apply { skjematype?.let { queryParam("skjematype", it.name) } }
+            .apply { queryParam("skjematype", skjematype.name) }
             .build()
     }.medSøkerBearerToken(personident)
     .exchange()
 
 fun IntegrationTest.harBehandling(
     personident: String,
-    stønadstype: Stønadstype? = null,
-    skjematype: Skjematype? = null,
-) = harBehandlingKall(personident, stønadstype, skjematype)
+    skjematype: Skjematype,
+) = harBehandlingKall(personident, skjematype)
     .expectStatus()
     .isOk
     .expectBody<Boolean>()

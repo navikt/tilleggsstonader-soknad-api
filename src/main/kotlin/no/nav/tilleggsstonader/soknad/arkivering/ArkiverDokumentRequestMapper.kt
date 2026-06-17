@@ -17,17 +17,23 @@ object ArkiverDokumentRequestMapper {
         tilhørendeStønadstype: Stønadstype,
         vedlegg: List<Vedlegg>,
     ): ArkiverDokumentRequest {
-        val dokumenttype = typeHoveddokument(skjema.type, tilhørendeStønadstype)
+        val dokumenttype = typeHoveddokument(type = skjema.type, tilhørendeStønadstype = tilhørendeStønadstype)
         val skjemadokumentJson =
             Dokument(
-                skjema.skjemaJson.json.toByteArray(),
-                Filtype.JSON,
-                null,
-                dokumenttype.dokumentTittel(),
-                dokumenttype,
+                dokument = skjema.skjemaJson.json.toByteArray(),
+                filtype = Filtype.JSON,
+                filnavn = null,
+                tittel = dokumenttype.dokumentTittel(),
+                dokumenttype = dokumenttype,
             )
         val skjemadokumentPdf =
-            Dokument(skjema.skjemaPdf!!.data, Filtype.PDFA, null, dokumenttype.dokumentTittel(), dokumenttype)
+            Dokument(
+                dokument = skjema.skjemaPdf!!.data,
+                filtype = Filtype.PDFA,
+                filnavn = null,
+                tittel = dokumenttype.dokumentTittel(),
+                dokumenttype = dokumenttype,
+            )
         return ArkiverDokumentRequest(
             fnr = skjema.personIdent,
             forsøkFerdigstill = false,
@@ -51,9 +57,11 @@ object ArkiverDokumentRequestMapper {
                 } else {
                     Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE
                 }
+
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema $type")
-            Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_TSO_SØKNAD
+
+            Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_SØKNAD
         }
 
     private fun typeVedlegg(
@@ -69,9 +77,11 @@ object ArkiverDokumentRequestMapper {
                 } else {
                     Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE_VEDLEGG
                 }
+
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema $type")
-            Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_TSO_SØKNAD_VEDLEGG
+
+            Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_SØKNAD_VEDLEGG
         }
 
     private fun mapVedlegg(
@@ -101,7 +111,9 @@ fun Dokumenttype?.dokumentTittel(): String =
     when (this) {
         Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om støtte til pass av barn"
         Dokumenttype.LÆREMIDLER_SØKNAD -> "Søknad om støtte til læremidler"
+        Dokumenttype.REISE_TIL_SAMLING_SØKNAD -> "Søknad om til reise til samling"
         Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE, Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE,
         -> "Refusjon av utgifter til daglig reise med bruk av bil"
+
         else -> error("Mangler mapping av $this")
     }

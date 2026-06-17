@@ -31,7 +31,12 @@ class ArkiveringService(
         skjema: Skjema,
         vedlegg: List<Vedlegg>,
     ): String {
-        val arkiverDokumentRequest = ArkiverDokumentRequestMapper.toDto(skjema, finnTilhørendeStønadstypeForSkjema(skjema), vedlegg)
+        val arkiverDokumentRequest =
+            ArkiverDokumentRequestMapper.toDto(
+                skjema = skjema,
+                tilhørendeStønadstype = finnTilhørendeStønadstypeForSkjema(skjema),
+                vedlegg = vedlegg,
+            )
         val dokumentResponse = integrasjonerClient.arkiver(arkiverDokumentRequest)
         return dokumentResponse.journalpostId
     }
@@ -41,7 +46,7 @@ class ArkiveringService(
             Skjematype.SØKNAD_BARNETILSYN -> Stønadstype.BARNETILSYN
             Skjematype.SØKNAD_LÆREMIDLER -> Stønadstype.LÆREMIDLER
             Skjematype.DAGLIG_REISE_KJØRELISTE -> hentStønadstypeFraTilhørendeRammevedtak(skjema)
-            Skjematype.SØKNAD_REISE_TIL_SAMLING -> Stønadstype.REISE_TIL_SAMLING_TSO // TODO: Må håndtere TSR også
+            Skjematype.SØKNAD_REISE_TIL_SAMLING -> Stønadstype.REISE_TIL_SAMLING_TSO // Brukes egentlig ikke av reise til samling, ettersom
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE -> error("Skjema håndteres av Fyll ut/Send inn")
         }
 
