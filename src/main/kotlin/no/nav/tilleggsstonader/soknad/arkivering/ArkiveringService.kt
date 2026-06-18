@@ -22,12 +22,12 @@ class ArkiveringService(
     ) {
         val skjema = skjemaService.hentSkjema(skjemaId)
         val vedlegg = vedleggRepository.findBySkjemaId(skjemaId)
-        val journalpostId: String = send(skjema, vedlegg)
+        val journalpostId: String = arkiverSkjema(skjema, vedlegg)
 
         skjemaService.oppdaterSkjema(skjema.copy(journalpostId = journalpostId))
     }
 
-    private fun send(
+    private fun arkiverSkjema(
         skjema: Skjema,
         vedlegg: List<Vedlegg>,
     ): String {

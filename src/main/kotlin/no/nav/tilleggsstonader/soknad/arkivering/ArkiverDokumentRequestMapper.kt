@@ -111,7 +111,7 @@ fun Dokumenttype?.dokumentTittel(): String =
     when (this) {
         Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om støtte til pass av barn"
         Dokumenttype.LÆREMIDLER_SØKNAD -> "Søknad om støtte til læremidler"
-        Dokumenttype.REISE_TIL_SAMLING_SØKNAD -> "Søknad om til reise til samling"
+        Dokumenttype.REISE_TIL_SAMLING_SØKNAD -> "Søknad om støtte til reise til samling"
         Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE, Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE,
         -> "Refusjon av utgifter til daglig reise med bruk av bil"
 
