@@ -50,8 +50,22 @@ object SøknadReiseTilSamlingUtil {
             reiseavstand =
                 ReiseavstandDto(
                     antallKilometerEnVei = VerdiFelt(label = "Antall kilometer én vei", verdi = "42"),
+                    reiseFraFolkeregistrertAdr =
+                        EnumFelt(
+                            label = "Reiser du fra din folkeregistrerte adresse?",
+                            verdi = JaNei.JA,
+                            svarTekst = "Ja",
+                            alternativer = emptyList(),
+                        ),
+                    adresseDetSkalReisesFra =
+                        AdresseDto(
+                            land = SelectFelt("Land", "NO", "Norge"),
+                            gateadresse = VerdiFelt(verdi = "Lurendreiergata 1", label = "Gateadresse"),
+                            postnummer = VerdiFelt(verdi = "5132", label = "Postnummer"),
+                            poststed = VerdiFelt(verdi = "Pæddekummen", label = "Poststed"),
+                        ),
                     aktivitetsadresse =
-                        AktivitetsadresseDto(
+                        AdresseDto(
                             land = SelectFelt(label = "Land", verdi = "NOR", svarTekst = "Norge"),
                             gateadresse = VerdiFelt(label = "Gateadresse", verdi = "Storgata 1"),
                             postnummer = VerdiFelt(label = "Postnummer", verdi = "0155"),

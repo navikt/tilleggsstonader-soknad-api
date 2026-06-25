@@ -24,7 +24,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.felles.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetsadresseAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AdresseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReiseavstandAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReisemåteAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Samling
@@ -94,7 +94,7 @@ object SøknadTreeWalker {
             is Reisedag,
             is SøknadsskjemaReiseTilSamling,
             is Samling,
-            is AktivitetsadresseAvsnitt,
+            is AdresseAvsnitt,
             -> finnFelter(entitet, språk)
 
             is HovedytelseAvsnitt,

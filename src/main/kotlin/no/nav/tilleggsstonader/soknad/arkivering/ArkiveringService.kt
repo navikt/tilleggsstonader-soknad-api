@@ -47,7 +47,7 @@ class ArkiveringService(
             Skjematype.SØKNAD_LÆREMIDLER -> Stønadstype.LÆREMIDLER
             Skjematype.DAGLIG_REISE_KJØRELISTE -> hentStønadstypeFraTilhørendeRammevedtak(skjema)
 
-            // Stønadstypen brukes egentlig ikke av reise til samling, for der har både TSO og TSR samme dokumenttype på søknaden.
+            // Stønadstypen brukes egentlig ikke av reise til samling, for der har både TSO og TSR samme dokumenttype på søknaden. Må bare sette noe for å gjøre denne funksjonen happy.
             Skjematype.SØKNAD_REISE_TIL_SAMLING -> Stønadstype.REISE_TIL_SAMLING_TSO
 
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE -> error("Skjema håndteres av Fyll ut/Send inn")

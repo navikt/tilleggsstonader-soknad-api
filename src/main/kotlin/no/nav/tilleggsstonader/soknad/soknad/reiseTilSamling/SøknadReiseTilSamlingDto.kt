@@ -31,7 +31,7 @@ data class SamlingDto(
     val tom: VerdiFelt<String>?,
 )
 
-data class AktivitetsadresseDto(
+data class AdresseDto(
     val land: SelectFelt<String>?,
     val gateadresse: VerdiFelt<String>?,
     val postnummer: VerdiFelt<String>?,
@@ -39,12 +39,14 @@ data class AktivitetsadresseDto(
 )
 
 data class ReiseavstandDto(
-    val antallKilometerEnVei: VerdiFelt<String>?,
-    val aktivitetsadresse: AktivitetsadresseDto,
+    val antallKilometerEnVei: VerdiFelt<String>,
+    val reiseFraFolkeregistrertAdr: EnumFelt<JaNei>,
+    val adresseDetSkalReisesFra: AdresseDto,
+    val aktivitetsadresse: AdresseDto,
 )
 
 data class ReisemåteDto(
-    val kanReiseKollektivt: EnumFelt<JaNei>?,
+    val kanReiseKollektivt: EnumFelt<JaNei>,
     val totalutgifterKollektivt: VerdiFelt<String>?,
     val kanBenytteEgenBil: EnumFelt<JaNei>?,
     val kanBenytteDrosje: EnumFelt<JaNei>?,

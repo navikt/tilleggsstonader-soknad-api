@@ -1,8 +1,8 @@
 {
   "collection": "kotlin-backend",
-  "version": "2026.06.16-091529-95c7081",
+  "version": "2026.06.24-071557-1b59278",
   "scope": "repo",
-  "source_sha": "95c7081",
+  "source_sha": "1b59278",
   "installed_at": "2026-05-12T07:49:47Z",
   "files": [
     {

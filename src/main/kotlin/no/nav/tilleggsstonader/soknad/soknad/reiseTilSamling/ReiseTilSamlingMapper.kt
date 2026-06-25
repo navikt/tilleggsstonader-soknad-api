@@ -4,8 +4,8 @@ import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AdresseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetsadresseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReiseavstandAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReisemåteAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Samling
@@ -43,6 +43,14 @@ class ReiseTilSamlingMapper {
             lønnetAktivitet = dto.lønnetAktivitet,
         )
 
+    private fun mapAdresse(dto: AdresseDto) =
+        AdresseAvsnitt(
+            land = dto.land,
+            gateadresse = dto.gateadresse,
+            postnummer = dto.postnummer,
+            poststed = dto.poststed,
+        )
+
     private fun mapSamling(dto: SamlingDto) =
         Samling(
             fom = dto.fom?.let { DatoFelt(label = it.label, verdi = LocalDate.parse(it.verdi)) },
@@ -52,13 +60,9 @@ class ReiseTilSamlingMapper {
     private fun mapReiseavstand(dto: ReiseavstandDto) =
         ReiseavstandAvsnitt(
             antallKilometerEnVei = dto.antallKilometerEnVei,
-            aktivitetsadresse =
-                AktivitetsadresseAvsnitt(
-                    land = dto.aktivitetsadresse.land,
-                    gateadresse = dto.aktivitetsadresse.gateadresse,
-                    postnummer = dto.aktivitetsadresse.postnummer,
-                    poststed = dto.aktivitetsadresse.poststed,
-                ),
+            reiseFraFolkeregistrertAdr = dto.reiseFraFolkeregistrertAdr,
+            adresseDetSkalReisesFra = mapAdresse(dto.adresseDetSkalReisesFra),
+            aktivitetsadresse = mapAdresse(dto.aktivitetsadresse),
         )
 
     private fun mapReisemåte(dto: ReisemåteDto) =

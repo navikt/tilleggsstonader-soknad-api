@@ -164,9 +164,24 @@
       }
     } ],
     "reiseavstand" : {
-      "antallKilometerEnVei" : {
-        "verdi" : "42",
-        "label" : "Antall kilometer én vei"
+      "adresseDetSkalReisesFra" : {
+        "land" : {
+          "label" : "Land",
+          "verdi" : "NO",
+          "svarTekst" : "Norge"
+        },
+        "gateadresse" : {
+          "verdi" : "Lurendreiergata 1",
+          "label" : "Gateadresse"
+        },
+        "postnummer" : {
+          "verdi" : "5132",
+          "label" : "Postnummer"
+        },
+        "poststed" : {
+          "verdi" : "Pæddekummen",
+          "label" : "Poststed"
+        }
       },
       "aktivitetsadresse" : {
         "land" : {
@@ -186,6 +201,16 @@
           "verdi" : "Oslo",
           "label" : "Poststed"
         }
+      },
+      "antallKilometerEnVei" : {
+        "verdi" : "42",
+        "label" : "Antall kilometer én vei"
+      },
+      "reiseFraFolkeregistrertAdr" : {
+        "label" : "Reiser du fra din folkeregistrerte adresse?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
       }
     },
     "reisemåte" : {

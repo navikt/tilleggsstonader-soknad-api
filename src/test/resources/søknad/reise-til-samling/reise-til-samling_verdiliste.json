@@ -257,6 +257,46 @@
 }, {
   "label" : "Reiseavstand",
   "verdier" : [ {
+    "label" : "Reiser du fra din folkeregistrerte adresse?",
+    "verdier" : [ {
+      "verdi" : "Ja",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Land",
+    "verdier" : [ {
+      "verdi" : "Norge",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Gateadresse",
+    "verdier" : [ {
+      "verdi" : "Lurendreiergata 1",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Postnummer",
+    "verdier" : [ {
+      "verdi" : "5132",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Poststed",
+    "verdier" : [ {
+      "verdi" : "Pæddekummen",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
     "label" : "Antall kilometer én vei",
     "verdier" : [ {
       "verdi" : "42",
