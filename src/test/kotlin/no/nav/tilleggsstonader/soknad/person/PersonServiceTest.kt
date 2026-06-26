@@ -8,6 +8,7 @@ import no.nav.tilleggsstonader.soknad.infrastruktur.exception.GradertBrukerExcep
 import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlBarn
 import no.nav.tilleggsstonader.soknad.infrastruktur.lagPdlSøker
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
+import no.nav.tilleggsstonader.soknad.person.dto.Adresse
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClient
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
@@ -31,6 +32,7 @@ class PersonServiceTest {
     fun setUp() {
         every { pdlClientCredentialClient.hentBarn(any()) } returns emptyMap()
         every { adresseMapper.tilFormatertAdresse(any()) } returns "Adresse 1"
+        every { adresseMapper.tilAdresse(any()) } returns Adresse()
     }
 
     @Nested
