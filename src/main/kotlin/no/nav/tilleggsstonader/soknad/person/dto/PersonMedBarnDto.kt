@@ -7,7 +7,15 @@ data class PersonMedBarnDto(
     val alder: Int,
     val visningsnavn: String,
     val adresse: String,
+    val strukturertAdresse: Adresse?,
     val barn: List<Barn>,
+)
+
+data class Adresse(
+    val land: String? = null,
+    val gateadresse: String? = null,
+    val postnummer: String? = null,
+    val poststed: String? = null,
 )
 
 data class Barn(

@@ -44,6 +44,7 @@ class PersonService(
             alder = alder,
             visningsnavn = søker.navn.first().visningsnavn(),
             adresse = adresseMapper.tilFormatertAdresse(søker),
+            strukturertAdresse = adresseMapper.tilAdresse(søker),
             barn = mapBarn(barn),
         )
     }
