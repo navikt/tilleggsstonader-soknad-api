@@ -41,16 +41,30 @@ object SøknadReiseTilSamlingUtil {
                     SamlingDto(
                         fom = VerdiFelt(label = "Startdato", verdi = "2024-03-01"),
                         tom = VerdiFelt(label = "Sluttdato", verdi = "2024-03-03"),
+                        erObligatorisk =
+                            EnumFelt(
+                                label = "Er samlingen obligatorisk?",
+                                verdi = JaNei.JA,
+                                svarTekst = "Ja",
+                                alternativer = listOf(),
+                            ),
                     ),
                     SamlingDto(
                         fom = VerdiFelt(label = "Startdato", verdi = "2024-04-15"),
                         tom = VerdiFelt(label = "Sluttdato", verdi = "2024-04-17"),
+                        erObligatorisk =
+                            EnumFelt(
+                                label = "Er samlingen obligatorisk?",
+                                verdi = JaNei.JA,
+                                svarTekst = "Ja",
+                                alternativer = listOf(),
+                            ),
                     ),
                 ),
             reiseavstand =
                 ReiseavstandDto(
                     antallKilometerEnVei = VerdiFelt(label = "Antall kilometer én vei", verdi = "42"),
-                    reiseFraFolkeregistrertAdr =
+                    skalReiseFraFolkeregistrertAdresse =
                         EnumFelt(
                             label = "Reiser du fra din folkeregistrerte adresse?",
                             verdi = JaNei.JA,

@@ -152,6 +152,12 @@
       "tom" : {
         "label" : "Sluttdato",
         "verdi" : "2024-03-03"
+      },
+      "erObligatorisk" : {
+        "label" : "Er samlingen obligatorisk?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
       }
     }, {
       "fom" : {
@@ -161,6 +167,12 @@
       "tom" : {
         "label" : "Sluttdato",
         "verdi" : "2024-04-17"
+      },
+      "erObligatorisk" : {
+        "label" : "Er samlingen obligatorisk?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
       }
     } ],
     "reiseavstand" : {
@@ -206,7 +218,7 @@
         "verdi" : "42",
         "label" : "Antall kilometer én vei"
       },
-      "reiseFraFolkeregistrertAdr" : {
+      "skalReiseFraFolkeregistrertAdresse" : {
         "label" : "Reiser du fra din folkeregistrerte adresse?",
         "verdi" : "JA",
         "svarTekst" : "Ja",

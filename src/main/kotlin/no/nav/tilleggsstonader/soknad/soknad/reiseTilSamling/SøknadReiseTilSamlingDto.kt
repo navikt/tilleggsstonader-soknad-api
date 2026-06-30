@@ -29,6 +29,7 @@ data class AktivitetDto(
 data class SamlingDto(
     val fom: VerdiFelt<String>?,
     val tom: VerdiFelt<String>?,
+    val erObligatorisk: EnumFelt<JaNei>?,
 )
 
 data class AdresseDto(
@@ -40,8 +41,8 @@ data class AdresseDto(
 
 data class ReiseavstandDto(
     val antallKilometerEnVei: VerdiFelt<String>,
-    val reiseFraFolkeregistrertAdr: EnumFelt<JaNei>,
-    val adresseDetSkalReisesFra: AdresseDto,
+    val skalReiseFraFolkeregistrertAdresse: EnumFelt<JaNei>,
+    val adresseDetSkalReisesFra: AdresseDto?,
     val aktivitetsadresse: AdresseDto,
 )
 
