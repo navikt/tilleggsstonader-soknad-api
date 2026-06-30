@@ -235,6 +235,14 @@
     } ],
     "type" : "AVSNITT"
   }, {
+    "label" : "Er samlingen obligatorisk?",
+    "verdier" : [ {
+      "verdi" : "Ja",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
     "type" : "LINJE"
   }, {
     "label" : "Startdato",
@@ -248,6 +256,14 @@
     "label" : "Sluttdato",
     "verdier" : [ {
       "verdi" : "17.04.2024",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Er samlingen obligatorisk?",
+    "verdier" : [ {
+      "verdi" : "Ja",
       "alternativer" : null,
       "type" : "VERDI"
     } ],
