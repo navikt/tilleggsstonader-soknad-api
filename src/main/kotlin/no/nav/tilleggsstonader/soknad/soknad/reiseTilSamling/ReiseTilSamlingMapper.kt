@@ -55,13 +55,14 @@ class ReiseTilSamlingMapper {
         Samling(
             fom = dto.fom?.let { DatoFelt(label = it.label, verdi = LocalDate.parse(it.verdi)) },
             tom = dto.tom?.let { DatoFelt(label = it.label, verdi = LocalDate.parse(it.verdi)) },
+            erObligatorisk = dto.erObligatorisk,
         )
 
     private fun mapReiseavstand(dto: ReiseavstandDto) =
         ReiseavstandAvsnitt(
             antallKilometerEnVei = dto.antallKilometerEnVei,
-            reiseFraFolkeregistrertAdr = dto.reiseFraFolkeregistrertAdr,
-            adresseDetSkalReisesFra = mapAdresse(dto.adresseDetSkalReisesFra),
+            skalReiseFraFolkeregistrertAdresse = dto.skalReiseFraFolkeregistrertAdresse,
+            adresseDetSkalReisesFra = dto.adresseDetSkalReisesFra?.let { mapAdresse(it) },
             aktivitetsadresse = mapAdresse(dto.aktivitetsadresse),
         )
 
