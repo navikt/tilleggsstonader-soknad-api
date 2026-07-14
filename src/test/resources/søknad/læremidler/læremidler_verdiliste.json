@@ -215,13 +215,13 @@
     } ],
     "type" : "AVSNITT"
   }, {
-      "label" : "Har du tidligere fullført videregående skole?",
-      "verdier" : [ {
-        "verdi" : "Ja",
-        "alternativer" : null,
-        "type" : "VERDI"
-      } ],
-      "type" : "AVSNITT"
+    "label" : "Har du tidligere fullført videregående skole?",
+    "verdier" : [ {
+      "verdi" : "Ja",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
   }, {
     "label" : "Har du en funksjonsnedsettelse som gir deg særlig store utgifter til læremidler?",
     "verdier" : [ {

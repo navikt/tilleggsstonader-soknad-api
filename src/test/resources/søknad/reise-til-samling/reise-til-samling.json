@@ -67,6 +67,9 @@
           "tom" : {
             "label" : "Fom",
             "verdi" : "2024-01-01"
+          },
+          "språkMapper" : {
+            "NB" : "Arbeid og opphold"
           }
         }, {
           "land" : {
@@ -89,6 +92,9 @@
           "tom" : {
             "label" : "Fom",
             "verdi" : "2024-01-01"
+          },
+          "språkMapper" : {
+            "NB" : "Arbeid og opphold"
           }
         } ],
         "harOppholdUtenforNorgeNeste12mnd" : {
@@ -118,8 +124,17 @@
           "tom" : {
             "label" : "Fom",
             "verdi" : "2024-01-01"
+          },
+          "språkMapper" : {
+            "NB" : "Arbeid og opphold"
           }
-        } ]
+        } ],
+        "språkMapper" : {
+          "NB" : "Arbeid og opphold"
+        }
+      },
+      "språkMapper" : {
+        "NB" : "Hovedytelse"
       }
     },
     "aktivitet" : {
@@ -142,6 +157,11 @@
         "verdi" : "NEI",
         "svarTekst" : "Nei",
         "alternativer" : [ ]
+      },
+      "tilleggsopplysningerAnnenAktivitet" : null,
+      "annenAktivitetTypeUtdanning" : null,
+      "språkMapper" : {
+        "NB" : "Aktivitet"
       }
     },
     "samlinger" : [ {
@@ -158,6 +178,38 @@
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
+      },
+      "harBruktEkstraReiseDager" : {
+        "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
+      },
+      "adresse" : {
+        "land" : {
+          "label" : "Land",
+          "verdi" : "NOR",
+          "svarTekst" : "Norge"
+        },
+        "gateadresse" : {
+          "verdi" : "Storgata 1",
+          "label" : "Gateadresse"
+        },
+        "postnummer" : {
+          "verdi" : "0155",
+          "label" : "Postnummer"
+        },
+        "poststed" : {
+          "verdi" : "Oslo",
+          "label" : "Poststed"
+        },
+        "språkMapper" : {
+          "NB" : "Adresse"
+        }
+      },
+      "antallKilometerEnVei" : {
+        "verdi" : "42",
+        "label" : "Antall kilometer én vei"
       }
     }, {
       "fom" : {
@@ -173,9 +225,47 @@
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
+      },
+      "harBruktEkstraReiseDager" : {
+        "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
+      },
+      "adresse" : {
+        "land" : {
+          "label" : "Land",
+          "verdi" : "NOR",
+          "svarTekst" : "Norge"
+        },
+        "gateadresse" : {
+          "verdi" : "Storgata 1",
+          "label" : "Gateadresse"
+        },
+        "postnummer" : {
+          "verdi" : "0155",
+          "label" : "Postnummer"
+        },
+        "poststed" : {
+          "verdi" : "Oslo",
+          "label" : "Poststed"
+        },
+        "språkMapper" : {
+          "NB" : "Adresse"
+        }
+      },
+      "antallKilometerEnVei" : {
+        "verdi" : "42",
+        "label" : "Antall kilometer én vei"
       }
     } ],
-    "reiseavstand" : {
+    "avreiseadresse" : {
+      "skalReiseFraFolkeregistrertAdresse" : {
+        "label" : "Reiser du fra din folkeregistrerte adresse?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
+      },
       "adresseDetSkalReisesFra" : {
         "land" : {
           "label" : "Land",
@@ -193,52 +283,42 @@
         "poststed" : {
           "verdi" : "Pæddekummen",
           "label" : "Poststed"
+        },
+        "språkMapper" : {
+          "NB" : "Adresse"
         }
       },
-      "aktivitetsadresse" : {
-        "land" : {
-          "label" : "Land",
-          "verdi" : "NOR",
-          "svarTekst" : "Norge"
-        },
-        "gateadresse" : {
-          "verdi" : "Storgata 1",
-          "label" : "Gateadresse"
-        },
-        "postnummer" : {
-          "verdi" : "0155",
-          "label" : "Postnummer"
-        },
-        "poststed" : {
-          "verdi" : "Oslo",
-          "label" : "Poststed"
-        }
-      },
-      "antallKilometerEnVei" : {
-        "verdi" : "42",
-        "label" : "Antall kilometer én vei"
-      },
-      "skalReiseFraFolkeregistrertAdresse" : {
-        "label" : "Reiser du fra din folkeregistrerte adresse?",
-        "verdi" : "JA",
-        "svarTekst" : "Ja",
-        "alternativer" : [ ]
+      "språkMapper" : {
+        "NB" : "Avreiseadresse"
       }
     },
     "reisemåte" : {
-      "kanReiseKollektivt" : {
+      "kanReiseMedOffentligTransport" : {
         "label" : "Kan du reise kollektivt?",
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
       },
-      "totalutgifterKollektivt" : {
+      "totalUtgifterOffentligTransport" : {
         "verdi" : "450",
         "label" : "Totale kollektivutgifter"
       },
+      "kanIkkeReiseMedOffentligTransportBegrunnelser" : null,
+      "barnehageGateadresse" : null,
+      "barnehagePostnummer" : null,
       "kanBenytteEgenBil" : null,
-      "kanBenytteDrosje" : null
+      "kanIkkeBenytteEgenBilBegrunnelser" : null,
+      "ønskerDekketUtgifterForDrosje" : null,
+      "betalerForReiseSelv" : null,
+      "harTTKort" : null,
+      "reiseMedBilUtgifter" : null,
+      "språkMapper" : {
+        "NB" : "Reisemåte"
+      }
     },
-    "dokumentasjon" : [ ]
+    "dokumentasjon" : [ ],
+    "språkMapper" : {
+      "NB" : "Søknad om støtte til reise til samling"
+    }
   }
 }

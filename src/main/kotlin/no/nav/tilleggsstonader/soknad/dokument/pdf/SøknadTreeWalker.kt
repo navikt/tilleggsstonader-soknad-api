@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
+import no.nav.tilleggsstonader.kontrakter.søknad.Avsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
@@ -9,28 +10,22 @@ import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Reisedag
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.SpråkMappable
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.UkeMedReisedager
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AktivitetAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.Utgifter
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOpphold
-import no.nav.tilleggsstonader.kontrakter.søknad.felles.HovedytelseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
-import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.UtdanningAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AdresseAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReiseavstandAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReisemåteAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Adresse
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Samling
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAlternativer
-import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAvsnitt
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeNeste12mnd
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeSiste12mnd
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSamlinger
@@ -40,11 +35,10 @@ import kotlin.reflect.KProperty1
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetAvsnitt as ReiseTilSamlingAktivitetAvsnitt
 
 /**
  * [SøknadTreeWalker] itererer over en søknad og genererer en struktur som brukes for å genere Html
- * [Avsnitt] skaper inline og verdiene itereres over og renderes
+ * [SpråkMappable] skaper inline og verdiene itereres over og renderes
  * [Verdi] brukes For [EnumFelt], [TekstFelt] etc for å plukke ut selve verdiet og vise det frem i html'en
  * [HorisontalLinje] brukes i eks tilfeller der man har en liste med Barn, og lager en linje mellom hvert barn
  */
@@ -85,27 +79,28 @@ object SøknadTreeWalker {
     ): List<HtmlFelt> =
         when (entitet) {
             is SøknadsskjemaBarnetilsyn,
+            is SøknadsskjemaReiseTilSamling,
+            is SøknadsskjemaLæremidler,
+            is KjørelisteSkjema,
             is BarnMedBarnepass,
             is Utgifter,
             is OppholdUtenforNorge,
-            is SøknadsskjemaLæremidler,
             is HarRettTilUtstyrsstipend,
-            is KjørelisteSkjema,
             is Reisedag,
-            is SøknadsskjemaReiseTilSamling,
             is Samling,
-            is AdresseAvsnitt,
+            is Adresse,
             -> finnFelter(entitet, språk)
 
-            is HovedytelseAvsnitt,
-            is AktivitetAvsnitt,
-            is BarnAvsnitt,
-            is UtdanningAvsnitt,
-            is ArbeidOgOpphold,
-            is ReiseTilSamlingAktivitetAvsnitt,
-            is ReiseavstandAvsnitt,
-            is ReisemåteAvsnitt,
-            -> listOf(Avsnitt(label = tittelAvsnitt(entitet, språk), verdier = finnFelter(entitet, språk)))
+            is Avsnitt,
+            ->
+                listOf(
+                    Avsnitt(
+                        label =
+                            entitet.getSpråkMapper()[språk]
+                                ?: error("Finner ikke språkmapping for ${entitet::class.java.simpleName}-$språk"),
+                        verdier = finnFelter(entitet, språk),
+                    ),
+                )
 
             is UkeMedReisedager,
             -> listOf(Avsnitt(label = entitet.ukeLabel, verdier = mapListe(entitet.reisedager, språk)))
@@ -166,19 +161,19 @@ object SøknadTreeWalker {
     ): List<HtmlFelt> =
         entitet
             .filterNotNull()
-            .mapIndexed { index, it ->
+            .flatMapIndexed { index, it ->
                 val felter = mapFelter(it, språk)
                 if (index != 0) {
                     listOf(HorisontalLinje) + felter
                 } else {
                     felter
                 }
-            }.flatten()
+            }
 
     private fun finnFelter(
         entitet: Any,
         språk: Språkkode,
-    ) = finnParametere(entitet, språk).map { mapFelter(it, språk) }.flatten()
+    ) = finnParametere(entitet, språk).flatMap { mapFelter(it, språk) }
 
     private data class SpecialHåndtering<T : Any, OUT : Any>(
         val kClass: KClass<T>,
@@ -190,13 +185,22 @@ object SøknadTreeWalker {
     // eks SpecialHåndtering(BarnMedBarnepass::class, BarnMedBarnepass::ident) { TekstFelt("Fødselsnummer", "", it) },
     private val specialHåndtering =
         setOf<SpecialHåndtering<*, *>>(
-            SpecialHåndtering(ArbeidOgOpphold::class, ArbeidOgOpphold::oppholdUtenforNorgeSiste12mnd) { verdi, språk ->
+            SpecialHåndtering(
+                ArbeidOgOpphold::class,
+                ArbeidOgOpphold::oppholdUtenforNorgeSiste12mnd,
+            ) { verdi, språk ->
                 ListeMedTittel(tittelOppholdUtenforNorgeSiste12mnd(språk), verdi)
             },
-            SpecialHåndtering(ArbeidOgOpphold::class, ArbeidOgOpphold::oppholdUtenforNorgeNeste12mnd) { verdi, språk ->
+            SpecialHåndtering(
+                ArbeidOgOpphold::class,
+                ArbeidOgOpphold::oppholdUtenforNorgeNeste12mnd,
+            ) { verdi, språk ->
                 ListeMedTittel(tittelOppholdUtenforNorgeNeste12mnd(språk), verdi)
             },
-            SpecialHåndtering(SøknadsskjemaReiseTilSamling::class, SøknadsskjemaReiseTilSamling::samlinger) { verdi, språk ->
+            SpecialHåndtering(
+                SøknadsskjemaReiseTilSamling::class,
+                SøknadsskjemaReiseTilSamling::samlinger,
+            ) { verdi, språk ->
                 ListeMedTittel(tittelSamlinger(språk), verdi)
             },
         ).associateBy { Pair(it.kClass, it.kProperty1) }

@@ -243,6 +243,54 @@
     } ],
     "type" : "AVSNITT"
   }, {
+    "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
+    "verdier" : [ {
+      "verdi" : "Ja",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Land",
+    "verdier" : [ {
+      "verdi" : "Norge",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Gateadresse",
+    "verdier" : [ {
+      "verdi" : "Storgata 1",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Postnummer",
+    "verdier" : [ {
+      "verdi" : "0155",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Poststed",
+    "verdier" : [ {
+      "verdi" : "Oslo",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Antall kilometer én vei",
+    "verdier" : [ {
+      "verdi" : "42",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
     "type" : "LINJE"
   }, {
     "label" : "Startdato",
@@ -268,10 +316,58 @@
       "type" : "VERDI"
     } ],
     "type" : "AVSNITT"
+  }, {
+    "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
+    "verdier" : [ {
+      "verdi" : "Ja",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Land",
+    "verdier" : [ {
+      "verdi" : "Norge",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Gateadresse",
+    "verdier" : [ {
+      "verdi" : "Storgata 1",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Postnummer",
+    "verdier" : [ {
+      "verdi" : "0155",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Poststed",
+    "verdier" : [ {
+      "verdi" : "Oslo",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
+    "label" : "Antall kilometer én vei",
+    "verdier" : [ {
+      "verdi" : "42",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
   } ],
   "type" : "AVSNITT"
 }, {
-  "label" : "Reiseavstand",
+  "label" : "Avreiseadresse",
   "verdier" : [ {
     "label" : "Reiser du fra din folkeregistrerte adresse?",
     "verdier" : [ {
@@ -308,46 +404,6 @@
     "label" : "Poststed",
     "verdier" : [ {
       "verdi" : "Pæddekummen",
-      "alternativer" : null,
-      "type" : "VERDI"
-    } ],
-    "type" : "AVSNITT"
-  }, {
-    "label" : "Antall kilometer én vei",
-    "verdier" : [ {
-      "verdi" : "42",
-      "alternativer" : null,
-      "type" : "VERDI"
-    } ],
-    "type" : "AVSNITT"
-  }, {
-    "label" : "Land",
-    "verdier" : [ {
-      "verdi" : "Norge",
-      "alternativer" : null,
-      "type" : "VERDI"
-    } ],
-    "type" : "AVSNITT"
-  }, {
-    "label" : "Gateadresse",
-    "verdier" : [ {
-      "verdi" : "Storgata 1",
-      "alternativer" : null,
-      "type" : "VERDI"
-    } ],
-    "type" : "AVSNITT"
-  }, {
-    "label" : "Postnummer",
-    "verdier" : [ {
-      "verdi" : "0155",
-      "alternativer" : null,
-      "type" : "VERDI"
-    } ],
-    "type" : "AVSNITT"
-  }, {
-    "label" : "Poststed",
-    "verdier" : [ {
-      "verdi" : "Oslo",
       "alternativer" : null,
       "type" : "VERDI"
     } ],
