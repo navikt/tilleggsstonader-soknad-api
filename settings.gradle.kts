@@ -4,4 +4,5 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-includeBuild("../tilleggsstonader-kontrakter")
+// Avkommenter hvis du vl bruke en lokal versjon av kontrakter
+// includeBuild("../tilleggsstonader-kontrakter")
