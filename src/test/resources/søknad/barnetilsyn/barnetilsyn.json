@@ -119,7 +119,13 @@
             "label" : "Fom",
             "verdi" : "2024-01-01"
           }
-        } ]
+        } ],
+        "språkMapper" : {
+          "NB" : "Arbeid og opphold"
+        }
+      },
+      "språkMapper" : {
+        "NB" : "Hovedytelse"
       }
     },
     "aktivitet" : {
@@ -145,6 +151,9 @@
         "verdi" : "NEI",
         "svarTekst" : "Nei",
         "alternativer" : [ ]
+      },
+      "språkMapper" : {
+        "NB" : "Aktivitet"
       }
     },
     "barn" : {
@@ -164,17 +173,21 @@
           "alternativer" : [ "Alt1", "Alt2" ]
         },
         "utgifter" : {
+          "harUtgifterTilPassHelePerioden" : {
+            "label" : "Har utgifter?",
+            "verdi" : "NEI",
+            "svarTekst" : "Nei",
+            "alternativer" : [ ]
+          },
           "fom" : {
             "label" : "Fra",
-            "verdi" : "2025-09-09"},
-          "harUtgifterTilPassHelePerioden" : {
-            "alternativer" : [],
-            "label" : "Har utgifter?",
-            "svarTekst" : "Nei",
-            "verdi" : "NEI"},
+            "verdi" : "2025-09-09"
+          },
           "tom" : {
             "label" : "Til",
-            "verdi" : "2025-10-09"}},
+            "verdi" : "2025-10-09"
+          }
+        },
         "startetIFemte" : {
           "label" : "Har startet i 5. klasse?",
           "verdi" : "JA",
@@ -203,17 +216,21 @@
           "alternativer" : [ ]
         },
         "utgifter" : {
+          "harUtgifterTilPassHelePerioden" : {
+            "label" : "Har utgifter?",
+            "verdi" : "NEI",
+            "svarTekst" : "Nei",
+            "alternativer" : [ ]
+          },
           "fom" : {
             "label" : "Fra",
-            "verdi" : "2025-09-09"},
-          "harUtgifterTilPassHelePerioden" : {
-            "alternativer" : [],
-            "label" : "Har utgifter?",
-            "svarTekst" : "Nei",
-            "verdi" : "NEI"},
+            "verdi" : "2025-09-09"
+          },
           "tom" : {
             "label" : "Til",
-            "verdi" : "2025-10-09"}},
+            "verdi" : "2025-10-09"
+          }
+        },
         "startetIFemte" : {
           "label" : "Har startet i 5. klasse?",
           "verdi" : "JA",
@@ -226,7 +243,10 @@
           "svarTekst" : "Mye borte",
           "alternativer" : [ ]
         }
-      } ]
+      } ],
+      "språkMapper" : {
+        "NB" : "Barn"
+      }
     },
     "dokumentasjon" : [ {
       "type" : "UTGIFTER_PASS_PRIVAT",
@@ -244,6 +264,9 @@
         "navn" : "Navn på vedlegg"
       } ],
       "barnId" : "08921997974"
-    } ]
+    } ],
+    "språkMapper" : {
+      "NB" : "Søknad om støtte til pass av barn"
+    }
   }
 }

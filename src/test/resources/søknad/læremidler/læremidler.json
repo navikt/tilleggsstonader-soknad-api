@@ -119,7 +119,13 @@
             "label" : "Fom",
             "verdi" : "2024-01-01"
           }
-        } ]
+        } ],
+        "språkMapper" : {
+          "NB" : "Arbeid og opphold"
+        }
+      },
+      "språkMapper" : {
+        "NB" : "Hovedytelse"
       }
     },
     "utdanning" : {
@@ -140,8 +146,9 @@
         "svarTekst" : "Utdanning på fagskole, høgskole eller universitet",
         "alternativer" : [ ]
       },
-      "erLærlingEllerLiknende": null,
-      "harTidligereFullførtVgs": null,
+      "mottarUtstyrsstipend" : null,
+      "erLærlingEllerLiknende" : null,
+      "harTidligereFullførtVgs" : null,
       "harRettTilUtstyrsstipend" : {
         "erLærlingEllerLiknende" : {
           "label" : "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",
@@ -162,8 +169,13 @@
         "svarTekst" : "Ja",
         "alternativer" : [ ]
       },
-      "mottarUtstyrsstipend": null
+      "språkMapper" : {
+        "NB" : "Utdanning"
+      }
     },
-    "dokumentasjon" : [ ]
+    "dokumentasjon" : [ ],
+    "språkMapper" : {
+      "NB" : "Søknad om støtte læremidler"
+    }
   }
 }

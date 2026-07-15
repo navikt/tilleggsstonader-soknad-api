@@ -119,7 +119,13 @@
             "label" : "Fom",
             "verdi" : "2024-01-01"
           }
-        } ]
+        } ],
+        "språkMapper" : {
+          "NB" : "Arbeid og opphold"
+        }
+      },
+      "språkMapper" : {
+        "NB" : "Hovedytelse"
       }
     },
     "aktivitet" : {
@@ -142,6 +148,11 @@
         "verdi" : "NEI",
         "svarTekst" : "Nei",
         "alternativer" : [ ]
+      },
+      "tilleggsopplysningerAnnenAktivitet" : null,
+      "annenAktivitetTypeUtdanning" : null,
+      "språkMapper" : {
+        "NB" : "Aktivitet"
       }
     },
     "samlinger" : [ {
@@ -158,44 +169,14 @@
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
-      }
-    }, {
-      "fom" : {
-        "label" : "Startdato",
-        "verdi" : "2024-04-15"
       },
-      "tom" : {
-        "label" : "Sluttdato",
-        "verdi" : "2024-04-17"
-      },
-      "erObligatorisk" : {
-        "label" : "Er samlingen obligatorisk?",
+      "harBruktEkstraReiseDager" : {
+        "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
-      }
-    } ],
-    "reiseavstand" : {
-      "adresseDetSkalReisesFra" : {
-        "land" : {
-          "label" : "Land",
-          "verdi" : "NO",
-          "svarTekst" : "Norge"
-        },
-        "gateadresse" : {
-          "verdi" : "Lurendreiergata 1",
-          "label" : "Gateadresse"
-        },
-        "postnummer" : {
-          "verdi" : "5132",
-          "label" : "Postnummer"
-        },
-        "poststed" : {
-          "verdi" : "Pæddekummen",
-          "label" : "Poststed"
-        }
       },
-      "aktivitetsadresse" : {
+      "adresse" : {
         "land" : {
           "label" : "Land",
           "verdi" : "NOR",
@@ -217,28 +198,109 @@
       "antallKilometerEnVei" : {
         "verdi" : "42",
         "label" : "Antall kilometer én vei"
+      }
+    }, {
+      "fom" : {
+        "label" : "Startdato",
+        "verdi" : "2024-04-15"
       },
+      "tom" : {
+        "label" : "Sluttdato",
+        "verdi" : "2024-04-17"
+      },
+      "erObligatorisk" : {
+        "label" : "Er samlingen obligatorisk?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
+      },
+      "harBruktEkstraReiseDager" : {
+        "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
+        "verdi" : "JA",
+        "svarTekst" : "Ja",
+        "alternativer" : [ ]
+      },
+      "adresse" : {
+        "land" : {
+          "label" : "Land",
+          "verdi" : "NOR",
+          "svarTekst" : "Norge"
+        },
+        "gateadresse" : {
+          "verdi" : "Storgata 1",
+          "label" : "Gateadresse"
+        },
+        "postnummer" : {
+          "verdi" : "0155",
+          "label" : "Postnummer"
+        },
+        "poststed" : {
+          "verdi" : "Oslo",
+          "label" : "Poststed"
+        }
+      },
+      "antallKilometerEnVei" : {
+        "verdi" : "42",
+        "label" : "Antall kilometer én vei"
+      }
+    } ],
+    "avreiseadresse" : {
       "skalReiseFraFolkeregistrertAdresse" : {
         "label" : "Reiser du fra din folkeregistrerte adresse?",
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
+      },
+      "adresseDetSkalReisesFra" : {
+        "land" : {
+          "label" : "Land",
+          "verdi" : "NO",
+          "svarTekst" : "Norge"
+        },
+        "gateadresse" : {
+          "verdi" : "Lurendreiergata 1",
+          "label" : "Gateadresse"
+        },
+        "postnummer" : {
+          "verdi" : "5132",
+          "label" : "Postnummer"
+        },
+        "poststed" : {
+          "verdi" : "Pæddekummen",
+          "label" : "Poststed"
+        }
+      },
+      "språkMapper" : {
+        "NB" : "Avreiseadresse"
       }
     },
     "reisemåte" : {
-      "kanReiseKollektivt" : {
+      "kanReiseMedOffentligTransport" : {
         "label" : "Kan du reise kollektivt?",
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
       },
-      "totalutgifterKollektivt" : {
+      "totalUtgifterOffentligTransport" : {
         "verdi" : "450",
         "label" : "Totale kollektivutgifter"
       },
+      "kanIkkeReiseMedOffentligTransportBegrunnelser" : null,
+      "barnehageGateadresse" : null,
+      "barnehagePostnummer" : null,
       "kanBenytteEgenBil" : null,
-      "kanBenytteDrosje" : null
+      "kanIkkeBenytteEgenBilBegrunnelser" : null,
+      "ønskerDekketUtgifterForDrosje" : null,
+      "betalerForReiseSelv" : null,
+      "harTTKort" : null,
+      "reiseMedBilUtgifter" : null,
+      "språkMapper" : {
+        "NB" : "Reisemåte"
+      }
     },
-    "dokumentasjon" : [ ]
+    "dokumentasjon" : [ ],
+    "språkMapper" : {
+      "NB" : "Søknad om støtte til reise til samling"
+    }
   }
 }
