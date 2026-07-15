@@ -7,7 +7,7 @@ object SpråkMapper {
     fun tittelSøknadsskjema(søknad: InnsendtSkjema<*>): String {
         val språk = søknad.språk
 
-        return søknad.skjema.getSpråkMapper()[språk]
+        return søknad.skjema.språkMapper()[språk]
             ?: error("Finner ikke språkmapping for ${søknad.skjema::class.java.simpleName}-$språk")
     }
 

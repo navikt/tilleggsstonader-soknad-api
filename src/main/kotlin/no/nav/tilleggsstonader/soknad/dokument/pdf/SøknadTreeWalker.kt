@@ -95,7 +95,7 @@ object SøknadTreeWalker {
                 listOf(
                     Avsnitt(
                         label =
-                            entitet.getSpråkMapper()[språk]
+                            entitet.språkMapper()[språk]
                                 ?: error("Finner ikke språkmapping for ${entitet::class.java.simpleName}-$språk"),
                         verdier = finnFelter(entitet, språk),
                     ),
