@@ -6,7 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOpphold
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOppholdAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ÅrsakOppholdUtenforNorge
@@ -62,7 +62,7 @@ class ArbeidOgOppholdMapperTest {
                 ),
             )
         val expected =
-            ArbeidOgOpphold(
+            ArbeidOgOppholdAvsnitt(
                 jobberIAnnetLand = enumJaNei("jobberIAnnetLand"),
                 jobbAnnetLand = SelectFelt("jobbAnnetLand", "SWE", "Sverige"),
                 harPengestøtteAnnetLand = harPengestøtteAnnetLand(),

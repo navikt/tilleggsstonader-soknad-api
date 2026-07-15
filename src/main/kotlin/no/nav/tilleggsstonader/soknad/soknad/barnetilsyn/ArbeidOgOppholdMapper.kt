@@ -1,12 +1,12 @@
 package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
 
-import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOpphold
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOppholdAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
 import no.nav.tilleggsstonader.soknad.soknad.ArbeidOgOppholdDto
 import no.nav.tilleggsstonader.soknad.soknad.OppholdUtenforNorgeDto
 
 object ArbeidOgOppholdMapper {
-    fun mapArbeidOgOpphold(arbeidOgOpphold: ArbeidOgOppholdDto): ArbeidOgOpphold? {
+    fun mapArbeidOgOpphold(arbeidOgOpphold: ArbeidOgOppholdDto): ArbeidOgOppholdAvsnitt? {
         if (listOfNotNull(
                 arbeidOgOpphold.jobberIAnnetLand,
                 arbeidOgOpphold.harPengestøtteAnnetLand,
@@ -15,7 +15,7 @@ object ArbeidOgOppholdMapper {
         ) {
             return null
         }
-        return ArbeidOgOpphold(
+        return ArbeidOgOppholdAvsnitt(
             jobberIAnnetLand = arbeidOgOpphold.jobberIAnnetLand,
             jobbAnnetLand = arbeidOgOpphold.jobbAnnetLand,
             harPengestøtteAnnetLand = arbeidOgOpphold.harPengestøtteAnnetLand,

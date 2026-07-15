@@ -19,7 +19,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.UkeMedReisedager
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.Utgifter
-import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOpphold
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOppholdAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Adresse
@@ -186,14 +186,14 @@ object SøknadTreeWalker {
     private val specialHåndtering =
         setOf<SpecialHåndtering<*, *>>(
             SpecialHåndtering(
-                ArbeidOgOpphold::class,
-                ArbeidOgOpphold::oppholdUtenforNorgeSiste12mnd,
+                ArbeidOgOppholdAvsnitt::class,
+                ArbeidOgOppholdAvsnitt::oppholdUtenforNorgeSiste12mnd,
             ) { verdi, språk ->
                 ListeMedTittel(tittelOppholdUtenforNorgeSiste12mnd(språk), verdi)
             },
             SpecialHåndtering(
-                ArbeidOgOpphold::class,
-                ArbeidOgOpphold::oppholdUtenforNorgeNeste12mnd,
+                ArbeidOgOppholdAvsnitt::class,
+                ArbeidOgOppholdAvsnitt::oppholdUtenforNorgeNeste12mnd,
             ) { verdi, språk ->
                 ListeMedTittel(tittelOppholdUtenforNorgeNeste12mnd(språk), verdi)
             },

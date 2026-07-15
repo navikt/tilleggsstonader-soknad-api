@@ -67,9 +67,6 @@
           "tom" : {
             "label" : "Fom",
             "verdi" : "2024-01-01"
-          },
-          "språkMapper" : {
-            "NB" : "Arbeid og opphold"
           }
         }, {
           "land" : {
@@ -92,9 +89,6 @@
           "tom" : {
             "label" : "Fom",
             "verdi" : "2024-01-01"
-          },
-          "språkMapper" : {
-            "NB" : "Arbeid og opphold"
           }
         } ],
         "harOppholdUtenforNorgeNeste12mnd" : {
@@ -124,9 +118,6 @@
           "tom" : {
             "label" : "Fom",
             "verdi" : "2024-01-01"
-          },
-          "språkMapper" : {
-            "NB" : "Arbeid og opphold"
           }
         } ],
         "språkMapper" : {
