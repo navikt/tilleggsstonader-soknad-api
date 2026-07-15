@@ -119,13 +119,7 @@
             "label" : "Fom",
             "verdi" : "2024-01-01"
           }
-        } ],
-        "språkMapper" : {
-          "NB" : "Arbeid og opphold"
-        }
-      },
-      "språkMapper" : {
-        "NB" : "Hovedytelse"
+        } ]
       }
     },
     "aktivitet" : {
@@ -151,9 +145,6 @@
         "verdi" : "NEI",
         "svarTekst" : "Nei",
         "alternativer" : [ ]
-      },
-      "språkMapper" : {
-        "NB" : "Aktivitet"
       }
     },
     "barn" : {
@@ -243,10 +234,7 @@
           "svarTekst" : "Mye borte",
           "alternativer" : [ ]
         }
-      } ],
-      "språkMapper" : {
-        "NB" : "Barn"
-      }
+      } ]
     },
     "dokumentasjon" : [ {
       "type" : "UTGIFTER_PASS_PRIVAT",
@@ -264,9 +252,6 @@
         "navn" : "Navn på vedlegg"
       } ],
       "barnId" : "08921997974"
-    } ],
-    "språkMapper" : {
-      "NB" : "Søknad om støtte til pass av barn"
-    }
+    } ]
   }
 }

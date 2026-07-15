@@ -119,13 +119,7 @@
             "label" : "Fom",
             "verdi" : "2024-01-01"
           }
-        } ],
-        "språkMapper" : {
-          "NB" : "Arbeid og opphold"
-        }
-      },
-      "språkMapper" : {
-        "NB" : "Hovedytelse"
+        } ]
       }
     },
     "aktivitet" : {
@@ -150,10 +144,7 @@
         "alternativer" : [ ]
       },
       "tilleggsopplysningerAnnenAktivitet" : null,
-      "annenAktivitetTypeUtdanning" : null,
-      "språkMapper" : {
-        "NB" : "Aktivitet"
-      }
+      "annenAktivitetTypeUtdanning" : null
     },
     "samlinger" : [ {
       "fom" : {
@@ -269,9 +260,6 @@
           "verdi" : "Pæddekummen",
           "label" : "Poststed"
         }
-      },
-      "språkMapper" : {
-        "NB" : "Avreiseadresse"
       }
     },
     "reisemåte" : {
@@ -293,14 +281,8 @@
       "ønskerDekketUtgifterForDrosje" : null,
       "betalerForReiseSelv" : null,
       "harTTKort" : null,
-      "reiseMedBilUtgifter" : null,
-      "språkMapper" : {
-        "NB" : "Reisemåte"
-      }
+      "reiseMedBilUtgifter" : null
     },
-    "dokumentasjon" : [ ],
-    "språkMapper" : {
-      "NB" : "Søknad om støtte til reise til samling"
-    }
+    "dokumentasjon" : [ ]
   }
 }

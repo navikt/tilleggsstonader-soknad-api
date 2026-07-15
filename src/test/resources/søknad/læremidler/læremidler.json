@@ -119,13 +119,7 @@
             "label" : "Fom",
             "verdi" : "2024-01-01"
           }
-        } ],
-        "språkMapper" : {
-          "NB" : "Arbeid og opphold"
-        }
-      },
-      "språkMapper" : {
-        "NB" : "Hovedytelse"
+        } ]
       }
     },
     "utdanning" : {
@@ -168,14 +162,8 @@
         "verdi" : "JA",
         "svarTekst" : "Ja",
         "alternativer" : [ ]
-      },
-      "språkMapper" : {
-        "NB" : "Utdanning"
       }
     },
-    "dokumentasjon" : [ ],
-    "språkMapper" : {
-      "NB" : "Søknad om støtte læremidler"
-    }
+    "dokumentasjon" : [ ]
   }
 }
