@@ -1,7 +1,6 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
-import no.nav.tilleggsstonader.kontrakter.søknad.Avsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
@@ -10,7 +9,6 @@ import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Reisedag
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.SpråkMappable
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
@@ -35,10 +33,11 @@ import kotlin.reflect.KProperty1
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
+import no.nav.tilleggsstonader.kontrakter.søknad.Avsnitt as IAvsnitt
 
 /**
  * [SøknadTreeWalker] itererer over en søknad og genererer en struktur som brukes for å genere Html
- * [SpråkMappable] skaper inline og verdiene itereres over og renderes
+ * [Avsnitt] skaper inline og verdiene itereres over og renderes
  * [Verdi] brukes For [EnumFelt], [TekstFelt] etc for å plukke ut selve verdiet og vise det frem i html'en
  * [HorisontalLinje] brukes i eks tilfeller der man har en liste med Barn, og lager en linje mellom hvert barn
  */
@@ -91,7 +90,7 @@ object SøknadTreeWalker {
             is Adresse,
             -> finnFelter(entitet, språk)
 
-            is Avsnitt,
+            is IAvsnitt,
             ->
                 listOf(
                     Avsnitt(
