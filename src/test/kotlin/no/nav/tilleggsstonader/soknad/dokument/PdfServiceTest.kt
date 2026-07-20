@@ -11,9 +11,9 @@ import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagKjøreliste
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagSøknad
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil.listFiles

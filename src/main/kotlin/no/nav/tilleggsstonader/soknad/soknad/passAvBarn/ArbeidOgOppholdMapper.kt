@@ -1,4 +1,4 @@
-package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
+package no.nav.tilleggsstonader.soknad.soknad.passAvBarn
 
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOppholdAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge

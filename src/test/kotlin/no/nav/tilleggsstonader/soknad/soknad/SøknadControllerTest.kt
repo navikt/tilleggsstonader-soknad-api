@@ -14,9 +14,9 @@ import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnS�
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadReiseTilSamling
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingUtil
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import no.nav.tilleggsstonader.soknad.util.FileUtil

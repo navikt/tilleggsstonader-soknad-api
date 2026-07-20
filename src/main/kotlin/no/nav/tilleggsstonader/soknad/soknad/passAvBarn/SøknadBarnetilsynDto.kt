@@ -1,13 +1,13 @@
-package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
+package no.nav.tilleggsstonader.soknad.soknad.passAvBarn
 
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFlereValgFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.AnnenAktivitetType
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.AnnenAktivitetType
+import no.nav.tilleggsstonader.kontrakter.søknad.passavbarn.TypeBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.passavbarn.ÅrsakBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.HovedytelseDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException

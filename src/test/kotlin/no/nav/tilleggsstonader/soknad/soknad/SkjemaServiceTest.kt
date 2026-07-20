@@ -13,11 +13,11 @@ import no.nav.tilleggsstonader.soknad.dokument.FamilieVedleggClient
 import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.person.dto.PersonMedBarnDto
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.PassAvBarnMapper
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.ReiseTilSamlingMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -39,7 +39,7 @@ class SkjemaServiceTest {
         SkjemaService(
             skjemaRepository = skjemaRepository,
             vedleggRepository = vedleggRepository,
-            barnetilsynMapper = BarnetilsynMapper(),
+            passAvBarnMapper = PassAvBarnMapper(),
             læremidlerMapper = LæremidlerMapper(),
             reiseTilSamlingMapper = ReiseTilSamlingMapper(),
             taskService = mockk<TaskService>(relaxed = true),

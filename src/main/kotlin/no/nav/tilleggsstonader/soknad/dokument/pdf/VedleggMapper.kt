@@ -3,7 +3,7 @@ package no.nav.tilleggsstonader.soknad.dokument.pdf
 import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
-import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaPassAvBarn
 import no.nav.tilleggsstonader.soknad.dokument.Dokument
 import no.nav.tilleggsstonader.soknad.dokument.DokumentasjonAvsnitt
 
@@ -39,7 +39,7 @@ object VedleggMapper {
 
     private fun mapBarnIdentTilNavn(søknad: InnsendtSkjema<*>): Map<String, String> {
         val skjema = søknad.skjema
-        return if (skjema is SøknadsskjemaBarnetilsyn) {
+        return if (skjema is SøknadsskjemaPassAvBarn) {
             skjema.barn.barnMedBarnepass.associate { it.ident.verdi to it.navn.verdi }
         } else {
             emptyMap()

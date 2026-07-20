@@ -9,17 +9,17 @@ import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.Reisedag
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaPassAvBarn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.UkeMedReisedager
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.BarnMedBarnepass
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.Utgifter
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ArbeidOgOppholdAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.OppholdUtenforNorge
 import no.nav.tilleggsstonader.kontrakter.søknad.læremidler.HarRettTilUtstyrsstipend
+import no.nav.tilleggsstonader.kontrakter.søknad.passavbarn.BarnMedBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.passavbarn.Utgifter
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Adresse
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Samling
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
@@ -77,7 +77,7 @@ object SøknadTreeWalker {
         språk: Språkkode,
     ): List<HtmlFelt> =
         when (entitet) {
-            is SøknadsskjemaBarnetilsyn,
+            is SøknadsskjemaPassAvBarn,
             is SøknadsskjemaReiseTilSamling,
             is SøknadsskjemaLæremidler,
             is KjørelisteSkjema,

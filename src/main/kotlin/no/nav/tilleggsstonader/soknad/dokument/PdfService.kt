@@ -6,8 +6,8 @@ import no.nav.tilleggsstonader.kontrakter.felles.tilStønadstyper
 import no.nav.tilleggsstonader.kontrakter.sak.DokumentBrevkode
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
-import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaBarnetilsyn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaPassAvBarn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Søkerinformasjon
@@ -34,7 +34,7 @@ class PdfService(
 
         val html =
             when (innsendtSkjema.skjema) {
-                is SøknadsskjemaBarnetilsyn, is SøknadsskjemaLæremidler, is SøknadsskjemaReiseTilSamling ->
+                is SøknadsskjemaPassAvBarn, is SøknadsskjemaLæremidler, is SøknadsskjemaReiseTilSamling ->
                     genererSøknadHtml(
                         skjema,
                         innsendtSkjema,
@@ -115,7 +115,7 @@ class PdfService(
 
     private fun dokumentBrevKode(innsendtSkjema: InnsendtSkjema<*>): DokumentBrevkode =
         when (innsendtSkjema.skjema) {
-            is SøknadsskjemaBarnetilsyn -> DokumentBrevkode.BARNETILSYN
+            is SøknadsskjemaPassAvBarn -> DokumentBrevkode.PASS_AV_BARN
             is SøknadsskjemaLæremidler -> DokumentBrevkode.LÆREMIDLER
             is KjørelisteSkjema -> DokumentBrevkode.DAGLIG_REISE_KJØRELISTE
             is SøknadsskjemaReiseTilSamling -> DokumentBrevkode.REISE_TIL_SAMLING
@@ -130,10 +130,14 @@ class PdfService(
     private fun parseInnsendtSkjema(skjema: Skjema): InnsendtSkjema<*> {
         val json = skjema.skjemaJson.json
         return when (skjema.type) {
-            Skjematype.SØKNAD_BARNETILSYN -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaBarnetilsyn>>(json)
+            Skjematype.SØKNAD_BARNETILSYN -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaPassAvBarn>>(json)
             Skjematype.SØKNAD_LÆREMIDLER -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaLæremidler>>(json)
             Skjematype.DAGLIG_REISE_KJØRELISTE -> jsonMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(json)
-            Skjematype.SØKNAD_REISE_TIL_SAMLING -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaReiseTilSamling>>(json)
+            Skjematype.SØKNAD_REISE_TIL_SAMLING ->
+                jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaReiseTilSamling>>(
+                    json,
+                )
+
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema ${skjema.type}")
         }
