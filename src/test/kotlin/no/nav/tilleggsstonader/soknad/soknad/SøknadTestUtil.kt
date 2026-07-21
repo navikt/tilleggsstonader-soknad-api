@@ -16,11 +16,11 @@ import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteDto
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteMapper
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.PassAvBarnMapper
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.ReiseTilSamlingMapper
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
 import java.time.LocalDate
@@ -42,7 +42,7 @@ object SøknadTestUtil {
     fun lagInnsendtSkjema(kjørelisteDto: KjørelisteDto) = KjørelisteMapper.map("25518735813", mottattTidspunkt, kjørelisteDto)
 
     fun lagInnsendtSkjema(søknadDto: SøknadBarnetilsynDto) =
-        BarnetilsynMapper().map("25518735813", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
+        PassAvBarnMapper().map("25518735813", mottattTidspunkt, mapBarn(søknadDto), søknadDto)
 
     fun lagInnsendtSkjema(søknadDto: SøknadLæremidlerDto) = LæremidlerMapper().map("25518735813", mottattTidspunkt, søknadDto)
 

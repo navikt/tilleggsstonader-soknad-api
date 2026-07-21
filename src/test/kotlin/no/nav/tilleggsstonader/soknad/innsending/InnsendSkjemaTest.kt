@@ -11,9 +11,9 @@ import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnS�
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadLæremidler
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.tasks.kjørTasksKlareForProsesseringTilIngenTasksIgjen
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteTestdata
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

@@ -9,9 +9,9 @@ import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.soknad.arkivering.ArkiverDokumentRequestMapper.toDto
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.ByteArrayWrapper
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.UUID

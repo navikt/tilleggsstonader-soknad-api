@@ -1,4 +1,4 @@
-package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
+package no.nav.tilleggsstonader.soknad.soknad.passAvBarn
 
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
@@ -12,7 +12,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.felles.TypePengestøtte
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.ÅrsakOppholdUtenforNorge
 import no.nav.tilleggsstonader.soknad.soknad.ArbeidOgOppholdDto
 import no.nav.tilleggsstonader.soknad.soknad.OppholdUtenforNorgeDto
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.ArbeidOgOppholdMapper.mapArbeidOgOpphold
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.ArbeidOgOppholdMapper.mapArbeidOgOpphold
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate

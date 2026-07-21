@@ -1,9 +1,9 @@
-package no.nav.tilleggsstonader.soknad.soknad.barnetilsyn
+package no.nav.tilleggsstonader.soknad.soknad.passAvBarn
 
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.ÅrsakBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.passavbarn.TypeBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.passavbarn.ÅrsakBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
@@ -51,7 +51,12 @@ class SøknadBarnetilsynDtoTest {
             BarnMedBarnepass(
                 ident = "ident",
                 type = EnumFelt("", TypeBarnepass.BARNEHAGE_SFO_AKS, "", emptyList()),
-                utgifter = Utgifter(EnumFelt(label = "", verdi = JaNei.JA, svarTekst = "", alternativer = emptyList()), null, null),
+                utgifter =
+                    Utgifter(
+                        EnumFelt(label = "", verdi = JaNei.JA, svarTekst = "", alternativer = emptyList()),
+                        null,
+                        null,
+                    ),
                 startetIFemte = startetIFemteklasse?.let { EnumFelt("", startetIFemteklasse, "", emptyList()) },
                 årsak = årsak,
             )

@@ -18,14 +18,14 @@ import no.nav.tilleggsstonader.soknad.person.PersonService
 import no.nav.tilleggsstonader.soknad.person.dto.Barn
 import no.nav.tilleggsstonader.soknad.prosessering.LagPdfTask
 import no.nav.tilleggsstonader.soknad.prosessering.SendNotifikasjonTask
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnetilsynMapper
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.PassAvBarnMapper
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.ReiseTilSamlingMapper
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
 import org.springframework.stereotype.Service
@@ -37,7 +37,7 @@ import java.util.UUID
 class SkjemaService(
     private val skjemaRepository: SkjemaRepository,
     private val vedleggRepository: VedleggRepository,
-    private val barnetilsynMapper: BarnetilsynMapper,
+    private val passAvBarnMapper: PassAvBarnMapper,
     private val læremidlerMapper: LæremidlerMapper,
     private val reiseTilSamlingMapper: ReiseTilSamlingMapper,
     private val taskService: TaskService,
@@ -68,7 +68,7 @@ class SkjemaService(
         val opprettetSkjema =
             lagreSkjema(
                 type = Skjematype.SØKNAD_BARNETILSYN,
-                innsendtSkjema = barnetilsynMapper.map(ident, mottattTidspunkt, barn, søknad),
+                innsendtSkjema = passAvBarnMapper.map(ident, mottattTidspunkt, barn, søknad),
                 vedlegg = vedlegg,
                 frontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
             )

@@ -5,9 +5,9 @@ import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Adresse
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AvreiseadresseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReiseMedBilUtgifterAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReiseTilSamlingAktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReisemåteAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Samling
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.TilleggsopplysningerAnnenAktivitetAvsnitt
@@ -39,7 +39,7 @@ class ReiseTilSamlingMapper {
         )
 
     private fun mapAktivitet(dto: AktivitetDto) =
-        AktivitetAvsnitt(
+        ReiseTilSamlingAktivitetAvsnitt(
             aktiviteter = dto.aktiviteter,
             annenAktivitet = dto.annenAktivitet,
             lønnetAktivitet = dto.lønnetAktivitet,

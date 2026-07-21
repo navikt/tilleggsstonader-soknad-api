@@ -2,8 +2,8 @@ package no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall
 
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.soknad.Kvittering
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import org.springframework.test.web.servlet.client.expectBody

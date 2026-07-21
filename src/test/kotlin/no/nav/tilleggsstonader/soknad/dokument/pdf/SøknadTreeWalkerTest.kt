@@ -2,11 +2,11 @@ package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.kontrakter.felles.JsonMapperProvider.jsonMapper
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.barnetilsyn.TypeBarnepass
+import no.nav.tilleggsstonader.kontrakter.søknad.passavbarn.TypeBarnepass
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil.lagInnsendtSkjema
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.BarnMedBarnepass
-import no.nav.tilleggsstonader.soknad.soknad.barnetilsyn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.BarnMedBarnepass
+import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
@@ -66,7 +66,10 @@ class SøknadTreeWalkerTest {
                 årsak = null,
             )
         val søknad =
-            SøknadBarnetilsynUtil.søknadBarnetilsyn.copy(barnMedBarnepass = listOf(barnMedBarnepass), dokumentasjon = emptyList())
+            SøknadBarnetilsynUtil.søknadBarnetilsyn.copy(
+                barnMedBarnepass = listOf(barnMedBarnepass),
+                dokumentasjon = emptyList(),
+            )
         val søknadsskjema = lagInnsendtSkjema(søknad)
         val result = SøknadTreeWalker.mapSøknad(søknadsskjema, søkerinformasjon)
         assertExpected(
