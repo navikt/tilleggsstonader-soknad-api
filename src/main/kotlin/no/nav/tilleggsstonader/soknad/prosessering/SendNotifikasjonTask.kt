@@ -32,6 +32,7 @@ class SendNotifikasjonTask(
             Skjematype.DAGLIG_REISE_KJØRELISTE -> "Vi har mottatt din kjøreliste"
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE -> error("Håndterer ikke skjema $skjematype")
             Skjematype.SØKNAD_REISE_TIL_SAMLING -> "Vi har mottatt søknaden din om reise til samling."
+            Skjematype.SØKNAD_FLYTTING -> "Vi har mottatt søknaden din om støtte til flytting."
         }
 
     companion object {

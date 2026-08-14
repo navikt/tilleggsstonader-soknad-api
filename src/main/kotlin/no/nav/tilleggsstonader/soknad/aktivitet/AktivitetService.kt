@@ -45,6 +45,7 @@ class AktivitetService(
             Skjematype.SØKNAD_LÆREMIDLER -> 6
             Skjematype.SØKNAD_DAGLIG_REISE -> 3
             Skjematype.SØKNAD_REISE_TIL_SAMLING -> 3
+            Skjematype.SØKNAD_FLYTTING -> 6
             Skjematype.DAGLIG_REISE_KJØRELISTE -> error("Skjematype $forSkjema skal ikke brukes for å hente aktiviteter")
         }
 }

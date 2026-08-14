@@ -62,6 +62,9 @@ object ArkiverDokumentRequestMapper {
                 error("Håndterer ikke skjema $type")
 
             Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_SØKNAD
+
+            // TODO: Implementer arkivering for SØKNAD_FLYTTING med korrekt stønadstype (TSO/TSR)
+            Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema $type")
         }
 
     private fun typeVedlegg(
@@ -82,6 +85,9 @@ object ArkiverDokumentRequestMapper {
                 error("Håndterer ikke skjema $type")
 
             Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_SØKNAD_VEDLEGG
+
+            // TODO: Implementer arkivering av vedlegg for SØKNAD_FLYTTING med korrekt stønadstype (TSO/TSR)
+            Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema $type")
         }
 
     private fun mapVedlegg(
@@ -112,6 +118,7 @@ fun Dokumenttype?.dokumentTittel(): String =
         Dokumenttype.BARNETILSYN_SØKNAD -> "Søknad om støtte til pass av barn"
         Dokumenttype.LÆREMIDLER_SØKNAD -> "Søknad om støtte til læremidler"
         Dokumenttype.REISE_TIL_SAMLING_SØKNAD -> "Søknad om støtte til reise til samling"
+        Dokumenttype.FLYTTING_TSO_SØKNAD, Dokumenttype.FLYTTING_TSR_SØKNAD -> "Søknad om støtte til flytting"
         Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE, Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE,
         -> "Refusjon av utgifter til daglig reise med bruk av bil"
 
