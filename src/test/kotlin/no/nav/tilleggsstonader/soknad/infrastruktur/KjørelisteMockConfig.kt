@@ -3,15 +3,11 @@ package no.nav.tilleggsstonader.soknad.infrastruktur
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
-import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
-import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteDto
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteService
-import no.nav.tilleggsstonader.soknad.kjøreliste.ReisedagDto
-import no.nav.tilleggsstonader.soknad.kjøreliste.UkeMedReisedagerDto
+import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteVisningDto
+import no.nav.tilleggsstonader.soknad.kjøreliste.ReisedagVisningDto
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
-import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -41,38 +37,36 @@ class KjørelisteMockConfig {
          * Mock-data basert på rammevedtak "1" i DagligReisePrivatBilClientConfig.
          * Uke 1 (1. jan - 5. jan 2025) har innsendtDato satt, så vi returnerer kjøreliste for den uken.
          */
-        private fun kjørelisteDtoForReise1(): KjørelisteDto =
-            KjørelisteDto(
-                reiseId = "1",
-                reisedagerPerUkeAvsnitt =
-                    listOf(
-                        UkeMedReisedagerDto(
-                            ukeLabel = "Uke 1",
-                            reisedagerLabel = "Ukentlige reisedager: 3",
-                            spørsmål = "Hvilke dager kjørte du?",
-                            reisedager =
-                                listOf(
-                                    reisedag(dato = LocalDate.of(2025, 1, 1), harKjørt = true, parkering = 50),
-                                    reisedag(dato = LocalDate.of(2025, 1, 2), harKjørt = true, parkering = 0),
-                                    reisedag(dato = LocalDate.of(2025, 1, 3), harKjørt = true, parkering = 30),
-                                    reisedag(dato = LocalDate.of(2025, 1, 4), harKjørt = false, parkering = null),
-                                    reisedag(dato = LocalDate.of(2025, 1, 5), harKjørt = false, parkering = null),
-                                ),
+        private fun kjørelisteDtoForReise1(): KjørelisteVisningDto =
+            KjørelisteVisningDto(
+                reisedager =
+                    listOf<ReisedagVisningDto>(
+                        ReisedagVisningDto(
+                            dato = LocalDate.of(2025, 1, 1),
+                            harKjørt = true,
+                            parkeringsutgift = 50,
+                        ),
+                        ReisedagVisningDto(
+                            dato = LocalDate.of(2025, 1, 2),
+                            harKjørt = true,
+                            parkeringsutgift = 0,
+                        ),
+                        ReisedagVisningDto(
+                            dato = LocalDate.of(2025, 1, 3),
+                            harKjørt = true,
+                            parkeringsutgift = 30,
+                        ),
+                        ReisedagVisningDto(
+                            dato = LocalDate.of(2025, 1, 4),
+                            harKjørt = false,
+                            parkeringsutgift = null,
+                        ),
+                        ReisedagVisningDto(
+                            dato = LocalDate.of(2025, 1, 5),
+                            harKjørt = false,
+                            parkeringsutgift = null,
                         ),
                     ),
-                dokumentasjon = emptyList(),
-                søknadMetadata = SøknadMetadataDto(søknadFrontendGitHash = null),
-            )
-
-        private fun reisedag(
-            dato: LocalDate,
-            harKjørt: Boolean,
-            parkering: Number?,
-        ): ReisedagDto =
-            ReisedagDto(
-                dato = DatoFelt(label = dato.toString(), verdi = dato),
-                harKjørt = harKjørt,
-                parkeringsutgift = VerdiFelt(label = "Parkeringsutgift (kr)", verdi = parkering),
             )
     }
 }
