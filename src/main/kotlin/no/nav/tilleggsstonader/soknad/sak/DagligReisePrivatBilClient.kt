@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.sak
 
 import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
+import no.nav.tilleggsstonader.soknad.kjøreliste.ManueltRegistrertKjøreliste
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -30,5 +31,21 @@ class DagligReisePrivatBilClient(
             .retrieve()
             .body<List<RammevedtakDto>>()
             ?: emptyList()
+    }
+
+    fun hentManueltRegistrertKjørelisteForReise(reiseId: String): ManueltRegistrertKjøreliste {
+        val uri =
+            UriComponentsBuilder
+                .fromUri(sakUri.toUri())
+                .pathSegment("kjoreliste", reiseId)
+                .build()
+                .toUriString()
+
+        return restClient
+            .get()
+            .uri(uri)
+            .retrieve()
+            .body<ManueltRegistrertKjøreliste>()
+            ?: ManueltRegistrertKjøreliste(emptyList())
     }
 }
