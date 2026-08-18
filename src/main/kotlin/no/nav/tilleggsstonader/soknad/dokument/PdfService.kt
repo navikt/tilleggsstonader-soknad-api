@@ -138,6 +138,9 @@ class PdfService(
                     json,
                 )
 
+            // TODO: Implementer parsing av SØKNAD_FLYTTING når SøknadsskjemaFlytting er definert i kontrakter
+            Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema ${skjema.type}")
+
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema ${skjema.type}")
         }

@@ -50,6 +50,9 @@ class ArkiveringService(
             // Stønadstypen brukes egentlig ikke av reise til samling, for der har både TSO og TSR samme dokumenttype på søknaden. Må bare sette noe for å gjøre denne funksjonen happy.
             Skjematype.SØKNAD_REISE_TIL_SAMLING -> Stønadstype.REISE_TIL_SAMLING_TSO
 
+            // TODO: Avklar om vi alltid skal la den stå som TSO, slik vi gjør med daglig reise fra fyll-ut
+            Skjematype.SØKNAD_FLYTTING -> Stønadstype.FLYTTING_TSO
+
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE -> error("Skjema håndteres av Fyll ut/Send inn")
         }
 
