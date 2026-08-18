@@ -27,9 +27,21 @@ object KjørelisteTestdata {
                         spørsmål = "Hvilke dager kjørte du?",
                         reisedager =
                             listOf(
-                                ReisedagDto(datofelt(LocalDate.of(2025, 1, 6)), true, parkeringsutgift = parkeringsutgift(130)),
-                                ReisedagDto(datofelt(LocalDate.of(2025, 1, 7)), true, parkeringsutgift = parkeringsutgift(40)),
-                                ReisedagDto(datofelt(LocalDate.of(2025, 1, 10)), true, parkeringsutgift = parkeringsutgift(90)),
+                                ReisedagDto(
+                                    datofelt(LocalDate.of(2025, 1, 6)),
+                                    true,
+                                    parkeringsutgift = parkeringsutgift(130),
+                                ),
+                                ReisedagDto(
+                                    datofelt(LocalDate.of(2025, 1, 7)),
+                                    true,
+                                    parkeringsutgift = parkeringsutgift(40),
+                                ),
+                                ReisedagDto(
+                                    datofelt(LocalDate.of(2025, 1, 10)),
+                                    true,
+                                    parkeringsutgift = parkeringsutgift(90),
+                                ),
                             ),
                     ),
                 ),
@@ -93,13 +105,17 @@ object KjørelisteTestdata {
 
     fun datoTilTekstUtenÅr(dato: LocalDate) =
         """
-            ${dato.dayOfWeek.getDisplayName(
-            TextStyle.FULL,
-            localeNb,
-        ).replaceFirstChar { it.uppercase() }} ${dato.dayOfMonth}. ${dato.month.getDisplayName(
-            TextStyle.FULL,
-            localeNb,
-        )}
+            ${
+            dato.dayOfWeek.getDisplayName(
+                TextStyle.FULL,
+                localeNb,
+            ).replaceFirstChar { it.uppercase() }
+        } ${dato.dayOfMonth}. ${
+            dato.month.getDisplayName(
+                TextStyle.FULL,
+                localeNb,
+            )
+        }
         """.trimIndent()
 }
 

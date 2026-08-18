@@ -29,7 +29,7 @@ class KjørelisteController(
     @GetMapping("/{reiseId}")
     fun hentKjørelister(
         @PathVariable reiseId: String,
-    ): KjørelisteDto? = kjørelisteService.hentKjørelisterForReise(reiseId)
+    ): KjørelisteVisningDto? = kjørelisteService.hentKjørelisterForReise(reiseId)
 
     @PostMapping
     fun mottaKjørelister(

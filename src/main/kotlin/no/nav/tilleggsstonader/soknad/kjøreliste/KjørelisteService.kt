@@ -25,31 +25,23 @@ class KjørelisteService(
 
     fun hentRammevedtakForInnloggetBruker(reiseId: String): RammevedtakDto = hentRammevedtak(reiseId)
 
-    fun hentKjørelisterForReise(reiseId: String): KjørelisteDto? {
+    fun hentKjørelisterForReise(reiseId: String): KjørelisteVisningDto? {
         val ident = EksternBrukerUtils.hentFnrFraToken()
-        val skjemaer =
-            skjemaService.hentSkjemaerForBruker(personIdent = ident, type = Skjematype.DAGLIG_REISE_KJØRELISTE)
-
-        val kjørelister =
-            skjemaer
+        val skjemaKjørelister =
+            skjemaService
+                .hentSkjemaerForBruker(personIdent = ident, type = Skjematype.DAGLIG_REISE_KJØRELISTE)
                 .map { jsonMapper.readValue<InnsendtSkjema<KjørelisteSkjema>>(it.skjemaJson.json).skjema }
                 .filter { it.reiseId == reiseId }
 
-        if (kjørelister.isEmpty()) return null
+        val manueltRegistrertKjøreliste = dagligReisePrivatBilClient.hentManueltRegistrertKjørelisteForReise(reiseId)
 
-        val sammenslåtteKjørelister = slåSammenKjørelister(reiseId = reiseId, kjørelister = kjørelister)
-        return sammenslåtteKjørelister.tilDto()
-    }
+        if (skjemaKjørelister.isEmpty() && manueltRegistrertKjøreliste.reisedager.isEmpty()) return null
 
-    private fun slåSammenKjørelister(
-        reiseId: String,
-        kjørelister: List<KjørelisteSkjema>,
-    ): KjørelisteSkjema =
-        KjørelisteSkjema(
-            reiseId = reiseId,
-            reisedagerPerUkeAvsnitt = kjørelister.flatMap { it.reisedagerPerUkeAvsnitt },
-            dokumentasjon = kjørelister.flatMap { it.dokumentasjon },
+        return flettKjørelister(
+            skjemaKjørelister = skjemaKjørelister,
+            manueltRegistrertKjøreliste = manueltRegistrertKjøreliste,
         )
+    }
 
     fun mottaKjøreliste(kjørelisteDto: KjørelisteDto): KjørelisteResponse {
         validerKjøreliste(kjørelisteDto)

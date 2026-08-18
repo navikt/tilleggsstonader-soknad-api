@@ -45,6 +45,7 @@ class HentKjørelisterForReiseTest {
     fun setUp() {
         mockkObject(EksternBrukerUtils)
         every { EksternBrukerUtils.hentFnrFraToken() } returns personIdent
+        every { dagligReisePrivatBilClient.hentManueltRegistrertKjørelisteForReise(any()) } returns ManueltRegistrertKjøreliste(emptyList())
     }
 
     @AfterEach
@@ -66,30 +67,31 @@ class HentKjørelisterForReiseTest {
         val reiseId = "reise-1"
         every {
             skjemaService.hentSkjemaerForBruker(personIdent = personIdent, type = Skjematype.DAGLIG_REISE_KJØRELISTE)
-        } returns listOf(lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager("Uke 1"))))
+        } returns listOf(lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager(LocalDate.of(2025, 6, 2)))))
 
         val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
 
         assertThat(resultat).isNotNull
-        assertThat(resultat!!.reiseId).isEqualTo(reiseId)
-        assertThat(resultat.reisedagerPerUkeAvsnitt).hasSize(1)
+        assertThat(resultat!!.reisedager).hasSize(1)
+        assertThat(resultat.reisedager[0].dato).isEqualTo(LocalDate.of(2025, 6, 2))
     }
 
     @Test
-    fun `skal slå sammen uker fra flere kjørelister`() {
+    fun `skal slå sammen dager fra flere kjørelister`() {
         val reiseId = "reise-1"
         every {
             skjemaService.hentSkjemaerForBruker(personIdent = personIdent, type = Skjematype.DAGLIG_REISE_KJØRELISTE)
         } returns
             listOf(
-                lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager("Uke 1"))),
-                lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager("Uke 2"))),
+                lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager(LocalDate.of(2025, 6, 2)))),
+                lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager(LocalDate.of(2025, 6, 9)))),
             )
 
         val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
 
-        assertThat(resultat!!.reisedagerPerUkeAvsnitt).hasSize(2)
-        assertThat(resultat.reisedagerPerUkeAvsnitt.map { it.ukeLabel }).containsExactly("Uke 1", "Uke 2")
+        assertThat(resultat!!.reisedager).hasSize(2)
+        assertThat(resultat.reisedager.map { it.dato })
+            .containsExactly(LocalDate.of(2025, 6, 2), LocalDate.of(2025, 6, 9))
     }
 
     @Test
@@ -99,19 +101,73 @@ class HentKjørelisterForReiseTest {
             skjemaService.hentSkjemaerForBruker(personIdent = personIdent, type = Skjematype.DAGLIG_REISE_KJØRELISTE)
         } returns
             listOf(
-                lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager("Uke riktig"))),
-                lagSkjema(reiseId = "annen-reise", uker = listOf(lagUkeMedReisedager("Uke annen"))),
+                lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager(LocalDate.of(2025, 6, 2)))),
+                lagSkjema(reiseId = "annen-reise", uker = listOf(lagUkeMedReisedager(LocalDate.of(2025, 6, 9)))),
             )
 
         val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
 
-        assertThat(resultat!!.reisedagerPerUkeAvsnitt).hasSize(1)
-        assertThat(resultat.reisedagerPerUkeAvsnitt[0].ukeLabel).isEqualTo("Uke riktig")
+        assertThat(resultat!!.reisedager).hasSize(1)
+        assertThat(resultat.reisedager[0].dato).isEqualTo(LocalDate.of(2025, 6, 2))
+    }
+
+    @Test
+    fun `skal hente kjøreliste fra sak når soknad-api DB er tom`() {
+        val reiseId = "reise-1"
+        every {
+            skjemaService.hentSkjemaerForBruker(personIdent = personIdent, type = Skjematype.DAGLIG_REISE_KJØRELISTE)
+        } returns emptyList()
+        every { dagligReisePrivatBilClient.hentManueltRegistrertKjørelisteForReise(reiseId) } returns
+            ManueltRegistrertKjøreliste(
+                listOf(ManueltRegistrertKjørelisteDag(dato = LocalDate.of(2025, 6, 2), harKjørt = true, parkeringsutgift = null)),
+            )
+
+        val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
+
+        assertThat(resultat).isNotNull
+        assertThat(resultat!!.reisedager).hasSize(1)
+        assertThat(resultat.reisedager[0].harKjørt).isTrue()
+    }
+
+    @Test
+    fun `skal flette dager fra soknad-api DB og sak`() {
+        val reiseId = "reise-1"
+        every {
+            skjemaService.hentSkjemaerForBruker(personIdent = personIdent, type = Skjematype.DAGLIG_REISE_KJØRELISTE)
+        } returns listOf(lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager(LocalDate.of(2025, 6, 2)))))
+        every { dagligReisePrivatBilClient.hentManueltRegistrertKjørelisteForReise(reiseId) } returns
+            ManueltRegistrertKjøreliste(
+                listOf(ManueltRegistrertKjørelisteDag(dato = LocalDate.of(2025, 6, 9), harKjørt = true, parkeringsutgift = null)),
+            )
+
+        val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
+
+        assertThat(resultat!!.reisedager).hasSize(2)
+        assertThat(resultat.reisedager.map { it.dato })
+            .containsExactly(LocalDate.of(2025, 6, 2), LocalDate.of(2025, 6, 9))
+    }
+
+    @Test
+    fun `sak-data skal overstyre soknad-api-data for samme dato`() {
+        val reiseId = "reise-1"
+        val dato = LocalDate.of(2025, 6, 2)
+        every {
+            skjemaService.hentSkjemaerForBruker(personIdent = personIdent, type = Skjematype.DAGLIG_REISE_KJØRELISTE)
+        } returns listOf(lagSkjema(reiseId = reiseId, uker = listOf(lagUkeMedReisedager(dato, harKjørt = false))))
+        every { dagligReisePrivatBilClient.hentManueltRegistrertKjørelisteForReise(reiseId) } returns
+            ManueltRegistrertKjøreliste(
+                listOf(ManueltRegistrertKjørelisteDag(dato = dato, harKjørt = true, parkeringsutgift = null)),
+            )
+
+        val resultat = service.hentKjørelisterForReise(reiseId = reiseId)
+
+        assertThat(resultat!!.reisedager).hasSize(1)
+        assertThat(resultat.reisedager[0].harKjørt).isTrue()
     }
 
     private fun lagSkjema(
         reiseId: String,
-        uker: List<UkeMedReisedager> = listOf(lagUkeMedReisedager("Uke 1")),
+        uker: List<UkeMedReisedager> = listOf(lagUkeMedReisedager(LocalDate.of(2025, 6, 1))),
     ): Skjema {
         val innsendtSkjema =
             InnsendtSkjema(
@@ -134,17 +190,20 @@ class HentKjørelisterForReiseTest {
         )
     }
 
-    private fun lagUkeMedReisedager(label: String): UkeMedReisedager =
+    private fun lagUkeMedReisedager(
+        dato: LocalDate,
+        harKjørt: Boolean = true,
+    ): UkeMedReisedager =
         UkeMedReisedager(
-            ukeLabel = label,
+            ukeLabel = "Uke ${dato.get(java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR)}",
             reisedagerLabel = "Ukentlige reisedager: 3",
             spørsmål = "Hvilke dager kjørte du?",
             reisedager =
                 listOf(
                     Reisedag(
-                        dato = DatoFelt(label = "Mandag 1. juni 2025", verdi = LocalDate.of(2025, 6, 1)),
-                        harKjørt = true,
-                        parkeringsutgift = VerdiFelt(label = "Parkeringsutgift (kr)", verdi = 50),
+                        dato = DatoFelt(label = "dato", verdi = dato),
+                        harKjørt = harKjørt,
+                        parkeringsutgift = VerdiFelt(label = "Parkeringsutgift (kr)", verdi = if (harKjørt) 50 else null),
                     ),
                 ),
         )

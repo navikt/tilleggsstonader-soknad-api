@@ -6,6 +6,7 @@ import io.mockk.mockk
 import no.nav.tilleggsstonader.kontrakter.søknad.HelligdagDto
 import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
 import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakUkeDto
+import no.nav.tilleggsstonader.soknad.kjøreliste.ManueltRegistrertKjøreliste
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -129,6 +130,10 @@ class DagligReisePrivatBilClientConfig {
                             ),
                         ),
                     ),
+                )
+            every { client.hentManueltRegistrertKjørelisteForReise(any()) } returns
+                ManueltRegistrertKjøreliste(
+                    emptyList(),
                 )
         }
     }

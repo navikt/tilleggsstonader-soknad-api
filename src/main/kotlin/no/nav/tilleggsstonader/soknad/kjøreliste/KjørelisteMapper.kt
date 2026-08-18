@@ -66,3 +66,34 @@ private fun UkeMedReisedager.tilDto(): UkeMedReisedagerDto =
                 )
             },
     )
+
+fun flettKjørelister(
+    skjemaKjørelister: List<KjørelisteSkjema>,
+    manueltRegistrertKjøreliste: ManueltRegistrertKjøreliste,
+): KjørelisteVisningDto {
+    val kjørelisteFraSkjema =
+        skjemaKjørelister
+            .flatMap { it.reisedagerPerUkeAvsnitt }
+            .flatMap { it.reisedager }
+            .associate { dag ->
+                dag.dato.verdi to
+                    ReisedagVisningDto(
+                        dato = dag.dato.verdi,
+                        harKjørt = dag.harKjørt,
+                        parkeringsutgift = dag.parkeringsutgift.verdi?.toInt(),
+                    )
+            }
+
+    val manueltRegistrertKjørelisteFraSak =
+        manueltRegistrertKjøreliste.reisedager
+            .associate { dag ->
+                dag.dato to
+                    ReisedagVisningDto(
+                        dato = dag.dato,
+                        harKjørt = dag.harKjørt,
+                        parkeringsutgift = dag.parkeringsutgift,
+                    )
+            }
+
+    return KjørelisteVisningDto(reisedager = (kjørelisteFraSkjema + manueltRegistrertKjørelisteFraSak).values.sortedBy { it.dato })
+}
