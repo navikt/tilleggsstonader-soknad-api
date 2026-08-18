@@ -83,6 +83,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-kafka")
     implementation("no.nav.tms.varsel:kotlin-builder:2.2.0")
 
+    // token-support
+    implementation("no.nav.security:token-validation-spring:${tokenSupportVersion}")
+    implementation("no.nav.security:token-validation-core:${tokenSupportVersion}")
+    implementation("no.nav.security:token-client-core:${tokenSupportVersion}")
+    implementation("no.nav.security:token-client-spring:${tokenSupportVersion}")
+
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     // Kun for å kunne bruke WebTestClient. Kan fjernes og erstattes av RestTestClient i spring-boot 4
