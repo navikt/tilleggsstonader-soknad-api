@@ -140,9 +140,6 @@
         "svarTekst" : "Utdanning på fagskole, høgskole eller universitet",
         "alternativer" : [ ]
       },
-      "mottarUtstyrsstipend" : null,
-      "erLærlingEllerLiknende" : null,
-      "harTidligereFullførtVgs" : null,
       "harRettTilUtstyrsstipend" : {
         "erLærlingEllerLiknende" : {
           "label" : "Er du lærling, lærekandidat, praksisbrevkandidat eller kandidat for fagbrev på jobb?",
@@ -152,6 +149,12 @@
         },
         "harTidligereFullførtVgs" : {
           "label" : "Har du tidligere fullført videregående skole?",
+          "verdi" : "JA",
+          "svarTekst" : "Ja",
+          "alternativer" : [ ]
+        },
+        "tarOpplæringVgsSamtidig" : {
+          "label" : "Tar du opplæring i videregående skole (fellesfag og/eller programfag) samtidig som du er lærling, lærekandidat, praksisbrevkandidat eller tar fagbrev på jobb?",
           "verdi" : "JA",
           "svarTekst" : "Ja",
           "alternativer" : [ ]

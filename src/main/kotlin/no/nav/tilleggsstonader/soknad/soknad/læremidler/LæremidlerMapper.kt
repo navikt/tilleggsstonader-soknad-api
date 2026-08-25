@@ -38,6 +38,7 @@ class LæremidlerMapper {
                 HarRettTilUtstyrsstipend(
                     erLærlingEllerLiknende = dto.utdanning.harRettTilUtstyrsstipend?.erLærlingEllerLiknende,
                     harTidligereFullførtVgs = dto.utdanning.harRettTilUtstyrsstipend?.harTidligereFullførtVgs,
+                    tarOpplæringVgsSamtidig = dto.utdanning.harRettTilUtstyrsstipend?.tarOpplæringVgsSamtidig,
                 ),
             harFunksjonsnedsettelse = dto.utdanning.harFunksjonsnedsettelse,
         )

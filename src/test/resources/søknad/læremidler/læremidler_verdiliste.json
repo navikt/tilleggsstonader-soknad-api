@@ -223,6 +223,14 @@
     } ],
     "type" : "AVSNITT"
   }, {
+    "label" : "Tar du opplæring i videregående skole (fellesfag og/eller programfag) samtidig som du er lærling, lærekandidat, praksisbrevkandidat eller tar fagbrev på jobb?",
+    "verdier" : [ {
+      "verdi" : "Ja",
+      "alternativer" : null,
+      "type" : "VERDI"
+    } ],
+    "type" : "AVSNITT"
+  }, {
     "label" : "Har du en funksjonsnedsettelse som gir deg særlig store utgifter til læremidler?",
     "verdier" : [ {
       "verdi" : "Ja",
