@@ -49,7 +49,9 @@ object SøknadLæremidlerUtil {
                                 ),
                             tarOpplæringVgsSamtidig =
                                 EnumFelt(
-                                    label = "Tar du opplæring i videregående skole (fellesfag og/eller programfag) samtidig som du er lærling, lærekandidat, praksisbrevkandidat eller tar fagbrev på jobb?",
+                                    label =
+                                        "Tar du opplæring i videregående skole (fellesfag og/eller programfag) samtidig som " +
+                                            "du er lærling, lærekandidat, praksisbrevkandidat eller tar fagbrev på jobb?",
                                     verdi = JaNei.JA,
                                     svarTekst = "Ja",
                                     alternativer = listOf(),
