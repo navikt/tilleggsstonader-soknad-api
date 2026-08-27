@@ -65,6 +65,9 @@ object ArkiverDokumentRequestMapper {
 
             // TODO: Implementer arkivering for SØKNAD_FLYTTING med korrekt stønadstype (TSO/TSR)
             Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema $type")
+
+            // TODO: Implementer arkivering for SØKNAD_STØTTE_TIL_REISE_OPPSTART_AVSLUTNING_HJEMREISE med korrekt stønadstype (TSO/TSR)
+            Skjematype.SØKNAD_STØTTE_TIL_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema $type")
         }
 
     private fun typeVedlegg(
@@ -88,6 +91,9 @@ object ArkiverDokumentRequestMapper {
 
             // TODO: Implementer arkivering av vedlegg for SØKNAD_FLYTTING med korrekt stønadstype (TSO/TSR)
             Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema $type")
+
+            // TODO: Implementer arkivering av vedlegg for SØKNAD_STØTTE_TIL_REISE_OPPSTART_AVSLUTNING_HJEMREISE med korrekt stønadstype (TSO/TSR)
+            Skjematype.SØKNAD_STØTTE_TIL_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema $type")
         }
 
     private fun mapVedlegg(
