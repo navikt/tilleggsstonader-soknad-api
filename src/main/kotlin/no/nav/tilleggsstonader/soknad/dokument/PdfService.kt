@@ -141,8 +141,8 @@ class PdfService(
             // TODO: Implementer parsing av SØKNAD_FLYTTING når SøknadsskjemaFlytting er definert i kontrakter
             Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema ${skjema.type}")
 
-            // TODO: Implementer parsing av SØKNAD_STØTTE_TIL_REISE_OPPSTART_AVSLUTNING_HJEMREISE når skjema er definert i kontrakter
-            Skjematype.SØKNAD_STØTTE_TIL_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema ${skjema.type}")
+            // TODO: Implementer parsing av SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE når skjema er definert i kontrakter
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema ${skjema.type}")
 
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema ${skjema.type}")

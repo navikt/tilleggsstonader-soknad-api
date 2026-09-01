@@ -33,7 +33,7 @@ class SendNotifikasjonTask(
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE -> error("Håndterer ikke skjema $skjematype")
             Skjematype.SØKNAD_REISE_TIL_SAMLING -> "Vi har mottatt søknaden din om reise til samling."
             Skjematype.SØKNAD_FLYTTING -> "Vi har mottatt søknaden din om støtte til flytting."
-            Skjematype.SØKNAD_STØTTE_TIL_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
                 "Vi har mottatt søknaden din om støtte til reise ved oppstart, avslutning og hjemreise."
         }
 

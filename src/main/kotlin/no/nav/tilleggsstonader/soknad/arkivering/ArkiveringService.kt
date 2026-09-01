@@ -54,8 +54,8 @@ class ArkiveringService(
             Skjematype.SØKNAD_FLYTTING -> Stønadstype.FLYTTING_TSO
 
             // TODO: Avklar om vi alltid skal la den stå som TSO, slik vi gjør med daglig reise fra fyll-ut
-            Skjematype.SØKNAD_STØTTE_TIL_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
-                Stønadstype.STØTTE_TIL_REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSO
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
+                Stønadstype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSO
 
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE -> error("Skjema håndteres av Fyll ut/Send inn")
         }
