@@ -16,8 +16,8 @@ Backend - søknad for tilleggsstønader
 For at man skal få svar fra ts-sak må man hente ut secrets:
 
 1. Logg inn med `gcloud auth login`
-2. Hent ut fra cluster: `kubectl --context dev-gcp -n tilleggsstonader get secret azuread-tilleggsstonader-soknad-api-lokal -o json | jq '.data | map_values(@base64d)' | grep CLIENT`
-3. Hent ut fra cluster: `kubectl --context dev-gcp -n tilleggsstonader get secret azuread-tilleggsstonader-sak-lokal -o json | jq '.data | map_values(@base64d)' | grep TENANT`
+2. Hent AZURE_APP_CLIENT_ID og AZURE_APP_CLIENT_SECRET ut fra cluster: `nais secret get azuread-tilleggsstonader-soknad-api-lokal -e dev-gcp -t tilleggsstonader --with-values --reason "Lokal utvikling" --output json | jq '.[]'`
+3. Hent AZURE_APP_TENANT_ID fra cluster: `nais secret get azuread-tilleggsstonader-sak-lokal -e dev-gcp -t tilleggsstonader --with-values --reason "Lokal utvikling" | grep TENANT`
 4. Variablene legges inn under `SøknadApiLocal` -> Edit Configurations -> Modify Options -> huk av for Environment
    variables og legg til følgende variabler:
     - `AZURE_APP_CLIENT_ID={secret};AZURE_APP_CLIENT_SECRET={secret};AZURE_APP_TENANT_ID={secret}`
