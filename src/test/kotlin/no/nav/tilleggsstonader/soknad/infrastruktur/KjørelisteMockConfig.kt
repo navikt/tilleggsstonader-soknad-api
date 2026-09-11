@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.infrastruktur
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
+import no.nav.tilleggsstonader.soknad.infrastruktur.database.AdvisoryLockService
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteService
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteVisningDto
 import no.nav.tilleggsstonader.soknad.kjøreliste.ReisedagVisningDto
@@ -24,9 +25,10 @@ class KjørelisteMockConfig {
         val skjemaService = mockk<SkjemaService>(relaxed = true)
         val dagligReisePrivatBilClient = mockk<DagligReisePrivatBilClient>()
         val skjemaRepository = mockk<SkjemaRepository>(relaxed = true)
+        val advisoryLockService = mockk<AdvisoryLockService>(relaxed = true)
         DagligReisePrivatBilClientConfig.resetMock(dagligReisePrivatBilClient)
 
-        val service = spyk(KjørelisteService(skjemaService, dagligReisePrivatBilClient, skjemaRepository))
+        val service = spyk(KjørelisteService(skjemaService, dagligReisePrivatBilClient, skjemaRepository, advisoryLockService))
         every { service.hentKjørelisterForReise("1") } returns kjørelisteDtoForReise1()
         every { service.hentKjørelisterForReise("2") } returns null
         return service

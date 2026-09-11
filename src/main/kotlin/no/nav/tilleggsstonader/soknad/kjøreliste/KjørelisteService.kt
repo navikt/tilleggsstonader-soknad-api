@@ -6,11 +6,13 @@ import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
+import no.nav.tilleggsstonader.soknad.infrastruktur.database.AdvisoryLockService
 import no.nav.tilleggsstonader.soknad.sak.DagligReisePrivatBilClient
 import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import tools.jackson.module.kotlin.readValue
 import java.time.LocalDateTime
 import kotlin.random.Random
@@ -20,6 +22,7 @@ class KjørelisteService(
     private val skjemaService: SkjemaService,
     private val dagligReisePrivatBilClient: DagligReisePrivatBilClient,
     private val skjemaRepository: SkjemaRepository,
+    private val advisoryLockService: AdvisoryLockService,
 ) {
     fun hentAlleRammevedtakForInnloggetBruker(): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
 
@@ -43,7 +46,13 @@ class KjørelisteService(
         )
     }
 
+    @Transactional
     fun mottaKjøreliste(kjørelisteDto: KjørelisteDto): KjørelisteResponse {
+        // Advisory lock på innlogget brukers personIdent, tatt FØR validerKjøreliste().
+        // Dette hindrer race condition der to samtidige innsendinger (f.eks. dobbel-klikk eller feil i
+        // frontend) begge rekker å validere OK før noen av dem har lagret skjemaet.
+        advisoryLockService.taLåsForTransaksjon(EksternBrukerUtils.hentFnrFraToken())
+
         validerKjøreliste(kjørelisteDto)
 
         skjemaService.lagreKjøreliste(
