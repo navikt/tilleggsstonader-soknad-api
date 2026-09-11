@@ -26,7 +26,15 @@ class KjørelisteMockConfig {
         val skjemaRepository = mockk<SkjemaRepository>(relaxed = true)
         DagligReisePrivatBilClientConfig.resetMock(dagligReisePrivatBilClient)
 
-        val service = spyk(KjørelisteService(skjemaService, dagligReisePrivatBilClient, skjemaRepository))
+        val service =
+            spyk(
+                KjørelisteService(
+                    skjemaService,
+                    dagligReisePrivatBilClient,
+                    skjemaRepository,
+                    kjørelisteLåsRepository = mockk(relaxed = true),
+                ),
+            )
         every { service.hentKjørelisterForReise("1") } returns kjørelisteDtoForReise1()
         every { service.hentKjørelisterForReise("2") } returns null
         return service

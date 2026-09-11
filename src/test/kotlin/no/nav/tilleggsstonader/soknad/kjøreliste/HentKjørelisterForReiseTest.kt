@@ -37,6 +37,7 @@ class HentKjørelisterForReiseTest {
             skjemaService = skjemaService,
             dagligReisePrivatBilClient = dagligReisePrivatBilClient,
             skjemaRepository = skjemaRepository,
+            kjørelisteLåsRepository = mockk(),
         )
 
     private val personIdent = "12345678901"

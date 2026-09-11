@@ -2,6 +2,19 @@
 
 Backend - søknad for tilleggsstønader
 
+## Samtidig innsending av kjørelister
+
+`POST /api/kjorelister` serialiseres per innlogget bruker med en transaksjonsbundet PostgreSQL advisory lock.
+Låsen holdes fra før validering til skjema, vedlegg og tasks er committet eller rullet tilbake, og virker på tvers av podder.
+GET-kall og andre søknadstyper omfattes ikke.
+
+`kjoreliste.laas-timeout-sekunder` begrenser låseventingen til 5 sekunder som standard.
+Timeout gir HTTP 409; etter vellykket låseopptak gir en allerede innsendt uke fortsatt HTTP 400.
+Dette er ikke en grense for hele HTTP-kallet. Både ventende og behandlende kall opptar databaseforbindelser.
+
+Beskyttelsen er komplett først når alle podder kjører versjonen med lås. Følg HTTP-latens, 409/5xx og Hikari-poolventing ved utrulling.
+Rollback krever ingen databaseendring, men gjeninnfører risikoen for duplikater. Historiske duplikater ryddes ikke automatisk.
+
 ## Lokal kjøring
 
 - Kjør opp Spring-appen `SøknadApiLocal`

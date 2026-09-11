@@ -1,6 +1,9 @@
 application:
   name: tilleggsstonad-soknad-api
 
+kjoreliste:
+  laas-timeout-sekunder: 5
+
 server:
   port: 8080
   shutdown: graceful

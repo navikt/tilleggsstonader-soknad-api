@@ -11,6 +11,7 @@ import no.nav.tilleggsstonader.soknad.soknad.SkjemaService
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import tools.jackson.module.kotlin.readValue
 import java.time.LocalDateTime
 import kotlin.random.Random
@@ -20,6 +21,7 @@ class KjørelisteService(
     private val skjemaService: SkjemaService,
     private val dagligReisePrivatBilClient: DagligReisePrivatBilClient,
     private val skjemaRepository: SkjemaRepository,
+    private val kjørelisteLåsRepository: KjørelisteLåsRepository,
 ) {
     fun hentAlleRammevedtakForInnloggetBruker(): List<RammevedtakDto> = dagligReisePrivatBilClient.hentRammevedtakForInnloggetBruker()
 
@@ -43,11 +45,14 @@ class KjørelisteService(
         )
     }
 
+    @Transactional
     fun mottaKjøreliste(kjørelisteDto: KjørelisteDto): KjørelisteResponse {
+        val ident = EksternBrukerUtils.hentFnrFraToken()
+        kjørelisteLåsRepository.låsBruker(ident)
         validerKjøreliste(kjørelisteDto)
 
         skjemaService.lagreKjøreliste(
-            ident = EksternBrukerUtils.hentFnrFraToken(),
+            ident = ident,
             mottattTidspunkt = LocalDateTime.now(),
             kjøreliste = kjørelisteDto,
         )

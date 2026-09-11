@@ -3,6 +3,7 @@ package no.nav.tilleggsstonader.soknad.infrastruktur.config
 import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
 import no.nav.tilleggsstonader.libs.log.SecureLogger.secureLogger
 import no.nav.tilleggsstonader.soknad.infrastruktur.exception.GradertBrukerException
+import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteInnsendingPågårException
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 import org.springframework.core.NestedExceptionUtils
 import org.springframework.http.HttpHeaders
@@ -62,5 +63,11 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     fun handleThrowable(throwable: GradertBrukerException): ProblemDetail {
         secureLogger.warn("Brukeren inneholder barn som har høyere gradering enn søker status=400")
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "ROUTING_GAMMEL_SØKNAD")
+    }
+
+    @ExceptionHandler(KjørelisteInnsendingPågårException::class)
+    fun handleThrowable(throwable: KjørelisteInnsendingPågårException): ProblemDetail {
+        logger.warn("Tidsavbrudd ved venting på kjøreliste-lås status=409")
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, throwable.message)
     }
 }
