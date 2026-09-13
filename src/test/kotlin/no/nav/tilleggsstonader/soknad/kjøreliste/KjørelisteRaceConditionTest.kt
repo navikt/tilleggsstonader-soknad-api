@@ -24,11 +24,6 @@ import java.util.concurrent.TimeUnit
  * databasen FØR noen av de to samtidige forsøkene har rukket å lagre sitt skjema.
  * Begge kan derfor validere OK og lagres som separate skjema - dobbel PDF, dobbel
  * journalpost og dobbelt varsel til bruker.
- *
- * Denne testen SKAL feile helt til rød-sone-oppgaven (advisory lock i
- * `KjørelisteService.mottaKjøreliste`, se TODO der) er implementert av utvikler.
- * Når låsen er på plass skal nøyaktig ett av de to samtidige forsøkene lykkes, og
- * det andre skal feile med "allerede sendt inn"-valideringsfeilen.
  */
 class KjørelisteRaceConditionTest : IntegrationTest() {
     @Autowired
