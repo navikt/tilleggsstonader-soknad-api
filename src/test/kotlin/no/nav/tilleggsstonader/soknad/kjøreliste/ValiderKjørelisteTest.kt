@@ -9,6 +9,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakDto
 import no.nav.tilleggsstonader.kontrakter.søknad.RammevedtakUkeDto
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
+import no.nav.tilleggsstonader.soknad.infrastruktur.database.AdvisoryLockService
 import no.nav.tilleggsstonader.soknad.infrastruktur.database.JsonWrapper
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteTestdata.datofelt
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteTestdata.parkeringsutgift
@@ -30,12 +31,14 @@ class ValiderKjørelisteTest {
     private val skjemaService = mockk<SkjemaService>()
     private val dagligReisePrivatBilClient = mockk<DagligReisePrivatBilClient>()
     private val skjemaRepository = mockk<SkjemaRepository>()
+    private val advisoryLockService = mockk<AdvisoryLockService>(relaxed = true)
 
     private val service =
         KjørelisteService(
             skjemaService = skjemaService,
             dagligReisePrivatBilClient = dagligReisePrivatBilClient,
             skjemaRepository = skjemaRepository,
+            advisoryLockService = advisoryLockService,
         )
 
     private val personIdent = "12345678901"
