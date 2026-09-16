@@ -51,7 +51,7 @@ class KjørelisteService(
         // Advisory lock på innlogget brukers personIdent, tatt FØR validerKjøreliste().
         // Dette hindrer race condition der to samtidige innsendinger (f.eks. dobbel-klikk eller feil i
         // frontend) begge rekker å validere OK før noen av dem har lagret skjemaet.
-        advisoryLockService.taLåsForTransaksjon(EksternBrukerUtils.hentFnrFraToken())
+        advisoryLockService.låsForTransaksjon(EksternBrukerUtils.hentFnrFraToken())
 
         validerKjøreliste(kjørelisteDto)
 

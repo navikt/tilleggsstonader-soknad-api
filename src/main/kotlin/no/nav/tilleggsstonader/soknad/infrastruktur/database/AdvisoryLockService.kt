@@ -22,7 +22,7 @@ class AdvisoryLockService(
      * Tar en transaksjons-scopet advisory lock for [nøkkel]. Blokkerer til låsen er ledig,
      * og slippes automatisk når den omkringliggende transaksjonen committer eller rulles tilbake.
      */
-    fun taLåsForTransaksjon(nøkkel: String) {
+    fun låsForTransaksjon(nøkkel: String) {
         jdbcOperations.execute(
             "SELECT pg_advisory_xact_lock(hashtext(:nokkel))",
             MapSqlParameterSource("nokkel", nøkkel),
