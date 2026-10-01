@@ -161,12 +161,6 @@
         "svarTekst" : "Ja",
         "alternativer" : [ ]
       },
-      "harBruktEkstraReiseDager" : {
-        "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
-        "verdi" : "JA",
-        "svarTekst" : "Ja",
-        "alternativer" : [ ]
-      },
       "adresse" : {
         "land" : {
           "label" : "Land",
@@ -189,6 +183,26 @@
       "antallKilometerEnVei" : {
         "verdi" : "42",
         "label" : "Antall kilometer én vei"
+      },
+      "reisemåte" : {
+        "hvilkeTransportmidlerBleBenyttet" : {
+          "label" : "Hvilke transportmidler ble benyttet?",
+          "verdier" : [ {
+            "verdi" : "OFFENTLIG_TRANSPORT",
+            "label" : "Offentlig transport"
+          } ],
+          "alternativer" : [ ]
+        },
+        "unntakFraOffentligTransport" : null,
+        "unntakFraPrivatBil" : null,
+        "offentligTransport" : {
+          "totalUtgifterOffentligTransport" : {
+            "verdi" : "450",
+            "label" : "Totale kollektivutgifter"
+          }
+        },
+        "privatBil" : null,
+        "drosje" : null
       }
     }, {
       "fom" : {
@@ -205,12 +219,6 @@
         "svarTekst" : "Ja",
         "alternativer" : [ ]
       },
-      "harBruktEkstraReiseDager" : {
-        "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
-        "verdi" : "JA",
-        "svarTekst" : "Ja",
-        "alternativer" : [ ]
-      },
       "adresse" : {
         "land" : {
           "label" : "Land",
@@ -233,7 +241,8 @@
       "antallKilometerEnVei" : {
         "verdi" : "42",
         "label" : "Antall kilometer én vei"
-      }
+      },
+      "reisemåte" : null
     } ],
     "avreiseadresse" : {
       "skalReiseFraFolkeregistrertAdresse" : {
@@ -261,27 +270,6 @@
           "label" : "Poststed"
         }
       }
-    },
-    "reisemåte" : {
-      "kanReiseMedOffentligTransport" : {
-        "label" : "Kan du reise kollektivt?",
-        "verdi" : "JA",
-        "svarTekst" : "Ja",
-        "alternativer" : [ ]
-      },
-      "totalUtgifterOffentligTransport" : {
-        "verdi" : "450",
-        "label" : "Totale kollektivutgifter"
-      },
-      "kanIkkeReiseMedOffentligTransportBegrunnelser" : null,
-      "barnehageGateadresse" : null,
-      "barnehagePostnummer" : null,
-      "kanBenytteEgenBil" : null,
-      "kanIkkeBenytteEgenBilBegrunnelser" : null,
-      "ønskerDekketUtgifterForDrosje" : null,
-      "betalerForReiseSelv" : null,
-      "harTTKort" : null,
-      "reiseMedBilUtgifter" : null
     },
     "dokumentasjon" : [ ]
   }

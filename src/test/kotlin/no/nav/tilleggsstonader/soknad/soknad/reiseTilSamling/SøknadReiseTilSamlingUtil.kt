@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.AnnenAktivitetType
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Transportmiddel
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 
@@ -50,13 +51,6 @@ object SøknadReiseTilSamlingUtil {
                                 svarTekst = "Ja",
                                 alternativer = listOf(),
                             ),
-                        harBruktEkstraReiseDager =
-                            EnumFelt(
-                                label = "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
-                                verdi = JaNei.JA,
-                                svarTekst = "Ja",
-                                alternativer = listOf(),
-                            ),
                         adresse =
                             AdresseDto(
                                 land = SelectFelt(label = "Land", verdi = "NOR", svarTekst = "Norge"),
@@ -65,6 +59,23 @@ object SøknadReiseTilSamlingUtil {
                                 poststed = VerdiFelt(label = "Poststed", verdi = "Oslo"),
                             ),
                         antallKilometerEnVei = VerdiFelt(label = "Antall kilometer én vei", verdi = "42"),
+                        reisemåte =
+                            ReisemåteDto(
+                                hvilkeTransportmidlerBleBenyttet =
+                                    EnumFlereValgFelt(
+                                        label = "Hvilke transportmidler ble benyttet?",
+                                        verdier = listOf(VerdiFelt(Transportmiddel.OFFENTLIG_TRANSPORT, "Offentlig transport")),
+                                        alternativer = listOf(),
+                                    ),
+                                unntakFraOffentligTransport = null,
+                                unntakFraPrivatBil = null,
+                                offentligTransport =
+                                    OffentligTransportInfoDto(
+                                        totalUtgifterOffentligTransport = VerdiFelt(label = "Totale kollektivutgifter", verdi = "450"),
+                                    ),
+                                privatBil = null,
+                                drosje = null,
+                            ),
                     ),
                     SamlingDto(
                         fom = VerdiFelt(label = "Startdato", verdi = "2024-04-15"),
@@ -76,13 +87,6 @@ object SøknadReiseTilSamlingUtil {
                                 svarTekst = "Ja",
                                 alternativer = listOf(),
                             ),
-                        harBruktEkstraReiseDager =
-                            EnumFelt(
-                                label = "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
-                                verdi = JaNei.JA,
-                                svarTekst = "Ja",
-                                alternativer = listOf(),
-                            ),
                         adresse =
                             AdresseDto(
                                 land = SelectFelt(label = "Land", verdi = "NOR", svarTekst = "Norge"),
@@ -91,6 +95,7 @@ object SøknadReiseTilSamlingUtil {
                                 poststed = VerdiFelt(label = "Poststed", verdi = "Oslo"),
                             ),
                         antallKilometerEnVei = VerdiFelt(label = "Antall kilometer én vei", verdi = "42"),
+                        reisemåte = null,
                     ),
                 ),
             avreiseadresse =
@@ -109,26 +114,6 @@ object SøknadReiseTilSamlingUtil {
                             postnummer = VerdiFelt(verdi = "5132", label = "Postnummer"),
                             poststed = VerdiFelt(verdi = "Pæddekummen", label = "Poststed"),
                         ),
-                ),
-            reisemåte =
-                ReisemåteDto(
-                    kanReiseMedOffentligTransport =
-                        EnumFelt(
-                            label = "Kan du reise kollektivt?",
-                            verdi = JaNei.JA,
-                            svarTekst = "Ja",
-                            alternativer = listOf(),
-                        ),
-                    kanIkkeReiseMedOffentligTransportBegrunnelser = null,
-                    totalUtgifterOffentligTransport = VerdiFelt(label = "Totale kollektivutgifter", verdi = "450"),
-                    kanBenytteEgenBil = null,
-                    ønskerDekketUtgifterForDrosje = null,
-                    barnehageGateadresse = null,
-                    barnehagePostnummer = null,
-                    kanIkkeBenytteEgenBilBegrunnelser = null,
-                    betalerForReiseSelv = null,
-                    harTTKort = null,
-                    reiseMedBilUtgifter = null,
                 ),
             dokumentasjon = listOf(),
             søknadMetadata = SøknadMetadataDto(søknadFrontendGitHash = "aabbccd"),
