@@ -243,14 +243,6 @@
     } ],
     "type" : "AVSNITT"
   }, {
-    "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
-    "verdier" : [ {
-      "verdi" : "Ja",
-      "alternativer" : null,
-      "type" : "VERDI"
-    } ],
-    "type" : "AVSNITT"
-  }, {
     "label" : "Land",
     "verdier" : [ {
       "verdi" : "Norge",
@@ -291,6 +283,30 @@
     } ],
     "type" : "AVSNITT"
   }, {
+    "label" : "Reisemåte",
+    "verdier" : [ {
+      "label" : "Hvilke transportmidler ble benyttet?",
+      "verdier" : [ {
+        "verdi" : "Offentlig transport",
+        "alternativer" : null,
+        "type" : "VERDI"
+      } ],
+      "type" : "AVSNITT"
+    }, {
+      "label" : "Offentlig transport",
+      "verdier" : [ {
+        "label" : "Totale kollektivutgifter",
+        "verdier" : [ {
+          "verdi" : "450",
+          "alternativer" : null,
+          "type" : "VERDI"
+        } ],
+        "type" : "AVSNITT"
+      } ],
+      "type" : "AVSNITT"
+    } ],
+    "type" : "AVSNITT"
+  }, {
     "type" : "LINJE"
   }, {
     "label" : "Startdato",
@@ -310,14 +326,6 @@
     "type" : "AVSNITT"
   }, {
     "label" : "Er samlingen obligatorisk?",
-    "verdier" : [ {
-      "verdi" : "Ja",
-      "alternativer" : null,
-      "type" : "VERDI"
-    } ],
-    "type" : "AVSNITT"
-  }, {
-    "label" : "Benyttet du deg av en ekstra reisedag i forbindelse med samlingen?",
     "verdier" : [ {
       "verdi" : "Ja",
       "alternativer" : null,
@@ -404,26 +412,6 @@
     "label" : "Poststed",
     "verdier" : [ {
       "verdi" : "Pæddekummen",
-      "alternativer" : null,
-      "type" : "VERDI"
-    } ],
-    "type" : "AVSNITT"
-  } ],
-  "type" : "AVSNITT"
-}, {
-  "label" : "Reisemåte",
-  "verdier" : [ {
-    "label" : "Kan du reise kollektivt?",
-    "verdier" : [ {
-      "verdi" : "Ja",
-      "alternativer" : null,
-      "type" : "VERDI"
-    } ],
-    "type" : "AVSNITT"
-  }, {
-    "label" : "Totale kollektivutgifter",
-    "verdier" : [ {
-      "verdi" : "450",
       "alternativer" : null,
       "type" : "VERDI"
     } ],

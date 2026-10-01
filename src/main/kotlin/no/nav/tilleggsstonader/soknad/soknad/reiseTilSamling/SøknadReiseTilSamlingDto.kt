@@ -9,9 +9,9 @@ import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.felles.AnnenAktivitetType
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AktivitetTypeUtdanning
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.DrivstoffType
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.KanBenytteEgenBil
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.KanIkkeBenytteEgenBilBegrunnelser
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.KanIkkeReiseMedOffentligTransportBegrunnelser
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Transportmiddel
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ÅrsakKanIkkeBenytteEgenBil
+import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ÅrsakKanIkkeBenytteOffentligTransport
 import no.nav.tilleggsstonader.soknad.soknad.HovedytelseDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 
@@ -20,7 +20,6 @@ data class SøknadReiseTilSamlingDto(
     val aktivitet: AktivitetDto,
     val samlinger: List<SamlingDto>,
     val avreiseadresse: AvreiseadresseDto,
-    val reisemåte: ReisemåteDto,
     val dokumentasjon: List<DokumentasjonFelt>,
     val søknadMetadata: SøknadMetadataDto,
 )
@@ -44,9 +43,9 @@ data class SamlingDto(
     val fom: VerdiFelt<String>,
     val tom: VerdiFelt<String>,
     val erObligatorisk: EnumFelt<JaNei>,
-    val harBruktEkstraReiseDager: EnumFelt<JaNei>,
     val adresse: AdresseDto,
     val antallKilometerEnVei: VerdiFelt<String>,
+    val reisemåte: ReisemåteDto? = null,
 )
 
 data class AdresseDto(
@@ -62,22 +61,48 @@ data class AvreiseadresseDto(
 )
 
 data class ReisemåteDto(
-    val kanReiseMedOffentligTransport: EnumFelt<JaNei>,
-    val kanIkkeReiseMedOffentligTransportBegrunnelser: EnumFlereValgFelt<KanIkkeReiseMedOffentligTransportBegrunnelser>?,
-    val totalUtgifterOffentligTransport: VerdiFelt<String>?,
-    val kanBenytteEgenBil: EnumFelt<KanBenytteEgenBil>?,
-    val ønskerDekketUtgifterForDrosje: EnumFelt<JaNei>?,
-    val barnehageGateadresse: VerdiFelt<String>?,
-    val barnehagePostnummer: VerdiFelt<String>?,
-    val kanIkkeBenytteEgenBilBegrunnelser: EnumFlereValgFelt<KanIkkeBenytteEgenBilBegrunnelser>?,
-    val betalerForReiseSelv: EnumFelt<JaNei>?,
-    val harTTKort: EnumFelt<JaNei>?,
-    val reiseMedBilUtgifter: ReiseMedBilUtgifterDto?,
+    val hvilkeTransportmidlerBleBenyttet: EnumFlereValgFelt<Transportmiddel>?,
+    val unntakFraOffentligTransport: UnntakFraOffentligTransportDto?,
+    val unntakFraPrivatBil: EnumFlereValgFelt<ÅrsakKanIkkeBenytteEgenBil>?,
+    val offentligTransport: OffentligTransportInfoDto?,
+    val privatBil: PrivatBilInfoDto?,
+    val drosje: DrosjeInfoDto?,
 )
 
-data class ReiseMedBilUtgifterDto(
-    val drivstoffType: EnumFelt<DrivstoffType>,
+data class OffentligTransportInfoDto(
+    val totalUtgifterOffentligTransport: VerdiFelt<String>?,
+)
+
+data class PrivatBilInfoDto(
+    val benyttetEgenBil: EnumFelt<JaNei>?,
+    val betalteForReisen: EnumFelt<JaNei>?,
+    val infoBilKunDelerAvStrekning: InfoBilKunDelerAvStrekningDto?,
+    val utgifterPrivatBil: UtgifterPrivatBilDto?,
+)
+
+data class DrosjeInfoDto(
+    val harTTKort: EnumFelt<JaNei>?,
+)
+
+data class UnntakFraOffentligTransportDto(
+    val årsaker: EnumFlereValgFelt<ÅrsakKanIkkeBenytteOffentligTransport>?,
+    val leveringOgHentingIBarnehage: LeveringOgHentingIBarnehageDto?,
+)
+
+data class LeveringOgHentingIBarnehageDto(
+    val gateadresse: VerdiFelt<String>?,
+    val postnummer: VerdiFelt<String>?,
+)
+
+data class UtgifterPrivatBilDto(
     val bompenger: VerdiFelt<String>?,
     val ferge: VerdiFelt<String>?,
     val piggdekkavgift: VerdiFelt<String>?,
+    val parkering: VerdiFelt<String>?,
+    val drivstoffType: EnumFelt<DrivstoffType>?,
+)
+
+data class InfoBilKunDelerAvStrekningDto(
+    val strekningHvorBilBleBenyttet: VerdiFelt<String>?,
+    val antallKilometerKjørt: VerdiFelt<String>?,
 )
