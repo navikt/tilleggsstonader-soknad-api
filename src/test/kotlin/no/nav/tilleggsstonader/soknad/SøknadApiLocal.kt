@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
             "local",
             "mock-pdl",
             "mock-vedlegg",
-//            "mock-sak",
+            "mock-sak",
             "mock-familie-vedlegg-controller",
             "mock-kodeverk",
             "mock-aktivitet",
