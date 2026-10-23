@@ -1,7 +1,7 @@
 val javaVersion = JavaLanguageVersion.of(21)
 val tomcatVersion = "11.0.22"
 val tilleggsstønaderLibsVersion = "2026.08.04-15.02.ea2eccef8308"
-val tilleggsstønaderKontrakterVersion = "2026.10.01-11.29.d7f312bf70bc"
+val tilleggsstønaderKontrakterVersion = "2026.10.23-11.09.f9ea0dfe2e97"
 val familieProsesseringVersion = "2.20260817115650_f13f507"
 val tokenSupportVersion = "6.0.13"
 val wiremockVersion = "3.0.1"
@@ -84,10 +84,10 @@ dependencies {
     implementation("no.nav.tms.varsel:kotlin-builder:2.2.0")
 
     // token-support
-    implementation("no.nav.security:token-validation-spring:${tokenSupportVersion}")
-    implementation("no.nav.security:token-validation-core:${tokenSupportVersion}")
-    implementation("no.nav.security:token-client-core:${tokenSupportVersion}")
-    implementation("no.nav.security:token-client-spring:${tokenSupportVersion}")
+    implementation("no.nav.security:token-validation-spring:$tokenSupportVersion")
+    implementation("no.nav.security:token-validation-core:$tokenSupportVersion")
+    implementation("no.nav.security:token-client-core:$tokenSupportVersion")
+    implementation("no.nav.security:token-client-spring:$tokenSupportVersion")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")

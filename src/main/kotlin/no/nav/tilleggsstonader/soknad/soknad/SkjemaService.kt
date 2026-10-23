@@ -22,6 +22,8 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.domene.Vedlegg
 import no.nav.tilleggsstonader.soknad.soknad.domene.VedleggRepository
+import no.nav.tilleggsstonader.soknad.soknad.flytting.FlyttingMapper
+import no.nav.tilleggsstonader.soknad.soknad.flytting.SøknadFlyttingDto
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.PassAvBarnMapper
@@ -39,6 +41,7 @@ class SkjemaService(
     private val vedleggRepository: VedleggRepository,
     private val passAvBarnMapper: PassAvBarnMapper,
     private val læremidlerMapper: LæremidlerMapper,
+    private val flyttingMapper: FlyttingMapper,
     private val reiseTilSamlingMapper: ReiseTilSamlingMapper,
     private val taskService: TaskService,
     private val personService: PersonService,
@@ -110,6 +113,27 @@ class SkjemaService(
             lagreSkjema(
                 type = Skjematype.SØKNAD_REISE_TIL_SAMLING,
                 innsendtSkjema = reiseTilSamlingMapper.map(ident, mottattTidspunkt, søknad),
+                vedlegg = vedlegg,
+                frontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
+            )
+
+        taskService.save(LagPdfTask.opprettTask(opprettetSkjema))
+        taskService.save(SendNotifikasjonTask.opprettTask(opprettetSkjema))
+        return opprettetSkjema.id
+    }
+
+    @Transactional
+    fun lagreSøknadFlytting(
+        ident: String,
+        mottattTidspunkt: LocalDateTime,
+        søknad: SøknadFlyttingDto,
+    ): UUID {
+        val vedlegg = hentVedlegg(søknad.dokumentasjon)
+
+        val opprettetSkjema =
+            lagreSkjema(
+                type = Skjematype.SØKNAD_FLYTTING,
+                innsendtSkjema = flyttingMapper.map(ident, mottattTidspunkt, søknad),
                 vedlegg = vedlegg,
                 frontendGitHash = søknad.søknadMetadata.søknadFrontendGitHash,
             )
