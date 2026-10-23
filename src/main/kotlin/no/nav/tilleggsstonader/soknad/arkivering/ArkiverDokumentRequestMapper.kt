@@ -63,12 +63,8 @@ object ArkiverDokumentRequestMapper {
 
             Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_TSO_SØKNAD
 
-            Skjematype.SØKNAD_FLYTTING ->
-                when (tilhørendeStønadstype) {
-                    Stønadstype.FLYTTING_TSO -> Dokumenttype.FLYTTING_TSO_SØKNAD
-                    Stønadstype.FLYTTING_TSR -> Dokumenttype.FLYTTING_TSR_SØKNAD
-                    else -> error("Stønadstype $tilhørendeStønadstype passer ikke til skjema $type")
-                }
+            // Stønadstype blir alltid nå satt til TSO, så setter bare denne direkte
+            Skjematype.SØKNAD_FLYTTING -> Dokumenttype.FLYTTING_TSO_SØKNAD
 
             // TODO: Implementer arkivering for SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE med korrekt stønadstype (TSO/TSR)
             Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema $type")
@@ -93,12 +89,8 @@ object ArkiverDokumentRequestMapper {
 
             Skjematype.SØKNAD_REISE_TIL_SAMLING -> Dokumenttype.REISE_TIL_SAMLING_TSO_SØKNAD_VEDLEGG
 
-            Skjematype.SØKNAD_FLYTTING ->
-                when (tilhørendeStønadstype) {
-                    Stønadstype.FLYTTING_TSO -> Dokumenttype.FLYTTING_TSO_SØKNAD_VEDLEGG
-                    Stønadstype.FLYTTING_TSR -> Dokumenttype.FLYTTING_TSR_SØKNAD_VEDLEGG
-                    else -> error("Stønadstype $tilhørendeStønadstype passer ikke til skjema $type")
-                }
+            // Stønadstype blir alltid nå satt til TSO, så setter bare denne direkte
+            Skjematype.SØKNAD_FLYTTING -> Dokumenttype.FLYTTING_TSO_SØKNAD_VEDLEGG
 
             // TODO: Implementer arkivering av vedlegg for SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE med korrekt stønadstype (TSO/TSR)
             Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema $type")
