@@ -4,6 +4,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
+import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.AdresseDto
 import org.assertj.core.api.Assertions.assertThat
@@ -14,6 +15,15 @@ import java.time.LocalDateTime
 
 class FlyttingMapperTest {
     private val mapper = FlyttingMapper()
+
+    @Test
+    fun `mapper hovedytelse til kontrakten`() {
+        val søknad = søknad(flyttemåte = Flyttemåte.FLYTTER_SELV, utgifter = null)
+
+        val resultat = mapper.map("ident", LocalDateTime.now(), søknad.copy(flyttingDetaljer = null))
+
+        assertThat(resultat.skjema.hovedytelse.hovedytelse).isEqualTo(søknad.hovedytelse.ytelse)
+    }
 
     @Test
     fun `mapper beløp med desimalkomma til kontrakten`() {
@@ -194,6 +204,7 @@ class FlyttingMapperTest {
         flyttebyrå: FlyttebyråDto? = null,
         utgifter: UtgifterEgenFlyttingDto? = null,
     ) = SøknadFlyttingDto(
+        hovedytelse = SøknadTestUtil.hovedytelseDto(),
         flyttingDetaljer =
             FlyttingDetaljerDto(
                 årsak = null,

@@ -6,10 +6,12 @@ import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flytteårsak
+import no.nav.tilleggsstonader.soknad.soknad.HovedytelseDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.AdresseDto
 
 data class SøknadFlyttingDto(
+    val hovedytelse: HovedytelseDto,
     val flyttingDetaljer: FlyttingDetaljerDto?,
     val dokumentasjon: List<DokumentasjonFelt>,
     val søknadMetadata: SøknadMetadataDto,

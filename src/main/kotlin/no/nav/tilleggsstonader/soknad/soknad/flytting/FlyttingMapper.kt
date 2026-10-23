@@ -10,6 +10,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.FlyttingDetaljer
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.UtgifterEgenFlytting
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Adresse
+import no.nav.tilleggsstonader.soknad.soknad.SøknadMapper
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.AdresseDto
 import org.springframework.stereotype.Service
@@ -32,6 +33,7 @@ class FlyttingMapper {
             språk = Språkkode.NB,
             skjema =
                 SøknadsskjemaFlytting(
+                    hovedytelse = SøknadMapper.mapHovedytelse(dto.hovedytelse),
                     flyttingDetaljer = dto.flyttingDetaljer?.let { mapFlyttingDetaljer(it) },
                     dokumentasjon = dto.dokumentasjon,
                 ),
