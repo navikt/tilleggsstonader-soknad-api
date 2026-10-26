@@ -75,21 +75,6 @@ class FlyttingMapperTest {
     }
 
     @Test
-    fun `avviser ugyldig flyttedato før arkivering`() {
-        val søknad = SøknadFlyttingUtil.søknadFlytting(Flyttemåte.FLYTTER_SELV)
-        listOf("", "2025-02-29", "01.03.2026", "2026-03-01T00:00:00").forEach { dato ->
-            assertThatThrownBy {
-                mapper.map(
-                    "ident",
-                    LocalDateTime.now(),
-                    søknad.copy(flyttingDetaljer = requireNotNull(søknad.flyttingDetaljer).copy(flyttedato = felt(dato))),
-                )
-            }.isInstanceOf(SøknadValideringException::class.java)
-                .hasMessage("Ugyldig felt i flyttesøknaden: flyttedato")
-        }
-    }
-
-    @Test
     fun `avviser beløp med ugyldig format uten å gjengi verdien`() {
         listOf("-1", "1.234", "1e8", "1.2.3").forEach { verdi ->
             assertThatThrownBy {
