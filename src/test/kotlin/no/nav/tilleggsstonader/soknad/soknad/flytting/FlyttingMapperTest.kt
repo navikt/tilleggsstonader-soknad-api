@@ -1,8 +1,10 @@
 package no.nav.tilleggsstonader.soknad.soknad.flytting
 
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flytteårsak
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
@@ -43,7 +45,7 @@ class FlyttingMapperTest {
         val resultat = mapper.map("ident", LocalDateTime.now(), søknad)
         val flyttebyrå = resultat.skjema.flyttingDetaljer?.flyttebyrå
 
-        assertThat(flyttebyrå?.tilbud?.map { it.beløp?.verdi })
+        assertThat(flyttebyrå?.tilbud?.map { it.beløp.verdi })
             .containsExactly(BigDecimal("1234.50"), BigDecimal("1100.50"))
     }
 
@@ -70,6 +72,21 @@ class FlyttingMapperTest {
         assertThat(utgifter?.hengerleie?.verdi).isEqualTo(BigDecimal("0.00"))
         assertThat(utgifter?.bom?.verdi).isEqualTo(BigDecimal("15.50"))
         assertThat(utgifter?.parkering).isNull()
+    }
+
+    @Test
+    fun `avviser ugyldig flyttedato før arkivering`() {
+        val søknad = SøknadFlyttingUtil.søknadFlytting(Flyttemåte.FLYTTER_SELV)
+        listOf("", "2025-02-29", "01.03.2026", "2026-03-01T00:00:00").forEach { dato ->
+            assertThatThrownBy {
+                mapper.map(
+                    "ident",
+                    LocalDateTime.now(),
+                    søknad.copy(flyttingDetaljer = requireNotNull(søknad.flyttingDetaljer).copy(flyttedato = felt(dato))),
+                )
+            }.isInstanceOf(SøknadValideringException::class.java)
+                .hasMessage("Ugyldig felt i flyttesøknaden: flyttedato")
+        }
     }
 
     @Test
@@ -129,7 +146,7 @@ class FlyttingMapperTest {
                     flyttemåte = Flyttemåte.FLYTTEBYRÅ,
                     flyttebyrå =
                         FlyttebyråDto(
-                            tilbud = null,
+                            tilbud = emptyList(),
                         ),
                 ),
             )
@@ -207,11 +224,11 @@ class FlyttingMapperTest {
         hovedytelse = SøknadTestUtil.hovedytelseDto(),
         flyttingDetaljer =
             FlyttingDetaljerDto(
-                årsak = null,
-                flyttedato = null,
+                årsak = EnumFelt("Årsak", Flytteårsak.AKTIVITET, "Aktivitet", emptyList()),
+                flyttedato = felt("2026-03-01"),
                 adresse = AdresseDto(land = null, gateadresse = null, postnummer = null, poststed = null),
                 flyttemåte = EnumFelt("Flyttemåte", flyttemåte, flyttemåte.name, listOf(flyttemåte.name)),
-                utgifterDekketPåAnnenMåte = null,
+                utgifterDekketPåAnnenMåte = EnumFelt("Annen dekning", JaNei.NEI, "Nei", emptyList()),
                 utgifterEgenFlytting = utgifter,
                 flyttebyrå = flyttebyrå,
             ),

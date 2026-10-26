@@ -43,17 +43,17 @@ class FlyttingMapper {
         FlyttingDetaljer(
             årsak = dto.årsak,
             flyttedato = dto.flyttedato,
-            adresse = dto.adresse?.let { mapAdresse(it) },
+            adresse = mapAdresse(dto.adresse),
             flyttemåte = dto.flyttemåte,
             utgifterDekketPåAnnenMåte = dto.utgifterDekketPåAnnenMåte,
             utgifterEgenFlytting =
-                if (dto.flyttemåte?.verdi == Flyttemåte.FLYTTER_SELV) {
+                if (dto.flyttemåte.verdi == Flyttemåte.FLYTTER_SELV) {
                     mapUtgifterEgenFlytting(dto.utgifterEgenFlytting ?: ugyldigFelt("utgifterEgenFlytting"))
                 } else {
                     null
                 },
             flyttebyrå =
-                if (dto.flyttemåte?.verdi == Flyttemåte.FLYTTEBYRÅ) {
+                if (dto.flyttemåte.verdi == Flyttemåte.FLYTTEBYRÅ) {
                     mapFlyttebyrå(dto.flyttebyrå ?: ugyldigFelt("flyttebyrå"))
                 } else {
                     null
@@ -69,7 +69,7 @@ class FlyttingMapper {
         )
 
     private fun mapUtgifterEgenFlytting(dto: UtgifterEgenFlyttingDto): UtgifterEgenFlytting {
-        val avstand = parseBeløp("avstand", dto.avstand) ?: ugyldigFelt("avstand")
+        val avstand = parsePåkrevdBeløp("avstand", dto.avstand)
         if (avstand.verdi <= BigDecimal.ZERO) {
             ugyldigFelt("avstand")
         }
@@ -84,18 +84,15 @@ class FlyttingMapper {
     }
 
     private fun mapFlyttebyrå(dto: FlyttebyråDto): Flyttebyrå {
-        val dtoTilbud = dto.tilbud ?: ugyldigFelt("tilbud")
+        val dtoTilbud = dto.tilbud
         if (dtoTilbud.size != ANTALL_TILBUD) {
             ugyldigFelt("tilbud")
         }
         val tilbud =
             dtoTilbud.mapIndexed { index, tilbud ->
-                val navn = tilbud.navn?.verdi
-                if (navn.isNullOrBlank() || navn.length > MAKS_NAVNELENGDE) {
+                val navn = tilbud.navn.verdi
+                if (navn.isBlank() || navn.length > MAKS_NAVNELENGDE) {
                     ugyldigFelt("tilbud[$index].navn")
-                }
-                if (tilbud.beløp == null) {
-                    ugyldigFelt("tilbud[$index].beløp")
                 }
                 mapFlyttebyråTilbud(tilbud)
             }
@@ -107,16 +104,18 @@ class FlyttingMapper {
     private fun mapFlyttebyråTilbud(dto: FlyttebyråTilbudDto) =
         FlyttebyråTilbud(
             navn = dto.navn,
-            beløp = parseBeløp("beløp", dto.beløp),
+            beløp = parsePåkrevdBeløp("beløp", dto.beløp),
         )
 
     private fun parseBeløp(
         felt: String,
         verdiFelt: VerdiFelt<String>?,
-    ): VerdiFelt<BigDecimal>? {
-        if (verdiFelt == null) {
-            return null
-        }
+    ): VerdiFelt<BigDecimal>? = verdiFelt?.let { parsePåkrevdBeløp(felt, it) }
+
+    private fun parsePåkrevdBeløp(
+        felt: String,
+        verdiFelt: VerdiFelt<String>,
+    ): VerdiFelt<BigDecimal> {
         val normalisertVerdi = verdiFelt.verdi.trim()
         if (!beløpsformat.matches(normalisertVerdi)) {
             ugyldigFelt(felt)

@@ -18,17 +18,17 @@ data class SøknadFlyttingDto(
 )
 
 data class FlyttingDetaljerDto(
-    val årsak: EnumFelt<Flytteårsak>?,
-    val flyttedato: VerdiFelt<String>?,
-    val adresse: AdresseDto?,
-    val flyttemåte: EnumFelt<Flyttemåte>?,
-    val utgifterDekketPåAnnenMåte: EnumFelt<JaNei>?,
+    val årsak: EnumFelt<Flytteårsak>,
+    val flyttedato: VerdiFelt<String>,
+    val adresse: AdresseDto,
+    val flyttemåte: EnumFelt<Flyttemåte>,
+    val utgifterDekketPåAnnenMåte: EnumFelt<JaNei>,
     val utgifterEgenFlytting: UtgifterEgenFlyttingDto?,
     val flyttebyrå: FlyttebyråDto?,
 )
 
 data class UtgifterEgenFlyttingDto(
-    val avstand: VerdiFelt<String>?,
+    val avstand: VerdiFelt<String>,
     val hengerleie: VerdiFelt<String>?,
     val bom: VerdiFelt<String>?,
     val parkering: VerdiFelt<String>?,
@@ -37,10 +37,10 @@ data class UtgifterEgenFlyttingDto(
 )
 
 data class FlyttebyråDto(
-    val tilbud: List<FlyttebyråTilbudDto>?,
+    val tilbud: List<FlyttebyråTilbudDto>,
 )
 
 data class FlyttebyråTilbudDto(
-    val navn: VerdiFelt<String>?,
-    val beløp: VerdiFelt<String>?,
+    val navn: VerdiFelt<String>,
+    val beløp: VerdiFelt<String>,
 )
