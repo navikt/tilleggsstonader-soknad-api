@@ -5,18 +5,23 @@ import no.nav.tilleggsstonader.kontrakter.dokarkiv.ArkiverDokumentRequest
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnKjøreliste
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadBarnetilsyn
+import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadFlytting
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadLæremidler
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.tasks.kjørTasksKlareForProsesseringTilIngenTasksIgjen
 import no.nav.tilleggsstonader.soknad.kjøreliste.KjørelisteTestdata
 import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
+import no.nav.tilleggsstonader.soknad.soknad.flytting.SøknadFlyttingUtil
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.kafka.core.KafkaTemplate
 import java.time.LocalDate
@@ -27,6 +32,17 @@ class InnsendSkjemaTest : IntegrationTest() {
 
     @Autowired
     lateinit var kafkaTemplate: KafkaTemplate<String, String>
+
+    @ParameterizedTest
+    @EnumSource(Flyttemåte::class)
+    fun `innsending av søknad flytting`(flyttemåte: Flyttemåte) {
+        val søknad = SøknadFlyttingUtil.søknadFlytting(flyttemåte)
+        val response = sendInnSøknadFlytting(søknad)
+
+        assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
+
+        validerSkjemaHarBlittSendtInnOgProsessert(Skjematype.SØKNAD_FLYTTING, Dokumenttype.FLYTTING_TSO_SØKNAD)
+    }
 
     @Test
     fun `innsending av kjøreliste`() {
@@ -72,6 +88,8 @@ class InnsendSkjemaTest : IntegrationTest() {
             }
 
         assertThat(skjema.type).isEqualTo(skjematype)
+        assertThat(skjema.skjemaPdf).isNotNull()
+        assertThat(skjema.journalpostId).isNotBlank()
 
         // Verifiserer at det har blitt opprettet journalpost av skjema
         val slot = io.mockk.slot<ArkiverDokumentRequest>()

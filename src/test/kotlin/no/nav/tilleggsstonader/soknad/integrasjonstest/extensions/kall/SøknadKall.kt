@@ -2,11 +2,25 @@ package no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall
 
 import no.nav.tilleggsstonader.soknad.IntegrationTest
 import no.nav.tilleggsstonader.soknad.soknad.Kvittering
+import no.nav.tilleggsstonader.soknad.soknad.flytting.SøknadFlyttingDto
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import org.springframework.test.web.servlet.client.expectBody
+
+fun IntegrationTest.sendInnSøknadFlytting(søknadFlyttingDto: SøknadFlyttingDto) =
+    restTestClient
+        .post()
+        .uri("/api/soknad/flytting")
+        .body(søknadFlyttingDto)
+        .medSøkerBearerToken(tokenSubject)
+        .exchange()
+        .expectStatus()
+        .isOk
+        .expectBody<Kvittering>()
+        .returnResult()
+        .responseBody!!
 
 fun IntegrationTest.sendInnSøknadBarnetilsynKall(søknadBarnetilsynDto: SøknadBarnetilsynDto) =
     restTestClient
