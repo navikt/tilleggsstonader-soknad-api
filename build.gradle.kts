@@ -1,9 +1,9 @@
 val javaVersion = JavaLanguageVersion.of(21)
 val tomcatVersion = "11.0.22"
 val tilleggsstønaderLibsVersion = "2026.08.04-15.02.ea2eccef8308"
-val tilleggsstønaderKontrakterVersion = "2026.10.01-11.29.d7f312bf70bc"
+val tilleggsstønaderKontrakterVersion = "2026.10.27-09.53.3b9bf736298c"
 val familieProsesseringVersion = "2.20260817115650_f13f507"
-val tokenSupportVersion = "6.0.12"
+val tokenSupportVersion = "6.0.13"
 val wiremockVersion = "3.0.1"
 val testcontainerVersion = "1.21.4"
 
@@ -13,14 +13,14 @@ version = "1.0.0"
 plugins {
     application
 
-    kotlin("jvm") version "2.4.10"
-    id("com.diffplug.spotless") version "8.10.3"
-    id("io.github.ben-manes.versions") version "0.64.0"
+    kotlin("jvm") version "2.4.21"
+    id("com.diffplug.spotless") version "8.10.4"
+    id("io.github.ben-manes.versions") version "0.66.0"
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
 
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
-    kotlin("plugin.spring") version "2.4.10"
+    kotlin("plugin.spring") version "2.4.21"
 }
 
 repositories {
@@ -84,10 +84,10 @@ dependencies {
     implementation("no.nav.tms.varsel:kotlin-builder:2.2.0")
 
     // token-support
-    implementation("no.nav.security:token-validation-spring:${tokenSupportVersion}")
-    implementation("no.nav.security:token-validation-core:${tokenSupportVersion}")
-    implementation("no.nav.security:token-client-core:${tokenSupportVersion}")
-    implementation("no.nav.security:token-client-spring:${tokenSupportVersion}")
+    implementation("no.nav.security:token-validation-spring:$tokenSupportVersion")
+    implementation("no.nav.security:token-validation-core:$tokenSupportVersion")
+    implementation("no.nav.security:token-client-core:$tokenSupportVersion")
+    implementation("no.nav.security:token-client-spring:$tokenSupportVersion")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")

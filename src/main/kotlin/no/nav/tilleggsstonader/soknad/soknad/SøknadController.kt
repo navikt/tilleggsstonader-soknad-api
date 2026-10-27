@@ -2,6 +2,7 @@ package no.nav.tilleggsstonader.soknad.soknad
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.tilleggsstonader.libs.sikkerhet.EksternBrukerUtils
+import no.nav.tilleggsstonader.soknad.soknad.flytting.SøknadFlyttingDto
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
@@ -65,6 +66,19 @@ class SøknadController(
     ): Kvittering {
         val mottattTidspunkt = LocalDateTime.now()
         skjemaService.lagreSøknadROAH(
+            ident = EksternBrukerUtils.hentFnrFraToken(),
+            mottattTidspunkt = mottattTidspunkt,
+            søknad = søknad,
+        )
+        return Kvittering(mottattTidspunkt = mottattTidspunkt)
+    }
+
+    @PostMapping("flytting")
+    fun sendInnFlytting(
+        @RequestBody søknad: SøknadFlyttingDto,
+    ): Kvittering {
+        val mottattTidspunkt = LocalDateTime.now()
+        skjemaService.lagreSøknadFlytting(
             ident = EksternBrukerUtils.hentFnrFraToken(),
             mottattTidspunkt = mottattTidspunkt,
             søknad = søknad,

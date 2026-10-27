@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.tilStønadstyper
 import no.nav.tilleggsstonader.kontrakter.sak.DokumentBrevkode
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaFlytting
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaPassAvBarn
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaROAH
@@ -39,6 +40,7 @@ class PdfService(
                 is SøknadsskjemaLæremidler,
                 is SøknadsskjemaReiseTilSamling,
                 is SøknadsskjemaROAH,
+                is SøknadsskjemaFlytting,
                 ->
                     genererSøknadHtml(
                         skjema,
@@ -124,7 +126,6 @@ class PdfService(
             is SøknadsskjemaLæremidler -> DokumentBrevkode.LÆREMIDLER
             is KjørelisteSkjema -> DokumentBrevkode.DAGLIG_REISE_KJØRELISTE
             is SøknadsskjemaReiseTilSamling -> DokumentBrevkode.REISE_TIL_SAMLING
-            is SøknadsskjemaROAH -> DokumentBrevkode.REISE_OPPSTART_AVSLUTNING_ELLER_HJEMREISE
             else -> error("Ingen dokumentbrevkode for skjema ${innsendtSkjema.skjema::class.qualifiedName}")
         }
 
@@ -143,15 +144,11 @@ class PdfService(
                 jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaReiseTilSamling>>(
                     json,
                 )
-
+            Skjematype.SØKNAD_FLYTTING -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaFlytting>>(json)
             Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
                 jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaROAH>>(
                     json,
                 )
-
-            // TODO: Implementer parsing av SØKNAD_FLYTTING når SøknadsskjemaFlytting er definert i kontrakter
-            Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema ${skjema.type}")
-
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema ${skjema.type}")
         }

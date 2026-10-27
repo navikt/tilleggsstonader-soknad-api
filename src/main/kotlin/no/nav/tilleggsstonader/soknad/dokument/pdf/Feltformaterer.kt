@@ -1,6 +1,7 @@
 package no.nav.tilleggsstonader.soknad.dokument.pdf
 
 import no.nav.tilleggsstonader.soknad.util.DatoFormat
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
@@ -20,6 +21,7 @@ object Feltformaterer {
             is Month -> tilUtskriftsformat(verdi)
             is Boolean -> tilUtskriftsformat(verdi)
             is Double -> tilUtskriftsformat(verdi)
+            is BigDecimal -> verdi.toPlainString().replace('.', ',')
             is Collection<*> -> verdi.joinToString(", ") { mapVerdi(it!!) }
             is LocalDate -> tilUtskriftsformat(verdi)
             is LocalDateTime -> tilUtskriftsformat(verdi)
