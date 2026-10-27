@@ -5,7 +5,6 @@ import no.nav.tilleggsstonader.kontrakter.dokarkiv.AvsenderMottaker
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokument
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
-import no.nav.tilleggsstonader.kontrakter.dokarkiv.dokumenttyper
 import no.nav.tilleggsstonader.kontrakter.felles.BrukerIdType
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
@@ -67,9 +66,8 @@ object ArkiverDokumentRequestMapper {
             // Stønadstype blir alltid nå satt til TSO, så setter bare denne direkte
             Skjematype.SØKNAD_FLYTTING -> Dokumenttype.FLYTTING_TSO_SØKNAD
 
-            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
-                tilhørendeStønadstype.dokumenttyper.søknad
-                    ?: error("Finner ikke dokumenttype for $type og stønadstype=$tilhørendeStønadstype")
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE,
+            -> Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSO_SØKNAD
         }
 
     private fun typeVedlegg(
@@ -95,8 +93,7 @@ object ArkiverDokumentRequestMapper {
             Skjematype.SØKNAD_FLYTTING -> Dokumenttype.FLYTTING_TSO_SØKNAD_VEDLEGG
 
             Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
-                tilhørendeStønadstype.dokumenttyper.søknadVedlegg
-                    ?: error("Finner ikke dokumenttype for vedlegg for $type og stønadstype=$tilhørendeStønadstype")
+                Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSO_SØKNAD_VEDLEGG
         }
 
     private fun mapVedlegg(
@@ -130,7 +127,7 @@ fun Dokumenttype?.dokumentTittel(): String =
         Dokumenttype.FLYTTING_TSO_SØKNAD, Dokumenttype.FLYTTING_TSR_SØKNAD -> "Søknad om støtte til flytting"
         Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSO_SØKNAD,
         Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSR_SØKNAD,
-        -> "Søknad om støtte til reise til oppstart, avslutning og hjemreiser"
+        -> "Søknad om støtte til reise ved oppstart, avslutning og hjemreiser"
         Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE, Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE,
         -> "Refusjon av utgifter til daglig reise med bruk av bil"
 
