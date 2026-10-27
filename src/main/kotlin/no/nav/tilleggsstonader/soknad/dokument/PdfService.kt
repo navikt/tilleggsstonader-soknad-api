@@ -126,6 +126,7 @@ class PdfService(
             is SøknadsskjemaLæremidler -> DokumentBrevkode.LÆREMIDLER
             is KjørelisteSkjema -> DokumentBrevkode.DAGLIG_REISE_KJØRELISTE
             is SøknadsskjemaReiseTilSamling -> DokumentBrevkode.REISE_TIL_SAMLING
+            is SøknadsskjemaFlytting -> DokumentBrevkode.FLYTTING
             else -> error("Ingen dokumentbrevkode for skjema ${innsendtSkjema.skjema::class.qualifiedName}")
         }
 
