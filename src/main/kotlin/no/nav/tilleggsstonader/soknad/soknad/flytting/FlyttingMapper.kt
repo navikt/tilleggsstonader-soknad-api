@@ -47,7 +47,7 @@ class FlyttingMapper {
             flyttemåte = dto.flyttemåte,
             utgifterDekketPåAnnenMåte = dto.utgifterDekketPåAnnenMåte,
             skalFlytteFraFolkeregistrertAdresse = dto.skalFlytteFraFolkeregistrertAdresse,
-            adresseDetSkalFlyttesFra = dto.adresseDetSkalFlyttesFra?.let { mapAdresse(it) },
+            adresseDetSkalFlyttesFra = mapAdresse(dto.adresseDetSkalFlyttesFra),
             utgifterEgenFlytting =
                 if (dto.flyttemåte.verdi == Flyttemåte.FLYTTER_SELV) {
                     mapUtgifterEgenFlytting(dto.utgifterEgenFlytting ?: ugyldigFelt("utgifterEgenFlytting"))

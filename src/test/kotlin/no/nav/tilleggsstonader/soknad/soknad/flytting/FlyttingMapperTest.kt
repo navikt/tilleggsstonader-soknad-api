@@ -270,8 +270,10 @@ class FlyttingMapperTest {
         flyttemåte: Flyttemåte,
         flyttebyrå: FlyttebyråDto? = null,
         utgifter: UtgifterEgenFlyttingDto? = null,
-        skalFlytteFraFolkeregistrertAdresse: EnumFelt<JaNei>? = null,
-        adresseDetSkalFlyttesFra: AdresseDto? = null,
+        skalFlytteFraFolkeregistrertAdresse: EnumFelt<JaNei> =
+            EnumFelt("Flytter fra folkeregistrert adresse?", JaNei.NEI, "Nei", emptyList()),
+        adresseDetSkalFlyttesFra: AdresseDto =
+            AdresseDto(land = null, gateadresse = felt("Hjemveien 2"), postnummer = felt("0123"), poststed = felt("Oslo")),
     ) = SøknadFlyttingDto(
         hovedytelse = SøknadTestUtil.hovedytelseDto(),
         flyttingDetaljer =

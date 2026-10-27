@@ -29,6 +29,15 @@ object SøknadFlyttingUtil {
                             postnummer = felt("5132", "Postnummer"),
                             poststed = felt("Nyborg", "Poststed"),
                         ),
+                    skalFlytteFraFolkeregistrertAdresse =
+                        EnumFelt("Flytter du fra din folkeregistrerte adresse?", JaNei.NEI, "Nei", emptyList()),
+                    adresseDetSkalFlyttesFra =
+                        AdresseDto(
+                            land = SelectFelt("Land", "NO", "Norge"),
+                            gateadresse = felt("Hjemveien 2", "Gateadresse"),
+                            postnummer = felt("0123", "Postnummer"),
+                            poststed = felt("Oslo", "Poststed"),
+                        ),
                     flyttemåte = EnumFelt("Hvordan flytter du?", flyttemåte, flyttemåte.name, emptyList()),
                     utgifterDekketPåAnnenMåte = EnumFelt("Annen dekning?", JaNei.NEI, "Nei", emptyList()),
                     utgifterEgenFlytting =
