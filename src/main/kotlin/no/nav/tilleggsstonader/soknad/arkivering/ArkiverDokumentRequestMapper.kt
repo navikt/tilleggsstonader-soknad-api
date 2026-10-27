@@ -66,8 +66,8 @@ object ArkiverDokumentRequestMapper {
             // Stønadstype blir alltid nå satt til TSO, så setter bare denne direkte
             Skjematype.SØKNAD_FLYTTING -> Dokumenttype.FLYTTING_TSO_SØKNAD
 
-            // TODO: Implementer arkivering for SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE med korrekt stønadstype (TSO/TSR)
-            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema $type")
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE,
+            -> Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSO_SØKNAD
         }
 
     private fun typeVedlegg(
@@ -92,8 +92,8 @@ object ArkiverDokumentRequestMapper {
             // Stønadstype blir alltid nå satt til TSO, så setter bare denne direkte
             Skjematype.SØKNAD_FLYTTING -> Dokumenttype.FLYTTING_TSO_SØKNAD_VEDLEGG
 
-            // TODO: Implementer arkivering av vedlegg for SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE med korrekt stønadstype (TSO/TSR)
-            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema $type")
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
+                Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSO_SØKNAD_VEDLEGG
         }
 
     private fun mapVedlegg(
@@ -125,6 +125,9 @@ fun Dokumenttype?.dokumentTittel(): String =
         Dokumenttype.LÆREMIDLER_SØKNAD -> "Søknad om støtte til læremidler"
         Dokumenttype.REISE_TIL_SAMLING_TSO_SØKNAD, Dokumenttype.REISE_TIL_SAMLING_TSR_SØKNAD -> "Søknad om støtte til reise til samling"
         Dokumenttype.FLYTTING_TSO_SØKNAD, Dokumenttype.FLYTTING_TSR_SØKNAD -> "Søknad om støtte til flytting"
+        Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSO_SØKNAD,
+        Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSR_SØKNAD,
+        -> "Søknad om støtte til reise ved oppstart, avslutning og hjemreiser"
         Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE, Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE,
         -> "Refusjon av utgifter til daglig reise med bruk av bil"
 

@@ -12,6 +12,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaFlytting
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaPassAvBarn
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaROAH
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
 import no.nav.tilleggsstonader.kontrakter.søknad.TekstFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.UkeMedReisedager
@@ -23,6 +24,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.passavbarn.BarnMedBarnepass
 import no.nav.tilleggsstonader.kontrakter.søknad.passavbarn.Utgifter
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Adresse
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Samling
+import no.nav.tilleggsstonader.kontrakter.søknad.roah.ROAHReiseInfo
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Feltformaterer.mapVerdi
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelAlternativer
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelOppholdUtenforNorgeNeste12mnd
@@ -80,6 +82,7 @@ object SøknadTreeWalker {
         when (entitet) {
             is SøknadsskjemaPassAvBarn,
             is SøknadsskjemaReiseTilSamling,
+            is SøknadsskjemaROAH,
             is SøknadsskjemaLæremidler,
             is SøknadsskjemaFlytting,
             is KjørelisteSkjema,
@@ -90,6 +93,7 @@ object SøknadTreeWalker {
             is Reisedag,
             is Samling,
             is Adresse,
+            is ROAHReiseInfo,
             -> finnFelter(entitet, språk)
 
             is IAvsnitt,

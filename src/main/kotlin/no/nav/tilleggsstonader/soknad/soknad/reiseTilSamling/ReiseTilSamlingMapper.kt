@@ -4,6 +4,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.DatoFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.ReisemåteAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Adresse
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.AvreiseadresseAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.DrosjeInfo
@@ -12,7 +13,6 @@ import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.LeveringOgHent
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.OffentligTransportInfo
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.PrivatBilInfo
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReiseTilSamlingAktivitetAvsnitt
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.ReisemåteAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Samling
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.TilleggsopplysningerAnnenAktivitetAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.UnntakFraOffentligTransport

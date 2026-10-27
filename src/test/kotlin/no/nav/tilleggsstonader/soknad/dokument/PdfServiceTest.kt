@@ -15,6 +15,7 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.Skjema
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingUtil
+import no.nav.tilleggsstonader.soknad.soknad.roah.SøknadROAHUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import no.nav.tilleggsstonader.soknad.util.FileUtil.listFiles
 import org.assertj.core.api.Assertions.assertThat
@@ -96,6 +97,17 @@ class PdfServiceTest {
             pdfService.lagPdf(søknadReiseTilSamling.id)
 
             assertGenerertHtml("søknad/reise-til-samling/reise-til-samling.html")
+            assertThat(oppdaterSkjemaSlot.captured.skjemaPdf?.data).isEqualTo(pdfBytes)
+        }
+
+        @Test
+        fun `skal lage pdf fra roah`() {
+            val søknadROAH = lagSøknad(SøknadROAHUtil.søknadROAH)
+            every { skjemaService.hentSkjema(søknadROAH.id) } returns søknadROAH
+
+            pdfService.lagPdf(søknadROAH.id)
+
+            assertGenerertHtml("søknad/roah/roah.html")
             assertThat(oppdaterSkjemaSlot.captured.skjemaPdf?.data).isEqualTo(pdfBytes)
         }
     }

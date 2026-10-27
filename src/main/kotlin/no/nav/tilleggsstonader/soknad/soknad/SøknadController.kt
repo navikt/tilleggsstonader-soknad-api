@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.soknad.soknad.flytting.SøknadFlyttingDto
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
+import no.nav.tilleggsstonader.soknad.soknad.roah.SøknadROAHDto
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -52,6 +53,19 @@ class SøknadController(
     ): Kvittering {
         val mottattTidspunkt = LocalDateTime.now()
         skjemaService.lagreSøknadReiseTilSamling(
+            ident = EksternBrukerUtils.hentFnrFraToken(),
+            mottattTidspunkt = mottattTidspunkt,
+            søknad = søknad,
+        )
+        return Kvittering(mottattTidspunkt = mottattTidspunkt)
+    }
+
+    @PostMapping("reise-oppstart-avslutning-hjemreise")
+    fun sendInnROAH(
+        @RequestBody søknad: SøknadROAHDto,
+    ): Kvittering {
+        val mottattTidspunkt = LocalDateTime.now()
+        skjemaService.lagreSøknadROAH(
             ident = EksternBrukerUtils.hentFnrFraToken(),
             mottattTidspunkt = mottattTidspunkt,
             søknad = søknad,

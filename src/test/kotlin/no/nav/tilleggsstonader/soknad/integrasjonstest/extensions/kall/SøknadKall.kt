@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.soknad.soknad.flytting.SøknadFlyttingDto
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerDto
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynDto
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingDto
+import no.nav.tilleggsstonader.soknad.soknad.roah.SøknadROAHDto
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import org.springframework.test.web.servlet.client.expectBody
 
@@ -70,6 +71,25 @@ fun IntegrationTest.sendInnSøknadReiseTilSamlingKall(
 
 fun IntegrationTest.sendInnSøknadReiseTilSamling(søknadReiseTilSamlingDto: SøknadReiseTilSamlingDto) =
     sendInnSøknadReiseTilSamlingKall(søknadReiseTilSamlingDto)
+        .expectStatus()
+        .isOk
+        .expectBody<Kvittering>()
+        .returnResult()
+        .responseBody!!
+
+fun IntegrationTest.sendInnSøknadROAHKall(
+    søknadROAHDto: SøknadROAHDto,
+    medToken: Boolean = true,
+) = restTestClient
+    .post()
+    .uri("/api/soknad/reise-oppstart-avslutning-hjemreise")
+    .body(søknadROAHDto)
+    .let {
+        if (medToken) it.medSøkerBearerToken(tokenSubject) else it
+    }.exchange()
+
+fun IntegrationTest.sendInnSøknadROAH(søknadROAHDto: SøknadROAHDto) =
+    sendInnSøknadROAHKall(søknadROAHDto)
         .expectStatus()
         .isOk
         .expectBody<Kvittering>()

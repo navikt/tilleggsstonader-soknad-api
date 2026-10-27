@@ -9,6 +9,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaFlytting
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaPassAvBarn
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaROAH
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Søkerinformasjon
@@ -38,6 +39,7 @@ class PdfService(
                 is SøknadsskjemaPassAvBarn,
                 is SøknadsskjemaLæremidler,
                 is SøknadsskjemaReiseTilSamling,
+                is SøknadsskjemaROAH,
                 is SøknadsskjemaFlytting,
                 ->
                     genererSøknadHtml(
@@ -143,12 +145,11 @@ class PdfService(
                 jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaReiseTilSamling>>(
                     json,
                 )
-
             Skjematype.SØKNAD_FLYTTING -> jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaFlytting>>(json)
-
-            // TODO: Implementer parsing av SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE når skjema er definert i kontrakter
-            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema ${skjema.type}")
-
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
+                jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaROAH>>(
+                    json,
+                )
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema ${skjema.type}")
         }
