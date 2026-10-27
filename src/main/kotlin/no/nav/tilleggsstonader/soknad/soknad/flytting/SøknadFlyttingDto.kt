@@ -25,6 +25,8 @@ data class FlyttingDetaljerDto(
     val utgifterDekketPåAnnenMåte: EnumFelt<JaNei>,
     val utgifterEgenFlytting: UtgifterEgenFlyttingDto?,
     val flyttebyrå: FlyttebyråDto?,
+    val skalFlytteFraFolkeregistrertAdresse: EnumFelt<JaNei>,
+    val adresseDetSkalFlyttesFra: AdresseDto,
 )
 
 data class UtgifterEgenFlyttingDto(

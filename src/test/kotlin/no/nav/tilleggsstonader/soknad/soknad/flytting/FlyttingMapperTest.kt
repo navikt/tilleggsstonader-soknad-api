@@ -2,6 +2,7 @@ package no.nav.tilleggsstonader.soknad.soknad.flytting
 
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
+import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flytteårsak
@@ -72,6 +73,70 @@ class FlyttingMapperTest {
         assertThat(utgifter?.hengerleie?.verdi).isEqualTo(BigDecimal("0.00"))
         assertThat(utgifter?.bom?.verdi).isEqualTo(BigDecimal("15.50"))
         assertThat(utgifter?.parkering).isNull()
+    }
+
+    @Test
+    fun `mapper adressen brukeren flytter fra`() {
+        val søknad =
+            søknad(
+                flyttemåte = Flyttemåte.FLYTTER_SELV,
+                utgifter =
+                    UtgifterEgenFlyttingDto(
+                        avstand = felt("1"),
+                        hengerleie = null,
+                        bom = null,
+                        parkering = null,
+                        ferje = null,
+                        annet = null,
+                    ),
+                skalFlytteFraFolkeregistrertAdresse = EnumFelt("Flytter fra folkeregistrert adresse?", JaNei.NEI, "Nei", emptyList()),
+                adresseDetSkalFlyttesFra =
+                    AdresseDto(
+                        land = SelectFelt("Land", "NOR", "Norge"),
+                        gateadresse = felt("Hjemveien 2"),
+                        postnummer = felt("0123"),
+                        poststed = felt("Oslo"),
+                    ),
+            )
+
+        val resultat = mapper.map("ident", LocalDateTime.now(), søknad)
+        val detaljer = resultat.skjema.flyttingDetaljer
+
+        assertThat(detaljer?.skalFlytteFraFolkeregistrertAdresse?.verdi).isEqualTo(JaNei.NEI)
+        assertThat(detaljer?.adresseDetSkalFlyttesFra?.gateadresse?.verdi).isEqualTo("Hjemveien 2")
+        assertThat(detaljer?.adresseDetSkalFlyttesFra?.postnummer?.verdi).isEqualTo("0123")
+        assertThat(detaljer?.adresseDetSkalFlyttesFra?.poststed?.verdi).isEqualTo("Oslo")
+        assertThat(detaljer?.adresseDetSkalFlyttesFra?.land?.verdi).isEqualTo("NOR")
+    }
+
+    @Test
+    fun `mapper folkeregistrert adresse når brukeren svarer ja`() {
+        val søknad =
+            søknad(
+                flyttemåte = Flyttemåte.FLYTTER_SELV,
+                utgifter =
+                    UtgifterEgenFlyttingDto(
+                        avstand = felt("1"),
+                        hengerleie = null,
+                        bom = null,
+                        parkering = null,
+                        ferje = null,
+                        annet = null,
+                    ),
+                skalFlytteFraFolkeregistrertAdresse = EnumFelt("Flytter fra folkeregistrert adresse?", JaNei.JA, "Ja", emptyList()),
+                adresseDetSkalFlyttesFra =
+                    AdresseDto(
+                        land = SelectFelt("Land", "NOR", "Norge"),
+                        gateadresse = felt("Hildes vei"),
+                        postnummer = felt("0100"),
+                        poststed = felt("Oslo"),
+                    ),
+            )
+
+        val detaljer = mapper.map("ident", LocalDateTime.now(), søknad).skjema.flyttingDetaljer
+
+        assertThat(detaljer?.skalFlytteFraFolkeregistrertAdresse?.verdi).isEqualTo(JaNei.JA)
+        assertThat(detaljer?.adresseDetSkalFlyttesFra?.gateadresse?.verdi).isEqualTo("Hildes vei")
     }
 
     @Test
@@ -205,6 +270,10 @@ class FlyttingMapperTest {
         flyttemåte: Flyttemåte,
         flyttebyrå: FlyttebyråDto? = null,
         utgifter: UtgifterEgenFlyttingDto? = null,
+        skalFlytteFraFolkeregistrertAdresse: EnumFelt<JaNei> =
+            EnumFelt("Flytter fra folkeregistrert adresse?", JaNei.NEI, "Nei", emptyList()),
+        adresseDetSkalFlyttesFra: AdresseDto =
+            AdresseDto(land = null, gateadresse = felt("Hjemveien 2"), postnummer = felt("0123"), poststed = felt("Oslo")),
     ) = SøknadFlyttingDto(
         hovedytelse = SøknadTestUtil.hovedytelseDto(),
         flyttingDetaljer =
@@ -216,6 +285,8 @@ class FlyttingMapperTest {
                 utgifterDekketPåAnnenMåte = EnumFelt("Annen dekning", JaNei.NEI, "Nei", emptyList()),
                 utgifterEgenFlytting = utgifter,
                 flyttebyrå = flyttebyrå,
+                skalFlytteFraFolkeregistrertAdresse = skalFlytteFraFolkeregistrertAdresse,
+                adresseDetSkalFlyttesFra = adresseDetSkalFlyttesFra,
             ),
         dokumentasjon = emptyList(),
         søknadMetadata = SøknadMetadataDto(søknadFrontendGitHash = "test"),
