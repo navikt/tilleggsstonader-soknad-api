@@ -11,6 +11,7 @@ import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnS�
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadBarnetilsynKall
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadLæremidler
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadLæremidlerKall
+import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadROAH
 import no.nav.tilleggsstonader.soknad.integrasjonstest.extensions.kall.sendInnSøknadReiseTilSamling
 import no.nav.tilleggsstonader.soknad.person.pdl.PdlClientCredentialClient
 import no.nav.tilleggsstonader.soknad.person.pdl.dto.AdressebeskyttelseGradering
@@ -18,6 +19,7 @@ import no.nav.tilleggsstonader.soknad.soknad.domene.SkjemaRepository
 import no.nav.tilleggsstonader.soknad.soknad.læremidler.SøknadLæremidlerUtil
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.SøknadReiseTilSamlingUtil
+import no.nav.tilleggsstonader.soknad.soknad.roah.SøknadROAHUtil
 import no.nav.tilleggsstonader.soknad.tokenSubject
 import no.nav.tilleggsstonader.soknad.util.FileUtil
 import org.assertj.core.api.Assertions.assertThat
@@ -63,6 +65,17 @@ class SøknadControllerTest : IntegrationTest() {
         assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
 
         verifiserLagretSøknad(Skjematype.SØKNAD_REISE_TIL_SAMLING, "søknad/reise-til-samling/reise-til-samling.json")
+    }
+
+    @Test
+    fun `skal kunne sende inn en komplett søknad for roah`() {
+        val response = sendInnSøknadROAH(SøknadROAHUtil.søknadROAH)
+        assertThat(response.mottattTidspunkt.toLocalDate()).isEqualTo(LocalDate.now())
+
+        val dbSøknad = skjemaRepository.findAll().single()
+        assertThat(dbSøknad.personIdent).isEqualTo(tokenSubject)
+        assertThat(dbSøknad.type).isEqualTo(Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE)
+        assertThat(dbSøknad.frontendGitHash).isEqualTo("aabbccd")
     }
 
     @Test

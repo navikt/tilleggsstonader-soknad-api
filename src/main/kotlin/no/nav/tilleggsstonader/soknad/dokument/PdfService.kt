@@ -8,6 +8,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.KjørelisteSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaLæremidler
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaPassAvBarn
+import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaROAH
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaReiseTilSamling
 import no.nav.tilleggsstonader.soknad.dokument.pdf.SpråkMapper.tittelSøknadsskjema
 import no.nav.tilleggsstonader.soknad.dokument.pdf.Søkerinformasjon
@@ -34,7 +35,11 @@ class PdfService(
 
         val html =
             when (innsendtSkjema.skjema) {
-                is SøknadsskjemaPassAvBarn, is SøknadsskjemaLæremidler, is SøknadsskjemaReiseTilSamling ->
+                is SøknadsskjemaPassAvBarn,
+                is SøknadsskjemaLæremidler,
+                is SøknadsskjemaReiseTilSamling,
+                is SøknadsskjemaROAH,
+                ->
                     genererSøknadHtml(
                         skjema,
                         innsendtSkjema,
@@ -119,6 +124,7 @@ class PdfService(
             is SøknadsskjemaLæremidler -> DokumentBrevkode.LÆREMIDLER
             is KjørelisteSkjema -> DokumentBrevkode.DAGLIG_REISE_KJØRELISTE
             is SøknadsskjemaReiseTilSamling -> DokumentBrevkode.REISE_TIL_SAMLING
+            is SøknadsskjemaROAH -> DokumentBrevkode.REISE_OPPSTART_AVSLUTNING_ELLER_HJEMREISE
             else -> error("Ingen dokumentbrevkode for skjema ${innsendtSkjema.skjema::class.qualifiedName}")
         }
 
@@ -138,11 +144,13 @@ class PdfService(
                     json,
                 )
 
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
+                jsonMapper.readValue<InnsendtSkjema<SøknadsskjemaROAH>>(
+                    json,
+                )
+
             // TODO: Implementer parsing av SØKNAD_FLYTTING når SøknadsskjemaFlytting er definert i kontrakter
             Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema ${skjema.type}")
-
-            // TODO: Implementer parsing av SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE når skjema er definert i kontrakter
-            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema ${skjema.type}")
 
             Skjematype.SØKNAD_BOUTGIFTER, Skjematype.SØKNAD_DAGLIG_REISE ->
                 error("Håndterer ikke skjema ${skjema.type}")

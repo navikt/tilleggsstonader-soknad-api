@@ -19,6 +19,7 @@ import no.nav.tilleggsstonader.soknad.soknad.læremidler.LæremidlerMapper
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.PassAvBarnMapper
 import no.nav.tilleggsstonader.soknad.soknad.passAvBarn.SøknadBarnetilsynUtil
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.ReiseTilSamlingMapper
+import no.nav.tilleggsstonader.soknad.soknad.roah.ROAHMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
@@ -45,6 +46,7 @@ class SkjemaServiceTest {
             taskService = mockk<TaskService>(relaxed = true),
             personService = personService,
             familieVedleggClient = familieVedleggClient,
+            roahMapper = ROAHMapper(),
         )
 
     val personIdent = FnrGenerator.generer()

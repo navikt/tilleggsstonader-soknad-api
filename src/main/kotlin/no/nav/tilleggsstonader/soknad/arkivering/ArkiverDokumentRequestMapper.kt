@@ -5,6 +5,7 @@ import no.nav.tilleggsstonader.kontrakter.dokarkiv.AvsenderMottaker
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokument
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Dokumenttype
 import no.nav.tilleggsstonader.kontrakter.dokarkiv.Filtype
+import no.nav.tilleggsstonader.kontrakter.dokarkiv.dokumenttyper
 import no.nav.tilleggsstonader.kontrakter.felles.BrukerIdType
 import no.nav.tilleggsstonader.kontrakter.felles.Skjematype
 import no.nav.tilleggsstonader.kontrakter.felles.Stønadstype
@@ -66,8 +67,9 @@ object ArkiverDokumentRequestMapper {
             // TODO: Implementer arkivering for SØKNAD_FLYTTING med korrekt stønadstype (TSO/TSR)
             Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema $type")
 
-            // TODO: Implementer arkivering for SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE med korrekt stønadstype (TSO/TSR)
-            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema $type")
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
+                tilhørendeStønadstype.dokumenttyper.søknad
+                    ?: error("Finner ikke dokumenttype for $type og stønadstype=$tilhørendeStønadstype")
         }
 
     private fun typeVedlegg(
@@ -92,8 +94,9 @@ object ArkiverDokumentRequestMapper {
             // TODO: Implementer arkivering av vedlegg for SØKNAD_FLYTTING med korrekt stønadstype (TSO/TSR)
             Skjematype.SØKNAD_FLYTTING -> error("Håndterer ikke skjema $type")
 
-            // TODO: Implementer arkivering av vedlegg for SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE med korrekt stønadstype (TSO/TSR)
-            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE -> error("Håndterer ikke skjema $type")
+            Skjematype.SØKNAD_REISE_OPPSTART_AVSLUTNING_HJEMREISE ->
+                tilhørendeStønadstype.dokumenttyper.søknadVedlegg
+                    ?: error("Finner ikke dokumenttype for vedlegg for $type og stønadstype=$tilhørendeStønadstype")
         }
 
     private fun mapVedlegg(
@@ -125,6 +128,9 @@ fun Dokumenttype?.dokumentTittel(): String =
         Dokumenttype.LÆREMIDLER_SØKNAD -> "Søknad om støtte til læremidler"
         Dokumenttype.REISE_TIL_SAMLING_TSO_SØKNAD, Dokumenttype.REISE_TIL_SAMLING_TSR_SØKNAD -> "Søknad om støtte til reise til samling"
         Dokumenttype.FLYTTING_TSO_SØKNAD, Dokumenttype.FLYTTING_TSR_SØKNAD -> "Søknad om støtte til flytting"
+        Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSO_SØKNAD,
+        Dokumenttype.REISE_OPPSTART_AVSLUTNING_HJEMREISE_TSR_SØKNAD,
+        -> "Søknad om støtte til reise til oppstart, avslutning og hjemreiser"
         Dokumenttype.DAGLIG_REISE_TSO_KJØRELISTE, Dokumenttype.DAGLIG_REISE_TSR_KJØRELISTE,
         -> "Refusjon av utgifter til daglig reise med bruk av bil"
 
