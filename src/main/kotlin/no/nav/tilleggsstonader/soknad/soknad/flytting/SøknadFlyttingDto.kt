@@ -32,6 +32,7 @@ data class FlyttingDetaljerDto(
 data class UtgifterEgenFlyttingDto(
     val avstand: VerdiFelt<String>,
     val hengerleie: VerdiFelt<String>?,
+    val leiebil: VerdiFelt<String>?,
     val bom: VerdiFelt<String>?,
     val parkering: VerdiFelt<String>?,
     val ferje: VerdiFelt<String>?,

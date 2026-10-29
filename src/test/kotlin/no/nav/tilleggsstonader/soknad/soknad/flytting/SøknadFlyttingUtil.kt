@@ -45,6 +45,7 @@ object SøknadFlyttingUtil {
                             UtgifterEgenFlyttingDto(
                                 avstand = felt("120,25", "Avstand"),
                                 hengerleie = felt("500", "Hengerleie"),
+                                leiebil = felt("800", "Leiebil"),
                                 bom = felt("0", "Bom"),
                                 parkering = felt("25.50", "Parkering"),
                                 ferje = felt("100,25", "Ferje"),

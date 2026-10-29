@@ -4,12 +4,13 @@ import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaFlytting
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
-import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttebyrå
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.FlyttebyråAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.FlyttebyråTilbud
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
-import no.nav.tilleggsstonader.kontrakter.søknad.flytting.FlyttingDetaljer
-import no.nav.tilleggsstonader.kontrakter.søknad.flytting.UtgifterEgenFlytting
-import no.nav.tilleggsstonader.kontrakter.søknad.reisetilsamling.Adresse
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.FlyttingDetaljerAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.FraAdresseAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.TilAdresseAvsnitt
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.UtgifterEgenFlyttingAvsnitt
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMapper
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.AdresseDto
@@ -40,14 +41,14 @@ class FlyttingMapper {
         )
 
     private fun mapFlyttingDetaljer(dto: FlyttingDetaljerDto) =
-        FlyttingDetaljer(
+        FlyttingDetaljerAvsnitt(
             årsak = dto.årsak,
             flyttedato = dto.flyttedato,
-            adresse = mapAdresse(dto.adresse),
+            adresse = mapTilAdresse(dto.adresse),
             flyttemåte = dto.flyttemåte,
             utgifterDekketPåAnnenMåte = dto.utgifterDekketPåAnnenMåte,
             skalFlytteFraFolkeregistrertAdresse = dto.skalFlytteFraFolkeregistrertAdresse,
-            adresseDetSkalFlyttesFra = mapAdresse(dto.adresseDetSkalFlyttesFra),
+            adresseDetSkalFlyttesFra = mapFraAdresse(dto.adresseDetSkalFlyttesFra),
             utgifterEgenFlytting =
                 if (dto.flyttemåte.verdi == Flyttemåte.FLYTTER_SELV) {
                     mapUtgifterEgenFlytting(dto.utgifterEgenFlytting ?: ugyldigFelt("utgifterEgenFlytting"))
@@ -62,22 +63,31 @@ class FlyttingMapper {
                 },
         )
 
-    private fun mapAdresse(dto: AdresseDto) =
-        Adresse(
+    private fun mapTilAdresse(dto: AdresseDto) =
+        TilAdresseAvsnitt(
             land = dto.land,
             gateadresse = dto.gateadresse,
             postnummer = dto.postnummer,
             poststed = dto.poststed,
         )
 
-    private fun mapUtgifterEgenFlytting(dto: UtgifterEgenFlyttingDto): UtgifterEgenFlytting {
+    private fun mapFraAdresse(dto: AdresseDto) =
+        FraAdresseAvsnitt(
+            land = dto.land,
+            gateadresse = dto.gateadresse,
+            postnummer = dto.postnummer,
+            poststed = dto.poststed,
+        )
+
+    private fun mapUtgifterEgenFlytting(dto: UtgifterEgenFlyttingDto): UtgifterEgenFlyttingAvsnitt {
         val avstand = parsePåkrevdBeløp("avstand", dto.avstand)
         if (avstand.verdi <= BigDecimal.ZERO) {
             ugyldigFelt("avstand")
         }
-        return UtgifterEgenFlytting(
+        return UtgifterEgenFlyttingAvsnitt(
             avstand = avstand,
             hengerleie = parseBeløp("hengerleie", dto.hengerleie),
+            leiebil = parseBeløp("leiebil", dto.leiebil),
             bom = parseBeløp("bom", dto.bom),
             parkering = parseBeløp("parkering", dto.parkering),
             ferje = parseBeløp("ferje", dto.ferje),
@@ -85,7 +95,7 @@ class FlyttingMapper {
         )
     }
 
-    private fun mapFlyttebyrå(dto: FlyttebyråDto): Flyttebyrå {
+    private fun mapFlyttebyrå(dto: FlyttebyråDto): FlyttebyråAvsnitt {
         val dtoTilbud = dto.tilbud
         if (dtoTilbud.size != ANTALL_TILBUD) {
             ugyldigFelt("tilbud")
@@ -98,7 +108,7 @@ class FlyttingMapper {
                 }
                 mapFlyttebyråTilbud(tilbud)
             }
-        return Flyttebyrå(
+        return FlyttebyråAvsnitt(
             tilbud = tilbud,
         )
     }
