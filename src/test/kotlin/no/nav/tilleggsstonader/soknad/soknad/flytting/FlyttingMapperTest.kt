@@ -59,6 +59,7 @@ class FlyttingMapperTest {
                     UtgifterEgenFlyttingDto(
                         avstand = felt("120,25"),
                         hengerleie = felt("0"),
+                        leiebil = felt("1000"),
                         bom = felt("15.50"),
                         parkering = null,
                         ferje = null,
@@ -71,6 +72,7 @@ class FlyttingMapperTest {
 
         assertThat(utgifter?.avstand?.verdi).isEqualTo(BigDecimal("120.25"))
         assertThat(utgifter?.hengerleie?.verdi).isEqualTo(BigDecimal("0.00"))
+        assertThat(utgifter?.leiebil?.verdi).isEqualTo(BigDecimal("1000.00"))
         assertThat(utgifter?.bom?.verdi).isEqualTo(BigDecimal("15.50"))
         assertThat(utgifter?.parkering).isNull()
     }
@@ -84,6 +86,7 @@ class FlyttingMapperTest {
                     UtgifterEgenFlyttingDto(
                         avstand = felt("1"),
                         hengerleie = null,
+                        leiebil = null,
                         bom = null,
                         parkering = null,
                         ferje = null,
@@ -118,6 +121,7 @@ class FlyttingMapperTest {
                     UtgifterEgenFlyttingDto(
                         avstand = felt("1"),
                         hengerleie = null,
+                        leiebil = null,
                         bom = null,
                         parkering = null,
                         ferje = null,
@@ -152,6 +156,7 @@ class FlyttingMapperTest {
                             UtgifterEgenFlyttingDto(
                                 avstand = felt("1"),
                                 hengerleie = felt(verdi),
+                                leiebil = null,
                                 bom = null,
                                 parkering = null,
                                 ferje = null,
@@ -178,6 +183,7 @@ class FlyttingMapperTest {
                             UtgifterEgenFlyttingDto(
                                 avstand = felt(avstand),
                                 hengerleie = null,
+                                leiebil = null,
                                 bom = null,
                                 parkering = null,
                                 ferje = null,
@@ -250,6 +256,7 @@ class FlyttingMapperTest {
                     UtgifterEgenFlyttingDto(
                         avstand = felt("10"),
                         hengerleie = null,
+                        leiebil = null,
                         bom = null,
                         parkering = null,
                         ferje = null,
