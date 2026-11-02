@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flytteårsak
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.UtgifterDekketPåAnnenMåte
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 import no.nav.tilleggsstonader.soknad.soknad.SøknadValideringException
@@ -289,7 +290,7 @@ class FlyttingMapperTest {
                 flyttedato = felt("2026-03-01"),
                 adresse = AdresseDto(land = null, gateadresse = null, postnummer = null, poststed = null),
                 flyttemåte = EnumFelt("Flyttemåte", flyttemåte, flyttemåte.name, listOf(flyttemåte.name)),
-                utgifterDekketPåAnnenMåte = EnumFelt("Annen dekning", JaNei.NEI, "Nei", emptyList()),
+                utgifterDekketPåAnnenMåte = EnumFelt("Annen dekning", UtgifterDekketPåAnnenMåte.NEI, "Nei", emptyList()),
                 utgifterEgenFlytting = utgifter,
                 flyttebyrå = flyttebyrå,
                 skalFlytteFraFolkeregistrertAdresse = skalFlytteFraFolkeregistrertAdresse,

@@ -9,6 +9,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flytteårsak
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.UtgifterDekketPåAnnenMåte
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadTestUtil
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.AdresseDto
@@ -39,7 +40,7 @@ object SøknadFlyttingUtil {
                             poststed = felt("Oslo", "Poststed"),
                         ),
                     flyttemåte = EnumFelt("Hvordan flytter du?", flyttemåte, flyttemåte.name, emptyList()),
-                    utgifterDekketPåAnnenMåte = EnumFelt("Annen dekning?", JaNei.NEI, "Nei", emptyList()),
+                    utgifterDekketPåAnnenMåte = EnumFelt("Annen dekning?", UtgifterDekketPåAnnenMåte.NEI, "Nei", emptyList()),
                     utgifterEgenFlytting =
                         if (flyttemåte == Flyttemåte.FLYTTER_SELV) {
                             UtgifterEgenFlyttingDto(

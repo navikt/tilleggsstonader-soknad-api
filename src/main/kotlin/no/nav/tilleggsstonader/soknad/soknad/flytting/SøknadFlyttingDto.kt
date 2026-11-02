@@ -6,6 +6,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flytteårsak
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.UtgifterDekketPåAnnenMåte
 import no.nav.tilleggsstonader.soknad.soknad.HovedytelseDto
 import no.nav.tilleggsstonader.soknad.soknad.SøknadMetadataDto
 import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.AdresseDto
@@ -22,7 +23,7 @@ data class FlyttingDetaljerDto(
     val flyttedato: VerdiFelt<String>,
     val adresse: AdresseDto,
     val flyttemåte: EnumFelt<Flyttemåte>,
-    val utgifterDekketPåAnnenMåte: EnumFelt<JaNei>,
+    val utgifterDekketPåAnnenMåte: EnumFelt<UtgifterDekketPåAnnenMåte>,
     val utgifterEgenFlytting: UtgifterEgenFlyttingDto?,
     val flyttebyrå: FlyttebyråDto?,
     val skalFlytteFraFolkeregistrertAdresse: EnumFelt<JaNei>,
