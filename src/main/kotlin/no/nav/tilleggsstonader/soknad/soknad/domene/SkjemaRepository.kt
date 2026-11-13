@@ -39,7 +39,7 @@ data class Skjema(
     val id: UUID = UUID.randomUUID(),
     val opprettetTid: LocalDateTime = SporbarUtils.now(),
     val type: Skjematype,
-    val personIdent: String,
+    val personIdent: String?,
     @Column("skjema_json")
     val skjemaJson: JsonWrapper,
     @Column("skjema_pdf")

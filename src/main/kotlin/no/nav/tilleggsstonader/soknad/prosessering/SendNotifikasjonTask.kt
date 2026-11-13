@@ -22,6 +22,9 @@ class SendNotifikasjonTask(
         val message = lagNotifikasjonsMelding(skjema.type)
         val eventId = skjema.id.toString()
 
+        if (skjema.personIdent == null) {
+            error("Mangler personident for skjema med type ${skjema.type}, burde finnes for skjemaer som ikke er FyllUtSendInn")
+        }
         notifikasjonsService.sendToKafka(skjema.personIdent, message, eventId)
     }
 

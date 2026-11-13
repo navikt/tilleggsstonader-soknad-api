@@ -132,6 +132,9 @@ class PdfService(
         }
 
     private fun hentSøkerinformasjon(skjema: Skjema): Søkerinformasjon {
+        if (skjema.personIdent == null) {
+            error("Mangler personident for skjema med type ${skjema.type}, burde finnes for skjemaer som ikke er FyllUtSendInn")
+        }
         val navn = personService.hentNavnMedClientCredential(skjema.personIdent)
         return Søkerinformasjon(ident = skjema.personIdent, navn = navn)
     }

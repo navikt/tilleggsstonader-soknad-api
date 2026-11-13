@@ -86,6 +86,7 @@ class FlyttingMapper {
         }
         return UtgifterEgenFlyttingAvsnitt(
             avstand = avstand,
+            drivstoffType = dto.drivstoffType,
             hengerleie = parseBeløp("hengerleie", dto.hengerleie),
             leiebil = parseBeløp("leiebil", dto.leiebil),
             bom = parseBeløp("bom", dto.bom),

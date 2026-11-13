@@ -62,7 +62,7 @@ object SøknadTestUtil {
         Skjema(
             skjemaJson = JsonWrapper(jsonMapper.writeValueAsString(innsendtSkjema)),
             type = skjematype,
-            personIdent = innsendtSkjema.ident,
+            personIdent = innsendtSkjema.ident!!, // Skal alltid være tilgjengelig,
             opprettetTid = LocalDateTime.now(),
             frontendGitHash = "aabbccd",
         )
