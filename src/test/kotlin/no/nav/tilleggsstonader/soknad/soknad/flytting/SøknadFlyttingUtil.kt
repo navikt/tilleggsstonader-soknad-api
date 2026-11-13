@@ -7,6 +7,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.Vedleggstype
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.DrivstoffType
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flytteårsak
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.UtgifterDekketPåAnnenMåte
@@ -44,6 +45,7 @@ object SøknadFlyttingUtil {
                     utgifterEgenFlytting =
                         if (flyttemåte == Flyttemåte.FLYTTER_SELV) {
                             UtgifterEgenFlyttingDto(
+                                drivstoffType = EnumFelt("Drivstofftype", DrivstoffType.BENSIN, "Bensin", emptyList()),
                                 avstand = felt("120,25", "Avstand"),
                                 hengerleie = felt("500", "Hengerleie"),
                                 leiebil = felt("800", "Leiebil"),

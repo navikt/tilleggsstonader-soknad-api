@@ -227,7 +227,8 @@ class SkjemaService(
             skjemaRepository.insert(
                 Skjema(
                     type = type,
-                    personIdent = innsendtSkjema.ident,
+                    personIdent =
+                        innsendtSkjema.ident ?: error("Fant ikke personident på innsendt skjema, skal være tilgjengelig på våre søknader"),
                     skjemaJson = JsonWrapper(jsonMapper.writeValueAsString(innsendtSkjema)),
                     frontendGitHash = frontendGitHash,
                 ),

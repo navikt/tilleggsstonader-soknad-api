@@ -34,6 +34,13 @@ object ArkiverDokumentRequestMapper {
                 tittel = dokumenttype.dokumentTittel(),
                 dokumenttype = dokumenttype,
             )
+
+        if (skjema.personIdent == null) {
+            error(
+                "Mangler personident ved forsøk på dokumentarkivering for skjematype ${skjema.type} og stønadstype $tilhørendeStønadstype",
+            )
+        }
+
         return ArkiverDokumentRequest(
             fnr = skjema.personIdent,
             forsøkFerdigstill = false,

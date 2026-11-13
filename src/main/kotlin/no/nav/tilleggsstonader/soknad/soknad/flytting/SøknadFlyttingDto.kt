@@ -4,6 +4,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.DokumentasjonFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.DrivstoffType
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flytteårsak
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.UtgifterDekketPåAnnenMåte
@@ -32,6 +33,7 @@ data class FlyttingDetaljerDto(
 
 data class UtgifterEgenFlyttingDto(
     val avstand: VerdiFelt<String>,
+    val drivstoffType: EnumFelt<DrivstoffType>,
     val hengerleie: VerdiFelt<String>?,
     val leiebil: VerdiFelt<String>?,
     val bom: VerdiFelt<String>?,

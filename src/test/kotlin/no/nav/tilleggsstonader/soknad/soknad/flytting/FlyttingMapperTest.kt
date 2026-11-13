@@ -4,6 +4,7 @@ import no.nav.tilleggsstonader.kontrakter.søknad.EnumFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.JaNei
 import no.nav.tilleggsstonader.kontrakter.søknad.SelectFelt
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.felles.DrivstoffType
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flytteårsak
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.UtgifterDekketPåAnnenMåte
@@ -34,6 +35,17 @@ class FlyttingMapperTest {
         val søknad =
             søknad(
                 flyttemåte = Flyttemåte.FLYTTEBYRÅ,
+                utgifter =
+                    UtgifterEgenFlyttingDto(
+                        avstand = felt("10"),
+                        drivstoffType = drivstoffType(),
+                        hengerleie = null,
+                        leiebil = null,
+                        bom = null,
+                        parkering = null,
+                        ferje = null,
+                        annet = null,
+                    ),
                 flyttebyrå =
                     FlyttebyråDto(
                         tilbud =
@@ -47,6 +59,7 @@ class FlyttingMapperTest {
         val resultat = mapper.map("ident", LocalDateTime.now(), søknad)
         val flyttebyrå = resultat.skjema.flyttingDetaljer?.flyttebyrå
 
+        assertThat(resultat.skjema.flyttingDetaljer?.utgifterEgenFlytting).isNull()
         assertThat(flyttebyrå?.tilbud?.map { it.beløp.verdi })
             .containsExactly(BigDecimal("1234.50"), BigDecimal("1100.50"))
     }
@@ -59,6 +72,7 @@ class FlyttingMapperTest {
                 utgifter =
                     UtgifterEgenFlyttingDto(
                         avstand = felt("120,25"),
+                        drivstoffType = drivstoffType(),
                         hengerleie = felt("0"),
                         leiebil = felt("1000"),
                         bom = felt("15.50"),
@@ -72,6 +86,7 @@ class FlyttingMapperTest {
         val utgifter = resultat.skjema.flyttingDetaljer?.utgifterEgenFlytting
 
         assertThat(utgifter?.avstand?.verdi).isEqualTo(BigDecimal("120.25"))
+        assertThat(utgifter?.drivstoffType?.verdi).isEqualTo(DrivstoffType.BENSIN)
         assertThat(utgifter?.hengerleie?.verdi).isEqualTo(BigDecimal("0.00"))
         assertThat(utgifter?.leiebil?.verdi).isEqualTo(BigDecimal("1000.00"))
         assertThat(utgifter?.bom?.verdi).isEqualTo(BigDecimal("15.50"))
@@ -86,6 +101,7 @@ class FlyttingMapperTest {
                 utgifter =
                     UtgifterEgenFlyttingDto(
                         avstand = felt("1"),
+                        drivstoffType = drivstoffType(),
                         hengerleie = null,
                         leiebil = null,
                         bom = null,
@@ -121,6 +137,7 @@ class FlyttingMapperTest {
                 utgifter =
                     UtgifterEgenFlyttingDto(
                         avstand = felt("1"),
+                        drivstoffType = drivstoffType(),
                         hengerleie = null,
                         leiebil = null,
                         bom = null,
@@ -156,6 +173,7 @@ class FlyttingMapperTest {
                         utgifter =
                             UtgifterEgenFlyttingDto(
                                 avstand = felt("1"),
+                                drivstoffType = drivstoffType(),
                                 hengerleie = felt(verdi),
                                 leiebil = null,
                                 bom = null,
@@ -183,6 +201,7 @@ class FlyttingMapperTest {
                         utgifter =
                             UtgifterEgenFlyttingDto(
                                 avstand = felt(avstand),
+                                drivstoffType = drivstoffType(),
                                 hengerleie = null,
                                 leiebil = null,
                                 bom = null,
@@ -256,6 +275,7 @@ class FlyttingMapperTest {
                 utgifter =
                     UtgifterEgenFlyttingDto(
                         avstand = felt("10"),
+                        drivstoffType = drivstoffType(),
                         hengerleie = null,
                         leiebil = null,
                         bom = null,
@@ -309,4 +329,6 @@ class FlyttingMapperTest {
     )
 
     private fun felt(verdi: String) = VerdiFelt(verdi = verdi, label = "Testfelt")
+
+    private fun drivstoffType() = EnumFelt("Drivstofftype", DrivstoffType.BENSIN, "Bensin", emptyList())
 }
