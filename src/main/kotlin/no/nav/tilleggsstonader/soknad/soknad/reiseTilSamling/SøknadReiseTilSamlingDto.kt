@@ -56,7 +56,7 @@ data class AdresseDto(
 )
 
 data class AvreiseadresseDto(
-    val skalReiseFraFolkeregistrertAdresse: EnumFelt<JaNei>,
+    val skalReiseFraFolkeregistrertAdresse: EnumFelt<JaNei>?,
     val adresseDetSkalReisesFra: AdresseDto?,
 )
 
