@@ -85,6 +85,10 @@ object SøknadFlyttingUtil {
                     )
                 },
             søknadMetadata = SøknadMetadataDto("aabbccd"),
+            arbeidssøker =
+                ArbeidssøkerDto(
+                    erRegistrertSomArbeidssøker = EnumFelt("Er du registrert som arbeidssøker?", JaNei.JA, "Ja", listOf("Ja", "Nei")),
+                ),
         )
 
     private fun felt(
