@@ -4,6 +4,7 @@ import no.nav.tilleggsstonader.kontrakter.felles.Språkkode
 import no.nav.tilleggsstonader.kontrakter.søknad.InnsendtSkjema
 import no.nav.tilleggsstonader.kontrakter.søknad.SøknadsskjemaFlytting
 import no.nav.tilleggsstonader.kontrakter.søknad.VerdiFelt
+import no.nav.tilleggsstonader.kontrakter.søknad.flytting.ArbeidssøkerAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.FlyttebyråAvsnitt
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.FlyttebyråTilbud
 import no.nav.tilleggsstonader.kontrakter.søknad.flytting.Flyttemåte
@@ -37,6 +38,7 @@ class FlyttingMapper {
                     hovedytelse = SøknadMapper.mapHovedytelse(dto.hovedytelse),
                     flyttingDetaljer = dto.flyttingDetaljer?.let { mapFlyttingDetaljer(it) },
                     dokumentasjon = dto.dokumentasjon,
+                    arbeidssøker = ArbeidssøkerAvsnitt(erRegistrertSomArbeidssøker = dto.arbeidssøker.erRegistrertSomArbeidssøker),
                 ),
         )
 

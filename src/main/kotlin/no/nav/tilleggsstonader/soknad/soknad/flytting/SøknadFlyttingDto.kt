@@ -14,9 +14,14 @@ import no.nav.tilleggsstonader.soknad.soknad.reiseTilSamling.AdresseDto
 
 data class SøknadFlyttingDto(
     val hovedytelse: HovedytelseDto,
+    val arbeidssøker: ArbeidssøkerDto,
     val flyttingDetaljer: FlyttingDetaljerDto?,
     val dokumentasjon: List<DokumentasjonFelt>,
     val søknadMetadata: SøknadMetadataDto,
+)
+
+data class ArbeidssøkerDto(
+    val erRegistrertSomArbeidssøker: EnumFelt<JaNei>,
 )
 
 data class FlyttingDetaljerDto(
