@@ -304,6 +304,7 @@ class FlyttingMapperTest {
             AdresseDto(land = null, gateadresse = felt("Hjemveien 2"), postnummer = felt("0123"), poststed = felt("Oslo")),
     ) = SøknadFlyttingDto(
         hovedytelse = SøknadTestUtil.hovedytelseDto(),
+        arbeidssøker = ArbeidssøkerDto(EnumFelt(label = "", JaNei.NEI, svarTekst = "Nei", emptyList())),
         flyttingDetaljer =
             FlyttingDetaljerDto(
                 årsak = EnumFelt("Årsak", Flytteårsak.AKTIVITET, "Aktivitet", emptyList()),
